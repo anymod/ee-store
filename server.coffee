@@ -1,14 +1,11 @@
 switch process.env.NODE_ENV
   when 'production'
     require 'newrelic'
-    stripeSecretKey = 'sk_live_UNVB2zgYAXxv90X9vuQckxc6'
   when 'test'
     process.env.PORT = 3333
-    stripeSecretKey = 'sk_test_1luLv9PtbgsqWX5irh1KLgdu'
   else
     process.env.NODE_ENV = 'development'
     process.env.PORT = 3000
-    stripeSecretKey = 'sk_test_1luLv9PtbgsqWX5irh1KLgdu'
 
 express         = require 'express'
 vhost           = require 'vhost'
@@ -16,7 +13,6 @@ morgan          = require 'morgan'
 path            = require 'path'
 serveStatic     = require 'serve-static'
 bodyParser      = require 'body-parser'
-stripe          = require('stripe')(stripeSecretKey)
 
 # Parent app
 app             = express()
