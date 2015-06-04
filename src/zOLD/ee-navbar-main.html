@@ -1,0 +1,71 @@
+<nav class="navbar navbar-fixed-top box-shadow round-0" id="navbar-top">
+  <div class="container-fluid">
+    <div class="margin-7">
+      <a ui-sref="landing" id="brand" class="inline-block">
+        <img src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_400/v1432578504/eeosk_blue.png" class="width-120"/>
+      </a>
+      &nbsp;&nbsp;
+      <div class="position-fixed text-center" style="top: 8px; left: 50%; width: 150px; margin-left: -75px;">
+        <div ng-click="catalog()" class="btn btn-info">Products</div>&nbsp;<a ui-sref="edit" class="btn btn-success">Edit</a>
+      </div>
+    </div>
+  </div>
+</nav>
+<!-- <nav class="navbar navbar-default main-navbar navbar-fixed-top round-0 no-side-border">
+
+  <div class="container-fluid">
+    <div class="vert-5">
+      main navbar
+      <div ng-show="state.indexOf('edit') < 0">
+        <div class="pull-left">
+          <a ui-sref="storefront" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('storefront') > -1 }">
+            <span class="hidden-xs">Preview</span>
+            <span class="visible-xs"><i class="fa fa-fw fa-lg fa-home"></i></span>
+          </a>&nbsp;
+          <a href ng-click="catalog()" class="btn btn-sm btn-default">
+            <span class="hidden-xs">Add products</span>
+            <span class="visible-xs"><i class="fa fa-fw fa-lg fa-plus"></i></span>
+          </a>&nbsp;
+          <a href ng-click="edit()" class="btn btn-sm btn-default" ng-class="{ active: state.indexOf('edit') > -1 }">
+            <span class="hidden-xs">Edit</span>
+            <span class="visible-xs"><i class="fa fa-fw fa-lg fa-pencil"></i></span>
+          </a>
+        </div>
+
+        <div class="pull-right">
+          <div ng-hide="ee.logged_in" ng-click="signup()" class="btn btn-sm btn-primary">
+            Sign up
+          </div>
+          <a ng-show="ee.logged_in" ui-sref="account" class="btn btn-sm btn-primary">
+            Publish<span class="hidden-xs">&nbsp;Store</span>
+          </a>&nbsp;
+          <div ng-click="feedback()" class="hidden-xs btn btn-sm btn-default">Feedback</div>
+          <span class="hidden-xs">&nbsp;</span>
+          <div ng-hide="ee.logged_in" ng-click="login()" class="btn btn-sm btn-default">Login</div>
+          <div ng-show="ee.logged_in" class="inline-block position-relative" dropdown>
+            <div class="btn btn-sm btn-default" dropdown-toggle ng-disabled="disabled">
+              <span class="hidden-xs">More&nbsp;<i class="fa fa-fw fa-caret-down"></i></span>
+              <span class="visible-xs"><i class="fa fa-fw fa-lg fa-caret-down"></i></span>
+            </div>
+            <ul class="dropdown-menu">
+              <li class="visible-xs"><a href ng-click="feedback()"><i class="fa fa-fw fa-comment-o"></i>&nbsp;&nbsp;Feedback</a></li>
+              <li><a ui-sref="orders"><i class="fa fa-fw fa-list"></i>&nbsp;&nbsp;Orders</a></li>
+              <li><a ui-sref="account"><i class="fa fa-fw fa-gear"></i>&nbsp;&nbsp;Account Settings</a></li>
+              TODO add payment settings and notification settings
+              <li class="divider"></li>
+              <li><a ui-sref="logout"><i class="fa fa-fw fa-sign-out"></i>&nbsp;&nbsp;Logout</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      /main navbar
+      save navbar
+      <div ng-hide="state.indexOf('edit') < 0">
+        <ee-save></ee-save>&nbsp;
+        <a ui-sref="storefront" class="btn btn-sm btn-default">Cancel</a>
+      </div>
+      /save navbar
+    </div>
+  </div>
+</nav>
+ -->

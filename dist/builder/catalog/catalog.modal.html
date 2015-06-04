@@ -1,0 +1,105 @@
+<div class="modal-header white-background pad-10" id="modal-header">
+  <div class="row margin-bottom-0">
+    <div class="col-xs-3">
+      <div class="btn-group" style="width: 75px;">
+        <div class="btn btn-default" ng-click="catalog.fns.decrementPage()" name="left-btn" ng-class="{ disabled: catalog.data.inputs.page < 2 }">
+          <i class="fa fa-chevron-left"></i>
+        </div>
+        <div class="btn btn-default" ng-click="catalog.fns.incrementPage()" name="right-btn" ng-class="{ disabled: catalog.data.products.length < catalog.data.inputs.productsPerPage }">
+          <i class="fa fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-7 col-sm-6">
+      <form class="inline-block margin-bottom-0" ng-submit="catalog.fns.search()">
+        <div class="input-group">
+          <input type="text" ng-model="catalog.data.inputs.search" class="form-control" placeholder="Search">
+          <span class="input-group-btn">
+            <button class="btn btn-default" type="submit" name="search-btn">
+              <span class="hidden-xs">Search</span>
+              <span class="visible-xs"><i class="fa fa-search"></i></span>
+            </button>
+          </span>
+        </div>
+      </form>
+    </div>
+    <div class="col-xs-2 col-sm-3">
+      <div class="btn btn-default pull-right" ng-click="$close()"><i class="fa fa-times"></i></div>
+    </div>
+  </div>
+</div>
+<div class="modal-body light-light-gray-background">
+  <!-- CATALOG products -->
+  <div id="catalog-products" class="text-center position-relative" ng-hide="catalog.ee.loading">
+
+    <div class="row margin-bottom-0 text-left">
+      <div class="col-xs-2 col-sm-1 text-right">
+        <div class="btn btn-xs btn-default margin-2" ng-click="catalog.data.hideFilterBtns = !catalog.data.hideFilterBtns">
+          <i class="fa fa-caret-down" ng-hide="catalog.data.hideFilterBtns"></i>
+          <i class="fa fa-caret-right" ng-show="catalog.data.hideFilterBtns"></i>
+        </div>
+      </div>
+      <div class="col-xs-10 col-sm-11">
+        <div ng-repeat="category in catalog.data.inputs.categoryArray"
+             ng-click="catalog.fns.setCategory(category)"
+             class="btn btn-xs btn-default margin-2"
+             ng-class="{ 'btn-primary': category == catalog.data.inputs.category }"
+             ng-hide="catalog.data.hideFilterBtns && category != catalog.data.inputs.category">
+          <span ng-show="category == catalog.data.inputs.category"><i class="fa fa-fw fa-times"></i></span>{{ category }}
+        </div>
+        <br ng-hide="catalog.data.hideFilterBtns">
+        <div ng-repeat="range in catalog.data.inputs.rangeArray"
+             ng-click="catalog.fns.setRange(range)"
+             class="btn btn-xs btn-default margin-2"
+             ng-class="{ 'btn-primary': range.min == catalog.data.inputs.range.min && range.max == catalog.data.inputs.range.max }"
+             ng-hide="catalog.data.hideFilterBtns && range.min != catalog.data.inputs.range.min">
+          <span ng-show="range.min == catalog.data.inputs.range.min && range.max == catalog.data.inputs.range.max"><i class="fa fa-fw fa-times"></i></span>{{ range | rangeToText }}
+        </div>
+        <br ng-hide="catalog.data.hideFilterBtns">
+        <div class="btn btn-xs btn-primary margin-2" ng-show="catalog.data.inputs.searchLabel" ng-click="catalog.fns.clearSearch()">
+          <i class="fa fa-fw fa-times"></i>{{ catalog.data.inputs.searchLabel }}
+        </div>
+      </div>
+    </div>
+
+    <div ng-show="catalog.data.searching" class="position-absolute top-left-bottom-right-0" style="z-index: 100;">
+      <div class="position-absolute full-width full-height white-background opacity-08" style="z-index: 0;"></div>
+      <h2 class="position-relative margin-20 pad-10">
+        <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>&nbsp;Loading
+      </h2>
+    </div>
+
+    <div class="vert-10" ng-class="{ 'opacity-08': catalog.data.searching }">
+      <span ng-repeat="product in catalog.data.products" class="position-relative">
+        <a href ng-click="catalog.productFns.openProductModal(product.id, true)"
+            class="thumb margin-2 hover-pointer gray-border"
+            style="background-color: white; background-image: url('{{ product.image_meta.main_image.url | thumbnail }}')">
+          <div ng-show="catalog.storeFns.inStorefront(product.id)" class="label label-primary">in <span class="hidden-xs">my </span>store</div>
+        </a>
+      </span>
+    </div>
+
+    <div ng-show="!catalog.data.searching && catalog.data.products.length <= 0">
+      <div class="pad-20">No results found</div>
+    </div>
+  </div>
+  <!-- /CATALOG products -->
+
+</div>
+<div class="modal-footer white-background">
+  <div class="row margin-bottom-0">
+    <div class="col-xs-offset-3 col-xs-6 text-center">
+      <div class="btn-group">
+        <div class="btn btn-default" ng-click="catalog.fns.decrementPage()" name="left-btn" ng-class="{ disabled: catalog.data.inputs.page < 2 }">
+          <i class="fa fa-chevron-left"></i>
+        </div>
+        <div class="btn btn-default" ng-click="catalog.fns.incrementPage()" name="right-btn" ng-class="{ disabled: catalog.data.products.length < catalog.data.inputs.productsPerPage }">
+          <i class="fa fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+    <div class="col-xs-3 text-right">
+      <div class="btn btn-xs btn-default pull-right vert-5" ng-click="catalog.feedback()">Feedback</div>
+    </div>
+  </div>
+</div>

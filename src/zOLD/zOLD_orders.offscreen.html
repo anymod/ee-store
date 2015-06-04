@@ -1,0 +1,79 @@
+<ee-offscreen-header></ee-offscreen-header>
+
+<nav ng-class="{ open: toggle }" class="position-fixed full-height light-{{ offscreenColor }}-background" style="overflow-x: hidden;">
+  <div class="position-relative full-height">
+    <div id="wrap" class="width-300">
+
+      <div id="main-region">
+        <div class="width-300">
+
+          <div class="pad-10 {{ offscreenColor }}-background">
+            <div class="vert-20 section"></div>
+            <h2 class="margin-0 white-color">Orders</h2>
+          </div>
+
+          <div class="pad-10">
+
+            <div class="input-group">
+              <input type="text" class="form-control" placeholder="Search orders" disabled>
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" disabled><i class="fa fa-fw fa-search"></i></button>
+              </span>
+            </div>
+
+            <hr class="vert-10">
+
+            <h5 class="vert-2">Filter Shipment Status</h5>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Pending Shipment</div>
+            </div>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Shipped</div>
+            </div>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Returned by Customer</div>
+            </div>
+
+            <br>
+
+            <h5 class="vert-2">Filter Disbursement Status</h5>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Pending Disbursement</div>
+            </div>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Disbursed</div>
+            </div>
+            <div class="input-group input-group-sm vert-2">
+              <span class="input-group-addon"><input type="checkbox" disabled></span>
+              <div class="btn btn-default btn-sm btn-block" disabled>Refunded to Customer</div>
+            </div>
+          </div>
+
+        </div> <!-- pad-10 -->
+
+      </div>
+    </div>
+
+    <!-- TODO ee-offscreen-footer directive -->
+    <div id="footer-region">
+      <div class="container">
+        <div>
+          <a ui-sref="landing">home</a>&nbsp;&nbsp;
+          <a href="mailto:team@eeosk.com" target="_blank">contact</a>&nbsp;&nbsp;
+          <a ui-sref="terms">terms</a>&nbsp;&nbsp;
+          <a ui-sref="privacy">privacy</a>
+        </div>
+        <div class="text-muted">&copy; eeosk 2015</div>
+      </div>
+    </div>
+
+  </div> <!-- /wrap -->
+</div>
+
+
+</nav>

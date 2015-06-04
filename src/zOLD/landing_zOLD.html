@@ -1,0 +1,23 @@
+<!-- LANDING -->
+<div id="top"></div>
+<ee-navbar ng-if="landing.show.landing.content" transparent="true"></ee-navbar>
+
+<div ng-show="!landing.show.catalog.content" class="jumbotron jumbotron-landing landing-background text-center overflow-hidden transition-400"
+     ng-class="{ 'pad-0 height-0': !landing.show.landing.content }">
+  <div class="container-fluid vert-20 max-width-600 margin-0-auto">
+    <div class="inline-block full-width vert-20"></div>
+    <h1 class="opacity-08-white-background margin-0 pad-20 line-height-1 round-top">Create an online store in minutes</h1>
+    <p class="line-height-1 margin-0 pad-15 opacity-07-white-background">
+      Choose inventory from a catalog of products and let eeosk manage overhead and shipping.
+    </p><div class="opacity-08-white-background pad-15 round-bottom">
+      <div ui-sref="example" class="btn btn-lg btn-default full-width max-width-300">
+        See a demo store
+      </div>
+      <div ui-sref="try-theme" class="btn btn-lg btn-primary full-width max-width-300 vert-5">
+        Try it out
+      </div>
+    </div>
+    <div class="section vert-10"></div>
+  </div>
+</div>
+<!-- /LANDING -->

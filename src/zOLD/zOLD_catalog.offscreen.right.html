@@ -1,0 +1,7 @@
+<div class="pad-10">
+  <ee-offscreen-toggle side="'right'" color="'dark'" class="pull-right"></ee-offscreen-toggle>
+  <img ng-src="{{ product.image_meta.main_image.url }}" ee-src="product.image_meta.main_image.url" class="full-width" ee-image-preload />
+  <!-- images -->
+  <h4 ng-bind="product.title"></h4>
+  <pre>{{ product | json }}</pre>
+</div>

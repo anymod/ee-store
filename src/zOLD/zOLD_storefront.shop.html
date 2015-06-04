@@ -1,0 +1,21 @@
+<div class="featured">
+  <div class="full-width pad-10"></div>
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col col-xs-4 col-md-2 overflow-hidden">
+        <h4 class="margin-0">Products</h4>
+        <hr>
+        <ee-shop-nav ng-if="storefront" categories="storefront.categories" class="nav nav-pills nav-stacked nav-compact"></ee-shop-nav>
+      </div>
+      <div class="col col-xs-8 col-md-10 position-inherit">
+        <h4 class="margin-0">{{ $state.params.shopCategory }}</h4>
+        <div class="full-width vert-20 overflow-hidden">
+          <div ng-repeat="product in storefront.product_selection | eeShopCategories:$state.params.shopCategory" class="product-container inline-block width-160 vertical-align-top">
+            <ee-product-for-storefront product="product"></ee-product-for-storefront>
+            <br>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- /featured -->

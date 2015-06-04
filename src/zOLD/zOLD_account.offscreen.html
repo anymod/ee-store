@@ -1,0 +1,78 @@
+<ee-offscreen-header></ee-offscreen-header>
+
+<nav ng-class="{ open: toggle }" class="position-fixed full-height light-{{ offscreenColor }}-background" style="overflow-x: hidden;">
+  <div class="position-relative full-height">
+    <div id="wrap" class="width-300">
+
+      <div id="main-region">
+        <div class="width-300">
+
+          <div class="pad-10 {{ offscreenColor }}-background">
+            <div class="vert-20 section"></div>
+            <h2 class="margin-0 white-color" ng-bind="offscreenCategory"></h2>
+          </div>
+
+          <div class="pad-10">
+
+            <h5 class="margin-0">Login&nbsp;&nbsp;<small>this email is private</small></h5>
+            <div class="input-group vert-2">
+              <span class="input-group-addon"><i class="fa fa-fw fa-envelope"></i></span>
+              <input type="text" class="form-control" placeholder="Email" ng-model="user.email" disabled>
+            </div>
+            <a ui-sref="reset" class="btn btn-default btn-block">Change password</a>
+
+            <hr class="vert-10">
+
+            <h5 class="margin-0">Store locations&nbsp;&nbsp;<small>coming soon</small></h5>
+            <div class="input-group vert-2">
+              <span class="input-group-addon"><i class="fa fa-fw fa-user"></i></span>
+              <input type="text" class="form-control" placeholder="Username" ng-model="user.username" disabled>
+            </div>
+            <div ng-if="user.username == 'demoseller'" class="input-group vert-2">
+              <span class="input-group-addon"><i class="fa fa-fw fa-globe"></i></span>
+              <input type="text" class="form-control" placeholder="http://" ng-model="url" ng-init="url = 'http://demoseller.com'" disabled>
+            </div>
+            <div class="btn btn-default btn-block disabled">Add / Edit locations</div>
+
+            <!--   <hr class="vert-10">
+
+            <h5 class="margin-0">Notifications</h5>
+            <div class="btn btn-default btn-block">Change notifications</div> -->
+
+            <hr class="vert-10">
+
+            <h5 class="margin-0">Earnings paid to</h5>
+            <div class="input-group vert-2">
+              <span class="input-group-addon"><i class="fa fa-fw fa-paypal"></i></span>
+              <input type="text" class="form-control" placeholder="paypal email" ng-model="user.account_meta.earnings_accounts.paypal">
+            </div>
+            <p>
+              Enter your paypal email address to receive payment
+              <br>
+              <small>(more options coming soon)</small>
+            </p>
+            <ee-save></ee-save>
+
+          </div> <!-- pad-10 -->
+
+        </div>
+      </div>
+
+      <!-- TODO ee-offscreen-footer directive -->
+      <div id="footer-region">
+        <div class="container">
+          <div>
+            <a ui-sref="landing">home</a>&nbsp;&nbsp;
+            <a href="mailto:team@eeosk.com" target="_blank">contact</a>&nbsp;&nbsp;
+            <a ui-sref="terms">terms</a>&nbsp;&nbsp;
+            <a ui-sref="privacy">privacy</a>
+          </div>
+          <div class="text-muted">&copy; eeosk 2015</div>
+        </div>
+      </div>
+
+    </div> <!-- /wrap -->
+  </div>
+
+
+</nav>

@@ -1,0 +1,25 @@
+<div class="open-nav width-300 {{ $state.current.data.offscreenColor }}-background">
+  <div class="pull-right">
+    <span dropdown>
+      <div class="btn btn-transparent btn-toggle {{ $state.current.data.offscreenColor }}-background" dropdown-toggle>
+        <div class="fa fa-chevron-down"></div>
+      </div>
+      <ul class="dropdown-menu" style="left: 7px; right: 8px; top: 45px;">
+        <li class="divider"></li>
+        <li><a ui-sref="orders"><h4 class="vert-2"><i class="fa fa-fw fa-list"></i>&nbsp;&nbsp;Orders</h4></a></li>
+        <!-- <li><a ui-sref="account"><h4 class="vert-2"><i class="fa fa-fw fa-globe"></i>&nbsp;&nbsp;Store Locations</h4></a></li> -->
+        <li class="divider"></li>
+        <li><a ui-sref="account"><h4 class="vert-2"><i class="fa fa-fw fa-gear"></i>&nbsp;&nbsp;Account Settings</h4></a></li>
+        <!-- <li><a ui-sref="account"><h4 class="vert-2"><i class="fa fa-fw fa-money"></i>&nbsp;&nbsp;Payment Settings</h4></a></li> -->
+        <!-- <li><a ui-sref="account"><h4 class="vert-2"><i class="fa fa-fw fa-bell-o"></i>&nbsp;&nbsp;Notifications</h4></a></li> -->
+        <li class="divider"></li>
+        <li><a ui-sref="logout"><h4 class="vert-2"><i class="fa fa-fw fa-sign-out"></i>&nbsp;&nbsp;Logout</h4></a></li>
+      </ul>
+    </span>&nbsp;<ee-offscreen-toggle color="$state.current.data.offscreenColor" icon="'icon icon-open'"></ee-offscreen-toggle>
+  </div>
+  <div ui-sref="storefront.home" name="storefront-btn" class="btn btn-primary margin-right-4" ng-class="{ active: $state.current.data.offscreenCategory == 'Storefront' }">
+    <i class="fa fa-lg fa-fw fa-home"></i>
+  </div><div ui-sref="catalog" name="catalog-btn" class="btn btn-warning margin-right-4" ng-class="{ active: $state.current.data.offscreenCategory == 'Catalog' }">
+    <i class="fa fa-lg fa-fw fa-book"></i>
+  </div>
+</div>

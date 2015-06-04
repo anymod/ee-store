@@ -1,0 +1,147 @@
+<ee-offscreen-header></ee-offscreen-header>
+
+<nav class="full-height light-{{ $state.current.data.offscreenColor }}-background" style="overflow-x: hidden;">
+  <div class="position-relative full-height">
+    <div id="wrap" class="width-300">
+
+      <div id="main-region">
+
+        <div class="width-300">
+
+          <div ng-show="product.id || loadingProduct" name="product-focus" e2e-id="{{ product.id }}">
+            <div class="section" style="height: 47px;"></div>
+            <div class="margin-10">
+              <span ng-show="loadingProduct" class="inline-block" style="height: 34px;">
+                <i class="fa fa-2x fa-circle-o-notch fa-spin text-info"></i>
+              </span>
+              <span ng-hide="loadingProduct">
+                <a ng-show="productInStorefront(product.id)" ui-sref="storefront.shop({ shopCategory: product.category })" class="btn btn-primary width-103">See in store</a>
+                <div ng-click="addToStore()" ng-hide="productInStorefront(product.id)" ng-disabled="addBtnDisabled || !focusImg" class="btn btn-primary width-103">Add to store</div>
+                <div class="inline-block text-right" style="width: 100px; height: 25px; vertical-align: middle">
+                  <h3 class="inline-block margin-0" style="line-height: 12px;">
+                    <span ng-bind="currentPrice | centToDollar"></span>
+                    <br>
+                    <span ng-show="product.shipping_price" class="s-h-text">+{{ product.shipping_price | centToDollar }} s/h</span>
+                  </h3>
+                </div>
+              </span>
+              <div class="btn btn-sm btn-default pull-right" ng-click="closeProduct()">close</div>
+            </div>
+            <div ng-show="productInStorefront(product.id)" class="margin-10 margin-top-0 margin-bottom-0">
+              <div ng-click="removeFromStore()" ng-disabled="removeBtnDisabled || !focusImg" class="btn btn-sm btn-danger btn-block">Remove from my store</div>
+            </div>
+            <div ng-hide="productInStorefront(product.id)" class="btn-group btn-group-justified">
+              <a href ng-repeat="margin in margin_array"
+                  class="btn btn-warning btn-sm pad-5 round-0"
+                  ng-class="{ active: currentMargin == margin }"
+                  ng-click="update(margin)">
+                {{ margin*100 }}<small><small>%</small></small>
+              </a>
+            </div>
+            <div ng-show="currentProfit" class="full-width text-center vert-2">
+              <strong>{{ currentMargin*100 }}%</strong> margin: you earn <strong ng-bind="currentProfit | centToDollar"></strong> per sale
+            </div>
+            <div class="margin-10">
+              <img ng-src="{{ focusImg.url }}" ee-src="focusImg.url" class="full-width" ee-image-preload />
+              <!-- images -->
+              <div ng-show="product.image_meta.additional_images.length > 0" class="vert-5">
+                <img ng-src="{{ product.image_meta.main_image.url | thumbnail }}"
+                     class="inline-block gray-border hover-pointer margin-2"
+                     style="width: 64px"
+                     ng-click="setFocusImg(product.image_meta.main_image)" />
+                <img ng-repeat="img in product.image_meta.additional_images"
+                     ng-src="{{ img.url | thumbnail }}"
+                     class="inline-block gray-border hover-pointer margin-2"
+                     style="width: 64px"
+                     ng-click="setFocusImg(img)" />
+              </div>
+              <div ng-hide="loadingProduct" class="pad-5 vert-10 white-background">
+                <h4 ng-bind="product.title" class="margin-5"></h4>
+                <p ng-bind-html="product.content | unboldHtml" class="margin-5"></p>
+              </div>
+              <table ng-show="!!product.content_meta && !loadingProduct" class="table table-condensed table-striped table-bordered white-background">
+                <tr ng-if="!!product.content_meta.item_name">
+                  <td>Item</td>
+                  <td ng-bind="product.content_meta.item_name"></td>
+                </tr>
+                <tr ng-if="!!product.availability_meta.quantity">
+                  <td>Quantity Available</td>
+                  <td ng-bind="product.availability_meta.quantity | truncateQty"></td>
+                </tr>
+                <tr ng-if="!!product.shipping_price">
+                  <td>Shipping Cost</td>
+                  <td ng-bind="product.shipping_price | centToDollar"></td>
+                </tr>
+                <tr ng-if="!!product.content_meta.brand_name">
+                  <td>Brand Name</td>
+                  <td ng-bind="product.content_meta.brand_name"</td>
+                </tr>
+                <tr ng-if="!!product.content_meta.manufacturer">
+                  <td>Manufacturer</td>
+                  <td ng-bind="product.content_meta.manufacturer"></td>
+                </tr>
+                <tr ng-if="!!product.content_meta.condition">
+                  <td>Condition</td>
+                  <td ng-bind="product.content_meta.condition"></td>
+                </tr>
+                <tr ng-if="!!product.content_meta.warranty">
+                  <td>Warranty</td>
+                  <td ng-bind="product.content_meta.warranty"></td>
+                </tr>
+                <tr ng-if="!!product.content_meta.details">
+                  <td>Details</td>
+                  <td ng-bind-html="product.content_meta.details | unboldHtml"></td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div ng-hide="product.id || loadingProduct">
+            <div class="pad-10 {{ $state.current.data.offscreenColor }}-background">
+              <div class="vert-20 section"></div>
+              <h2 class="margin-0 white-color" ng-bind="$state.current.data.offscreenCategory"></h2>
+            </div>
+            <form ng-submit="setSearch()" class="input-group round-0">
+              <input type="text" ng-model="search" class="form-control round-0" placeholder="Search the catalog">
+              <span class="input-group-btn">
+                <input type="submit" class="btn btn-warning round-0" value="search">
+              </span>
+            </form>
+
+            <div class="pad-10">
+              <h5 class="vert-2">Categories</h5>
+              <div class="btn-group-vertical full-width">
+                <a href ng-repeat="cat in categoryArray" class="btn btn-sm btn-default" ng-click="setCategory(cat)" ng-class="{ 'btn-warning active': cat == category }" style="text-align: left;">
+                  <i class="fa fa-fw fa-lg" ng-class="{ 'fa-times': cat == category }"></i>&nbsp;{{ cat }}
+                </a>
+              </div>
+
+              <hr class="vert-5">
+
+              <h5 class="vert-2">Starting Price</h5>
+              <div class="btn-group-vertical full-width">
+                <a href ng-repeat="range in rangeArray" class="btn btn-sm btn-default" ng-click="setRange(range)" ng-class="{ 'btn-warning active': range.min == min }" style="text-align: left;">
+                  <i class="fa fa-fw fa-lg" ng-class="{ 'fa-times': range.min == min }"></i>&nbsp;{{ range | rangeToText }}
+                </a>
+              </div>
+              <!-- TODO: implement custom min and max -->
+              <br>
+              <!-- TODO: implement rating filtering -->
+              <!-- TODO: implement location filtering -->
+            </div>
+          </div> <!-- pad-10 -->
+
+        </div>
+      </div>
+      <div class="full-width vert-20 inline-block"></div>
+
+      <!-- TODO ee-offscreen-footer directive -->
+      <div id="footer-region">
+        <ee-offscreen-footer></ee-offscreen-footer>
+      </div>
+
+    </div> <!-- /wrap -->
+  </div>
+
+
+</nav>

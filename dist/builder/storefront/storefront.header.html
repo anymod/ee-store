@@ -1,0 +1,15 @@
+<!-- MAIN NAVBAR -->
+<ee-navbar ng-if="storefront.state.indexOf('storefront') > -1" fixed="true" storefront="true" dropdown="true"></ee-navbar>
+<ee-navbar ng-if="storefront.state == 'products'" fixed="true" products="true" back="true"></ee-navbar>
+<ee-navbar ng-if="storefront.state == 'edit'" fixed="true" save="true" back="true"></ee-navbar>
+<ee-navbar ng-if="storefront.state == 'orders'" fixed="true" orders="true" back="true"></ee-navbar>
+<ee-navbar ng-if="storefront.state == 'account'" fixed="true" save="true" back="true"></ee-navbar>
+<!-- /MAIN NAVBAR -->
+
+<!-- STORE navbar -->
+<ee-storefront-header class="position-fixed navbar-subheader"
+                      meta="storefront.ee.meta"
+                      loading="storefront.ee.loading"
+                      blocked="storefront.ee.blocked">
+</ee-storefront-header>
+<!-- /STORE navbar -->

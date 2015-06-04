@@ -1,0 +1,67 @@
+<!doctype html>
+<html ng-app="eeStore" lang="en">
+
+<head>
+  <title ng-bind="storeName">Store</title>
+  <meta name="description">
+
+  <meta charset="utf-8">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+  <base href="/">
+
+  <!-- Do not edit inside of build block; it is auto-generated -->
+  <!-- build:css -->
+  <link rel="stylesheet" href="stylesheets/ee.builder.css">
+  <!-- endbuild -->
+</head>
+
+<body id="body-top" style="padding-top: {{ $state.current.data.padTop }}">
+
+  <div ui-view="header" id="ee-header" class="position-fixed" style="top: 0; z-index: 2000;"></div>
+  <div ui-view="top"    id="ee-top-view" class="position-relative"></div>
+  <div ui-view="middle" id="ee-middle-view" class="position-relative"></div>
+  <div ui-view="bottom" id="ee-bottom-view" class="position-relative"></div>
+  <div ui-view="footer" id="ee-footer" class="position-relative"></div>
+
+  <!-- Do not edit inside of build block; it is auto-generated -->
+  <!-- build:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-cookies/angular-cookies.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap.js"></script>
+  <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/angulartics/src/angulartics.js"></script>
+  <script src="bower_components/angulartics/src/angulartics-ga.js"></script>
+  <script src="js/app/core/core.module.js"></script>
+  <script src="js/app/core/constants.js"></script>
+  <script src="js/app/core/filters.js"></script>
+  <script src="js/app/core/config.js"></script>
+  <script src="js/app/core/run.js"></script>
+  <script src="js/app/core/svc.back.js"></script>
+  <script src="js/app/core/svc.storefront.js"></script>
+  <script src="js/app/core/svc.product.js"></script>
+  <script src="js/app/core/svc.modal.js"></script>
+  <script src="js/app/core/svc.definer.js"></script>
+  <script src="js/app/product/product.modal.controller.js"></script>
+  <script src="js/store/store.index.js"></script>
+  <script src="js/store/core/core.module.js"></script>
+  <script src="js/store/core/run.js"></script>
+  <script src="js/store/core/core.route.js"></script>
+  <script src="js/store/core/svc.auth.js"></script>
+  <script src="js/store/core/svc.cart.js"></script>
+  <script src="js/store/core/svc.landing.js"></script>
+  <script src="js/store/store.controller.js"></script>
+  <script src="js/store/cart.controller.js"></script>
+  <script src="js/components/ee-button-add-to-cart.js"></script>
+  <script src="js/components/ee-product.js"></script>
+  <script src="js/components/ee-product-for-storefront.js"></script>
+  <script src="js/components/ee-shop-nav.js"></script>
+  <script src="js/components/ee-storefront-header.js"></script>
+  <script src="js/components/ee-scroll-to-top.js"></script>
+  <!-- endbuild -->
+
+</body>
+</html>

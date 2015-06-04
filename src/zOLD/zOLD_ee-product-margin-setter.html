@@ -1,0 +1,15 @@
+<div class="btn-group btn-group-xs vert-5">
+  <button class="btn btn-default">margin:</button>
+  <button ng-repeat="margin in margin_array"
+          class="btn btn-default"
+          ng-class="{ active: currentMargin == margin }"
+          ng-click="update(margin)"
+          ng-if="!disabled || currentMargin == margin">
+    {{ margin*100 }}<small><small>%</small></small>
+  </button>
+</div>
+<div>
+  <h4 class="vert-2 inline-block">Sell for {{ currentPrice | centToDollar }}&nbsp;</h4>
+  <br class="visible-xs">
+  <small>You&nbsp;</span>earn {{ currentPrice - product.baseline_price | centToDollar }}&nbsp;each sale</span></small>
+</div>

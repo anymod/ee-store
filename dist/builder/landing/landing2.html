@@ -1,0 +1,110 @@
+<!-- LANDING -->
+<ee-navbar id="top" transparent="true" signin="true"></ee-navbar>
+
+<div class="jumbotron text-center overflow-hidden transition-400 pad-0 margin-0"
+     style="background: linear-gradient( rgba(0,0,0,0.3), rgba(0,0,0,0.3) ), url('https://res.cloudinary.com/eeosk/image/upload/c_scale,h_750,w_1100/v1430439803/cross_leg.jpg') no-repeat center;
+            background-size: cover;">
+  <div class="container-fluid">
+    <div class="inline-block full-width vert-50"></div>
+    <h1 class="white-color margin-0 text-shadow-dark-4">Sell home décor online</h1>
+    <h3 class="white-color vert-10 margin-top-0 font-weight-200" style="text-shadow: 0 1px 4px rgba(0,0,0,.5)">Build your own online business for free.</h3>
+  </div>
+  <div style="height: 360px; max-width: 400px;" class="full-width pad-10 margin-0-auto">
+    <div class="position-relative box-shadow hover-trigger">
+      <img src="https://res.cloudinary.com/eeosk/image/upload/bo_3px_solid_rgb:eee,c_scale,w_400/v1433182905/store_demo.png"
+          class="full-width round-5 white-background">
+      <div class="position-absolute top-left-bottom-right-0 round-5 white-color hover-pointer hover-visible transition-200"
+          style="background: rgba(0,0,0,.5); border: 3px solid white;"
+          ng-click="landing.modalFns.open('example')">
+        <div class="vert-50 pad-10 text-shadow-dark-4">
+          <h2>See a demo store</h2>
+          <i class="fa fa-5x fa-desktop"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="pad-20 opacity-08-white-background text-center">
+    <div class="vert-20">
+      <h3 class="max-width-600 margin-0-auto font-weight-200" style="text-shadow: 0 1px 4px white">
+        eeosk is a store builder with inventory: earn money by building and promoting your own online store in minutes.
+      </h3>
+      <form id="top-signup" class="form-inline vert-20" ng-submit="landing.signup()">
+        <h4 ng-bind="landing.error" class="font-weight-200"></h4>
+        <div class="form-group full-width max-width-300">
+          <input type="email" ng-model="landing.email" class="form-control input-lg" style="width:100%" placeholder="Email address" required>
+        </div>
+        <button type="submit" ng-disabled="landing.authExp.confirming" class="btn btn-lg btn-primary" style="text-shadow: 0 1px 4px rgba(0,0,0,.5)">Sign up for Free</button>
+      </form>
+      <h4 class="max-width-600 margin-0-auto font-weight-200" style="text-shadow: 0 1px 4px white">
+        eeosk is free to use for as long as you want.
+      </h4>
+    </div>
+  </div>
+</div>
+
+<a ui-sref="your-own-business" class="section pad-20 white-color text-center bg-success hover-bg-info transition-200 hover-trigger">
+  <div class="max-width-600 margin-0-auto">
+    <div class="inline-block vert-50">
+      <h3 class="margin-0 font-weight-200" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5)">
+        Learn more about eeosk
+      </h3>
+      <h1 class="vert-15 transition-200 hover-shift" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5); font-size: 60px;">
+        Take the Tour<i class="fa fa-fw fa-arrow-circle-o-right"></i>
+      </h1>
+      <h3 class="margin-0 font-weight-200" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5)">
+        Screenshots, feature descriptions, and more
+      </h3>
+    </div>
+  </div>
+</a>
+
+<div class="pad-20 text-center">
+  <div class="inline-block vert-20">
+    <h3 class="margin-0 font-weight-200">
+      Curate your collection from
+    </h3>
+    <h1 class="vert-10 line-height-1 font-weight-200" style="font-size: 56px;">
+      thousands of products
+    </h1>
+    <h3 class="margin-0 font-weight-200">
+      sourced from a network of suppliers across the United States
+    </h3>
+  </div>
+</div>
+
+<div class="pad-20 text-center" style="background: url('https://res.cloudinary.com/eeosk/image/upload/v1432586455/product_background.png') no-repeat center">
+  <div style="min-height: 360px;"></div>
+</div>
+
+<a ui-sref="everything-you-need" class="section pad-20 white-color text-center bg-info hover-bg-success transition-200 hover-trigger">
+  <div class="inline-block vert-20">
+    <h3 class="margin-0 font-weight-200" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5)">
+      eeosk gives you what you need to sell.
+    </h3>
+    <h1 class="vert-0 font-weight-200 transition-200 hover-shift" style="text-shadow: 0 1px 4px rgba(0,0,0,0.5)">
+      See our selling tools <i class="fa fa-fw fa-arrow-right" style="font-size: 20px; vertical-align: middle;"></i>
+    </h1>
+  </div>
+</a>
+
+<div class="pad-20 text-center">
+  <div class="container-fluid margin-0-auto" style="max-width: 95%;">
+    <div class="inline-block full-width vert-50">
+      <img src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_400/v1432578504/eeosk_blue.png" style="max-width: 400px; width: 100%;">
+      <h1 class="vert-20 line-height-1 font-weight-200 text-shrink-480" style="font-size: 52px;">We're on a mission to enable independent sellers to compete and win.</h1>
+      <div class="well">
+        <form id="bottom-signup" class="form-inline vert-20" ng-submit="landing.signup()">
+          <h4 ng-bind="landing.error" class="font-weight-200"></h4>
+          <div class="form-group full-width max-width-300">
+            <input type="email" ng-model="landing.email" class="form-control input-lg" style="width:100%" placeholder="Email address" required>
+          </div>
+          <button type="submit" ng-disabled="landing.authExp.confirming" class="btn btn-lg btn-primary" style="text-shadow: 0 1px 4px rgba(0,0,0,.5)">Sign up for Free</button>
+        </form>
+        <h4 class="max-width-600 line-height-1 margin-0-auto font-weight-200" style="text-shadow: 0 1px 4px white">
+          eeosk is free to use for as long as you want.
+        </h4>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /LANDING -->

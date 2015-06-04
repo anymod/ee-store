@@ -1,0 +1,65 @@
+<h5 class="vert-2">Top bar colors</h5>
+<div>
+  <div class="position-relative inline-block" style="width: 49%">
+    <div class="input-group" colorpicker colorpicker-parent="true" ng-model="user.storefront_meta.home.topBarBackgroundColor">
+      <span class="input-group-addon"><i class="fa fa-fw fa-paint-brush"></i></span>
+      <input name="storefront_meta.home.topBarColor"
+             ng-model="user.storefront_meta.home.topBarBackgroundColor"
+             class="form-control"
+             ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
+    </div>
+  </div>
+  <div class="position-relative inline-block" style="width: 49%">
+    <div class="input-group" colorpicker colorpicker-parent="true" ng-model="user.storefront_meta.home.topBarColor">
+      <span class="input-group-addon"><i class="fa fa-fw fa-font"></i></span>
+      <input name="storefront_meta.home.topBarBackgroundColor"
+             ng-model="user.storefront_meta.home.topBarColor"
+             class="form-control"
+             ng-style="{ 'background-color': user.storefront_meta.home.topBarColor }">
+    </div>
+  </div>
+</div>
+
+<br>
+
+<h5 class="vert-2">Main image <small>1200x400px</small></h5>
+<div>
+  <ee-cloudinary-upload attr-target="'carousel'"></ee-cloudinary-upload>
+  <img ng-src="{{ user.storefront_meta.home.carousel[0].imgUrl }}" class="img-responsive">
+  <a href="https://unsplash.com/grid" target="_blank" class="pull-right">
+    <small>
+      Free hi-res images <i class="fa fa-fw fa-external-link"></i>
+    </small>
+  </a>
+</div>
+
+<br>
+
+<h5 class="vert-2">Headline</h5>
+<input type="text" class="form-control input-sm" placeholder="Headline" ng-model="user.storefront_meta.home.carousel[0].headline">
+<div class="btn-group btn-group-justified"
+     ng-show="!!user.storefront_meta.home.carousel[0].headline || !!user.storefront_meta.home.carousel[0].byline || !!user.storefront_meta.home.carousel[0].btnText">
+  <div class="btn btn-default btn-sm" ng-model="user.storefront_meta.home.carousel[0].btnPosition" btn-radio="'left'">Left</div>
+  <div class="btn btn-default btn-sm" ng-model="user.storefront_meta.home.carousel[0].btnPosition" btn-radio="'middle'">Middle</div>
+  <div class="btn btn-default btn-sm" ng-model="user.storefront_meta.home.carousel[0].btnPosition" btn-radio="'right'">Right</div>
+</div>
+<input type="text" class="form-control input-sm" placeholder="Byline" ng-model="user.storefront_meta.home.carousel[0].byline">
+<input type="text" class="form-control input-sm" placeholder="Button Text" ng-model="user.storefront_meta.home.carousel[0].btnText">
+<div ng-show="!!user.storefront_meta.home.carousel[0].btnText">
+  <h5 class="vert-2"><small class="text-muted">'{{ user.storefront_meta.home.carousel[0].btnText }}' button goes to:</small></h5>
+  <select class="form-control input-sm" ng-model="user.storefront_meta.home.carousel[0].linkCategory">
+    <option ng-repeat="category in categories">{{ category }}</option>
+  </select>
+</div>
+
+
+<br>
+
+<h5 class="vert-2">Store Title</h5>
+<input type="text"
+       class="form-control"
+       placeholder="Enter store name"
+       ng-model="user.storefront_meta.home.name">
+
+<br>
+<br>

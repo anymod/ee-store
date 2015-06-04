@@ -1,0 +1,54 @@
+<nav ng-class="{ open: toggle }" class="position-fixed full-height white-background" style="overflow-x: hidden;">
+  <div class="position-relative full-height">
+    <div id="wrap" class="width-300">
+
+      <div id="main-region">
+        <div class="width-300">
+
+
+          <div class="width-300 pad-10 blue-background">
+            <a ui-sref="landing">
+              <img src="../img/eeosk_250x67.png" class="img-responsive" alt="eeosk logo" />
+            </a>
+          </div>
+
+          <div class="pad-10">
+            <mark>ee·osk</mark>
+            <br>
+            <em class="text-muted">noun: eeosk; plural noun: eeosks</em>
+            <p class="pad-5">
+              An online storefront created from a catalog of thousands of products and suppliers.
+            </p>
+            <hr>
+            eeosks are:<br>
+            - simple<br>
+            - free<br>
+            - customizable<br>
+            - embeddable
+            <hr>
+            <a ui-sref="signup" class="btn btn-primary btn-block">Create your eeosk</a>
+            <a ui-sref="login" class="btn btn-default btn-block visible-xs">Login</a>
+          </div>
+
+
+        </div>
+      </div>
+
+      <!-- TODO ee-offscreen-footer directive -->
+      <div id="footer-region">
+        <div class="container">
+          <div>
+            <a ui-sref="landing">home</a>&nbsp;&nbsp;
+            <a href="mailto:team@eeosk.com" target="_blank">contact</a>&nbsp;&nbsp;
+            <a ui-sref="terms">terms</a>&nbsp;&nbsp;
+            <a ui-sref="privacy">privacy</a>
+          </div>
+          <div class="text-muted">&copy; eeosk 2015</div>
+        </div>
+      </div>
+
+    </div> <!-- /wrap -->
+  </div>
+
+
+</nav>

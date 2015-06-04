@@ -1,0 +1,257 @@
+<div ng-show="!toggleLeft" class="position-fixed" style="top: 9px; left: -25px; z-index: 1001;">
+  <ee-offscreen-toggle color="'blue'" icon="'icon'"></ee-offscreen-toggle>
+</div>
+
+<div id="store-wrap">
+  <div id="store-main-region">
+    <nav id="navtop"
+         class="navbar navbar-default navbar-rgba-colors margin-0 round-0"
+         ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
+
+      <div ng-show="loading" class="container-fluid">
+        <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
+          <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
+        </h2>
+        <a href class="navbar-brand">Loading</a>
+      </div>
+
+      <div ng-hide="loading" class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a ui-sref="storefront.home"
+             class="navbar-brand margin-0"
+             ng-style="{ color: user.storefront_meta.home.topBarColor }"
+             ng-bind="user.storefront_meta.home.name">
+          </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div collapse="navCollapsed" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li ng-class="{ active: $state.current.name == 'storefront.home' }"><a ui-sref="storefront.home" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">Home</a></li>
+
+            <li ng-class="{ active: $state.current.name == 'storefront-shop' }" class="dropdown" dropdown>
+              <a href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.home.topBarColor }" dropdown-toggle>
+                Shop <span class="caret"></span>
+              </a>
+              <ee-shop-nav ng-if="storefront" categories="storefront.categories" class="dropdown-menu"></ee-shop-nav>
+            </li>
+
+            <li ng-class="{ active: $state.current.name == 'storefront.blog' }"
+                ng-show="$state.current.name == 'storefront.blog' || !!user.storefront_meta.blog.url">
+              <a ng-if="isStore" href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank" ng-style="{ color: user.storefront_meta.home.topBarColor }">Blog</a>
+              <a ng-if="isBuilder" ui-sref="storefront.blog" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                Blog
+              </a>
+              <div class="popover bottom in inline-block"
+                   style="top: 42px; width: 300px;"
+                   ng-show="isBuilder && $state.current.name == 'storefront.blog'">
+                <div class="arrow" style="left: 12%;"></div>
+                <div class="popover-content">
+                  <div ng-if="user.storefront_meta.blog.url">
+                    Customers will be directed to your&nbsp;
+                    <a href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank" class="btn btn-primary btn-sm">blog link</a>
+                  </div>
+                  <div ng-if="!user.storefront_meta.blog.url">
+                    Enter the link to your blog and this button will direct to it.
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <li ng-class="{ active: $state.current.name == 'storefront.about' }"
+                ng-show="$state.current.name == 'storefront.about' || !!user.storefront_meta.about.headline">
+              <a ui-sref="storefront.about" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                About
+              </a>
+              <div class="popover bottom in inline-block"
+                   style="top: 42px; width: 300px;"
+                   ng-show="isBuilder && $state.current.name == 'storefront.about' && !user.storefront_meta.about.headline && !user.storefront_meta.about.content">
+                <div class="arrow" style="left: 13%;"></div>
+                <div class="popover-content">
+                  Add something about your store and this section will show.
+                </div>
+              </div>
+            </li>
+
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+
+            <!-- audience: store -->
+            <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
+                ng-if="isStore && !!user.storefront_meta.audience.social[site]">
+              <a href="http://{{ site }}.com/{{ user.storefront_meta.audience.social[site] }}"
+                 target="_blank" class="squeeze-5"
+                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-{{ site }}"></i>
+              </a>
+            </li>
+            <li ng-if="isStore && !!user.storefront_meta.audience.contact.email">
+              <a href="mailto:{{ user.storefront_meta.audience.contact.email }}"
+                 target="_blank"
+                 class="squeeze-5"
+                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </li>
+
+            <!-- audience: builder -->
+            <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
+                ng-if="isBuilder && !!user.storefront_meta.audience.social[site]">
+              <a ui-sref="storefront.audience"
+                 class="squeeze-5"
+                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-{{ site }}"></i>
+              </a>
+            </li>
+            <li ng-if="isBuilder && !!user.storefront_meta.audience.contact.email">
+              <a ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-envelope"></i>
+              </a>
+            </li>
+
+            <li ng-show="$state.current.name == 'storefront.audience'">
+              <a ng-if="isBuilder && !user.storefront_meta.audience.social.facebook && !user.storefront_meta.audience.social.pinterest && !user.storefront_meta.audience.social.twitter && !user.storefront_meta.audience.social.instagram && !user.storefront_meta.audience.contact.email"
+                 ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-fw fa-facebook"></i>
+                <i class="fa fa-fw fa-pinterest"></i>
+                <i class="fa fa-fw fa-twitter"></i>
+                <i class="fa fa-fw fa-instagram"></i>
+                <i class="fa fa-fw fa-envelope"></i>
+              </a>
+              <div class="popover bottom in inline-block"
+                   style="top: 42px; width: 300px; right: -10px; left: auto;">
+                <div class="arrow" style="left: auto; right: 4%;"></div>
+                <div ng-if="!user.storefront_meta.audience.social.facebook && !user.storefront_meta.audience.social.pinterest && !user.storefront_meta.audience.social.twitter && !user.storefront_meta.audience.social.instagram && !user.storefront_meta.audience.contact.email"
+                     class="popover-content">
+                  Add your social media & email and they will show here.
+                </div>
+                <div ng-if="!!user.storefront_meta.audience.social.facebook || !!user.storefront_meta.audience.social.pinterest || !!user.storefront_meta.audience.social.twitter || !!user.storefront_meta.audience.social.instagram || !!user.storefront_meta.audience.contact.email"
+                     class="popover-content">
+                  <div ng-if="!!user.storefront_meta.audience.social.facebook || !!user.storefront_meta.audience.social.pinterest || !!user.storefront_meta.audience.social.twitter || !!user.storefront_meta.audience.social.instagram">
+                    Your links are active for
+                    <a ng-if='!!user.storefront_meta.audience.social.facebook' class="btn btn-info btn-block" href="http://facebook.com/{{ user.storefront_meta.audience.social.facebook }}" target="_blank"><i class="fa fa-fw fa-facebook"></i> Facebook<br><small><small>facebook.com/</small>{{ user.storefront_meta.audience.social.facebook }}</small></a>
+                    <a ng-if='!!user.storefront_meta.audience.social.pinterest' class="btn btn-danger btn-block" href="http://pinterest.com/{{ user.storefront_meta.audience.social.pinterest }}" target="_blank"><i class="fa fa-fw fa-pinterest"></i> Pinterest<br><small><small>pinterest.com/</small>{{ user.storefront_meta.audience.social.pinterest }}</small></a>
+                    <a ng-if='!!user.storefront_meta.audience.social.twitter' class="btn btn-primary btn-block" href="http://twitter.com/{{ user.storefront_meta.audience.social.twitter }}" target="_blank"><i class="fa fa-fw fa-twitter"></i> Twitter<br><small><small>twitter.com/</small>{{ user.storefront_meta.audience.social.twitter }}</small></a>
+                    <a ng-if='!!user.storefront_meta.audience.social.instagram' class="btn btn-warning btn-block" href="http://instagram.com/{{ user.storefront_meta.audience.social.instagram }}" target="_blank"><i class="fa fa-fw fa-instagram"></i> Instagram<br><small><small>instagram.com/</small>{{ user.storefront_meta.audience.social.instagram }}</small></a>
+                    <br>
+                  </div>
+                  <div ng-if="user.storefront_meta.audience.contact.email">
+                    Customers can email you at
+                    <div class="full-width text-center">
+                      <a class="btn btn-primary btn-block"
+                         href="mailto:{{ user.storefront_meta.audience.contact.email }}"
+                         target="_blank"
+                         ng-bind="user.storefront_meta.audience.contact.email">
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </li>
+
+            <!-- TODO implement search on storefront products -->
+            <!-- <li><a ui-sref="storefront.home" ng-style="{ color: user.storefront_meta.home.topBarColor }"><i class="fa fa-search"></i></a></li> -->
+
+            <li class="dropdown" dropdown>
+              <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.home.topBarColor }" dropdown-toggle>
+                <i class="fa fa-shopping-cart"></i>
+              </a>
+              <a ng-if="isStore" ui-sref="storefront.cart" class="position-relative" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                <i class="fa fa-shopping-cart"></i>
+                <span ng-show="cart.calc_meta.count >= 1" ng-bind="cart.calc_meta.count"></span>
+              </a>
+
+              <ul class="dropdown-menu">
+                <li>
+                  <a href>This button takes<br>customers to their carts</a>
+                </li>
+              </ul>
+            </li>
+
+          </ul>
+        </div><!-- /.navbar-collapse -->
+      </div><!-- /.container-fluid -->
+    </nav>
+    <div ng-hide="loading" ng-class="{ 'opacity-01': !!$state.current.data.storeOpacity }">
+      <div ui-view="main" class="white-background position-relative"></div>
+    </div>
+  </div><!-- /store-main-region -->
+
+  <div id="store-footer-region" ng-hide="loading" ng-class="{ 'opacity-01': !!$state.current.data.storeOpacity }">
+    <div class="section vert-20"></div>
+    <div class="full-width pad-15 position-relative text-muted gray-background">
+
+      <div class="row">
+        <div class="col col-md-11 col-md-offset-1">
+          <h4 ng-bind="user.storefront_meta.home.name"></h4>
+        </div>
+      </div> <!-- /row -->
+
+      <div class="row">
+        <div class="col col-sm-2 col-md-offset-1">
+          <ul class="nav nav-pills nav-stacked nav-compact">
+            <li class="disabled">Sections</li>
+            <li>
+              <a ui-sref="storefront.home">Home</a>
+            </li>
+            <li ng-if="user.storefront_meta.blog.url">
+              <a href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank">Blog</a>
+            </li>
+            <li ng-if="!!user.storefront_meta.about.headline || !!user.storefront_meta.about.content">
+              <a ui-sref="storefront.about">About</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col col-sm-2" ng-if="storefront">
+          <ul class="nav nav-pills nav-stacked nav-compact">
+            <li class="disabled">Categories</li>
+            <ee-shop-nav categories="storefront.categories"
+                         class="nav nav-pills nav-stacked nav-compact">
+            </ee-shop-nav>
+          </ul>
+        </div>
+        <div class="col col-sm-2" ng-if="!!user.storefront_meta.audience.social.facebook || !!user.storefront_meta.audience.social.pinterest || !!user.storefront_meta.audience.social.twitter || !!user.storefront_meta.audience.social.instagram || !!user.storefront_meta.audience.contact.email">
+          <ul class="nav nav-pills nav-stacked nav-compact">
+            <li class="disabled">Connect</li>
+            <li ng-if="!!user.storefront_meta.audience.contact.email">
+              <a href="mailto:{{ user.storefront_meta.audience.contact.email }}" target="_blank">
+                Email us
+              </a>
+            </li>
+            <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
+                ng-if="!!user.storefront_meta.audience.social[site]">
+              <a href="http://{{ site }}.com/{{ user.storefront_meta.audience.social[site] }}" target="_blank">
+                <span ng-bind="site"></span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div> <!-- /row -->
+      <div class="section vert-10"></div>
+    </div> <!-- /gray-background -->
+
+    <div class="white-background vert-20">
+      <div class="row margin-0">
+        <div class="col col-sm-7 col-md-offset-1">
+          <small>
+            &copy;&nbsp;2015&nbsp;<span ng-bind="user.storefront_meta.home.name"></span>.&nbsp;&nbsp;
+            <a href="https://eeosk.com" target="_blank" class="gray-color">Ecommerce by eeosk</a>.
+          </small>
+        </div>
+        <div class="col col-sm-4">
+          <img class="width-35" src="//cdn.shopify.com/s/files/1/0269/1895/t/2/assets/cc-paypal.png" alt="PayPal">&nbsp;<img class="width-35" src="//cdn.shopify.com/s/files/1/0269/1895/t/2/assets/cc-visa.png" alt="Visa">&nbsp;<img class="width-35" src="//cdn.shopify.com/s/files/1/0269/1895/t/2/assets/cc-mastercard.png" alt="Mastercard">&nbsp;<img class="width-35" src="//cdn.shopify.com/s/files/1/0269/1895/t/2/assets/cc-amex.png" alt="American Express">&nbsp;<img class="width-35" src="//cdn.shopify.com/s/files/1/0269/1895/t/2/assets/cc-discover.png" alt="Discover">
+        </div>
+      </div>
+    </div> <!-- /white-background -->
+
+
+  </div><!-- /store-footer-region -->
+
+</div><!-- /store-wrap -->

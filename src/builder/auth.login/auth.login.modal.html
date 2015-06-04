@@ -1,0 +1,30 @@
+<div class="modal-header" id="modal-header">
+  <a class="btn btn-link pull-right" ng-click="$close()">cancel</a>
+  <h3 class="modal-title">Login</h3>
+</div>
+<div class="modal-body">
+  <form ng-submit="modal.login()" class="vert-20">
+    <div class="alert alert-info" ng-show='modal.alert' ng-bind="modal.alert"></div>
+    <input type="email"
+           ng-model="modal.email"
+           placeholder="Email address"
+           class="form-control input-lg vert-5"
+           required
+           autofocus>
+    <input type="password"
+           ng-model="modal.password"
+           placeholder="Password"
+           class="form-control input-lg vert-5"
+           required>
+    <p class="full-width text-right">
+      <small><a ui-sref="reset" ng-click="$close()">Forgot password</a></small>
+    </p>
+    <button class="btn btn-lg btn-primary btn-block"
+            type="submit"
+            ng-bind="modal.btnText"
+            ng-disabled="modal.btnText != 'Sign in'"></button>
+  </form>
+</div>
+<div class="modal-footer">
+  <small>Want to create a store?&nbsp;<a href ng-click="modal.signup(); $close();">Sign up</a></small>
+</div>

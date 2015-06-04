@@ -1,0 +1,22 @@
+<ee-navbar transparent="true"></ee-navbar>
+
+<div class="landing-background pad-10">
+  <span class="inline-block full-width vert-20"></span>
+  <span class="inline-block full-width vert-20 hidden-xs"></span>
+
+  <div class="well max-width-600 margin-0-auto">
+    <h1 class="margin-0">
+      Examples
+    </h1>
+    <small>Want to create a store? <a ui-sref="signup">Sign up</a></small>
+    <div class="row">
+      <div ng-repeat="example in examples" class="col col-sm-6 vert-5">
+        <a href="https://{{ example.username }}.eeosk.com"
+           target="_blank"
+           class="btn btn-default btn-block"
+           ng-bind="example.name">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

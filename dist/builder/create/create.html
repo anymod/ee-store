@@ -1,0 +1,157 @@
+<ee-navbar fixed="true"></ee-navbar>
+
+<div id="clickblock" class="position-fixed" style="left: 0; top: 0; width: 150px; height: 50px; z-index: 1035;"></div>
+
+<div class="position-fixed" style="top: 8px; right: 15px; z-index: 1040;">
+  <div ng-show="create.section > 1" ng-click="create.setSection(create.section - 1)" class="btn btn-default">
+    <i class="fa fa-fw fa-long-arrow-left"></i>
+  </div>&nbsp;
+  <div ng-show="create.section < 3" ng-click="create.setSection(create.section + 1)" ng-class="{ 'btn-info': create.highlightNext }" class="btn btn-default">
+    <span class="hidden-xs">Next&nbsp;</span><i class="fa fa-fw fa-long-arrow-right"></i>
+  </div>
+</div>
+
+<div id="messages" class="pad-10 text-center">
+  <span class="inline-block full-width vert-20"></span>
+  <span class="inline-block full-width vert-20 hidden-xs"></span>
+
+  <div class="max-width-600 margin-0-auto text-center">
+
+    <h3 class="vert-10 font-weight-200">Great! Let's get set up.</h3>
+
+    <div class="row well white-background box-shadow pad-0 overflow-hidden">
+      <div ng-click="create.setSection(1)" class="col-xs-4 font-weight-200 pad-15 hover-pointer" ng-class="{ 'bg-success': create.section == 1 }">1. Choose products</div>
+      <div ng-click="create.setSection(2)" class="col-xs-4 font-weight-200 pad-15 hover-pointer" ng-class="{ 'bg-success': create.section == 2 }">2. Choose theme</div>
+      <div ng-click="create.setSection(3)" class="col-xs-4 font-weight-200 pad-15 hover-pointer" ng-class="{ 'bg-success': create.section == 3 }">3. Finishing touches</div>
+    </div>
+
+    <!-- SECTION 1 -->
+    <div ng-show="create.section == 1">
+      <div class="max-width-600 margin-0-auto text-center">
+        <div class="well white-background box-shadow">
+          <div class="max-width-300 margin-0-auto">
+            <h3 class="margin-0 font-weight-200">
+              Choose a few products to get your store started
+            </h3>
+          </div>
+          <p class="vert-10 font-weight-200">You can search, edit prices, and add even more products once you're set up.</p>
+        </div>
+      </div>
+      <h4 class="vert-10 font-weight-200 text-muted">We've pre-selected some of the top products for you below. Add what you like and it will show up in your store automatically!</h4>
+    </div> <!-- /SECTION 1 -->
+
+    <!-- SECTION 2 -->
+    <div ng-show="create.section == 2">
+      <div class="max-width-600 margin-0-auto text-center">
+        <div class="well white-background box-shadow">
+          <div class="max-width-300 margin-0-auto">
+            <h3 class="margin-0 font-weight-200">
+              Choose a starting theme for your store
+            </h3>
+          </div>
+          <p class="vert-10 font-weight-200">You can edit colors and images in more detail once you're set up.</p>
+        </div>
+      </div>
+      <h4 class="vert-10 font-weight-200 text-muted">This will be your store's initial color scheme & imagery.</h4>
+    </div> <!-- /SECTION 2 -->
+
+    <!-- SECTION 3 -->
+    <div ng-show="create.section == 3">
+      <div class="max-width-600 margin-0-auto text-center">
+        <div class="well white-background box-shadow">
+          <h3 class="margin-0 font-weight-200">
+            Create login information
+          </h3>
+          <div class="max-width-300 full-width margin-0-auto">
+            <p class="font-weight-200 vert-10">
+              Enter a username and password so that you can sign in and edit your store in the future.
+            </p>
+            <form ng-submit="create.complete()" class="vert-20">
+              <div class="alert alert-info" ng-show='create.alert' ng-bind="create.alert"></div>
+              <input type="text"
+                     ng-model="create.username"
+                     placeholder="Username"
+                     class="form-control input-lg vert-5"
+                     required
+                     autofocus>
+              <input type="password"
+                     ng-model="create.password"
+                     placeholder="Password"
+                     class="form-control input-lg vert-5"
+                     required>
+              <input type="password"
+                     ng-model="create.password_confirm"
+                     placeholder="Confirm Password"
+                     class="form-control input-lg vert-5"
+                     required>
+              <button class="btn btn-lg btn-primary btn-block"
+                      type="submit"
+                      ng-bind="create.btnText"
+                      ng-disabled="create.btnText != 'Finished'"></button>
+            </form>
+          </div>
+        </div>
+
+        <h4 class="vert-20 text-muted font-weight-200">
+          Username should contain only letters, numbers, and dashes (-).
+          <br>
+          Password should be at least 8 characters long.
+        </h4>
+      </div>
+    </div> <!-- /SECTION 3 -->
+
+  </div>
+</div>
+
+<!-- SECTION 1 -->
+<div ng-show="create.section == 1 && create.data.products.length > 0" class="pad-10 text-left text-center">
+
+<!--   <pagination total-items="4000"
+            items-per-page="32"
+            ng-model="create.data.inputs.page"
+            max-size="5"
+            class="pagination-sm vert-10 margin-top-0 vertical-align-top"
+            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            boundary-links="true"
+            rotate="false"
+            ng-change="create.fns.update()">
+</pagination> -->
+
+  <div class="margin-0-auto" style="max-width: 920px;">
+    <div ng-repeat="product in create.data.products" class="well text-center inline-block pad-5 margin-2 white-background box-shadow" style="width: 140px;">
+      <div class="pad-10 text-left">
+        <img ng-src="{{ product.image_meta.main_image.url | thumbnail }}" class="full-width gray-border">
+        <div>
+          <p ng-bind="product.title" class="font-weight-200" style="max-height: 50px; overflow: hidden;"></p>
+          <h4 ng-bind="product.suggested_price | centToDollar"></h4>
+        </div>
+      </div>
+      <button ng-hide="create.products.indexOf(product.id) > -1" class="btn btn-default font-weight-200" ng-click="create.addProduct(product)">Add</button>
+      <button ng-show="create.products.indexOf(product.id) > -1" class="btn btn-success font-weight-200" ng-click="create.removeProduct(product)">Added&nbsp;&nbsp;<i class="fa fa-times"></i></button>
+      <!-- <button class="btn btn-default"><i class="fa fa-pencil"></i></button> -->
+    </div>
+  </div>
+</div> <!-- /SECTION 1 -->
+
+<!-- SECTION 2 -->
+<div ng-show="create.section == 2" class="max-width-900 margin-0-auto pad-20">
+  <div class="row">
+    <div ng-repeat="theme in create.landingData.demoStores" class="col col-sm-6">
+      <div class="vert-10 gray-border box-shadow position-relative">
+        <div class="full-width text-left margin-0 pad-10"
+             style="background-color: {{ theme.topBarBackgroundColor }}; color: {{ theme.topBarColor }};">
+          <h4 class="inline-block margin-0 font-weight-200" ng-bind="theme.name"></h4>
+          <i class="fa fa-fw fa-shopping-cart pad-2 pull-right"></i>
+        </div>
+        <img ng-src="{{ theme.imgUrl | scaledDownBackground }}" class="full-width" />
+        <div class="position-absolute" style="bottom: 5px; left: 5px;">
+          <div ng-hide="create.theme.name == theme.name" ng-click="create.setTheme(theme)" class="btn btn-default">Choose</div>
+          <div ng-show="create.theme.name == theme.name" ng-click="create.clearTheme()" class="btn btn-success">Chosen&nbsp;&nbsp;<i class="fa fa-times"></i></div>
+          <div ng-show="create.theme.name == theme.name" ng-click="create.setSection(3)" class="btn btn-default" style="margin-left: 5px;">Next&nbsp;&nbsp;<i class="fa fa-long-arrow-right"></i></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> <!-- /SECTION 2 -->
+
+<div class="section vert-50"></div>

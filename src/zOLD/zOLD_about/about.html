@@ -1,0 +1,115 @@
+<div class="navbar navbar-fixed-top ee-brand">
+  <div class="container">
+    <div class="navbar-form pad-0 no-shadow">
+      <h3 class="white-color inline-block margin-5 pad-left-20">about eeosk</h3>
+      <a ui-sref="catalog" class="btn btn-default pull-left">
+        <i class="glyphicon glyphicon-arrow-left"></i>
+      </a>
+    </div>
+  </div>
+</div>
+
+<div class="container pad-top-navbar">
+  <br>
+  <h1><strong>eeosk lets you sell on behalf of suppliers</strong></h1>
+  <h4 class="alert alert-info">You sell, suppliers ship.</h4>
+
+  <hr>
+
+  <h2>How it works:</h2>
+
+  <div style="width: 100%; overflow: hidden; position: relative;">
+
+    <div class="slide" ng-class="slidePos" style="width: 400%; background: black;">
+      <div style="width: 25%; float: left;">
+        <h3 class="vert-10">Choose a product</h3>
+        <h5 class="line-height-1-5">Select a product from the trade catalog that you want to sell. You can choose products you like, that you think will have good margins, or that you think will sell well with your audience.</h5>
+        <div style="height: 100px; overflow: hidden;" ng-click="itemChosen = true">
+          <img ng-repeat="product in products"
+               ng-src="https://s3.amazonaws.com/eeosk/products/{{ product.images[0] }}"
+               ng-click="clickProd = !clickProd; $parent.baselinePrice = product.baselinePrice; $parent.sellerPrice = 1.10 * $parent.baselinePrice"
+               ng-class="{ 'ee-brand': clickProd }"
+               class="thumbnail max-height-80 max-width-80 height-auto width-auto inline-block margin-2 hover-pointer">
+        </div>
+        <div class="text-center vert-10">
+          <span ng-show="!itemChosen"><i class="glyphicon glyphicon-hand-up"></i> choose a product &nbsp;</span>
+          <a ng-click="slidePos = 'slide-2'" class="btn btn-success" ng-disabled="!itemChosen">Sell <i class="glyphicon glyphicon-arrow-right"></i></a>
+        </div>
+      </div>
+      <div style="width: 25%; float: left; margin-left: 1%;">
+        <h3 class="vert-10">Set your price & generate a link</h3>
+        <h5 class="line-height-1-5">Once you choose a product, you get to set a price above its baseline price.  When a customer purchases the product from your link (and keeps it), you earn the difference between your price and the baseline price.</h5>
+
+        <p>{{ sellerPrice | currency }}</p>
+
+        <div class="full-width" style="position: relative;">
+          <slider class="vert-10 progress-slider"
+            ng-model="sellerPrice"
+            floor="{{ baselinePrice }}"
+            ceiling="{{ baselinePrice * 2.00 }}"
+            step=".01"
+            precision="2">
+          </slider>
+          <div class="progress margin-0">
+            <span class="progress-bar progress-bar-info right-border" style="width: 50%"></span>
+            <span class="progress-bar progress-bar-primary progress-bar-striped active no-transition" style="width: {{ 50.00*(sellerPrice - baselinePrice) / baselinePrice }}%"></span>
+          </div>
+        </div>
+
+        <h5 class="section">
+          <span class="inline-block text-center" style="width: 49%;">
+            baseline price: {{ baselinePrice | currency }}
+          </span>
+          <strong class="inline-block text-center" style="width: 49%;">
+            your profit: {{ sellerPrice - baselinePrice | currency }}
+          </strong>
+        </h5>
+        <a ng-click="slidePos = 'slide-3'" class="btn btn-primary" ng-disabled="sellerPrice < 5">Generate Link</a>
+      </div>
+      <div style="width: 25%; float: left; margin-left: 1%;">
+        <h3 class="vert-10">Sell on your own terms</h3>
+        <div class="well well-compact white-background overflow-hidden">
+          <h4 class="vert-10 text-center">
+            <a>http://eeosk.us/myLink</a>
+          </h4>
+        </div>
+        <h5 class="line-height-1-5">Promote your link wherever you think people will want to buy.  When you make a sale, the supplier will ship the product directly to the customer.</h5>
+
+        <a ui-sref="catalog({id: 'catalog'})" class="btn btn-primary">Try it for real</a>
+        <a ng-click="slidePos = 'slide-1'" class="btn btn-link">Start over</a>
+      </div>
+    </div>
+  </div>
+
+  <hr>
+
+  <a class="hover-pointer" ng-click="showFaq = !showFaq">Frequently Asked Questions</a>
+
+  <div ng-show="showFaq">
+    <h3>What can I sell?</h3>
+    <p>You can sell anything you see in the trade catalog.  We are constantly adding new items, and we'd love to hear any suggestions you have.</p>
+
+    <h3>Where should I sell?</h3>
+    <p>You should sell wherever you think people will want to buy the product.  That may be on your blog, with a mailing list, via social media, to your friends, or by purchasing advertising.  Be creative, and feel free to experiment with pricing and different channels to see what works.</p>
+
+    <h3>How do I get paid?</h3>
+    <p>Money is deposited into your PayPal account 45 days after you make a sale.  You must wait this amount of time to ensure that the customer has not initiated a return within the product's 30-day return window.</p>
+    <p>For now, payment is offered through PayPal only, so you will need a PayPal account to participate. We will be adding other payment methods soon, and we welcome your input on what you'd like to see.</p>
+
+    <h3>Do I have to pay anything?</h3>
+    <p>No. As a seller, you simply sell and get paid for it.  However, if a product you sold is returned by the customer, money from that sale will not be paid into your account.</p>
+
+    <h3>Who takes payment?</h3>
+    <p>When the customer purchases a product, eeosk takes full payment.  If the customer keeps the product, then eeosk distributes the seller's earnings to the seller and the supplier's earnings to the supplier.</p>
+
+    <h3>Do my links ever expire?</h3>
+    <p>As long as the product is available for purchase, your links will not expire.  If the product is sold out or removed, your link will still work but customers will not be able to purchase the product.</p>
+
+    <h3>I have additional questions</h3>
+    <p>Please feel free to ask. You can reach us at <a href="mailto:team@eeosk.com" target="_blank">team@eeosk.com</a></p>
+
+    <br>
+    <br>
+  </div>
+
+</div>

@@ -1,0 +1,17 @@
+<div class="position-relative" ng-hide="storefront.ee.loading">
+  <img ng-src="{{ storefront.ee.about.imgUrl }}" class="img-responsive full-width">
+  <div class="max-width-900 margin-0-auto pad-20">
+
+    <h2 class="well white-background box-shadow font-weight-200" style="white-space: pre-line;"
+         ng-if="storefront.ee.about.headline"
+         ng-bind="storefront.ee.about.headline">
+    </h2>
+
+    <br>
+
+    <div class="well white-background box-shadow font-weight-200" style="white-space: pre-line;"
+         ng-if="storefront.ee.about.content"
+         ng-bind="storefront.ee.about.content">
+    </div>
+  </div>
+</div>

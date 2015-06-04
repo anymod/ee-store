@@ -1,0 +1,39 @@
+<ee-navbar transparent="true"></ee-navbar>
+
+<div class="landing-background pad-10">
+  <span class="inline-block full-width vert-20"></span>
+  <span class="inline-block full-width vert-20 hidden-xs"></span>
+
+  <div class="well max-width-600 margin-0-auto">
+    <h1 class="margin-0">
+      Create your store
+    </h1>
+
+    <small>Already have a store? <a ui-sref="login">Log in</a></small>
+    <form ng-submit="signup.signup()" class="vert-20">
+      <div class="alert alert-info" ng-show='signup.alert'>{{ signup.alert }}</div>
+      <input type="email"
+             ng-model="signup.email"
+             placeholder="Email address"
+             class="form-control input-lg vert-5"
+             required
+             autofocus>
+      <input type="email"
+             ng-model="signup.email_check"
+             placeholder="Re-enter email address"
+             class="form-control input-lg vert-5"
+             required>
+      <input type="password"
+             ng-model="signup.password"
+             placeholder="Password"
+             class="form-control input-lg vert-5"
+             required>
+      <div class="vert-5 text-muted">
+        By creating a store, you agree to the&nbsp;
+        <a ng-click="signup.openTerms()" name="termsLink" class="hover-pointer">terms & conditions</a>
+      </div>
+      <hr class="vert-5">
+      <button type="submit" class="btn btn-lg btn-block btn-primary" ng-bind="signup.btnText" ng-disabled="signup.btnText == 'Sending...'"></button>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,31 @@
+<div class="modal-header" id="modal-header">
+  <a class="btn btn-link pull-right" ng-click="$close()">cancel</a>
+  <h3 class="modal-title">Save & continue</h3>
+</div>
+<div class="modal-body">
+  <form class="margin-0" ng-submit="modal.signup()">
+    <div class="alert alert-info" ng-show='modal.alert' ng-bind="modal.alert"></div>
+    <div>Sign up to save your progress and more.</div>
+    <input type="email"
+           ng-model="modal.email"
+           placeholder="Email address"
+           class="form-control input-lg vert-5"
+           required
+           autofocus>
+    <input type="email"
+           ng-model="modal.email_check"
+           placeholder="Re-enter email address"
+           class="form-control input-lg vert-5"
+           required>
+    <input type="password"
+           ng-model="modal.password"
+           placeholder="Password"
+           class="form-control input-lg vert-5"
+           required>
+    <div class="vert-5 text-muted">
+      By creating a store, you agree to the&nbsp;
+      <a ng-click="modal.openTerms()" name="termsLink" class="hover-pointer">terms & conditions</a>
+    </div>
+    <button type="submit" class="btn btn-lg btn-block btn-primary" ng-bind="modal.btnText" ng-disabled="modal.btnText == 'Sending...'"></button>
+  </form>
+</div>

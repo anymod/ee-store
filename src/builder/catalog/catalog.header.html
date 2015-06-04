@@ -1,0 +1,60 @@
+<!-- MAIN NAVBAR -->
+<ee-navbar back="true"></ee-navbar>
+<!-- /MAIN NAVBAR -->
+
+<!-- CATALOG navbar -->
+<nav class="navbar navbar-default position-fixed navbar-rgba-colors navbar-subheader margin-0 round-0 no-side-border"
+     ng-style="{ 'background-color': catalog.ee.meta.home.topBarBackgroundColor }"
+     id="catalog-top">
+
+  <div ng-show="catalog.ee.loading" class="container-fluid">
+    <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
+      <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
+    </h2>
+    <a href class="navbar-brand">Loading</a>
+  </div>
+
+  <div class="container-fluid pad-10" ng-hide="catalog.ee.loading">
+<!--     <div class="btn-group" dropdown>
+  <div class="btn btn-default dropdown-toggle" dropdown-toggle>
+    {{ catalog.data.inputs.category || 'Categories'}} <span class="caret"></span>
+  </div>
+  <ul class="dropdown-menu">
+    <li><a href ng-click="catalog.fns.setCategory()">All Categories</a></li>
+    <li class="divider"></li>
+    <li ng-repeat="cat in catalog.data.inputs.categoryArray" ng-class="{ active: cat == catalog.data.inputs.category }">
+      <a href ng-click="catalog.fns.setCategory(cat)" ng-bind="cat"></a>
+    </li>
+  </ul>
+</div>
+<div class="btn-group" dropdown>
+  <div class="btn btn-default dropdown-toggle" dropdown-toggle>
+    {{ catalog.data.inputs.range | rangeToText }} <span class="caret"></span>
+  </div>
+  <ul class="dropdown-menu">
+    <li><a href ng-click="catalog.fns.setRange()">All Prices</a></li>
+    <li class="divider"></li>
+    <li ng-repeat="range in catalog.data.inputs.rangeArray" ng-class="{ active: range.min == catalog.data.inputs.range.min }">
+      <a href ng-click="catalog.fns.setRange(range)">
+        {{ range | rangeToText }}
+      </a>
+    </li>
+  </ul>
+</div> -->
+    <div class="btn btn-default" ng-click="catalog.fns.decrementPage()" name="left-btn" ng-class="{ disabled: catalog.data.inputs.page < 2 }">
+      <i class="fa fa-fw fa-long-arrow-left"></i>
+    </div>
+    <div class="btn btn-default" ng-click="catalog.fns.incrementPage()" name="right-btn" ng-class="{ disabled: catalog.data.products.length < catalog.data.inputs.productsPerPage }">
+      <i class="fa fa-fw fa-long-arrow-right"></i>
+    </div>
+    <form class="pull-right inline-block margin-0" style="max-width: 200px;" ng-submit="catalog.fns.search()">
+      <div class="input-group">
+        <input type="text" ng-model="catalog.data.inputs.search" class="form-control" placeholder="Search">
+        <span class="input-group-btn">
+          <button class="btn btn-default" type="submit" name="search-btn"><i class="fa fa-fw fa-search"></i></button>
+        </span>
+      </div>
+    </form>
+  </div><!-- /.container-fluid -->
+</nav>
+<!-- /CATALOG navbar -->

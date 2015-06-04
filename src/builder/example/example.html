@@ -1,0 +1,20 @@
+<div class="modal-header">
+  <button class="close" ng-click="$close()">&times;</button>
+  <h4 class="modal-title">Store Demo</h4>
+  <p class="margin-0">This is an example of what your store could look like. Click anywhere on the store to close.</p>
+</div>
+<div class="modal-body pad-0">
+  <div class="position-relative overflow-hidden transition-200">
+    <ee-storefront-header meta="storefront.ee.meta"></ee-storefront-header>
+    <div ng-include="'app/storefront/storefront.carousel.html'"></div>
+    <div ng-include="'app/storefront/storefront.products.html'"></div>
+    <div ng-include="'app/storefront/storefront.footer.html'"></div>
+
+    <div class="section vert-20 gray-background"></div>
+
+    <div ng-click="$close()" class="position-absolute top-left-bottom-right-0 hover-pointer"></div>
+  </div>
+</div>
+<div class="modal-footer text-left">
+  <div ng-click="$close()" class="btn btn-sm btn-link pull-right">close</div>
+</div>

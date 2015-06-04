@@ -1,0 +1,65 @@
+<div class="row margin-0 position-relative white-background" style="z-index: 2">
+  <div class="col col-xs-9 col-sm-6 col-md-offset-1 col-lg-offset-2 col-lg-5">
+    <img ng-src="{{ focusImg.url | mainImg }}" class="img-responsive full-width">
+    <h2 class="vert-5" ng-bind="product.title"></h2>
+    <h4 ng-if="product.selling_price">
+      {{ product.selling_price | centToDollar }}
+      &nbsp;
+      <small ng-if="!!product.shipping_price">
+        + {{ product.shipping_price | centToDollar }} shipping
+      </small>
+    </h4>
+    <div ng-if="isBuilder" ng-bind="product.category" class="label label-primary"></div>
+    <div class="vert-5">
+      <ee-product-selection-button ng-if="isBuilder && isntCatalog" product="product"></ee-product-selection-button>
+      <ee-button-add-to-cart ng-if="isStore" product="product"></ee-button-add-to-cart>
+    </div>
+    <p ng-bind-html="product.content | unboldHtml"></p>
+    <table ng-show="!!product.content_meta" class="table table-condensed table-striped table-bordered">
+      <tr ng-if="!!product.content_meta.item_name">
+        <td>Item</td>
+        <td ng-bind="product.content_meta.item_name"></td>
+      </tr>
+      <tr ng-if="!!product.availability_meta.quantity">
+        <td>Quantity Available</td>
+        <td ng-bind="product.availability_meta.quantity | truncateQty"></td>
+      </tr>
+      <tr ng-if="!!product.shipping_price">
+        <td>Shipping Cost</td>
+        <td ng-bind="product.shipping_price | centToDollar"></td>
+      </tr>
+      <tr ng-if="!!product.content_meta.brand_name">
+        <td>Brand Name</td>
+        <td ng-bind="product.content_meta.brand_name"</td>
+      </tr>
+      <tr ng-if="!!product.content_meta.manufacturer">
+        <td>Manufacturer</td>
+        <td ng-bind="product.content_meta.manufacturer"></td>
+      </tr>
+      <tr ng-if="!!product.content_meta.condition">
+        <td>Condition</td>
+        <td ng-bind="product.content_meta.condition"></td>
+      </tr>
+      <tr ng-if="!!product.content_meta.warranty">
+        <td>Warranty</td>
+        <td ng-bind="product.content_meta.warranty"></td>
+      </tr>
+      <tr ng-if="!!product.content_meta.details">
+        <td>Details</td>
+        <td ng-bind-html="product.content_meta.details | unboldHtml"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="col col-xs-3 col-sm-2">
+    <img ng-src="{{ product.image_meta.main_image.url | thumbnail }}"
+         class="hover-pointer full-width vert-2 margin-top-0"
+         ng-click="setFocusImg(product.image_meta.main_image)" />
+    <div ng-repeat="img in product.image_meta.additional_images">
+      <img ng-src="{{ img.url | thumbnail }}"
+           class="hover-pointer full-width vert-2"
+           ng-click="setFocusImg(img)" />
+    </div>
+  </div>
+</div>
+
+<div class="full-width vert-20"></div>

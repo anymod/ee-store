@@ -1,0 +1,48 @@
+<ee-offscreen-header></ee-offscreen-header>
+
+<nav ng-class="{ open: toggle }" class="position-fixed full-height light-{{ $state.current.data.offscreenColor }}-background" style="overflow-x: hidden;">
+  <div class="position-relative full-height">
+    <div id="wrap" class="width-300">
+
+      <div id="main-region">
+        <div class="width-300">
+
+          <div class="pad-10 {{ $state.current.data.offscreenColor }}-background">
+            <div class="vert-20 section"></div>
+            <div>
+              <a ng-if="!!user.username"
+                 href="https://{{ user.username }}.eeosk.com"
+                 target="_blank"
+                 class='btn btn-default btn-sm pull-right'>
+                <i class="fa fa-globe"></i>&nbsp;&nbsp;Live
+              </a>
+              <h2 class="margin-0 white-color" ng-bind="$state.current.data.offscreenCategory"></h2>
+            </div>
+          </div>
+
+          <div class="btn-group btn-group-justified">
+            <a ui-sref-active="active" ui-sref="storefront.home" class="btn btn-info btn-sm btn-block pad-5 round-0">Home</a>
+            <a ng-class="{ active: $state.current.name == 'storefront-shop' }" ui-sref="storefront.shop({shopCategory: 'All'})" class="btn btn-info btn-sm btn-block pad-5">Shop</a>
+            <a ui-sref-active="active" ui-sref="storefront.blog" class="btn btn-info btn-sm btn-block pad-5">Blog</a>
+            <a ui-sref-active="active" ui-sref="storefront.about" class="btn btn-info btn-sm btn-block pad-5">About</a>
+            <a ui-sref-active="active" ui-sref="storefront.audience" class="btn btn-info btn-sm btn-block pad-5 round-0">Social</a>
+          </div>
+
+          <div class="pad-10">
+            <ee-save></ee-save>
+            <hr class="vert-5">
+            <div ui-view="offscreen" id="ee-offscreen-child"></div>
+          </div>
+
+        </div>
+      </div>
+
+      <div id="footer-region">
+        <ee-offscreen-footer></ee-offscreen-footer>
+      </div>
+
+    </div> <!-- /wrap -->
+  </div>
+
+
+</nav>

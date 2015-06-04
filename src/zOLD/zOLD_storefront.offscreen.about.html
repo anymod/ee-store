@@ -1,0 +1,19 @@
+<div ng-show="!!user.storefront_meta.about.headline || !!user.storefront_meta.about.content">
+  <h5 class="vert-2">About image <small>1200x400px</small></h5>
+  <ee-cloudinary-upload attr-target="'about'"></ee-cloudinary-upload>
+
+  <img ng-src="{{ user.storefront_meta.about.imgUrl }}" class="img-responsive">
+
+  <br>
+</div>
+
+<h5 class="vert-2">Heading</h5>
+<textarea class="form-control max-width-100-pct" rows="2" ng-model="user.storefront_meta.about.headline"></textarea>
+
+<br>
+
+<h5 class="vert-2">About us</h5>
+<!-- TODO implement bold and italic -->
+<!-- Use * and _ for <strong>*bold*</strong> and <em>_italic_</em> -->
+<!-- <br> -->
+<textarea class="form-control max-width-100-pct" rows="9" ng-model="user.storefront_meta.about.content"></textarea>

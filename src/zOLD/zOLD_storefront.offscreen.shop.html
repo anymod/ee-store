@@ -1,0 +1,39 @@
+<h5 class="vert-2">Current Category</h5>
+<div class="btn-group full-width" dropdown>
+  <button dropdown-toggle type="button" class="btn btn-default btn-block dropdown-toggle" style="text-align: left;">
+    <i class="fa fa-fw fa-caret-down"></i>{{ $state.params.shopCategory }}
+  </button>
+  <ee-shop-nav categories="storefront.categories" class="dropdown-menu full-width"></ee-shop-nav>
+</div>
+
+<hr class="vert-10">
+
+<a ui-sref="catalog" class="btn btn-default btn-block">Add Products</a>
+
+<br>
+
+<!-- TODO allow reordering of products -->
+<!-- <div class="alert alert-warning alert-dismissible margin-0" ng-hide="hideShopAlert">
+  <button type="button" class="close" ng-click="hideShopAlert = !hideShopAlert">&times;</button>
+  Use the <div class="btn-group">
+    <div class="btn btn-xs btn-default">
+      <i class="fa fa-arrow-up visible-xs-inline-block"></i>
+      <i class="fa fa-arrow-left hidden-xs"></i>
+    </div>
+    <div class="btn btn-xs btn-default">
+      <i class="fa fa-arrow-down visible-xs-inline-block"></i>
+      <i class="fa fa-arrow-right hidden-xs"></i>
+    </div>
+  </div> arrows to reorder products in your store
+  <hr class="vert-10">
+  Use <div class="btn btn-xs btn-default"><i class="fa fa-pencil"></i></div> to edit a product
+</div>
+
+<br ng-if="!hideShopAlert"> -->
+
+<!-- TODO allow custom categories -->
+<!-- <h5 class="vert-2">Add a Category</h5>
+<div class="input-group vert-2">
+  <span class="input-group-addon"><i class="fa fa-fw fa-plus"></i></span>
+  <input type="text" class="form-control" placeholder="Add a category">
+</div> -->

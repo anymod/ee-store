@@ -1,0 +1,51 @@
+<div id="example-top"
+     class="position-relative overflow-hidden transition-200"
+     ng-class="show.example.content ? 'max-height-2400' : 'max-height-0'">
+  <ee-storefront-header></ee-storefront-header>
+  <div ng-include="'app/storefront/storefront.home.html'"></div>
+
+  <div class="featured" style="overflow: hidden;">
+    <div class="container-fluid">
+      <div class="full-width pad-10"></div>
+      <div class="row">
+        <div class="col col-md-offset-1 col-xs-4 col-md-2 overflow-hidden">
+          <h4 class="margin-0">Categories</h4>
+          <hr>
+          <ul class="nav nav-pills nav-stacked nav-compact">
+            <li><a>All</a></li>
+            <li><a>Accessories</a></li>
+            <li><a>Jewelry</a></li>
+            <li><a>Outdoor</a></li>
+            <li><a>Home Accents</a></li>
+            <li><a>Health & Beauty</a></li>
+          </ul>
+        </div>
+        <div class="col col-xs-8 position-inherit">
+          <h4 class="margin-0">Featured</h4>
+          <div class="full-width vert-20 overflow-hidden">
+            <div ng-repeat="product in example_products" class="product-container inline-block width-160 vertical-align-top">
+              <ee-product-for-storefront product="product"></ee-product-for-storefront>
+              <br>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <ee-storefront-footer></ee-storefront-footer>
+
+  <div class="section vert-20 gray-background"></div>
+
+  <div ng-click="toggleBlock(show)" class="position-absolute top-left-bottom-right-0 hover-pointer text-center">
+    <div ng-show="show.tryout" class="position-absolute full-width" style="top: 180px; z-index: 10">
+      <div class="well white-background max-width-300 margin-0-auto">
+        This is just a demo store. You can build your own one like it (or better)
+        <hr>
+        <div ng-click="tryout(show)" class="btn btn-primary">Try building yours</div>
+        <div class="btn btn-link">No thanks</div>
+      </div>
+    </div>
+    <div class="position-absolute top-left-bottom-right-0 opacity-08 white-background" ng-show="show.tryout"></div>
+  </div>
+</div>
