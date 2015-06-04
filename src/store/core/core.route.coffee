@@ -8,13 +8,13 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       templateUrl: 'store/store.header.html'
     top:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'app/storefront/storefront.carousel.html'
+      templateUrl: 'ee-shared/storefront/storefront.carousel.html'
     middle:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'app/storefront/storefront.products.html'
+      templateUrl: 'ee-shared/storefront/storefront.products.html'
     footer:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'app/storefront/storefront.footer.html'
+      templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
   shopViews =
     header: views.header
@@ -25,7 +25,7 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     header: views.header
     top:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'app/storefront/storefront.about.html'
+      templateUrl: 'ee-shared/storefront/storefront.about.html'
     footer: views.footer
 
   data =

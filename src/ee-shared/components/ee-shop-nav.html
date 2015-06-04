@@ -1,0 +1,5 @@
+<ul>
+  <li ng-repeat="category in categories" ng-class="{ active: category == $state.params.category }" >
+    <a ui-sref="storefront-shop-category({ category: '{{ category }}' })">{{ category }}</a>
+  </li>
+</ul>

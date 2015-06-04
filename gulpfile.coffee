@@ -19,7 +19,6 @@ htmlminOptions =
   removeComments: true
   removeCommentsFromCDATA: true
   collapseWhitespace: true
-  # conservativeCollapse: true # otherwise <i> & text squished
   collapseBooleanAttributes: true
   removeAttributeQuotes: true
   removeRedundantAttributes: true
@@ -31,113 +30,56 @@ htmlminOptions =
 ## html tasks
 
 gulp.task 'html-dev', () ->
-  # Builder html
-  gulp.src './src/builder.html'
-    .pipe gp.plumber()
-    .pipe gp.htmlReplace
-      css: 'stylesheets/ee.builder.css'
-      js: sources.builderJs(), { keepBlockTags: true }
-    .pipe gulp.dest './src'
-  # Store html
   gulp.src './src/store.html'
     .pipe gp.plumber()
     .pipe gp.htmlReplace
-      css: 'stylesheets/ee.builder.css'
+      css: 'ee-shared/stylesheets/ee.css'
       js: sources.storeJs(), { keepBlockTags: true }
     .pipe gulp.dest './src'
 
 gulp.task 'html-prod', () ->
-  # Builder html
-  gulp.src './src/builder.html'
-    .pipe gp.plumber()
-    # Replace localhost tracking code with product tracking code
-    .pipe gp.replace /UA-55625421-2/g, 'UA-55625421-1'
-    .pipe gp.htmlReplace
-      css: 'ee.builder.css'
-      js: 'ee.builder.js'
-    .pipe gp.htmlmin htmlminOptions
-    .pipe gulp.dest distPath
-  # Builder sitemap
-  gulp.src './src/sitemap.xml'
-    .pipe gulp.dest distPath
-  # Store html
-  gulp.src ['./src/store.html']
+  gulp.src './src/store.html'
     .pipe gp.plumber()
     .pipe gp.htmlReplace
-      css: 'ee.builder.css'
+      css: 'ee-shared/stylesheets/ee.css'
       js: 'ee.store.js'
     .pipe gp.htmlmin htmlminOptions
     .pipe gulp.dest distPath
 
 # ==========================
-# css tasks
-
-gulp.task 'css-dev', () ->
-  gulp.src './src/stylesheets/ee.builder.less' # ** force to same dir
-    .pipe gp.sourcemaps.init()
-    .pipe gp.less paths: './src/stylesheets/' # @import path
-    # write sourcemap to separate file w/o source content to path relative to dest below
-    .pipe gp.sourcemaps.write './', { includeContent: false, sourceRoot: '../' }
-    .pipe gulp.dest './src/stylesheets'
-
-gulp.task 'css-prod', () ->
-  gulp.src './src/stylesheets/ee.builder.less'
-    # TODO: wait for minifyCss to support sourcemaps
-    .pipe gp.replace "../bower_components/bootstrap/fonts/", "./fonts/"
-    .pipe gp.replace "../bower_components/font-awesome/fonts/", "./fonts/"
-    .pipe gp.less paths: './src/stylesheets/' # @import path
-    .pipe gp.minifyCss cache: true, keepSpecialComments: 0 # remove all
-    .pipe gulp.dest distPath
+# css tasks handled with copy-prod
 
 # ==========================
 # js tasks
 
-gulp.task 'js-test', () ->
-  gulp.src './src/**/*.coffee' # ** glob forces dest to same subdir
-    .pipe gp.replace /@@eeBackUrl/g, 'http://localhost:5555'
+copyToSrcJs = (url) ->
+
+  gulp.src ['./src/**/!(constants.coffee)*.coffee'] # ** glob forces dest to same subdir
     .pipe gp.plumber()
     .pipe gp.sourcemaps.init()
     .pipe gp.coffee()
     .pipe gp.sourcemaps.write './'
     .pipe gulp.dest './src/js'
 
-gulp.task 'js-dev', () ->
-  gulp.src './src/**/*.coffee' # ** glob forces dest to same subdir
-    .pipe gp.replace /@@eeBackUrl/g, 'http://localhost:5000'
+  gulp.src ['./src/**/constants.coffee'] # ** glob forces dest to same subdir
+    .pipe gp.replace /@@eeBackUrl/g, url
     .pipe gp.plumber()
     .pipe gp.sourcemaps.init()
     .pipe gp.coffee()
     .pipe gp.sourcemaps.write './'
     .pipe gulp.dest './src/js'
+
+gulp.task 'js-test',  () -> copyToSrcJs 'http://localhost:5555'
+gulp.task 'js-dev',   () -> copyToSrcJs 'http://localhost:5000'
 
 gulp.task 'js-prod', () ->
   # inline templates; no need for ngAnnotate
-  # TODO separate templates for builder and store
-  appTemplates = gulp.src './src/components/ee*.html'
+  appTemplates = gulp.src './src/ee-shared/components/ee-*.html'
     .pipe gp.htmlmin htmlminOptions
     .pipe gp.angularTemplatecache
       module: 'ee.templates'
       standalone: true
-      root: 'components'
-
-  ## Builder prod
-  builderVendorMin    = gulp.src(sources.builderVendorMin)
-  builderVendorUnmin  = gulp.src(sources.builderVendorUnmin)
-  # builder modules; replace and annotate
-  builderModules = gulp.src sources.builderModules()
-    .pipe gp.plumber()
-    .pipe gp.replace "# 'ee.templates'", "'ee.templates'" # for builder.index.coffee $templateCache
-    .pipe gp.replace "'env', 'development'", "'env', 'production'" # TODO use gulp-ng-constant
-    .pipe gp.replace /@@eeBackUrl/g, 'https://api.eeosk.com'
-    .pipe gp.coffee()
-    .pipe gp.ngAnnotate()
-  # minified and uglify vendorUnmin, templates, and modules
-  builderCustomMin = streamqueue objectMode: true, builderVendorUnmin, appTemplates, builderModules
-    .pipe gp.uglify()
-  # concat: vendorMin before jsMin because vendorMin has angular
-  streamqueue objectMode: true, builderVendorMin, builderCustomMin
-    .pipe gp.concat 'ee.builder.js'
-    .pipe gulp.dest distPath
+      root: 'ee-shared/components'
 
   ## Store prod
   storeVendorMin   = gulp.src sources.storeVendorMin
@@ -164,23 +106,31 @@ gulp.task 'js-prod', () ->
 # copy non-compiled files
 
 gulp.task "copy-prod", () ->
-  sameDirFiles = [
 
-  ]
-  gulp.src ['./src/img/**/*.*', './src/app/**/*.html', './src/builder/**/*.html', './src/store/**/*.html'], base: './src'
+  gulp.src './src/ee-shared/**/*.html'
     .pipe gp.plumber()
     .pipe gp.changed distPath
-    .pipe gulp.dest distPath
+    .pipe gulp.dest distPath + '/ee-shared'
 
-  gulp.src './src/bower_components/bootstrap/fonts/**/*.*'
+  gulp.src './src/store/**/*.html'
     .pipe gp.plumber()
     .pipe gp.changed distPath
-    .pipe gulp.dest distPath + '/fonts'
+    .pipe gulp.dest distPath + '/store'
 
-  gulp.src './src/bower_components/font-awesome/fonts/**/*.*'
+  gulp.src './src/ee-shared/fonts/*.*'
     .pipe gp.plumber()
     .pipe gp.changed distPath
-    .pipe gulp.dest distPath + '/fonts'
+    .pipe gulp.dest distPath + '/ee-shared/fonts'
+
+  gulp.src './src/ee-shared/img/*.*'
+    .pipe gp.plumber()
+    .pipe gp.changed distPath
+    .pipe gulp.dest distPath + '/ee-shared/img'
+
+  gulp.src './src/ee-shared/stylesheets/*.*'
+    .pipe gp.plumber()
+    .pipe gp.changed distPath
+    .pipe gulp.dest distPath + '/ee-shared/stylesheets'
 
 
 # ==========================
@@ -210,17 +160,7 @@ gulp.task 'protractor-live', () ->
 # ==========================
 # servers
 
-gulp.task 'server-test', () ->
-  gulp.src('./src').pipe gp.webserver(
-    fallback: 'builder.html' # for angular html5mode
-    port: 3333
-  )
-
 gulp.task 'server-dev', () ->
-  gulp.src('./src').pipe gp.webserver(
-    fallback: 'builder.html' # for angular html5mode
-    port: 3000
-  )
   gulp.src('./src').pipe gp.webserver(
     fallback: 'store.html' # for angular html5mode
     port: 4000
@@ -238,16 +178,12 @@ gulp.task 'server-prod', () -> spawn 'foreman', ['start'], stdio: 'inherit'
 # watchers
 
 gulp.task 'watch-dev', () ->
-  gulp.src './src/stylesheets/ee*.less'
-    .pipe gp.watch { emit: 'one', name: 'css' }, ['css-dev']
   gulp.src './src/**/*.coffee'
     .pipe gp.watch { emit: 'one', name: 'js' }, ['js-dev']
   gulp.src './src/**/*.html'
     .pipe gp.watch { emit: 'one', name: 'html' }, ['html-dev']
 
 gulp.task 'watch-test', () ->
-  gulp.src './src/stylesheets/ee*.less'
-    .pipe gp.watch { emit: 'one', name: 'css' }, ['css-dev']
   gulp.src './src/**/*.coffee'
     .pipe gp.watch { emit: 'one', name: 'js' }, ['js-test']
   gulp.src './src/e2e/*e2e*.coffee'
@@ -260,12 +196,4 @@ gulp.task 'test', ['js-test', 'html-dev', 'server-test', 'watch-test'], () -> re
 
 gulp.task 'dev', ['watch-dev', 'server-dev'], () -> return
 
-gulp.task 'pre-prod-test', ['css-prod', 'html-prod', 'copy-prod', 'js-prod', 'server-prod'], () ->
-  gulp.src './dist/ee.builder.js'
-    .pipe gp.replace /https:\/\/api\.eeosk\.com/g, 'http://localhost:5555'
-    .pipe gulp.dest distPath
-  return
-
-gulp.task 'prod-test', ['pre-prod-test', 'protractor-prod']
-
-gulp.task 'prod', ['css-prod', 'js-prod', 'html-prod', 'copy-prod', 'server-prod'], () -> return
+gulp.task 'prod', ['js-prod', 'html-prod', 'copy-prod', 'server-prod'], () -> return
