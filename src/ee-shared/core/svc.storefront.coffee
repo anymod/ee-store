@@ -76,6 +76,7 @@ angular.module('app.core').factory 'eeStorefront', ($rootScope, $q, $location, e
     if !!host and (host is 'localhost' or host.indexOf('herokuapp') > -1) then username = 'demoseller'
 
     if !username then deferred.reject('Missing username'); return deferred.promise
+    _status.fetching = deferred.promise
 
     eeBack.storefrontGET username
     .then (storefront) ->

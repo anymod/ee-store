@@ -1,3 +1,10 @@
+<div ng-show="storefront.ee.loading" class="section text-center" name="loading-navbar">
+  <h2 class="font-weight-200">
+    <i class="fa fa-fw fa-circle-o-notch fa-spin" ng-style="{ 'color': storefront.ee.meta.home.topBarBackgroundColor }"></i>&nbsp;Loading
+  </h2>
+</div>
+
+
 <div class="featured" ng-hide="storefront.ee.loading">
   <div ng-show="storefront.ee.product_selection.length > 0" class="container-fluid">
     <div class="full-width pad-10"></div>
