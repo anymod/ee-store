@@ -28,11 +28,13 @@ app.use serveStatic(path.join __dirname, 'dist')
 
 app.get '/*', (req, res, next) ->
   bootstrap = {}
-  # client.query 'SELECT storefront_meta FROM "Users" WHERE username = $1', ['demoseller'], (err, data) ->
-  sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = \'demoseller\''
+  username = 'demoseller'
+  host = req.headers.host.replace('www.', '').split('.')[0]
+  username = host if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
+
+  sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: ['demoseller'] }
   .then (data) ->
     bootstrap = data[0][0]
-    # console.log bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error running query', err
