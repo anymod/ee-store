@@ -29,8 +29,11 @@ app.use serveStatic(path.join __dirname, 'dist')
 app.get '/*', (req, res, next) ->
   bootstrap = {}
   username = 'demoseller'
+  console.log 'req.headers.host', req.headers.host
   host = req.headers.host.replace('www.', '').split('.')[0]
+  console.log 'host', host
   username = host if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
+  console.log 'username', username
 
   sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: ['demoseller'] }
   .then (data) ->
