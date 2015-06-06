@@ -35,7 +35,7 @@ app.get '/*', (req, res, next) ->
   username = host if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
   console.log 'username', username
 
-  sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: ['demoseller'] }
+  sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: [username] }
   .then (data) ->
     bootstrap = data[0][0]
     res.render 'store.ejs', { bootstrap: bootstrap }
