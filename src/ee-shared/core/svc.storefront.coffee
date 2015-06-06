@@ -70,7 +70,7 @@ angular.module('app.core').factory 'eeStorefront', ($rootScope, $q, $location, e
     deferred  = $q.defer()
 
     if !!_status.fetching then return _status.fetching
-    host      = $location.host()
+    host      = $location.host().replace('www.', '')
     username  = host.split('.')[0]
 
     if !!host and (host is 'localhost' or host.indexOf('herokuapp') > -1) then username = 'demoseller'
