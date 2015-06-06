@@ -16,7 +16,7 @@ sequelize   = require './config/sequelize/setup'
 # bodyParser  = require 'body-parser'
 
 app = express()
-app.set 'view engine', 'mustache'
+app.set 'view engine', 'ejs'
 app.set 'views', path.join __dirname, 'dist'
 
 if process.env.NODE_ENV is 'production' then app.use morgan 'common' else app.use morgan 'dev'
@@ -29,11 +29,8 @@ app.use serveStatic(path.join __dirname, 'dist')
 app.get '/*', (req, res, next) ->
   bootstrap = {}
   username = 'demoseller'
-  console.log 'req.headers.host', req.headers.host
-  host = req.headers.host.replace('www.', '').split('.')[0]
-  console.log 'host', host
-  username = host if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
-  console.log 'username', username
+  host = req.headers.host.replace('www.', '')
+  username = host.split('.')[0] if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
 
   sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: [username] }
   .then (data) ->
@@ -43,12 +40,6 @@ app.get '/*', (req, res, next) ->
     console.error 'error running query', err
     res.send 'Not found'
 
-
-# app.all '/*', (req, res, next) ->
-#   # Send store.html to support HTML5Mode
-#   res.sendfile 'store.html', root: path.join __dirname, 'dist'
-#   return
-
 app.listen process.env.PORT, ->
-  console.log 'Frontend listening on port ' + process.env.PORT
+  console.log 'Store app listening on port ' + process.env.PORT
   return
