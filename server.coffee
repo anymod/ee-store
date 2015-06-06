@@ -40,7 +40,7 @@ app.get '/*', (req, res, next) ->
   findUserByHost req.headers.host
   .then (data) ->
     bootstrap = data[0][0]
-    console.log 'bootstrap', bootstrap
+    if !bootstrap then throw 'Not found'
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error running query', err
