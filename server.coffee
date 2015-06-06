@@ -26,13 +26,18 @@ if process.env.NODE_ENV is 'production' then app.use morgan 'common' else app.us
 
 app.use serveStatic(path.join __dirname, 'dist')
 
+findUserByHost = (host) ->
+  host = host.replace 'www.', ''
+  if process.env.NODE_ENV isnt 'production' or host.indexOf('eeosk.com') > -1 or host.indexOf('herokuapp.com') > -1
+    username = 'demoseller'
+    if host.indexOf('eeosk.com') > -1 then username = host.split('.')[0]
+    sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: [username] }
+  else
+    sequelize.query 'SELECT storefront_meta FROM "Users" WHERE domain = ?', { replacements: [host] }
+
 app.get '/*', (req, res, next) ->
   bootstrap = {}
-  username = 'demoseller'
-  host = req.headers.host.replace('www.', '')
-  username = host.split('.')[0] if process.env.NODE_ENV is 'production' and host.indexOf('herokuapp') < 0
-
-  sequelize.query 'SELECT storefront_meta FROM "Users" WHERE username = ?', { replacements: [username] }
+  findUserByHost req.headers.host
   .then (data) ->
     bootstrap = data[0][0]
     res.render 'store.ejs', { bootstrap: bootstrap }
