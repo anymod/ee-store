@@ -15,6 +15,17 @@
   <!-- build:css -->
   <link rel="stylesheet" href="ee-shared/stylesheets/ee.css">
   <!-- endbuild -->
+
+  <% if (!!bootstrap.storefront_meta && !!bootstrap.storefront_meta.ga_id) { %>
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+      ga('create', "<%= bootstrap.storefront_meta.ga_id %>", 'auto');
+      ga('require', 'displayfeatures');
+      ga('require', 'linkid', 'linkid.js');
+    </script>
+  <% } %>
 </head>
 
 <div ui-view="header" id="ee-header" class="position-fixed" style="top: 0; z-index: 2000;"></div>
@@ -64,16 +75,5 @@
 <script>
   angular.module("app.core").constant("eeBootstrap", angular.fromJson("<%= JSON.stringify(bootstrap) %>".replace(/&#34;/g, '"')));
 </script>
-
-<% if (!!bootstrap.storefront_meta && !!bootstrap.storefront_meta.ga_id) { %>
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', "<%= bootstrap.storefront_meta.ga_id %>", 'auto');
-    ga('require', 'displayfeatures');
-    ga('require', 'linkid', 'linkid.js');
-  </script>
-<% } %>
 
 </html>
