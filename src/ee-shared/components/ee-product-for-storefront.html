@@ -5,5 +5,8 @@
     <span ng-bind="product.title" class="product-title"></span>
     <br>
     <strong ng-bind="product.selling_price | centToDollar"></strong>
+    &nbsp;
+    <div ng-show="product.discontinued" class="badge">Discontinued</div>
+    <div ng-show="product.out_of_stock" class="badge">Out of Stock</div>
   </div>
 </div>
