@@ -32,9 +32,9 @@ findUserByHost = (host) ->
   if process.env.NODE_ENV isnt 'production' or host.indexOf('eeosk.com') > -1 or host.indexOf('herokuapp.com') > -1
     username = 'demoseller'
     if host.indexOf('eeosk.com') > -1 then username = host.split('.')[0]
-    sequelize.query 'SELECT id, storefront_meta, collections FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
+    sequelize.query 'SELECT id, storefront_meta FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
   else
-    sequelize.query 'SELECT id, storefront_meta, collections FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
+    sequelize.query 'SELECT id, storefront_meta FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
 findSelectionsByPath = (path, bootstrap) ->
   selection_ids = []
@@ -69,8 +69,8 @@ app.get '/*', (req, res, next) ->
     user            = data[0]
     bootstrap.meta  = user.storefront_meta
     if !bootstrap.meta then throw 'Not found'
-    findSelectionsByPath path, bootstrap
-  .then (data) ->
+    # findSelectionsByPath path, bootstrap
+  # .then (data) ->
     bootstrap.selections = {}
     bootstrap.stringified = JSON.stringify(bootstrap).escapeSpecialChars()
     res.render 'store.ejs', { bootstrap: bootstrap }
