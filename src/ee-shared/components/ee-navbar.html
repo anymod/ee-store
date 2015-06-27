@@ -1,7 +1,8 @@
 <!--
   signin:      when true show sign in button
   storefront:  when true show buttons on storefront page
-  products:    when true show buttons on products page
+  product:     when true show buttons on product page
+  selection:   when true show buttons on selection page
   edit:        when true show buttons on edit page
   dropdown:    when true show dropdown instead of logo
   back:        when true show back button instead of logo
@@ -9,16 +10,13 @@
   fixed:       when true fix navbar to top of page
 //-->
 
-<!-- products: buttons on products page -->
-<!-- /products -->
-
 <nav class="navbar ee-navbar round-0" id="navbar-top" ng-class="{ 'navbar-transparent': transparent, 'box-shadow': !transparent, 'navbar-fixed-top': fixed, 'navbar-absolute-top': !fixed }">
   <div class="container-fluid">
     <div class="margin-7">
 
       <!-- LOGO -->
       <!-- normal logo -->
-      <a ng-hide="dropdown || back" ui-sref="landing" id="brand" class="pull-left">
+      <a ng-hide="dropdown || back || product || selection" ui-sref="landing" id="brand" class="pull-left">
         <img ng-show="transparent" src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_150/v1432656685/eeosk_white.png" class="width-120"/>
         <img ng-hide="transparent" src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_400/v1432578504/eeosk_blue.png" class="width-120"/>
       </a> <!-- /normal logo -->
@@ -43,8 +41,18 @@
 
       <!-- back: back instead of logo -->
       <a ng-if="back" ui-sref="storefront" id="back" class="btn btn-default pull-left">
-        <i class="fa fa-fw fa-long-arrow-left"></i>
+        <i class="fa fa-fw fa-home"></i>
       </a> <!-- /back -->
+
+      <!-- product: back to catalog instead of logo -->
+      <a ng-if="product" ui-sref="products" id="products" class="btn btn-default pull-left">
+        <i class="fa fa-fw fa-long-arrow-left"></i>
+      </a> <!-- /product -->
+
+      <!-- product: back to my store instead of logo -->
+      <a ng-if="selection" ui-sref="selections" id="selections" class="btn btn-default pull-left">
+        <i class="fa fa-fw fa-long-arrow-left"></i>
+      </a> <!-- /product -->
 
       <!-- /LOGO -->
 
@@ -62,7 +70,7 @@
       <!-- storefront: buttons on storefront page -->
       <div ng-if="storefront" class="storefront-buttons">
         <div class="position-fixed text-center">
-          <div ng-click="catalog()" class="btn btn-info">Products</div>&nbsp;<a ui-sref="edit" class="btn btn-success">Edit</a>
+          <div ui-sref="products" class="btn btn-info">Products</div>&nbsp;<a ui-sref="edit" class="btn btn-success">Edit</a>
         </div>
         <a class="btn btn-link pull-right hidden-xs" href="https://{{ ee.user.username }}.eeosk.com" target="_blank">
           Live&nbsp;<i class="fa fa-fw fa-external-link"></i>

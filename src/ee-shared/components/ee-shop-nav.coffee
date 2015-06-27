@@ -5,7 +5,7 @@ angular.module('ee-product').directive "eeShopNav", ($state) ->
   restrict: 'E'
   replace: true
   scope:
-    categories: '='
+    collections: '='
   link: (scope, ele, attrs) ->
     scope.$state = $state
     return

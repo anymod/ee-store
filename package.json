@@ -17,6 +17,7 @@
     "coffee-script": "^1.9.0",
     "ejs": "^2.3.1",
     "express": "^4.4.5",
+    "lodash": "^3.9.3",
     "morgan": "^1.1.1",
     "newrelic": "^1.12.2",
     "pg": "^4.3.0",

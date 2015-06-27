@@ -1,8 +1,8 @@
 'use strict'
 
-angular.module('app.core').run ($rootScope, $location, $anchorScroll, $state, productsPerPage) ->
+angular.module('app.core').run ($rootScope, $location, $anchorScroll, $state, perPage) ->
 
-  $rootScope.productsPerPage = productsPerPage
+  $rootScope.perPage = perPage
 
   # binding this so $state.current.data.pageTitle & other $state data can be accessed
   $rootScope.$state = $state

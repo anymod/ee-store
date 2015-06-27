@@ -54,3 +54,20 @@ angular.module('app.core').filter 'rangeToText', () ->
 
 angular.module('app.core').filter 'addHttp', () ->
   (text) -> if !!text and text.indexOf('http://') isnt 0 and text.indexOf('https://') isnt 0 then 'http://' + text else text
+
+angular.module('app.core').filter 'pluses', () ->
+  (text) ->
+    if !text or typeof(text) isnt 'string' then return ''
+    text.replace(/ /g, '+')
+
+angular.module('app.core').filter 'humanize', () ->
+  (text) ->
+    if !text or typeof(text) isnt 'string' then return ''
+    frags = text.split '_'
+    (frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1)) for i in [0..(frags.length - 1)]
+    frags.join(' ')
+
+angular.module('app.core').filter 'dashify', () ->
+  (text) ->
+    if !text or typeof(text) isnt 'string' then return ''
+    text.replace(/_/g, '-')

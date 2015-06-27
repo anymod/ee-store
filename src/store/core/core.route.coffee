@@ -45,8 +45,8 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    shopViews
       data:     data
 
-    .state 'storefront-shop-category',
-      url:      '/shop/:category'
+    .state 'storefront-shop-collection',
+      url:      '/shop/:collection'
       views:    shopViews
       data:     data
 
@@ -54,6 +54,15 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       url:      '/about'
       views:    aboutViews
       data:     data
+
+    .state 'selectionView',
+      url:      '/selections/:id/:slug'
+      views:    shopViews
+      data:     data,
+      params:
+        slug:
+          value: null
+          squash: true
 
     .state 'cart',
       url: '/cart'

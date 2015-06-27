@@ -19,7 +19,7 @@ angular.module('app.core').controller 'productModalCtrl', ($rootScope, eeDefiner
   this.removeProductSelection = () ->
     index = eeStorefront.data.product_ids.indexOf that.product.id
     if index > -1
-      p_s = that.ee.product_selection[index]
+      p_s = that.ee.selections[index]
       if that.ee.logged_in then eeStorefront.fns.removeProductSelection(p_s) else eeStorefront.fns.removeDummyProductSelection(p_s)
 
   this.addProductToCart = () ->
@@ -32,7 +32,7 @@ angular.module('app.core').controller 'productModalCtrl', ($rootScope, eeDefiner
     eeProduct.fns.calcByDollarsAndCents()
     index = eeStorefront.data.product_ids.indexOf that.product.id
     if index > -1
-      p_s = that.ee.product_selection[index]
+      p_s = that.ee.selections[index]
       if that.ee.logged_in then eeStorefront.fns.updateProductSelection(p_s, that.product) else eeStorefront.fns.updateDummyProductSelection(p_s, that.product)
     that.showPriceOptions = false
 

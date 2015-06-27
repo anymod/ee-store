@@ -1,5 +1,5 @@
 <ul>
-  <li ng-repeat="category in categories" ng-class="{ active: category == $state.params.category }" >
-    <a ui-sref="storefront-shop-category({ category: '{{ category }}' })">{{ category }}</a>
+  <li ng-repeat="collection in collections" ng-class="{ active: collection == $state.params.collection }" >
+    <a ui-sref="storefront-shop-collection({ collection: '{{ collection }}' })">{{ collection | humanize }}</a>
   </li>
 </ul>

@@ -11,7 +11,6 @@
       <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
         <i class="fa fa-fw fa-circle-o-notch fa-spin text-info"></i>
       </h2>
-      <a href class="navbar-brand">Loading</a>
     </div>
 
     <div ng-hide="loading" class="container-fluid" name="store-navbar">
@@ -35,11 +34,11 @@
         <ul class="nav navbar-nav">
           <li ng-class="{ active: state == 'storefront' }"><a ui-sref="storefront" ng-click="navCollapsed = true" ng-style="{ color: meta.home.topBarColor }">Home</a></li>
 
-          <li ng-class="{ active: state == 'storefront-shop-category' }" class="dropdown" dropdown>
+          <li ng-class="{ active: state == 'storefront-shop-collection' }" class="dropdown" dropdown>
             <a href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
               Shop <span class="caret"></span>
             </a>
-            <ee-shop-nav ng-show="categories" categories="categories" class="dropdown-menu"></ee-shop-nav>
+            <ee-shop-nav ng-show="collections" collections="collections" class="dropdown-menu"></ee-shop-nav>
           </li>
 
           <li ng-show="!!meta.blog.url">

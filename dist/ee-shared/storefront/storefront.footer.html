@@ -1,4 +1,4 @@
-<div id="store-footer-region" class="position-relative" ng-hide="storefront.ee.loading">
+<div id="store-footer-region" class="position-relative" ng-hide="storefront.data.loading">
   <!-- blocker -->
   <div ng-show="storefront.ee.blocked" class="position-absolute top-left-bottom-right-0" style="z-index: 2005;"></div>
   <!-- /blocker -->
@@ -8,7 +8,7 @@
 
     <div class="row">
       <div class="col col-md-11 col-md-offset-1">
-        <h4 ng-bind="storefront.ee.meta.home.name"></h4>
+        <h4 ng-bind="storefront.data.meta.home.name"></h4>
       </div>
     </div> <!-- /row -->
 
@@ -19,33 +19,33 @@
           <li>
             <a ui-sref="storefront">Home</a>
           </li>
-          <li ng-if="storefront.ee.meta.blog.url">
-            <a href="{{ storefront.ee.meta.blog.url | addHttp }}" target="_blank">Blog</a>
+          <li ng-if="storefront.data.meta.blog.url">
+            <a href="{{ storefront.data.meta.blog.url | addHttp }}" target="_blank">Blog</a>
           </li>
-          <li ng-if="!!storefront.ee.meta.about.headline || !!storefront.ee.meta.about.content">
+          <li ng-if="!!storefront.data.meta.about.headline || !!storefront.data.meta.about.content">
             <a ui-sref="storefront-about">About</a>
           </li>
         </ul>
       </div>
       <div class="col col-sm-2" ng-if="storefront">
         <ul class="nav nav-pills nav-stacked nav-compact">
-          <li class="disabled">Categories</li>
-          <ee-shop-nav categories="storefront.ee.categories"
+          <li class="disabled">Collections</li>
+          <ee-shop-nav collections="storefront.data.collection_names"
                        class="nav nav-pills nav-stacked nav-compact">
           </ee-shop-nav>
         </ul>
       </div>
-      <div class="col col-sm-2" ng-if="!!storefront.ee.meta.audience.social.facebook || !!storefront.ee.meta.audience.social.pinterest || !!storefront.ee.meta.audience.social.twitter || !!storefront.ee.meta.audience.social.instagram || !!storefront.ee.meta.audience.contact.email">
+      <div class="col col-sm-2" ng-if="!!storefront.data.meta.audience.social.facebook || !!storefront.data.meta.audience.social.pinterest || !!storefront.data.meta.audience.social.twitter || !!storefront.data.meta.audience.social.instagram || !!storefront.data.meta.audience.contact.email">
         <ul class="nav nav-pills nav-stacked nav-compact">
           <li class="disabled">Connect</li>
-          <li ng-if="!!storefront.ee.meta.audience.contact.email">
-            <a href="mailto:{{ storefront.ee.meta.audience.contact.email }}" target="_blank">
+          <li ng-if="!!storefront.data.meta.audience.contact.email">
+            <a href="mailto:{{ storefront.data.meta.audience.contact.email }}" target="_blank">
               Email us
             </a>
           </li>
           <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
-              ng-if="!!storefront.ee.meta.audience.social[site]">
-            <a href="http://{{ site }}.com/{{ storefront.ee.meta.audience.social[site] }}" target="_blank">
+              ng-if="!!storefront.data.meta.audience.social[site]">
+            <a href="http://{{ site }}.com/{{ storefront.data.meta.audience.social[site] }}" target="_blank">
               <span ng-bind="site"></span>
             </a>
           </li>
@@ -59,7 +59,7 @@
     <div class="row margin-0">
       <div class="col col-sm-7 col-md-offset-1">
         <small>
-          &copy;&nbsp;2015&nbsp;<span ng-bind="storefront.ee.meta.home.name"></span>.&nbsp;&nbsp;
+          &copy;&nbsp;2015&nbsp;<span ng-bind="storefront.data.meta.home.name"></span>.&nbsp;&nbsp;
           <a href="https://eeosk.com" target="_blank" class="gray-color">Ecommerce by eeosk</a>.
         </small>
       </div>

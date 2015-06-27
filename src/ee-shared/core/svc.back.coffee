@@ -110,11 +110,20 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       data: data
     }
 
-  usersStorefrontGET: (token) ->
+  usersStorefrontGET: (token, collection) ->
+    path = 'store'
+    if collection then path += '/' + collection
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'users/storefront'
+      url: eeBackUrl + path
       headers: authorization: token
+    }
+
+  storefrontGET: (username) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'store/' + username + '/all'
+      headers: authorization: {}
     }
 
   productsGET: (token, query) ->
@@ -131,6 +140,20 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       headers: authorization: token
     }
 
+  selectionsGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'selections' + _formQueryString(query)
+      headers: authorization: token
+    }
+
+  selectionGET: (id, token) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'selections/' + id
+      headers: authorization: token
+    }
+
   selectionsPOST: (token, attrs) ->
     _makeRequest {
       method: 'POST'
@@ -139,12 +162,12 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       data: attrs
     }
 
-  selectionsPUT: (token, id, attrs) ->
+  selectionsPUT: (token, selection) ->
     _makeRequest {
       method: 'PUT'
-      url: eeBackUrl + 'selections/' + id
+      url: eeBackUrl + 'selections/' + selection.id
       headers: authorization: token
-      data: attrs
+      data: selection
     }
 
   selectionsDELETE: (token, id) ->
@@ -152,13 +175,6 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       method: 'DELETE'
       url: eeBackUrl + 'selections/' + id
       headers: authorization: token
-    }
-
-  storefrontGET: (username) ->
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'store/' + username + '/all'
-      headers: authorization: {}
     }
 
   ordersGET: (token) ->

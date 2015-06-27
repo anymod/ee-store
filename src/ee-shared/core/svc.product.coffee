@@ -31,13 +31,23 @@ angular.module('app.core').factory 'eeProduct', ($q, $timeout, eeAuth, eeBack, e
   ## PRIVATE FUNCTIONS
   _getProduct = (id) ->
     deferred = $q.defer()
-    if !id
-      deferred.reject 'Missing product ID'
-    else
-      eeBack.productGET id, eeAuth.fns.getToken()
-      .then (data) -> deferred.resolve data
-      .catch (err) -> deferred.reject err
+    if !!_data.loading then return _data.loading
+    if !id then deferred.reject('Missing product ID'); return deferred.promise
+    _data.loading = deferred.promise
+    eeBack.productGET id, eeAuth.fns.getToken()
+    .then (data) -> deferred.resolve data
+    .catch (err) -> deferred.reject err
+    .finally () -> _data.loading = false
     deferred.promise
+
+  _setProduct = (id) ->
+    _data.product = {}
+    _getProduct id
+    .then (data) ->
+      _data.product = data
+      _calcByMargin _data.margins.start_margin
+      console.log 'setProduct', _data
+    .catch (err) -> _data.product = {}
 
   _calcPrice  = (base, margin)  -> parseInt(base / (1 - margin))
   _calcMargin = (base, selling) -> 1 - (base / selling)
@@ -65,7 +75,6 @@ angular.module('app.core').factory 'eeProduct', ($q, $timeout, eeAuth, eeBack, e
     _calcByMargin margin
     return
 
-
   _openProductModal = (id, catalog) ->
     if !id then return
     _reset()
@@ -87,3 +96,4 @@ angular.module('app.core').factory 'eeProduct', ($q, $timeout, eeAuth, eeBack, e
     calcByMargin:           _calcByMargin
     calcByDollarsAndCents:  _calcByDollarsAndCents
     openProductModal:       _openProductModal
+    setProduct:             _setProduct

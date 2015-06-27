@@ -1,24 +1,24 @@
 <div ng-show="storefront.ee.loading" class="section text-center" name="loading-navbar">
   <h2 class="font-weight-200">
-    <i class="fa fa-fw fa-circle-o-notch fa-spin" ng-style="{ 'color': storefront.ee.meta.home.topBarBackgroundColor }"></i>&nbsp;Loading
+    <i class="fa fa-fw fa-circle-o-notch fa-spin" ng-style="{ 'color': storefront.ee.meta.home.topBarBackgroundColor }"></i>
   </h2>
 </div>
 
-
 <div class="featured" ng-hide="storefront.ee.loading">
-  <div ng-show="storefront.ee.product_selection.length > 0" class="container-fluid">
+  <div ng-show="storefront.data.selections.length > 0" class="container-fluid">
     <div class="full-width pad-10"></div>
     <div class="row">
       <div class="col col-md-offset-1 col-xs-4 col-md-2 overflow-hidden">
-        <h4 class="margin-0">Categories</h4>
+        <h4 class="margin-0">Collections</h4>
         <hr>
-        <ee-shop-nav ng-show="storefront" categories="storefront.ee.categories" class="nav nav-pills nav-stacked nav-compact"></ee-shop-nav>
+        <ee-shop-nav ng-show="storefront" collections="storefront.data.collection_names" class="nav nav-pills nav-stacked nav-compact"></ee-shop-nav>
       </div>
       <div class="col col-xs-8 position-inherit">
-        <h4 class="margin-0">Featured</h4>
-        <div class="full-width vert-20 overflow-hidden">
-          <div ng-repeat="product in storefront.ee.product_selection | eeShopCategories:$state.params.category" class="product-container inline-block width-160 vertical-align-top">
-            <ee-product-for-storefront product="product"></ee-product-for-storefront>
+        <h4 class="margin-0">{{ $state.params.collection || 'Featured' | humanize }}</h4>
+        <h2 ng-if="storefront.data.loading"><i class="fa fa-fw fa-spin fa-circle-o-notch text-info"></i></h2>
+        <div ng-hide="storefront.data.loading" class="full-width vert-20 overflow-hidden">
+          <div ng-repeat="selection in storefront.data.selections | eeShopCategories:$state.params.category" class="product-container inline-block width-160 vertical-align-top">
+            <ee-product-for-storefront selection="selection"></ee-product-for-storefront>
             <br>
           </div>
         </div>
@@ -26,7 +26,7 @@
     </div>
   </div>
 
-  <div ng-if="isStore" ng-show="storefront.ee.product_selection.length <= 0" class="pad-10">
+  <div ng-if="isStore" ng-show="storefront.ee.selections.length <= 0" class="pad-10">
     <h2 class="full-width text-center">Coming soon</h2>
   </div>
 </div> <!-- /featured -->
