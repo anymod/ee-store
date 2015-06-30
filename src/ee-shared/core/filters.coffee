@@ -37,7 +37,9 @@ angular.module('app.core').filter 'scaledDownBackground', () ->
       url
 
 angular.module('app.core').filter 'urlText', () ->
-  (text) -> text.replace(/[^a-zA-Z0-9-]|^-/gi, '').toLowerCase()
+  (text) ->
+    if !text or typeof(text) isnt 'string' then return ''
+    text.replace(/[^a-zA-Z0-9-]|^-/gi, '-').toLowerCase()
 
 angular.module('app.core').filter 'unboldHtml', () ->
   (text) -> if typeof text isnt 'string' then return text else return text.replace(/<b>/gi, '').replace(/<\/b>/gi, '')
@@ -63,11 +65,11 @@ angular.module('app.core').filter 'pluses', () ->
 angular.module('app.core').filter 'humanize', () ->
   (text) ->
     if !text or typeof(text) isnt 'string' then return ''
-    frags = text.split '_'
+    frags = text.split /_|-/
     (frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1)) for i in [0..(frags.length - 1)]
     frags.join(' ')
 
-angular.module('app.core').filter 'dashify', () ->
-  (text) ->
-    if !text or typeof(text) isnt 'string' then return ''
-    text.replace(/_/g, '-')
+# angular.module('app.core').filter 'dashify', () ->
+#   (text) ->
+#     if !text or typeof(text) isnt 'string' then return ''
+#     text.replace(/_/g, '-')

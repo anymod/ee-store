@@ -76,7 +76,6 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
     }
 
   usersPOST: (email, proposition) ->
-    console.log 'email, prop', email, proposition
     _makeRequest {
       method: 'POST'
       url: eeBackUrl + 'users'
@@ -111,7 +110,7 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
     }
 
   usersStorefrontGET: (token, collection) ->
-    path = 'store'
+    path = 'storefront'
     if collection then path += '/' + collection
     _makeRequest {
       method: 'GET'
@@ -122,7 +121,7 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
   storefrontGET: (username) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'store/' + username + '/all'
+      url: eeBackUrl + 'storefront/' + username + '/all'
       headers: authorization: {}
     }
 

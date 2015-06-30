@@ -34,7 +34,7 @@
         <ul class="nav navbar-nav">
           <li ng-class="{ active: state == 'storefront' }"><a ui-sref="storefront" ng-click="navCollapsed = true" ng-style="{ color: meta.home.topBarColor }">Home</a></li>
 
-          <li ng-class="{ active: state == 'storefront-shop-collection' }" class="dropdown" dropdown>
+          <li ng-class="{ active: state == 'collection' }" class="dropdown" dropdown>
             <a href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
               Shop <span class="caret"></span>
             </a>
@@ -60,18 +60,10 @@
           </li>
 
           <li ng-class="{ active: state == 'storefront-about' }"
-              ng-show="state == 'storefront-about' || !!meta.about.headline">
+              ng-show="state == 'storefront-about' || meta.about.headline || meta.about.content">
             <a ui-sref="storefront-about" ng-click="navCollapsed = true" ng-style="{ color: meta.home.topBarColor }">
               About
             </a>
-            <div class="popover bottom in inline-block"
-                 style="top: 42px; width: 300px;"
-                 ng-show="isBuilder && state == 'storefront-about' && !meta.about.headline && !meta.about.content">
-              <div class="arrow" style="left: 13%;"></div>
-              <div class="popover-content">
-                Add something about your store and this section will show.
-              </div>
-            </div>
           </li>
 
         </ul>

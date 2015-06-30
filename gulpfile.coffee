@@ -30,7 +30,7 @@ htmlminOptions =
 ## html tasks
 
 gulp.task 'html-dev', () ->
-  gulp.src './src/store.html'
+  gulp.src './src/store.ejs'
     .pipe gp.plumber()
     .pipe gp.htmlReplace
       css: 'ee-shared/stylesheets/ee.css'
@@ -173,13 +173,13 @@ gulp.task 'protractor-live', () ->
 
 gulp.task 'server-dev', () ->
   gulp.src('./src').pipe gp.webserver(
-    fallback: 'store.html' # for angular html5mode
+    fallback: 'store.ejs' # for angular html5mode
     port: 4000
   )
 
 gulp.task 'server-test-store', () ->
   gulp.src('./src').pipe gp.webserver(
-    fallback: 'store.html' # for angular html5mode
+    fallback: 'store.ejs' # for angular html5mode
     port: 4444
   )
 
@@ -198,8 +198,8 @@ gulp.task 'watch-test', () ->
 gulp.task 'watch-dev', () ->
   gulp.src './src/**/*.coffee'
     .pipe gp.watch { emit: 'one', name: 'js' }, ['js-dev']
-  gulp.src './src/store.ejs'
-    .pipe gp.watch { emit: 'one', name: 'html' }, ['html-prod']
+  # gulp.src './src/store.ejs'
+  #   .pipe gp.watch { emit: 'one', name: 'html' }, ['html-prod']
   gulp.src './src/ee-shared/**/*.*'
     .pipe gp.watch { emit: 'one', name: 'html' }, ['copy-prod']
 
@@ -216,6 +216,6 @@ gulp.task 'watch-prod', () ->
 
 gulp.task 'test', ['js-test', 'html-dev', 'server-test', 'watch-test'], () -> return
 
-gulp.task 'dev', ['js-dev', 'html-prod', 'copy-prod', 'watch-dev', 'server-prod'], () -> return
+gulp.task 'dev', ['js-dev', 'html-dev', 'copy-prod', 'watch-dev', 'server-prod'], () -> return
 
-gulp.task 'prod', ['js-prod', 'html-prod', 'copy-prod', 'watch-prod', 'server-prod'], () -> return
+gulp.task 'prod', ['js-prod', 'html-dev', 'html-prod', 'copy-prod', 'watch-prod', 'server-prod'], () -> return

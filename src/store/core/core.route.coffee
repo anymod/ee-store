@@ -45,8 +45,8 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    shopViews
       data:     data
 
-    .state 'storefront-shop-collection',
-      url:      '/shop/:collection'
+    .state 'collection',
+      url:      '/shop/:title'
       views:    shopViews
       data:     data
 
@@ -57,7 +57,16 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
 
     .state 'selectionView',
       url:      '/selections/:id/:slug'
-      views:    shopViews
+      views:
+        header:
+          controller: 'storeCtrl as storefront'
+          templateUrl: 'store/store.header.html'
+        top:
+          controller: 'storeCtrl as storefront'
+          templateUrl: 'store/store.selection.html'
+        footer:
+          controller: 'storeCtrl as storefront'
+          templateUrl: 'ee-shared/storefront/storefront.footer.html'
       data:     data,
       params:
         slug:

@@ -5,12 +5,12 @@
          ng-hide="!storefront.ee.carousel.headline && !storefront.ee.carousel.byline && !storefront.ee.carousel.btnText">
       <h3 ng-bind="storefront.ee.carousel.headline" class="margin-0"></h3>
       <p ng-bind="storefront.ee.carousel.byline" class="vert-2"></p>
-      <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="storefront-shop-collection({ collection: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
+      <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="collection({ title: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
     </div>
   </div>
   <div class="pad-15 visible-xs">
     <h3 ng-bind="storefront.ee.carousel.headline" class="margin-0"></h3>
     <p ng-bind="storefront.ee.carousel.byline" class="vert-2"></p>
-    <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="storefront-shop-collection({ collection: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
+    <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="collection({ title: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
   </div>
 </div>

@@ -11,7 +11,7 @@
         <h4 class="margin-0">{{ $state.params.shopCategory }}</h4>
         <div class="full-width vert-20 overflow-hidden">
           <div ng-repeat="product in storefront.product_selection | eeShopCategories:$state.params.shopCategory" class="product-container inline-block width-160 vertical-align-top">
-            <ee-product-for-storefront product="product"></ee-product-for-storefront>
+            <ee-selection-for-storefront product="product"></ee-selection-for-storefront>
             <br>
           </div>
         </div>

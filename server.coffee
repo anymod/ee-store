@@ -24,8 +24,8 @@ if process.env.NODE_ENV is 'production' then app.use morgan 'common' else app.us
 
 app.use serveStatic(path.join __dirname, 'dist')
 
-storeByUsername = (username) -> sequelize.query 'SELECT id, storefront_meta, collections FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
-storeByDomain   = (host) -> sequelize.query 'SELECT id, storefront_meta, collections FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
+storeByUsername = (username) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
+storeByDomain   = (host) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
 selectionsByFeatured    = (seller_id) -> sequelize.query 'SELECT id, title, selling_price, image, collection from "Selections" WHERE seller_id = ? and featured = true', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
 selectionsByCollection  = (seller_id, collection) -> sequelize.query 'SELECT id, title, selling_price, image, collection from "Selections" WHERE seller_id = ? and collection = ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, collection] }
@@ -57,7 +57,7 @@ findByHostAndPath = (host, path) ->
     if path is '/'
       querySel = selectionsByFeatured
     else if path.indexOf('shop/') > -1
-      collection = path.split('shop/')[1]
+      collection = path.split('shop/')[1].replace(/[^a-zA-Z0-9]/gi, '_').toLowerCase()
       querySel = if collection is 'featured' then selectionsByFeatured else selectionsByCollection
     else
       querySel = () -> return
@@ -77,31 +77,40 @@ String.prototype.escapeSpecialChars = () ->
     .replace /\\b/g, "\\b"
     .replace /\\f/g, "\\f"
 
-app.get '/*', (req, res, next) ->
+app.get ['/', '/shop/*', '/about'], (req, res, next) ->
   bootstrap = {}
   host = req.headers.host
   path = req.url
   if path is '/favicon.ico' then return res.send 'favicon.ico not found'
   findByHostAndPath host, path
   .then (data) ->
-    { storefront_meta, collections, selections, count } =  data
+    { username, storefront_meta, collections, selections, count } =  data
     if !storefront_meta then throw 'Not found'
     bootstrap =
+      first_load:       true
+      username:         username
       storefront_meta:  storefront_meta
       collections:      collections
       collection_names: collectionNames collections
       selections:       selections
       count:            count
+      title:            storefront_meta.home.name
     bootstrap.stringified = JSON.stringify(bootstrap).escapeSpecialChars()
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error running query', err
     res.send 'Not found'
 
+app.get ['/selections/*'], (req, res, next) ->
+  bootstrap = {}
+  bootstrap.stringified = JSON.stringify(bootstrap).escapeSpecialChars()
+  res.render 'store.ejs', { bootstrap: bootstrap }
+
 # TODO add proper routes http://expressjs.com/guide/routing.html
 # app.get '/'
 # app.get '/about'
 # app.get '/collections/*'
+# app.get '/selections/*'
 # app.get '/shop/*'
 # app.get '/cart'
 
