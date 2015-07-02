@@ -2,8 +2,6 @@
 
 angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, eeBootstrap, eeCart) ->
 
-  # TODO implement cart_quantity for PayPal
-
   cart = this
 
   # Define data
@@ -36,7 +34,9 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
   cart.total    = cart.subtotal + cart.taxes
 
   # Other PayPal variables
-  cart.item_name      = if cart.quantity_array.length > 1 then ('' + cart.quantity_array.length + ' items') else cart.selections[0]?.title
+  cart.quantity       = 0
+  cart.quantity += pair.quantity for pair in cart.quantity_array
+  cart.item_name      = if cart.quantity_array.length > 1 then ('' + cart.quantity_array.length + ' items (qty: ' + cart.quantity + ')') else cart.selections[0]?.title
   cart.item_number    = $cookies.cart?.split('.')[1]
   cart.return         = '' + $location.absUrl() + '/success'
   cart.cancel_return  = '' + $location.absUrl()

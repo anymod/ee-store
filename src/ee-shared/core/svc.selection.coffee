@@ -110,4 +110,4 @@ angular.module('app.core').factory 'eeSelection', ($rootScope, $cookies, $q, eeB
     updateSelection:    _updateSelection
     deleteSelection:    _deleteSelection
     setSelectionFromId: _setSelectionFromId
-    createSelectionFromProduct: (product) -> createSelection { product_id: product.id }
+    # createSelectionFromProduct: (product) -> createSelection { product_id: product.id }

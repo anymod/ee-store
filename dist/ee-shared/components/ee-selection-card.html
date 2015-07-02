@@ -1,9 +1,9 @@
-<!-- PRODUCT CARD -->
+<!-- SELECTION CARD -->
 <div class="well white-background max-width-900 box-shadow margin-0-auto text-left">
   <div class="container-fluid vert-10">
     <div class="row">
       <div class="col col-sm-6 max-height-600">
-        <img ng-src="{{ mainImage }}" class="full-width" name="mainImage">
+        <img ng-src="{{ mainImage | mainImg }}" class="full-width" name="mainImage">
         <!-- images -->
         <div ng-show="details.image_meta.additional_images.length > 0" class="vert-5">
           <img ng-src="{{ details.image_meta.main_image.url | thumbnail }}"
@@ -14,10 +14,11 @@
                class="inline-block width-62 gray-border hover-pointer margin-2"
                ng-click="setMainImage(img.url)" />
         </div>
+        <!-- /images -->
       </div>
       <div class="col col-sm-6">
         <div class="pad-10">
-          <h1 ng-bind="title" class="vert-10 margin-top-0 font-weight-200"></h1>
+          <h1 ng-bind="selectionTitle" class="vert-10 margin-top-0 font-weight-200"></h1>
           <h3 ng-bind="price | centToDollar"></h3>
           <h4 ng-bind="content" class="vert-20 font-weight-200" style="white-space: pre-line;"></h4>
           <div class="btn btn-primary btn-lg btn-block" ng-disabled="disabled" ng-click="addToCart()">Add to cart</div>
@@ -72,8 +73,4 @@
       </div>
     </div>
   </div>
-</div> <!-- /PRODUCT CARD -->
-
-<!-- <pre class="text-left">
-  {{ details | json }}
-</pre> -->
+</div> <!-- /SELECTION CARD -->
