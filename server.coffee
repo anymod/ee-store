@@ -31,7 +31,7 @@ setup = (req) ->
   {
     bootstrap:
       cart: req.cart
-      url: req.headers.host + req.url
+      url: req.protocol + '://' + req.get('host') + req.originalUrl
     host: req.headers.host
     path: url.parse(req.url).pathname
   }
