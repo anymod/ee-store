@@ -1,5 +1,9 @@
 <!doctype html>
-<html ng-app="eeStore" lang="en" <% if (!!bootstrap.selection) { itemscope itemtype="http://schema.org/Product" } %>>
+<% if (!!bootstrap.selection) { %>
+  <html ng-app="eeStore" lang="en" itemscope itemtype="http://schema.org/Product">
+<% } else { %>
+  <html ng-app="eeStore" lang="en">
+<% } %>
 
 <head>
   <title><%= bootstrap.title %> </title>
@@ -35,6 +39,7 @@
     <meta property="og:type" content="article" />
     <meta property="og:url" content="<%= bootstrap.url %>" />
     <meta property="og:image" content="<%= bootstrap.selection.image %>" />
+    <meta property="og:image:secure_url" content="<%= bootstrap.selection.image %>" />
     <meta property="og:description" content="<%= bootstrap.selection.content %>" />
     <meta property="og:site_name" content="<%= bootstrap.site_name %>" />
     <meta property="og:price:amount" content="<%= parseInt(bootstrap.selection.selling_price) / 100 %>" />
