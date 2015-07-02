@@ -1,5 +1,5 @@
 <!doctype html>
-<html ng-app="eeStore" lang="en">
+<html ng-app="eeStore" lang="en" <% if (!!bootstrap.selection) { itemscope itemtype="http://schema.org/Product" } %>>
 
 <head>
   <title><%= bootstrap.title %> </title>
@@ -13,8 +13,6 @@
   <base href="/">
 
   <% if (!!bootstrap.selection) { %>
-    <html itemscope itemtype="http://schema.org/Product">
-
     <!-- Schema.org markup for Google+ -->
     <meta itemprop="name" content="<%= bootstrap.selection.title %>">
     <meta itemprop="description" content="<%= bootstrap.selection.content %>">
