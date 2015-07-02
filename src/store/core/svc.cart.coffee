@@ -50,6 +50,7 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
         pair.quantity += 1
         inArray = true
     quantity_array.push { id: selection_id, quantity: 1 } unless inArray
+    quantity_array
 
   _remove = (selection_id, quantity_array) ->
     quantity_array ||= []
@@ -59,7 +60,7 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
     temp
 
   _addSelection = (selection_id, quantity_array) ->
-    _addOrIncrement selection_id, quantity_array
+    quantity_array = _addOrIncrement selection_id, quantity_array
     if $cookies.cart
       [ee, cart_id, token] = $cookies.cart.split('.')
       eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }

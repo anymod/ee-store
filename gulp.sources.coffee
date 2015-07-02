@@ -57,11 +57,11 @@ sources.storeModule = [
   './src/store/core/store.config.coffee'
   './src/store/core/core.route.coffee'
   # Services
-  './src/store/core/svc.auth.coffee'
+  # './src/store/core/svc.auth.coffee'
   './src/store/core/svc.back.coffee'
   './src/store/core/svc.cart.coffee'
-  './src/store/core/svc.landing.coffee'
-  './src/store/core/svc.fetcher.coffee'
+  # './src/store/core/svc.landing.coffee'
+  # './src/store/core/svc.fetcher.coffee'
   # Module - store
   './src/store/store.controller.coffee'
   # Module - selection
