@@ -62,12 +62,12 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
         top:
-          controller: 'storeCtrl as storefront'
+          controller: 'selectionCtrl as storefront'
           templateUrl: 'store/store.selection.html'
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
-      data:     data,
+      data: data,
       params:
         slug:
           value: null

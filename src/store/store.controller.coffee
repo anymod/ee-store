@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('eeStore').controller 'storeCtrl', ($rootScope, eeBootstrap) ->
+angular.module('eeStore').controller 'storeCtrl', (eeBootstrap) ->
 
   this.ee =
     meta: eeBootstrap?.storefront_meta

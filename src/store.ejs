@@ -8,8 +8,40 @@
   <meta charset="utf-8">
   <meta http-equiv="content-type" content="text/html; charset=UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="robots" content="index,follow">
 
   <base href="/">
+
+  <% if (!!bootstrap.selection) { %>
+    <html itemscope itemtype="http://schema.org/Product">
+
+    <!-- Schema.org markup for Google+ -->
+    <meta itemprop="name" content="<%= bootstrap.selection.title %>">
+    <meta itemprop="description" content="<%= bootstrap.selection.content %>">
+    <meta itemprop="image" content="<%= bootstrap.selection.image %>">
+
+    <!-- Twitter Card data -->
+    <meta name="twitter:card" content="product">
+    <!-- <meta name="twitter:site" content="@publisher_handle"> -->
+    <!-- <meta name="twitter:creator" content="@author_handle"> -->
+    <meta name="twitter:title" content="<%= bootstrap.selection.title %>">
+    <meta name="twitter:description" content="<%= bootstrap.selection.content %>">
+    <meta name="twitter:image" content="<%= bootstrap.selection.image %>">
+    <meta name="twitter:data1" content="$<%= parseInt(bootstrap.selection.selling_price) / 100 %>">
+    <meta name="twitter:label1" content="Price">
+    <!-- <meta name="twitter:data2" content="Black"> -->
+    <!-- <meta name="twitter:label2" content="Color"> -->
+
+    <!-- Open Graph data -->
+    <meta property="og:title" content="<%= bootstrap.selection.title %>" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="<%= bootstrap.url %>" />
+    <meta property="og:image" content="<%= bootstrap.selection.image %>" />
+    <meta property="og:description" content="<%= bootstrap.selection.content %>" />
+    <meta property="og:site_name" content="<%= bootstrap.site_name %>" />
+    <meta property="og:price:amount" content="<%= parseInt(bootstrap.selection.selling_price) / 100 %>" />
+    <meta property="og:price:currency" content="USD" />
+  <% } %>
 
   <!-- Do not edit inside of build block; it is auto-generated -->
   <!-- build:css -->
@@ -29,6 +61,9 @@
 </head>
 
 <body id="body-top" style="padding-top: 50px;">
+  <% if (!!bootstrap.title) { %>
+    <h1 class="position-fixed overflow-hidden height-0" style="top: -5000px;"><%= bootstrap.title %></h1>
+  <% } %>
 
   <div ui-view="header" id="ee-header" class="position-fixed" style="top: 0; z-index: 2000;"></div>
   <div ui-view="top"    id="ee-top-view" class="position-relative"></div>
@@ -64,9 +99,11 @@
   <script src="js/store/core/svc.landing.js"></script>
   <script src="js/store/core/svc.fetcher.js"></script>
   <script src="js/store/store.controller.js"></script>
+  <script src="js/store/selection.controller.js"></script>
   <script src="js/store/cart.controller.js"></script>
   <script src="js/ee-shared/components/ee-button-add-to-cart.js"></script>
   <script src="js/ee-shared/components/ee-selection-for-storefront.js"></script>
+  <script src="js/ee-shared/components/ee-selection-card.js"></script>
   <script src="js/ee-shared/components/ee-shop-nav.js"></script>
   <script src="js/ee-shared/components/ee-storefront-header.js"></script>
   <script src="js/ee-shared/components/ee-scroll-to-top.js"></script>

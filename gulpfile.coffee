@@ -97,7 +97,6 @@ copyToDist = (url) ->
     .pipe gp.replace "# 'ee.templates'", "'ee.templates'" # for store.index.coffee $templateCache
     .pipe gp.replace "'env', 'development'", "'env', 'production'" # TODO use gulp-ng-constant
     # .pipe gp.replace "'demoseller' # username", "username" # allows testing at *.localhost
-    .pipe gp.replace /@@eeBackUrl/g, url
     .pipe gp.coffee()
     .pipe gp.ngAnnotate()
   # minified and uglify vendorUnmin, templates, and modules
@@ -106,6 +105,7 @@ copyToDist = (url) ->
   # concat: vendorMin before jsMin because vendorMin has angular
   streamqueue objectMode: true, storeVendorMin, storeCustomMin
     .pipe gp.concat 'ee.store.js'
+    .pipe gp.replace /@@eeBackUrl/g, url
     .pipe gulp.dest distPath
 
 

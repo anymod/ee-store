@@ -64,6 +64,8 @@ sources.storeModule = [
   './src/store/core/svc.fetcher.coffee'
   # Module - store
   './src/store/store.controller.coffee'
+  # Module - selection
+  './src/store/selection.controller.coffee'
   # Module - cart
   './src/store/cart.controller.coffee'
 ]
@@ -72,6 +74,7 @@ sources.storeModule = [
 sources.storeDirective = [
   './src/ee-shared/components/ee-button-add-to-cart.coffee'
   './src/ee-shared/components/ee-selection-for-storefront.coffee'
+  './src/ee-shared/components/ee-selection-card.coffee'
   './src/ee-shared/components/ee-shop-nav.coffee'
   './src/ee-shared/components/ee-storefront-header.coffee'
   './src/ee-shared/components/ee-scroll-to-top.coffee'

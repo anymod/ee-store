@@ -1,11 +1,14 @@
-<ee-selection-card
-  title="storefront.data.selection.title"
-  content="storefront.data.selection.content"
-  price="storefront.data.selection.selling_price"
-  main-image="{{ storefront.data.selection.image }}"
-  details="storefront.data.selection.catalog_meta">
-</ee-selection-card>
+<ol class="breadcrumb round-0 box-shadow">
+  <li><a href="/">Home</a></li>
+  <li><a ui-sref="collection({ title: (storefront.data.selection.collection | urlText) })">{{ storefront.data.selection.collection | humanize }}</a></li>
+</ol>
 
-<pre>
-  {{ storefront.data | json }}
-</pre>
+<div class="pad-10 vert-20">
+  <ee-selection-card
+    selection-title="storefront.data.selection.title"
+    content="storefront.data.selection.content"
+    price="storefront.data.selection.selling_price"
+    main-image="{{ storefront.data.selection.image }}"
+    details="storefront.data.selection.product_meta">
+  </ee-selection-card>
+</div>

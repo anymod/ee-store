@@ -91,13 +91,13 @@
           <li ng-show="state == 'storefront.audience'">
             <a ng-if="isBuilder && !meta.audience.social.facebook && !meta.audience.social.pinterest && !meta.audience.social.twitter && !meta.audience.social.instagram && !meta.audience.contact.email"
                ui-sref="storefront-edit" class="squeeze-5" ng-style="{ color: meta.home.topBarColor }">
-              <i class="fa fa-fw fa-facebook"></i>
-              <i class="fa fa-fw fa-pinterest"></i>
-              <i class="fa fa-fw fa-twitter"></i>
-              <i class="fa fa-fw fa-instagram"></i>
-              <i class="fa fa-fw fa-envelope"></i>
+              <i class="fa fa-fw fa-lg fa-facebook"></i>
+              <i class="fa fa-fw fa-lg fa-pinterest"></i>
+              <i class="fa fa-fw fa-lg fa-twitter"></i>
+              <i class="fa fa-fw fa-lg fa-instagram"></i>
+              <i class="fa fa-fw fa-lg fa-envelope"></i>
             </a>
-            <div class="popover bottom in inline-block"
+            <!-- <div class="popover bottom in inline-block"
                  style="top: 42px; width: 300px; right: -10px; left: auto;">
               <div class="arrow" style="left: auto; right: 4%;"></div>
               <div ng-if="!meta.audience.social.facebook && !meta.audience.social.pinterest && !meta.audience.social.twitter && !meta.audience.social.instagram && !meta.audience.contact.email"
@@ -108,10 +108,10 @@
                    class="popover-content">
                 <div ng-if="!!meta.audience.social.facebook || !!meta.audience.social.pinterest || !!meta.audience.social.twitter || !!meta.audience.social.instagram">
                   Your links are active for
-                  <a ng-if='!!meta.audience.social.facebook' class="btn btn-info btn-block" href="http://facebook.com/{{ meta.audience.social.facebook }}" target="_blank"><i class="fa fa-fw fa-facebook"></i> Facebook<br><small><small>facebook.com/</small>{{ meta.audience.social.facebook }}</small></a>
-                  <a ng-if='!!meta.audience.social.pinterest' class="btn btn-danger btn-block" href="http://pinterest.com/{{ meta.audience.social.pinterest }}" target="_blank"><i class="fa fa-fw fa-pinterest"></i> Pinterest<br><small><small>pinterest.com/</small>{{ meta.audience.social.pinterest }}</small></a>
-                  <a ng-if='!!meta.audience.social.twitter' class="btn btn-primary btn-block" href="http://twitter.com/{{ meta.audience.social.twitter }}" target="_blank"><i class="fa fa-fw fa-twitter"></i> Twitter<br><small><small>twitter.com/</small>{{ meta.audience.social.twitter }}</small></a>
-                  <a ng-if='!!meta.audience.social.instagram' class="btn btn-warning btn-block" href="http://instagram.com/{{ meta.audience.social.instagram }}" target="_blank"><i class="fa fa-fw fa-instagram"></i> Instagram<br><small><small>instagram.com/</small>{{ meta.audience.social.instagram }}</small></a>
+                  <a ng-if='!!meta.audience.social.facebook' class="btn btn-info btn-block" href="http://facebook.com/{{ meta.audience.social.facebook }}" target="_blank"><i class="fa fa-lg fa-fw fa-facebook"></i> Facebook<br><small><small>facebook.com/</small>{{ meta.audience.social.facebook }}</small></a>
+                  <a ng-if='!!meta.audience.social.pinterest' class="btn btn-danger btn-block" href="http://pinterest.com/{{ meta.audience.social.pinterest }}" target="_blank"><i class="fa fa-lg fa-fw fa-pinterest"></i> Pinterest<br><small><small>pinterest.com/</small>{{ meta.audience.social.pinterest }}</small></a>
+                  <a ng-if='!!meta.audience.social.twitter' class="btn btn-primary btn-block" href="http://twitter.com/{{ meta.audience.social.twitter }}" target="_blank"><i class="fa fa-lg fa-fw fa-twitter"></i> Twitter<br><small><small>twitter.com/</small>{{ meta.audience.social.twitter }}</small></a>
+                  <a ng-if='!!meta.audience.social.instagram' class="btn btn-warning btn-block" href="http://instagram.com/{{ meta.audience.social.instagram }}" target="_blank"><i class="fa fa-lg fa-fw fa-instagram"></i> Instagram<br><small><small>instagram.com/</small>{{ meta.audience.social.instagram }}</small></a>
                   <br>
                 </div>
                 <div ng-if="meta.audience.contact.email">
@@ -125,7 +125,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </li>
 
           <!-- TODO implement search on storefront products -->
@@ -133,11 +133,11 @@
 
           <li class="dropdown" dropdown>
             <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
-              <i class="fa fa-shopping-cart"></i>
+              <i class="fa fa-lg fa-shopping-cart"></i>
             </a>
             <a ng-if="isStore" ui-sref="cart" class="position-relative" ng-style="{ color: meta.home.topBarColor }">
-              <i class="fa fa-shopping-cart"></i>
-              <span ng-show="cart.calc_meta.count >= 1" ng-bind="cart.calc_meta.count"></span>
+              <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
+              <strong ng-if="quantityArray && quantityArray.length > 0">{{ quantityArray.length }}</strong>
             </a>
 
             <ul class="dropdown-menu">

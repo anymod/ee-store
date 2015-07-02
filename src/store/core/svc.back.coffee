@@ -63,3 +63,17 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       url: eeBackUrl + 'store/selections/' + selection_id
       headers: authorization: username
     }
+
+  cartPOST: (quantity_array) ->
+    _makeRequest {
+      method: 'POST'
+      url: eeBackUrl + 'carts'
+      data: { quantity_array: quantity_array }
+    }
+
+  cartPUT: (cart_id, data) ->
+    _makeRequest {
+      method: 'PUT'
+      url: eeBackUrl + 'carts/' + cart_id
+      data: data
+    }
