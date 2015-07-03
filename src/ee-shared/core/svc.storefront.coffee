@@ -74,8 +74,6 @@ angular.module('app.core').factory 'eeStorefront', ($rootScope, $q, $location, e
     if !eeAuth.fns.getToken() then deferred.reject('Missing login credentials'); return deferred.promise
     _data.loading = deferred.promise
 
-    console.log 'usersStorefrontGET', eeAuth.fns.getToken(), collection
-
     eeBack.usersStorefrontGET eeAuth.fns.getToken(), collection
     .then (data) ->
       { storefront_meta, collections, count, selections } = data

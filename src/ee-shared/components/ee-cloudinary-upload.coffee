@@ -1,25 +1,26 @@
 angular.module 'ee-cloudinaryUpload', []
 
-angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", (eeDefiner) ->
+angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", () ->
   templateUrl: 'ee-shared/components/ee-cloudinary-upload.html'
   restrict: 'E'
   replace: true
   scope:
+    meta: '='
     attrTarget: '='
   link: (scope, element, attrs) ->
     form = element
+    cloudinary_transform = if scope.attrTarget is 'logo' then 'storefront_logo' else 'storefront_home'
 
-    scope.user  = eeDefiner.exports.user
-    username    = scope.user.username
     form
-      .append $.cloudinary.unsigned_upload_tag "storefront_home", {
+      .append $.cloudinary.unsigned_upload_tag cloudinary_transform, {
           cloud_name: 'eeosk',
-          tags: 'browser_uploads', username
+          tags: 'browser_uploads'
         }
 
     assignAttr = (data) ->
-      if scope.attrTarget is 'carousel' then scope.user.storefront_meta.home.carousel[0].imgUrl = data.result.secure_url
-      if scope.attrTarget is 'about' then scope.user.storefront_meta.about.imgUrl = data.result.secure_url
+      if scope.attrTarget is 'carousel' then scope.meta.home.carousel[0].imgUrl = data.result.secure_url
+      if scope.attrTarget is 'about'    then scope.meta.about.imgUrl = data.result.secure_url
+      if scope.attrTarget is 'logo'     then scope.meta.logo = data.result.secure_url
 
     resetProgress = () ->
       scope.progress = 0
@@ -33,16 +34,6 @@ angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", (eeDefiner
           assignAttr(data)
           scope.$apply()
           bindCloudinary()
-          # $('.carousel img').append($.cloudinary.image(data.result.public_id,
-          #   {
-          #     format: 'jpg',
-          #     width: 150,
-          #     height: 100,
-          #     crop: 'thumb',
-          #     gravity: 'face',
-          #     effect: 'saturation:50'
-          #   }
-          # ))
         .bind 'cloudinaryprogress', (e, data) ->
           percentage = Math.round((data.loaded * 100.0) / data.total)
           # Only scope.$apply periodically

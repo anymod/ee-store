@@ -17,7 +17,7 @@
         <h4 class="margin-0">{{ $state.params.title || 'Featured' | humanize }}</h4>
         <h2 ng-show="storefront.data.loading"><i class="fa fa-fw fa-spin fa-circle-o-notch text-info"></i></h2>
         <div ng-hide="storefront.data.loading" class="full-width vert-20 overflow-hidden">
-          <div ng-repeat="selection in storefront.data.selections | eeShopCategories:$state.params.category" class="product-container inline-block width-160 vertical-align-top">
+          <div ng-repeat="selection in storefront.data.selections" class="product-container inline-block width-160 vertical-align-top">
             <ee-selection-for-storefront selection="selection"></ee-selection-for-storefront>
             <br>
           </div>

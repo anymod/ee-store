@@ -8402,6 +8402,18 @@ colorpicker-preview {
   color: white;
 }
 /* @brand-danger: #ED5E5A; */
+.text-facebook {
+  color: #3b5998 !important;
+}
+.text-pinterest {
+  color: #cc2127 !important;
+}
+.text-twitter {
+  color: #55acee !important;
+}
+.text-instagram {
+  color: #3f729b !important;
+}
 .dropdown-menu {
   z-index: 1070;
 }
@@ -8474,9 +8486,6 @@ colorpicker-preview {
   max-width: 730px;
   margin: 0 auto;
 }
-.pad-top-navbar {
-  padding-top: 50px;
-}
 html,
 body {
   height: 100%;
@@ -8520,9 +8529,9 @@ html {
   color: white;
 }
 .main-navbar {
-  height: 49px;
-  min-height: 49px;
-  max-height: 49px;
+  height: 50px;
+  min-height: 50px;
+  max-height: 50px;
 }
 .main-navbar ul.nav {
   display: inline-block !important;
@@ -8539,7 +8548,7 @@ html {
   right: 0;
 }
 .navbar-subheader {
-  top: 49px;
+  top: 50px;
   left: 0;
   right: 0;
 }
@@ -8555,6 +8564,18 @@ html {
     margin-left: 0;
     right: 5px;
   }
+}
+.store-navbar {
+  min-height: 75px;
+}
+.store-navbar .navbar-nav > li > a {
+  padding: 28px 15px 27px;
+}
+.store-navbar a.navbar-brand {
+  font-size: 30px;
+  line-height: 30px;
+  padding: 19px 10px;
+  height: 73px;
 }
 .white-background {
   background: white !important;
@@ -8586,7 +8607,8 @@ html {
 .light-gray-background {
   background: #f6f6f6 !important;
 }
-.light-light-gray-background {
+.light-light-gray-background,
+.light-background {
   background: #fcfcfc !important;
 }
 .light-dark-background {
@@ -8648,7 +8670,8 @@ html {
   box-shadow: none;
   -webkit-box-shadow: none;
 }
-.no-underline:hover {
+.no-underline:hover,
+.no-underline:focus {
   text-decoration: none;
 }
 .text-underline {
@@ -8854,6 +8877,9 @@ html {
 }
 .round-5 {
   border-radius: 5px;
+}
+.round-20 {
+  border-radius: 20px;
 }
 .round-top {
   border-top-left-radius: 5px !important;
@@ -9220,35 +9246,6 @@ nav {
 .is-arrow-right {
   right: 20px;
 }
-/* .segment-1 {
-  padding: 50px 0;
-}
-
-.segment-2 {
-  background: url('../img/cup.jpg') no-repeat;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  height: 590px;
-  color: #f5f5f5;
-}
-
-.segment-3 {
-  background-color: @ee-blue;
-  padding: 50px 0;
-  color: #f5f5f5;
-}
-
-.segment-4 { padding: 50px 0; }
-
-.segment-5 {
-  background: url('../img/casual_guy.jpg') no-repeat 10% center;
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  background-size: cover;
-  height: 680px;
-  color: #f5f5f5;
-} */
 .btn-container {
   padding: 20px 0;
 }
@@ -9383,30 +9380,6 @@ nav {
 #ee-main.open {
   margin-left: 300px;
 }
-/* @media (max-width: 767px) {
-  #ee-main {
-    width: 100%;
-    min-width: 100%;
-    max-width: 100%;
-    margin-left: 0px !important;
-    margin-right: 0px !important;
-  }
-  #ee-offscreen,
-  .open-nav {
-    left: -@offscreen-left-width !important;
-  }
-  body {
-    -webkit-transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
-    -ms-transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
-    transition: all 0.2s cubic-bezier(0.7, 0, 0.175, 1) 0s;
-  }
-  body.open {
-    left: 300px;
-    -webkit-transform: translate(@offscreen-left-width, 0);
-    -ms-transform: translate(@offscreen-left-width, 0);
-    transform: translate(@offscreen-left-width, 0);
-  }
-} */
 #ee-offscreen {
   position: fixed;
   top: 0;
@@ -9465,19 +9438,13 @@ nav {
 }
 .storefront-carousel {
   max-height: 500px;
-  background: #eeeeee;
+  background: white;
 }
 .storefront-carousel .position-absolute {
   top: 25%;
 }
 .storefront-carousel .well {
-  background: rgba(200, 200, 200, 0.8);
-  border: none;
-}
-.storefront-carousel .well h3,
-.storefront-carousel .well p {
-  color: white;
-  text-shadow: black 1px 1px;
+  background: rgba(255, 255, 255, 0.9);
 }
 .storefront-carousel .left {
   padding-left: 12%;
