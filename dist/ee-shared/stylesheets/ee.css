@@ -8946,6 +8946,9 @@ html {
 .max-height-2400 {
   max-height: 2400px;
 }
+.min-height-300 {
+  min-height: 300px;
+}
 .min-height-600 {
   min-height: 600px;
 }

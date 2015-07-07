@@ -43,7 +43,7 @@ sources.appModule = [
   # './src/ee-shared/core/svc.back.coffee'
   # './src/ee-shared/core/svc.storefront.coffee'
   # './src/ee-shared/core/svc.product.coffee'
-  './src/ee-shared/core/svc.modal.coffee'
+  # './src/ee-shared/core/svc.modal.coffee'
   # './src/ee-shared/core/svc.definer.coffee'
   './src/ee-shared/core/svc.selections.coffee'
   # Product modal
@@ -60,6 +60,7 @@ sources.storeModule = [
   # './src/store/core/svc.auth.coffee'
   './src/store/core/svc.back.coffee'
   './src/store/core/svc.cart.coffee'
+  './src/store/core/svc.modal.coffee'
   # './src/store/core/svc.landing.coffee'
   # './src/store/core/svc.fetcher.coffee'
   # Module - store
@@ -68,6 +69,8 @@ sources.storeModule = [
   './src/store/selection.controller.coffee'
   # Module - cart
   './src/store/cart.controller.coffee'
+  # Module - modal
+  './src/store/modal/modal.controller.coffee'
 ]
 
 ### DIRECTIVES ###

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.core').run ($rootScope, $window) ->
+angular.module('store.core').run ($rootScope, $window, $cookies, eeModal, eeBootstrap) ->
   $rootScope.isStore = true
 
   n = 0
@@ -15,5 +15,10 @@ angular.module('store.core').run ($rootScope, $window) ->
       if frags[2] and toParams[frags[2]] then path = path + '/' + toParams[frags[2]]
       $window.location.assign(protocol + '//' + host + path)
     n += 1
+
+  if eeBootstrap.username is 'stylishrustic' and !$cookies.offered then $rootScope.mouseleave = () ->
+    $cookies.offered = true
+    eeModal.fns.open 'offer'
+    $rootScope.mouseleave = () -> false
 
   return

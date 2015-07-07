@@ -63,7 +63,7 @@
   <% } %>
 </head>
 
-<body id="body-top" style="padding-top: 74px;">
+<body id="body-top" style="padding-top: 74px;" ng-mouseleave="mouseleave()">
   <% if (!!bootstrap.title) { %>
     <h1 class="position-fixed overflow-hidden height-0" style="top: -5000px;"><%= bootstrap.title %></h1>
   <% } %>
@@ -89,7 +89,6 @@
   <script src="js/ee-shared/core/filters.js"></script>
   <script src="js/ee-shared/core/config.js"></script>
   <script src="js/ee-shared/core/run.js"></script>
-  <script src="js/ee-shared/core/svc.modal.js"></script>
   <script src="js/ee-shared/core/svc.selections.js"></script>
   <script src="js/store/store.index.js"></script>
   <script src="js/store/core/core.module.js"></script>
@@ -98,9 +97,11 @@
   <script src="js/store/core/core.route.js"></script>
   <script src="js/store/core/svc.back.js"></script>
   <script src="js/store/core/svc.cart.js"></script>
+  <script src="js/store/core/svc.modal.js"></script>
   <script src="js/store/store.controller.js"></script>
   <script src="js/store/selection.controller.js"></script>
   <script src="js/store/cart.controller.js"></script>
+  <script src="js/store/modal/modal.controller.js"></script>
   <script src="js/ee-shared/components/ee-button-add-to-cart.js"></script>
   <script src="js/ee-shared/components/ee-selection-for-storefront.js"></script>
   <script src="js/ee-shared/components/ee-selection-card.js"></script>

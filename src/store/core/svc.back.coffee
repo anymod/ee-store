@@ -77,3 +77,12 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       url: eeBackUrl + 'carts/' + cart_id
       data: data
     }
+
+  customerPOST: (email, seller_id) ->
+    _makeRequest {
+      method: 'POST'
+      url: eeBackUrl + 'customers'
+      data:
+        email: email
+        seller_id: seller_id
+    }

@@ -37,7 +37,7 @@ setup = (req) ->
   }
 
 assignBootstrap = (bootstrap, attrs) ->
-  bootstrap.first_load        = true
+  bootstrap.id                = attrs.id
   bootstrap.username          = attrs.username
   bootstrap.storefront_meta   = attrs.storefront_meta
   bootstrap.collections       = attrs.collections
