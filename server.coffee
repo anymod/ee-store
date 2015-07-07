@@ -48,7 +48,12 @@ app.get ['/', '/featured', '/shop/featured', '/about'], (req, res, next) ->
     finders.selectionsByFeatured data[0].id
   .then (selections) ->
     # TODO add pagination
-    bootstrap.selections = selections
+    bootstrap.selections = selections || []
+    if path.indexOf('featured') > -1
+      console.log 'PATH', path
+      bootstrap.collection  = 'Featured'
+      bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
+      bootstrap.images      = _.pluck bootstrap.selections.slice(0,5), 'image'
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -66,10 +71,10 @@ app.get ['/shop/:collection'], (req, res, next) ->
     finders.selectionsByCollection data[0].id, collection
   .then (selections) ->
     # TODO add pagination
+    bootstrap.selections  = selections || []
     bootstrap.collection  = helpers.humanize collection
     bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-    bootstrap.selections  = selections || []
-    bootstrap.images      = _.pluck selections.slice(0,5), 'image'
+    bootstrap.images      = _.pluck bootstrap.selections.slice(0,5), 'image'
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
