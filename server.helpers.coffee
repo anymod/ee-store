@@ -26,6 +26,7 @@ h.assignBootstrap = (bootstrap, attrs) ->
   bootstrap.collection_names  = h.collectionNames attrs.collections
   bootstrap.title             = attrs.storefront_meta?.home?.name
   bootstrap.site_name         = attrs.storefront_meta?.home?.name
+  bootstrap.images            = if attrs.storefront_meta?.home?.carousel[0]?.imgUrl then h.makeMetaImages([ attrs.storefront_meta?.home?.carousel[0]?.imgUrl ]) else []
   bootstrap
 
 h.stringify = (obj) ->
@@ -47,5 +48,16 @@ h.humanize = (text) ->
 
 h.formCollectionPageTitle = (collection, title) ->
   if collection and title then (collection + ' | ' + title) else collection
+
+h.makeMetaImage = (url) ->
+  if !!url and url.indexOf("image/upload") > -1
+    url.split("image/upload").join('image/upload/c_pad,w_600,h_314').replace('https://', 'http://')
+  else
+    url
+
+h.makeMetaImages = (img_array) ->
+  imgs = []
+  imgs.push h.makeMetaImage(img) for img in img_array
+  imgs
 
 module.exports = h

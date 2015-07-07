@@ -48,12 +48,11 @@ app.get ['/', '/featured', '/shop/featured', '/about'], (req, res, next) ->
     finders.selectionsByFeatured data[0].id
   .then (selections) ->
     # TODO add pagination
-    bootstrap.selections = selections || []
+    bootstrap.selections    = selections || []
     if path.indexOf('featured') > -1
-      console.log 'PATH', path
       bootstrap.collection  = 'Featured'
       bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-      bootstrap.images      = _.pluck bootstrap.selections.slice(0,5), 'image'
+      bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -74,7 +73,7 @@ app.get ['/shop/:collection'], (req, res, next) ->
     bootstrap.selections  = selections || []
     bootstrap.collection  = helpers.humanize collection
     bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-    bootstrap.images      = _.pluck bootstrap.selections.slice(0,5), 'image'
+    bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -89,9 +88,10 @@ app.get '/selections/:id/:slug', (req, res, next) ->
     helpers.assignBootstrap bootstrap, data[0]
     finders.selectionByIds req.params.id, data[0].id
   .then (selection) ->
-    bootstrap.title = selection[0].title
-    bootstrap.description = selection[0].content
-    bootstrap.selection = selection[0]
+    bootstrap.selection   = selection[0]
+    bootstrap.title       = bootstrap.selection.title
+    bootstrap.images      = helpers.makeMetaImages([ bootstrap.selection?.image ])
+    bootstrap.description = bootstrap.selection.content
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
