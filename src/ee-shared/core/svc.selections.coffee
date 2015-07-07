@@ -113,6 +113,7 @@ angular.module('app.core').factory 'eeSelections', ($rootScope, $q, eeBack, eeAu
   ## EXPORTS
   data: _data
   fns:
+    update: () -> _runQuery()
     search: () ->
       _data.inputs.page = 1
       _runQuery()
