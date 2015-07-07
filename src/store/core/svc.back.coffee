@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
+angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstrap) ->
 
   _data =
     requesting: false
@@ -68,7 +68,10 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
     _makeRequest {
       method: 'POST'
       url: eeBackUrl + 'carts'
-      data: { quantity_array: quantity_array }
+      data:
+        quantity_array: quantity_array
+        seller_id: eeBootstrap?.id
+        domain: eeBootstrap?.url
     }
 
   cartPUT: (cart_id, data) ->
