@@ -8414,6 +8414,12 @@ colorpicker-preview {
 .text-instagram {
   color: #3f729b !important;
 }
+.text-dark-gray {
+  color: #474747 !important;
+}
+.text-dark-blue {
+  color: #0286c2 !important;
+}
 .dropdown-menu {
   z-index: 1070;
 }
@@ -8661,7 +8667,7 @@ html {
   border: 1px solid #eceff1 !important;
 }
 .dark-gray-border {
-  border: 1px solid #cfd6db !important;
+  border: 1px solid #474747 !important;
 }
 .blue-border {
   border: 1px solid #03a9f4 !important;
@@ -8984,6 +8990,9 @@ html {
 }
 .width-200 {
   width: 200px;
+}
+.width-250 {
+  width: 250px;
 }
 .width-300 {
   width: 300px;
@@ -9428,17 +9437,10 @@ nav {
   width: auto;
   height: auto;
 }
-.selection-container {
+/* .selection-container {
   margin-right: 10px;
-}
-.selection-container img:hover,
-.selection-container .product-title:hover {
-  cursor: pointer;
-}
-.selection-container img:hover + div .product-title,
-.selection-container .product-title:hover {
-  color: #03a9f4;
-}
+  img:hover, .product-title:hover { cursor: pointer; }
+} */
 .storefront-carousel {
   max-height: 500px;
   background: white;

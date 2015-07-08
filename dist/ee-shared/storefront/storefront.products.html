@@ -5,19 +5,20 @@
 </div>
 
 <div class="featured" ng-hide="storefront.ee.loading">
-  <div ng-show="storefront.data.selections.length > 0" class="container-fluid">
+  <div ng-show="storefront.data.selections.length > 0" class="container">
     <div class="full-width pad-10"></div>
     <div class="row">
-      <div class="col col-md-offset-1 col-xs-4 col-md-2 overflow-hidden">
+      <div class="col col-lg-offset-1 col-sm-3 col-md-2 overflow-hidden">
         <h4 class="margin-0">Collections</h4>
         <hr>
         <ee-shop-nav ng-show="storefront" collections="storefront.data.collection_names" class="nav nav-pills nav-stacked nav-compact"></ee-shop-nav>
+        <br>
       </div>
-      <div class="col col-xs-8 position-inherit">
+      <div class="col col-sm-9 col-md-10 col-lg-9 position-inherit">
         <h4 class="margin-0">{{ $state.params.title || 'Featured' | humanize }}</h4>
         <h2 ng-show="storefront.data.loading"><i class="fa fa-fw fa-spin fa-circle-o-notch text-info"></i></h2>
-        <div ng-hide="storefront.data.loading" class="full-width vert-20 overflow-hidden">
-          <div ng-repeat="selection in storefront.data.selections" class="product-container inline-block width-160 vertical-align-top">
+        <div ng-hide="storefront.data.loading" class="full-width text-center vert-20 overflow-hidden">
+          <div ng-repeat="selection in storefront.data.selections" class="product-container text-left inline-block width-250 vertical-align-top">
             <ee-selection-for-storefront selection="selection"></ee-selection-for-storefront>
             <br>
           </div>
