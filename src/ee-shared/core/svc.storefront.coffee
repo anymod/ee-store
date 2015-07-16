@@ -13,7 +13,7 @@ angular.module('app.core').factory 'eeStorefront', ($rootScope, $q, $location, e
     _data.selections        = []
     _data.product_ids       = []
     _data.selection_map     = {}
-    _data.categories        = ['All']
+    _data.categories        = ['Featured']
     _data.meta              = {}
     _data.collections       = {}
     _data.collection_names  = ['Featured']

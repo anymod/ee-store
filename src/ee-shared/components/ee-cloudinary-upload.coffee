@@ -18,9 +18,9 @@ angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", () ->
         }
 
     assignAttr = (data) ->
-      if scope.attrTarget is 'carousel' then scope.meta.home.carousel[0].imgUrl = data.result.secure_url
-      if scope.attrTarget is 'about'    then scope.meta.about.imgUrl = data.result.secure_url
-      if scope.attrTarget is 'logo'     then scope.meta.logo = data.result.secure_url
+      if scope.attrTarget is 'body'   then scope.meta.home.carousel[0].imgUrl = data.result.secure_url
+      if scope.attrTarget is 'about'  then scope.meta.about.imgUrl = data.result.secure_url
+      if scope.attrTarget is 'logo'   then scope.meta.logo = data.result.secure_url
 
     resetProgress = () ->
       scope.progress = 0

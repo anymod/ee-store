@@ -20,9 +20,9 @@ module.directive "eeSelectionEditorCard", (eeProduct) ->
       margin:             undefined
     scope.margins =
       min_margin:         0.05
-      max_margin:         0.40
+      max_margin:         0.80
       start_margin:       0.15
-      margin_array:       [0.1, 0.2, 0.3]
+      margin_array:       [0.1, 0.2, 0.3, 0.5]
 
     _setMaxAndMinPrice = () ->
       if !scope.product or !scope.margins then return

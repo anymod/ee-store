@@ -58,7 +58,7 @@ angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeStorefron
     _exports.logged_in  = false
     _exports.loading    = false
     _exports.blocked    = true
-    _fillExportData eeLanding.landingUser, eeStorefront.data
+    _fillExportData {}, eeStorefront.data
 
   _defineCustomerStore = () ->
     console.info '_defineCustomerStore'

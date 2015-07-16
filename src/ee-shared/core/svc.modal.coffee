@@ -23,6 +23,12 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
       size:           'lg'
       backdropClass:  _backdropClass
       windowClass:    'full-modal'
+    themes:
+      templateUrl:    'builder/create/create.themes.modal.html'
+      controller:     'createCtrl as create'
+      backdropClass:  _backdropClass
+      size:           'lg'
+      windowClass:    'full-modal'
     sellerTerms:
       templateUrl:    'builder/terms/terms.modal.html'
       controller:     'termsModalCtrl as modal'

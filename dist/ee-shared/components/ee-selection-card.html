@@ -21,7 +21,8 @@
           <h1 ng-bind="selectionTitle" class="vert-10 margin-top-0 font-weight-200"></h1>
           <h3 ng-bind="price | centToDollar"></h3>
           <h4 ng-bind="content" class="vert-20 font-weight-200" style="white-space: pre-line;"></h4>
-          <div class="btn btn-primary btn-lg btn-block" ng-disabled="disabled" ng-click="addToCart()">Add to cart</div>
+          <div class="btn btn-primary btn-lg btn-block" ng-if="!disabled" ng-click="addToCart()">Add to cart</div>
+          <div class="btn btn-info btn-lg btn-block disabled" ng-if="disabled" disabled>Out of Stock</div>
           <div class="btn btn-link pad-0 vert-20" ng-click="showDetails = !showDetails">{{ showDetails ? 'hide' : 'more' }} details</div>
         </div>
       </div>
@@ -32,10 +33,6 @@
           <tr ng-if="details.content_meta.item_name">
             <td>Item</td>
             <td ng-bind="details.content_meta.item_name"></td>
-          </tr>
-          <tr ng-if="details.availability_meta.quantity">
-            <td>Quantity Available</td>
-            <td ng-bind="details.availability_meta.quantity | truncateQty"></td>
           </tr>
           <tr ng-if="details.shipping_price">
             <td>Shipping Cost</td>
