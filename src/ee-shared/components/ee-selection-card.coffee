@@ -11,7 +11,9 @@ module.directive "eeSelectionCard", ($rootScope, $state, $cookies, eeBack) ->
     content:        '='
     mainImage:      '@'
     details:        '='
-    disabled:       '@'
+    disabled:       '='
+    outOfStock:     '='
+    discontinued:   '='
   link: (scope, ele, attrs) ->
     scope.setMainImage = (url) -> scope.mainImage = url
     scope.addToCart = () -> $rootScope.$emit 'add:selection', $state.params.id
