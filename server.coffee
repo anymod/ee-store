@@ -14,6 +14,7 @@ serveStatic   = require 'serve-static'
 cookieParser  = require 'cookie-parser'
 ejs           = require 'ejs'
 _             = require 'lodash'
+constants     = require './server.constants'
 finders       = require './server.finders'
 helpers       = require './server.helpers'
 
@@ -45,10 +46,11 @@ app.get ['/', '/featured', '/shop/featured', '/about'], (req, res, next) ->
   finders.userByHost host
   .then (data) ->
     helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByFeatured data[0].id
-  .then (selections) ->
-    # TODO add pagination
-    bootstrap.selections    = selections || []
+    finders.selectionsByFeatured data[0].id, bootstrap.pagination.page
+  .then (data) ->
+    { rows, count } = data
+    bootstrap.selections        = rows || []
+    bootstrap.pagination.count  = count
     if path.indexOf('featured') > -1
       bootstrap.collection  = 'Featured'
       bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
@@ -67,14 +69,15 @@ app.get ['/shop/:collection'], (req, res, next) ->
   finders.userByHost host
   .then (data) ->
     helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByCollection data[0].id, collection
-  .then (selections) ->
-    # TODO add pagination
-    bootstrap.selections  = selections || []
-    bootstrap.collection  = helpers.humanize collection
-    bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-    bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
-    bootstrap.stringified = helpers.stringify bootstrap
+    finders.selectionsByCollection data[0].id, collection, bootstrap.pagination.page
+  .then (data) ->
+    { rows, count } = data
+    bootstrap.selections        = rows || []
+    bootstrap.pagination.count  = count
+    bootstrap.collection        = helpers.humanize collection
+    bootstrap.title             = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
+    bootstrap.images            = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
+    bootstrap.stringified       = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in COLLECTIONS', err

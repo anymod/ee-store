@@ -1,11 +1,16 @@
 'use strict'
 
-angular.module('eeStore').controller 'storeCtrl', (eeBootstrap) ->
+angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location, eeBootstrap) ->
 
-  this.ee =
+  storefront = this
+
+  storefront.ee =
     meta: eeBootstrap?.storefront_meta
     carousel: eeBootstrap?.storefront_meta?.home?.carousel[0]
 
-  this.data = eeBootstrap
+  storefront.data = eeBootstrap
+
+  storefront.fns =
+    update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 
   return

@@ -22,6 +22,18 @@
             <ee-selection-for-storefront selection="selection"></ee-selection-for-storefront>
             <br>
           </div>
+          <div ng-if="isStore" ng-show="storefront.data.pagination.count > storefront.data.pagination.perPage">
+            <pagination total-items="storefront.data.pagination.count"
+              items-per-page="storefront.data.pagination.perPage"
+              ng-model="storefront.data.pagination.page"
+              max-size="5"
+              class="pagination-sm vert-20 vertical-align-top"
+              previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+              boundary-links="true"
+              rotate="false"
+              ng-change="storefront.fns.update()">
+            </pagination>
+          </div>
         </div>
       </div>
     </div>

@@ -1,5 +1,6 @@
-_   = require 'lodash'
-url = require 'url'
+_         = require 'lodash'
+url       = require 'url'
+constants = require './server.constants'
 
 h = {}
 
@@ -8,6 +9,9 @@ h.setup = (req) ->
     bootstrap:
       cart: req.cart
       url: req.protocol + '://' + req.get('host') + req.originalUrl
+      pagination:
+        page: req.query.page
+        perPage: constants.perPage
     host: req.headers.host
     path: url.parse(req.url).pathname
   }
