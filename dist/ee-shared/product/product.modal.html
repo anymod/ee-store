@@ -4,11 +4,11 @@
       <img ng-src="{{ modal.mainImage.url }}" class="full-width" name="mainImage">
       <!-- images -->
       <div ng-show="modal.product.image_meta.additional_images.length > 0" class="vert-5">
-        <img ng-src="{{ modal.product.image_meta.main_image.url | thumbnail }}"
+        <img ng-src="{{ modal.product.image_meta.main_image.url | midsize }}"
              class="inline-block width-62 gray-border hover-pointer margin-2"
              ng-click="modal.setMainImage(modal.product.image_meta.main_image)" />
         <img ng-repeat="img in modal.product.image_meta.additional_images"
-             ng-src="{{ img.url | thumbnail }}"
+             ng-src="{{ img.url | midsize }}"
              class="inline-block width-62 gray-border hover-pointer margin-2"
              ng-click="modal.setMainImage(img)" />
       </div>

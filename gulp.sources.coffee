@@ -40,14 +40,9 @@ sources.appModule = [
   './src/ee-shared/core/config.coffee'
   './src/ee-shared/core/run.coffee'
   # Services
-  # './src/ee-shared/core/svc.back.coffee'
-  # './src/ee-shared/core/svc.storefront.coffee'
-  # './src/ee-shared/core/svc.product.coffee'
-  # './src/ee-shared/core/svc.modal.coffee'
-  # './src/ee-shared/core/svc.definer.coffee'
-  './src/ee-shared/core/svc.selections.coffee'
-  # Product modal
-  # './src/ee-shared/product/product.modal.controller.coffee'
+  # './src/ee-shared/core/svc.selections.coffee'
+  # './src/ee-shared/core/svc.collections.coffee'
+  './src/ee-shared/core/svc.modal.coffee'
 ]
 sources.storeModule = [
   # Definitions
@@ -57,16 +52,13 @@ sources.storeModule = [
   './src/store/core/store.config.coffee'
   './src/store/core/core.route.coffee'
   # Services
-  # './src/store/core/svc.auth.coffee'
   './src/store/core/svc.back.coffee'
   './src/store/core/svc.cart.coffee'
-  './src/store/core/svc.modal.coffee'
-  # './src/store/core/svc.landing.coffee'
-  # './src/store/core/svc.fetcher.coffee'
+  # './src/store/core/svc.modal.coffee'
   # Module - store
   './src/store/store.controller.coffee'
   # Module - selection
-  './src/store/selection.controller.coffee'
+  # './src/store/selection.controller.coffee'
   # Module - cart
   './src/store/cart.controller.coffee'
   # Module - modal
@@ -76,9 +68,9 @@ sources.storeModule = [
 ### DIRECTIVES ###
 sources.storeDirective = [
   './src/ee-shared/components/ee-button-add-to-cart.coffee'
-  './src/ee-shared/components/ee-selection-for-storefront.coffee'
-  './src/ee-shared/components/ee-selection-card.coffee'
-  './src/ee-shared/components/ee-shop-nav.coffee'
+  './src/ee-shared/components/ee-storeproduct-for-storefront.coffee'
+  './src/ee-shared/components/ee-storeproduct-card.coffee'
+  './src/ee-shared/components/ee-collection-nav.coffee'
   './src/ee-shared/components/ee-storefront-header.coffee'
   './src/ee-shared/components/ee-scroll-to-top.coffee'
 ]

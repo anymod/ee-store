@@ -15,14 +15,16 @@
           check google
         </a>
       </div>
-    </div> <!-- /Title -->
+    </div>
+    <!-- /Title -->
     <!-- Description -->
     <div class="form-group vert-5">
       <label class="col-sm-3 control-label font-weight-200">Description</label>
       <div class="col-sm-6">
         <textarea class="form-control full-width" rows=5 ng-model="selection.content" placeholder="Product description"></textarea>
       </div>
-    </div> <!-- /Description -->
+    </div>
+    <!-- /Description -->
     <!-- Price -->
     <div class="form-group vert-5">
       <label class="col-sm-3 control-label font-weight-200">Price</label>
@@ -44,7 +46,7 @@
             {{ calculated.margin * 100 | number:1 }}%&nbsp;margin. You earn&nbsp;<strong ng-bind="calculated.earnings | centToDollar"></strong>&nbsp;each sale.
           </div>
           <div class="vert-5 margin-top-0">
-            <div class="btn btn-xs btn-link" ng-click="calcByMargin(margins.start_margin)" style="padding-left: 0">Recommended</div>
+            <div class="btn btn-xs btn-link pad-left-0" ng-click="calcByMargin(margins.start_margin)">Recommended</div>
             <div class="btn btn-xs btn-link" ng-click="setSellingPrice(calculated.min_price)">Min</div>
             <div class="btn btn-xs btn-link" ng-click="calcByMargin(margin)" ng-repeat="margin in margins.margin_array">{{ margin*100 }}%</div>
           </div>

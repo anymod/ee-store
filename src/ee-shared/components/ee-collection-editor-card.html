@@ -1,0 +1,60 @@
+<div class="well white-background box-shadow">
+  <form class="form-horizontal text-left" ng-submit="updateCollection()">
+    <!-- Save -->
+    <div class="form-group vert-5">
+      <div class="col-sm-offset-3 col-sm-9">
+        <button class="btn btn-default" type="submit" ng-disabled="updating || save_status == 'Saved'" ng-class="{ 'btn-success': save_status == 'Save' }">
+          <i class="fa fa-fw fa-save"></i>&nbsp;{{ save_status }}
+        </button>
+        <div ng-click="deleteCollection()" ng-disabled="data.destroying" class="btn btn-default pull-right"><i class="fa fa-trash"></i></div>
+        <!-- <a ui-sref="collection({ id: collection.id })" class="btn btn-default pull-right">View</a> -->
+      </div>
+    </div>
+    <!-- /Save -->
+    <!-- Link title -->
+    <div class="form-group vert-5">
+      <label class="col-sm-3 control-label font-weight-200">Collection link title</label>
+      <div class="col-sm-4 col-md-3">
+        <input type="text" ng-model="collection.title" class="form-control" placeholder="Collection Title (required)">
+      </div>
+    </div>
+    <!-- /Link title -->
+    <!-- Show on home -->
+    <div class="form-group vert-5">
+      <label class="col-sm-3 control-label font-weight-200">Show image on home page</label>
+      <div class="col-sm-9">
+        <label class="checkbox hover-pointer">
+          <input type="checkbox" class="margin-0" style="margin-top: 3px !important;" ng-model="collection.in_carousel">
+          <span ng-if="collection.in_carousel && collection.banner.indexOf('placehold.it') > -1" style="margin-left: 20px;">(Upload an image to show on home page)</span>
+        </label>
+      </div>
+    </div>
+    <!-- /Show on home -->
+    <!-- Banner -->
+    <div class="form-group vert-10">
+      <label class="col-sm-3 control-label font-weight-200">Home page image</label>
+      <div class="col-sm-6">
+        <img ng-src="{{ collection.banner }}" class="full-width gray-border" ng-hide="collection.banner.indexOf('placehold.it') > -1"/>
+        <ee-cloudinary-upload meta="collection" attr-target="'collection'"></ee-cloudinary-upload>
+        <em>Upload an image (800x470px)</em>
+      </div>
+    </div>
+    <!-- /Banner -->
+    <!-- Headline -->
+    <div class="form-group vert-5">
+      <label class="col-sm-3 control-label font-weight-200">Home page headline</label>
+      <div class="col-sm-4">
+        <input type="text" ng-model="collection.headline" class="form-control" placeholder="Text shown with image (optional)">
+      </div>
+    </div>
+    <!-- /Headline -->
+
+    <!-- Message -->
+    <div class="form-group vert-5">
+      <div class="col-sm-offset-3 col-sm-4">
+        <h4 ng-if="save_status != 'Saved'" class="text-success">Don't forget to save!</h4>
+      </div>
+    </div>
+    <!-- /Message -->
+  </form>
+</div>

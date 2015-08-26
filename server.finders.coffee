@@ -8,6 +8,9 @@ f = {}
 f.storeByUsername = (username) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
 f.storeByDomain   = (host) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
+f.collectionsTitlesBySellerId   = (seller_id) -> sequelize.query 'SELECT id, title FROM "Collections" WHERE seller_id = ? AND title is not null ORDER BY title ASC', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+f.carouselCollectionsBySellerId = (seller_id) -> sequelize.query 'SELECT id, title, headline, button, banner, in_carousel FROM "Collections" WHERE seller_id = ? AND in_carousel = true AND banner is not null LIMIT 10', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+
 f.selectionsByFeatured    = (seller_id, page) ->
   perPage = constants.perPage
   page  ||= 1

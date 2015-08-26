@@ -11,15 +11,15 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       templateUrl: 'ee-shared/storefront/storefront.carousel.html'
     middle:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'ee-shared/storefront/storefront.products.html'
+      templateUrl: 'ee-shared/storefront/storefront.featured.html'
     footer:
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
-  shopViews =
-    header: views.header
-    top:    views.middle
-    footer: views.footer
+  # shopViews =
+  #   header: views.header
+  #   top:    views.middle
+  #   footer: views.footer
 
   aboutViews =
     header: views.header
@@ -40,15 +40,15 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    views
       data:     data
 
-    .state 'storefront-shop',
-      url:      '/shop'
-      views:    shopViews
-      data:     data
+    # .state 'storefront-shop',
+    #   url:      '/shop'
+    #   views:    shopViews
+    #   data:     data
 
-    .state 'collection',
-      url:      '/shop/:title'
-      views:    shopViews
-      data:     data
+    # .state 'collection',
+    #   url:      '/shop/:title'
+    #   views:    shopViews
+    #   data:     data
 
     .state 'storefront-about',
       url:      '/about'

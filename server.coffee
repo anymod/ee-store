@@ -40,8 +40,30 @@ cartCookie = (req, res, next) ->
 
 app.use cartCookie
 
+# HOME
+app.get '/', (req, res, next) ->
+  { bootstrap, host, path } = helpers.setup req
+  finders.userByHost host
+  .then (data) ->
+    helpers.assignBootstrap bootstrap, data[0]
+    # Define carousel collections
+    finders.carouselCollectionsBySellerId bootstrap.id
+  .then (data) ->
+    bootstrap.carouselCollections = data
+    # Define all collections
+    finders.collectionsTitlesBySellerId bootstrap.id
+  .then (data) ->
+    helpers.assignCollectionTypes bootstrap, data
+
+    bootstrap.stringified = helpers.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    # TODO add better error pages
+    console.error 'error in FEATURED', err
+    res.send 'Not found'
+
 # FEATURED (TODO give ABOUT its own route)
-app.get ['/', '/featured', '/shop/featured', '/about'], (req, res, next) ->
+app.get ['/featured', '/shop/featured', '/about'], (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
   finders.userByHost host
   .then (data) ->

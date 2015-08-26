@@ -60,18 +60,18 @@ angular.module('app.core').factory 'eeDefiner', ($rootScope, eeAuth, eeStorefron
     _exports.blocked    = true
     _fillExportData {}, eeStorefront.data
 
-  _defineCustomerStore = () ->
-    console.info '_defineCustomerStore'
-    _exports.logged_in  = false
-    _exports.loading    = true
-    _exports.blocked    = false
-    eeStorefront.fns.defineCustomerStore()
-    .then  (res) -> _fillExportData res, eeStorefront.data
-    .catch (err) -> console.error err
-    .finally  () -> _exports.loading = false
+  # _defineCustomerStore = () ->
+  #   console.info '_defineCustomerStore'
+  #   _exports.logged_in  = false
+  #   _exports.loading    = true
+  #   _exports.blocked    = false
+  #   eeStorefront.fns.defineCustomerStore()
+  #   .then  (res) -> _fillExportData res, eeStorefront.data
+  #   .catch (err) -> console.error err
+  #   .finally  () -> _exports.loading = false
 
   ## DEFINITION LOGIC
-  if _isStore                   then _defineCustomerStore()
+  # if _isStore                   then _defineCustomerStore()
   if _isBuilder and _loggedIn   then _defineLoggedIn()
   if _isBuilder and _loggedOut  then _defineLanding()
 

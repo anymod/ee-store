@@ -51,11 +51,11 @@
     </table>
   </div>
   <div class="col col-xs-3 col-sm-2">
-    <img ng-src="{{ product.image_meta.main_image.url | thumbnail }}"
+    <img ng-src="{{ product.image_meta.main_image.url | midsize }}"
          class="hover-pointer full-width vert-2 margin-top-0"
          ng-click="setFocusImg(product.image_meta.main_image)" />
     <div ng-repeat="img in product.image_meta.additional_images">
-      <img ng-src="{{ img.url | thumbnail }}"
+      <img ng-src="{{ img.url | midsize }}"
            class="hover-pointer full-width vert-2"
            ng-click="setFocusImg(img)" />
     </div>

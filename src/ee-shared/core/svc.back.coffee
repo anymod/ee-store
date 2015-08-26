@@ -67,6 +67,13 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       data: { email: email }
     }
 
+  usersGET: (token) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'users'
+      headers: authorization: token
+    }
+
   usersPUT: (user, token) ->
     _makeRequest {
       method: 'PUT'
@@ -139,42 +146,136 @@ angular.module('app.core').factory 'eeBack', ($http, $q, eeBackUrl) ->
       headers: authorization: token
     }
 
-  selectionsGET: (token, query) ->
+  collectionGET: (id, token, query) ->
     _makeRequest {
       method: 'GET'
-      url: eeBackUrl + 'selections' + _formQueryString(query)
+      url: eeBackUrl + 'collections/' + id + _formQueryString(query)
       headers: authorization: token
     }
 
-  selectionGET: (id, token) ->
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'selections/' + id
-      headers: authorization: token
-    }
-
-  selectionsPOST: (token, attrs) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'selections'
-      headers: authorization: token
-      data: attrs
-    }
-
-  selectionsPUT: (token, selection) ->
+  collectionPUT: (token, collection) ->
     _makeRequest {
       method: 'PUT'
-      url: eeBackUrl + 'selections/' + selection.id
+      url: eeBackUrl + 'collections/' + collection.id
       headers: authorization: token
-      data: selection
+      data: collection
     }
 
-  selectionsDELETE: (token, id) ->
+  collectionDELETE: (id, token) ->
     _makeRequest {
       method: 'DELETE'
-      url: eeBackUrl + 'selections/' + id
+      url: eeBackUrl + 'collections/' + id
       headers: authorization: token
     }
+
+  collectionAddProduct: (collection_id, product_id, token) ->
+    _makeRequest {
+      method: 'PUT'
+      url: eeBackUrl + 'collections/' + collection_id + '/add/' + product_id
+      headers: authorization: token
+    }
+
+  collectionRemoveProduct: (collection_id, product_id, token) ->
+    _makeRequest {
+      method: 'PUT'
+      url: eeBackUrl + 'collections/' + collection_id + '/remove/' + product_id
+      headers: authorization: token
+    }
+
+  collectionsPOST: (token) ->
+    _makeRequest {
+      method: 'POST'
+      url: eeBackUrl + 'collections'
+      headers: authorization: token
+    }
+
+  ownCollectionsGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'collections' + _formQueryString(query)
+      headers: authorization: token
+    }
+
+  featuredCollectionGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'collections/featured' + _formQueryString(query)
+      headers: authorization: token
+    }
+
+  publicCollectionsGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'collections/public' + _formQueryString(query)
+      headers: authorization: token
+    }
+
+  storeProductGET: (id, token) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'storeProducts/' + id
+      headers: authorization: token
+    }
+
+  storeProductsGET: (token, query) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'storeProducts' + _formQueryString(query)
+      headers: authorization: token
+    }
+
+  storeProductsPUT: (data, token) ->
+    _makeRequest {
+      method: 'PUT'
+      url: eeBackUrl + 'storeProducts/' + data.id
+      headers: authorization: token
+      data: data
+    }
+
+  storeProductsDELETE: (id, token) ->
+    _makeRequest {
+      method: 'DELETE'
+      url: eeBackUrl + 'storeProducts/' + id
+      headers: authorization: token
+    }
+
+
+  # selectionsGET: (token, query) ->
+  #   _makeRequest {
+  #     method: 'GET'
+  #     url: eeBackUrl + 'selections' + _formQueryString(query)
+  #     headers: authorization: token
+  #   }
+  #
+  # selectionGET: (id, token) ->
+  #   _makeRequest {
+  #     method: 'GET'
+  #     url: eeBackUrl + 'selections/' + id
+  #     headers: authorization: token
+  #   }
+  #
+  # selectionsPOST: (token, attrs) ->
+  #   _makeRequest {
+  #     method: 'POST'
+  #     url: eeBackUrl + 'selections'
+  #     headers: authorization: token
+  #     data: attrs
+  #   }
+  #
+  # selectionsPUT: (token, selection) ->
+  #   _makeRequest {
+  #     method: 'PUT'
+  #     url: eeBackUrl + 'selections/' + selection.id
+  #     headers: authorization: token
+  #     data: selection
+  #   }
+  #
+  # selectionsDELETE: (token, id) ->
+  #   _makeRequest {
+  #     method: 'DELETE'
+  #     url: eeBackUrl + 'selections/' + id
+  #     headers: authorization: token
+  #   }
 
   ordersGET: (token) ->
     _makeRequest {

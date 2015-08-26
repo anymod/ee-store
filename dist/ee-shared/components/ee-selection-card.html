@@ -6,11 +6,11 @@
         <img ng-src="{{ mainImage | mainImg }}" class="full-width" name="mainImage">
         <!-- images -->
         <div ng-show="details.image_meta.additional_images.length > 0" class="vert-5">
-          <img ng-src="{{ details.image_meta.main_image.url | thumbnail }}"
+          <img ng-src="{{ details.image_meta.main_image.url | midsize }}"
                class="inline-block width-62 gray-border hover-pointer margin-2"
                ng-click="setMainImage(details.image_meta.main_image.url)" />
           <img ng-repeat="img in details.image_meta.additional_images"
-               ng-src="{{ img.url | thumbnail }}"
+               ng-src="{{ img.url | midsize }}"
                class="inline-block width-62 gray-border hover-pointer margin-2"
                ng-click="setMainImage(img.url)" />
         </div>

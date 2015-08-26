@@ -13,19 +13,16 @@ angular.module('app.core').filter 'centToDollar', ($filter) ->
     currencyFilter = $filter('currency')
     currencyFilter Math.floor(cents)/100
 
-angular.module('app.core').filter 'thumbnail', () ->
-  (url) ->
-    if !!url and url.indexOf("image/upload") > -1
-      url.split("image/upload").join('image/upload/c_pad,w_250,h_250')
-    else
-      url
+resizeCloudinaryImageTo = (url, w, h) ->
+  if !!url and url.indexOf("image/upload") > -1
+    url.split("image/upload").join('image/upload/c_pad,w_' + w + ',h_' + h)
+  else
+    url
 
-angular.module('app.core').filter 'mainImg', () ->
-  (url) ->
-    if !!url and url.indexOf("image/upload") > -1
-      url.split("image/upload").join('image/upload/c_limit,w_500,h_500')
-    else
-      url
+angular.module('app.core').filter 'thumbnail',  () -> (url) -> resizeCloudinaryImageTo url, 80, 80
+angular.module('app.core').filter 'small',      () -> (url) -> resizeCloudinaryImageTo url, 120, 120
+angular.module('app.core').filter 'midsize',    () -> (url) -> resizeCloudinaryImageTo url, 250, 250
+angular.module('app.core').filter 'mainImg',    () -> (url) -> resizeCloudinaryImageTo url, 500, 500
 
 angular.module('app.core').filter 'scaledDownBackground', () ->
   (url) ->
@@ -66,6 +63,14 @@ angular.module('app.core').filter 'humanize', () ->
     frags = text.split /_|-/
     (frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1)) for i in [0..(frags.length - 1)]
     frags.join(' ')
+
+angular.module('app.core').filter 'in_carousel', () ->
+  (collections) ->
+    if !collections or !angular.isArray(collections) or collections.length <= 0 then return []
+    filtered = []
+    (if collections[i].in_carousel and filtered.length < 10 then filtered.push(collections[i])) for i in [0..(collections.length-1)]
+    filtered
+
 
 # angular.module('app.core').filter 'dashify', () ->
 #   (text) ->

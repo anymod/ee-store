@@ -1,9 +1,9 @@
 'use strict'
 
-angular.module 'ee-shop-nav', []
+angular.module 'ee-collection-nav', []
 
-angular.module('ee-shop-nav').directive "eeShopNav", ($state) ->
-  templateUrl: 'ee-shared/components/ee-shop-nav.html'
+angular.module('ee-collection-nav').directive "eeShopNav", ($state) ->
+  templateUrl: 'ee-shared/components/ee-collection-nav.html'
   restrict: 'E'
   replace: true
   scope:

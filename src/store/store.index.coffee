@@ -17,8 +17,8 @@ angular.module 'eeStore', [
 
   # custom
   'ee-storefront-header'
-  'ee-shop-nav'
-  'ee-selection-for-storefront'
-  'ee-selection-card'
+  'ee-collection-nav'
+  'ee-storeproduct-for-storefront'
+  'ee-storeproduct-card'
   # 'ee.templates' # commented out during build step for inline templates
 ]

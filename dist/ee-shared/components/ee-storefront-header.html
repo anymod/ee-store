@@ -8,7 +8,7 @@
        ng-hide="loading"
        ng-style="{ 'background-color': meta.home.topBarBackgroundColor }">
 
-    <div class="container-fluid" name="store-navbar">
+    <div ng-class="fluid ? 'container-fluid' : 'container'" name="store-navbar">
       <!-- Brand and toggle get grouped for better mobile display -->
       <div class="navbar-header">
         <button type="button" class="navbar-toggle pad-20 collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
@@ -18,11 +18,10 @@
           <span class="icon-bar"></span>
         </button>
         <div ui-sref="storefront"
-           class="inline-block hover-pointer font-weight-200 margin-0"
-           style="padding: 10px 12px 12px;"
+           class="store-title inline-block hover-pointer font-weight-200 margin-0"
            ng-style="{ color: meta.home.topBarColor }">
           <img ng-if="meta.logo" ng-src="{{ meta.logo }}" class="small-thumb img-circle margin-right-4" />
-          <div class="inline-block pad-5 height-50" style="height: 50px; padding-top: 5px; font-size: 28px; vertical-align: middle;">{{ meta.home.name }}</div>
+          <div class="inline-block height-50" style="height: 50px; padding: 5px 0; font-size: 28px; vertical-align: middle;">{{ meta.home.name }}</div>
         </div>
       </div>
 
@@ -30,12 +29,15 @@
       <div collapse="navCollapsed" class="collapse navbar-collapse">
         <ul class="nav navbar-nav">
           <li ng-class="{ active: state == 'storefront' }"><a ui-sref="storefront" ng-click="navCollapsed = true" ng-style="{ color: meta.home.topBarColor }">Home</a></li>
-          <li ng-class="{ active: state == 'collection' }" class="dropdown" dropdown>
+          <li ng-if="collections.length > 0">
+            <a href ng-click="openCollectionsModal()" ng-style="{ color: meta.home.topBarColor }">Collections</a>
+          </li>
+          <!-- <li ng-class="{ active: state == 'collection' }" class="dropdown" dropdown>
             <a href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
               Shop <span class="caret"></span>
             </a>
-            <ee-shop-nav ng-show="collections" collections="collections" class="dropdown-menu"></ee-shop-nav>
-          </li>
+            <ee-collection-nav ng-show="collections" collections="collections" class="dropdown-menu"></ee-collection-nav>
+          </li> -->
 
           <li ng-show="!!meta.blog.url">
             <a href="{{ meta.blog.url | addHttp }}" target="_blank" ng-style="{ color: meta.home.topBarColor }">Blog</a>

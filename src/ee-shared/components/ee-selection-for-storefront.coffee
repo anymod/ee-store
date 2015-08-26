@@ -1,9 +1,9 @@
 'use strict'
 
-angular.module 'ee-selection-for-storefront', []
+angular.module 'ee-storeproduct-for-storefront', []
 
-angular.module('ee-selection-for-storefront').directive "eeSelectionForStorefront", () ->
-  templateUrl: 'ee-shared/components/ee-selection-for-storefront.html'
+angular.module('ee-storeproduct-for-storefront').directive "eeStoreproductForStorefront", () ->
+  templateUrl: 'ee-shared/components/ee-storeproduct-for-storefront.html'
   restrict: 'E'
   scope:
     selection: '='

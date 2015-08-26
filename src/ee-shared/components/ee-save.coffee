@@ -1,6 +1,6 @@
 module = angular.module 'ee-save', []
 
-angular.module('ee-save').directive "eeSave", ($state, eeDefiner, eeAuth, eeModal) ->
+angular.module('ee-save').directive "eeSave", ($state, eeDefiner, eeUser) ->
   templateUrl: 'ee-shared/components/ee-save.html'
   restrict: 'E'
   scope: {}
@@ -11,22 +11,20 @@ angular.module('ee-save').directive "eeSave", ($state, eeDefiner, eeAuth, eeModa
     resetBtnText  = ()    -> setBtnText 'Save'
     resetBtnText()
 
-    scope.$watch 'ee.user', (newVal, oldVal) ->
-      if !!oldVal.email and !angular.equals(newVal, oldVal)
+    scope.$watch 'ee.User.user', (newVal, oldVal) ->
+      if oldVal and oldVal.email and !angular.equals(newVal, oldVal)
         scope.ee.unsaved = true
         resetBtnText()
     , true
 
     scope.save = () ->
       setBtnText 'Saving'
-      eeAuth.fns.saveUser()
+      eeUser.fns.updateUser()
       .then () ->
         scope.ee.unsaved = false
         $state.go 'storefront'
       .catch () ->
         scope.ee.unsaved = true
         setBtnText 'Error'
-
-    scope.saveModal = () -> eeModal.fns.openSignupModal()
 
     return

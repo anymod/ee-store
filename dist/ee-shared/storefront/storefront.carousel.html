@@ -1,16 +1,43 @@
-<div class="carousel storefront-carousel overflow-hidden" ng-show="storefront.ee.carousel.imgUrl">
-  <img ng-src="{{ storefront.ee.carousel.imgUrl }}" class="img-responsive full-width">
-  <div class="position-absolute full-width hidden-xs {{ storefront.ee.carousel.btnPosition }}">
-    <div class="well box-shadow inline-block"
-         ng-hide="!storefront.ee.carousel.headline && !storefront.ee.carousel.byline && !storefront.ee.carousel.btnText">
-      <h3 ng-bind="storefront.ee.carousel.headline" class="font-weight-200 margin-0"></h3>
-      <p ng-bind="storefront.ee.carousel.byline" class="vert-2"></p>
-      <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="collection({ title: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
+<div ng-if="storefront.ee.Collections.collections.length > 0" class="container">
+  <div class="row vert-20 margin-bottom-0">
+    <div class="col col-sm-2 hidden-xs">
+      <h4 class="margin-5 margin-top-0 font-weight-200">Collections</h4>
+      <ee-collection-nav ng-show="storefront" collections="storefront.ee.Collections.firstTenCollections" class="nav nav-pills nav-stacked nav-compact"></ee-collection-nav>
+      <ul ng-if="storefront.ee.Collections.afterTenCollections.length > 0" class="nav nav-pills nav-stacked nav-compact">
+        <li>
+          <a href ng-click="storefront.openCollectionsModal()">More collections</a>
+        </li>
+      </ul>
+      <br>
+    </div>
+    <div class="col col-sm-10">
+      <div style="max-width: 800px; max-height: 470px;" class="margin-0-auto">
+        <carousel interval="5000" no-wrap="noWrapSlides">
+          <slide ng-repeat="collection in storefront.ee.Collections.carouselCollections" active="collection.active">
+            <a ui-sref="collection({ id: collection.id })">
+              <img ng-src="{{ collection.banner }}" style="margin:auto;">
+              <div class="carousel-caption">
+                <h4>{{ collection.headline || collection.title }}</h4>
+              </div>
+            </a>
+          </slide>
+        </carousel>
+      </div>
+      <div class="btn btn-default btn-lg btn-block visible-xs vert-20" ng-click="storefront.openCollectionsModal()">All collections</div>
     </div>
   </div>
-  <div class="pad-15 visible-xs">
-    <h3 ng-bind="storefront.ee.carousel.headline" class="margin-0"></h3>
-    <p ng-bind="storefront.ee.carousel.byline" class="vert-2"></p>
-    <a ng-bind="storefront.ee.carousel.btnText" ng-show="storefront.ee.carousel.btnText" ui-sref="collection({ title: storefront.ee.carousel.linkCategory })" class="btn btn-default"></a>
-  </div>
 </div>
+
+<ee-empty-message
+  ng-if="isBuilder && !storefront.ee.Collections.reading && storefront.ee.Collections.collections.length <= 0"
+  main-message="Start your store"
+  btn-message="Add collections"
+  btn-sref="collectionsAdd"
+  sub-message="When you add collections and products to your store, they will show here and will be ready for customers to purchase!">
+</ee-empty-message>
+
+<ee-empty-message
+  ng-if="isStore && !storefront.ee.Collections.reading && storefront.ee.Collections.collections.length <= 0"
+  main-message="Coming soon"
+  sub-message="We're setting up our store, so please check back soon!">
+</ee-empty-message>

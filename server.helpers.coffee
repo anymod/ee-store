@@ -50,6 +50,16 @@ h.humanize = (text) ->
   (frags[i] = frags[i].charAt(0).toUpperCase() + frags[i].slice(1)) for i in [0..(frags.length - 1)]
   frags.join(' ')
 
+h.assignCollectionTypes = (bootstrap, collections) ->
+  bootstrap.collections = collections
+  bootstrap.firstTenCollections = []
+  bootstrap.afterTenCollections = []
+  setCollection = (coll) ->
+    return unless coll.title
+    if bootstrap.firstTenCollections?.length < 10 then bootstrap.firstTenCollections.push coll else bootstrap.afterTenCollections.push coll
+  setCollection collection for collection in bootstrap.collections
+
+
 h.formCollectionPageTitle = (collection, title) ->
   if collection and title then (collection + ' | ' + title) else collection
 

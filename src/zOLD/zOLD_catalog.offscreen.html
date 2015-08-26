@@ -45,12 +45,12 @@
               <img ng-src="{{ focusImg.url }}" ee-src="focusImg.url" class="full-width" ee-image-preload />
               <!-- images -->
               <div ng-show="product.image_meta.additional_images.length > 0" class="vert-5">
-                <img ng-src="{{ product.image_meta.main_image.url | thumbnail }}"
+                <img ng-src="{{ product.image_meta.main_image.url | midsize }}"
                      class="inline-block gray-border hover-pointer margin-2"
                      style="width: 64px"
                      ng-click="setFocusImg(product.image_meta.main_image)" />
                 <img ng-repeat="img in product.image_meta.additional_images"
-                     ng-src="{{ img.url | thumbnail }}"
+                     ng-src="{{ img.url | midsize }}"
                      class="inline-block gray-border hover-pointer margin-2"
                      style="width: 64px"
                      ng-click="setFocusImg(img)" />

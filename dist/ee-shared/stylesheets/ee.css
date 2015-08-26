@@ -8391,6 +8391,29 @@ colorpicker-preview {
   clear: both;
   background-position: 0 100%;
 }
+.glyphicon {
+  display: inline-block;
+  font: normal normal normal 14px/1 FontAwesome;
+  font-size: inherit;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+.glyphicon-chevron-left:before {
+  content: "\f053";
+}
+.glyphicon-chevron-right:before {
+  content: "\f054";
+}
+.glyphicon-chevron-up:before {
+  content: "\f077";
+}
+.glyphicon-chevron-down:before {
+  content: "\f078";
+}
+.carousel-control:hover {
+  cursor: pointer;
+}
 .bg-info,
 .hover-bg-info:hover {
   background-color: #6b5c84 !important;
@@ -8462,6 +8485,9 @@ colorpicker-preview {
   transition: none !important;
   transform: none !important;
 }
+body.modal-open {
+  overflow: visible;
+}
 .full-modal .modal-dialog.modal-lg {
   position: fixed;
   margin: 0;
@@ -8482,6 +8508,51 @@ colorpicker-preview {
   height: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+.carousel {
+  margin-bottom: 60px;
+}
+.carousel-inner {
+  padding-bottom: 60px;
+}
+.carousel-control {
+  bottom: 60px;
+}
+.carousel-indicators {
+  bottom: 16px !important;
+  right: 5px !important;
+  left: inherit !important;
+  text-align: right;
+}
+.carousel-indicators li {
+  border: 1px solid #0286c2 !important;
+  background-color: #fcfcfc !important;
+}
+.carousel-indicators .active {
+  background-color: #0286c2 !important;
+}
+.carousel-caption {
+  left: 0;
+  right: 0;
+  bottom: -60px;
+  height: 60px;
+  padding: 0 3px;
+  color: #474747;
+  text-shadow: none;
+  text-align: left;
+}
+.carousel-caption h4 {
+  font-weight: 200;
+  font-size: 24px;
+  line-height: 24px;
+}
+@media (max-width: 600px) {
+  .carousel {
+    margin-bottom: 0;
+  }
+  .carousel-indicators {
+    display: none;
+  }
 }
 [ng\:cloak],
 [ng-cloak],
@@ -8558,18 +8629,40 @@ html {
   left: 0;
   right: 0;
 }
-.ee-navbar .storefront-buttons .position-fixed {
+.ee-builder-navbar .storefront-buttons .position-fixed {
   top: 8px;
   left: 50%;
-  width: 150px;
-  margin-left: -75px;
+  width: 300px;
+  margin-left: -150px;
 }
 @media (max-width: 767px) {
-  .ee-navbar .storefront-buttons .position-fixed {
+  .ee-builder-navbar .storefront-buttons .position-fixed {
     left: auto;
     margin-left: 0;
     right: 5px;
   }
+}
+.ee-builder-subnav {
+  top: 50px !important;
+  max-height: 50px;
+  z-index: 1020;
+  overflow: hidden;
+  font-weight: bold;
+}
+.ee-builder-subnav .builder-subnav-btn-info,
+.ee-builder-subnav .builder-subnav-btn-success {
+  display: inline-block;
+  width: 19%;
+  line-height: 14px;
+  color: #AFAFAF;
+}
+.ee-builder-subnav .builder-subnav-btn-info.active,
+.ee-builder-subnav .builder-subnav-btn-info:hover {
+  color: #6b5c84;
+}
+.ee-builder-subnav .builder-subnav-btn-success.active,
+.ee-builder-subnav .builder-subnav-btn-success:hover {
+  color: #40a397;
 }
 .store-navbar {
   min-height: 75px;
@@ -8958,6 +9051,9 @@ html {
 .min-height-600 {
   min-height: 600px;
 }
+.min-height-900 {
+  min-height: 900px;
+}
 .height-0 {
   height: 0px !important;
 }
@@ -9099,7 +9195,13 @@ img.loading {
 .product-row:hover {
   background: #eceff1;
 }
+.product-well {
+  width: 180px;
+}
 @media (max-width: 767px) {
+  .product-well {
+    width: 139px;
+  }
   .product-preview-thumb img {
     float: left;
   }
@@ -9156,6 +9258,20 @@ img.small-thumb {
   opacity: 1;
   background: rgba(255, 255, 255, 0.1) !important;
 }
+.store-title {
+  padding: 10px 12px 12px 0px;
+}
+@media (max-width: 767px) {
+  .store-title {
+    padding: 10px 12px 12px 12px;
+  }
+}
+.navbar-addition {
+  left: 70px;
+  right: 15px;
+  top: 7px;
+  z-index: 1050;
+}
 img.media-object {
   width: auto;
   height: auto;
@@ -9163,7 +9279,7 @@ img.media-object {
   max-height: 64px;
 }
 .nav-compact li > a {
-  padding: 5px;
+  padding: 1px 5px;
 }
 .input-group .btn:last-child {
   border-radius: 0 3px 3px 0;
@@ -9437,10 +9553,6 @@ nav {
   width: auto;
   height: auto;
 }
-/* .selection-container {
-  margin-right: 10px;
-  img:hover, .product-title:hover { cursor: pointer; }
-} */
 .storefront-carousel {
   max-height: 500px;
   background: white;
@@ -9464,10 +9576,10 @@ nav {
 .storefront-carousel .right .well {
   text-align: left;
 }
-.selection a.selection-title {
+.storeproduct a.storeproduct-title {
   color: #0286c2;
 }
-.selection a.selection-title:hover {
+.storeproduct a.storeproduct-title:hover {
   color: #03a9f4;
 }
 

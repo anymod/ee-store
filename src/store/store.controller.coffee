@@ -1,16 +1,22 @@
 'use strict'
 
-angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location, eeBootstrap) ->
+angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location, eeBootstrap, eeModal) ->
 
   storefront = this
 
   storefront.ee =
-    meta: eeBootstrap?.storefront_meta
-    carousel: eeBootstrap?.storefront_meta?.home?.carousel[0]
+    Collections:
+      collections:          eeBootstrap?.collections
+      carouselCollections:  eeBootstrap?.carouselCollections
+      firstTenCollections:  eeBootstrap?.firstTenCollections
+      afterTenCollections:  eeBootstrap?.afterTenCollections
+    # meta: eeBootstrap?.storefront_meta
 
   storefront.data = eeBootstrap
 
   storefront.fns =
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
+
+  storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.collections)
 
   return
