@@ -9,9 +9,8 @@ h.setup = (req) ->
     bootstrap:
       cart: req.cart
       url: req.protocol + '://' + req.get('host') + req.originalUrl
-      pagination:
-        page: req.query.page
-        perPage: constants.perPage
+      page: req.query.page
+      perPage: constants.perPage
     host: req.headers.host
     path: url.parse(req.url).pathname
   }
@@ -52,13 +51,14 @@ h.humanize = (text) ->
 
 h.assignCollectionTypes = (bootstrap, collections) ->
   bootstrap.collections = collections
+  bootstrap.carouselCollections = []
   bootstrap.firstTenCollections = []
   bootstrap.afterTenCollections = []
   setCollection = (coll) ->
     return unless coll.title
     if bootstrap.firstTenCollections?.length < 10 then bootstrap.firstTenCollections.push coll else bootstrap.afterTenCollections.push coll
+    if bootstrap.carouselCollections?.length < 10 and coll.in_carousel and coll.banner.indexOf('placehold.it') is -1 then bootstrap.carouselCollections.push coll
   setCollection collection for collection in bootstrap.collections
-
 
 h.formCollectionPageTitle = (collection, title) ->
   if collection and title then (collection + ' | ' + title) else collection

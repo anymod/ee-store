@@ -8,8 +8,21 @@ f = {}
 f.storeByUsername = (username) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE username = ?', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
 f.storeByDomain   = (host) -> sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE domain = ?', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
-f.collectionsTitlesBySellerId   = (seller_id) -> sequelize.query 'SELECT id, title FROM "Collections" WHERE seller_id = ? AND title is not null ORDER BY title ASC', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
-f.carouselCollectionsBySellerId = (seller_id) -> sequelize.query 'SELECT id, title, headline, button, banner, in_carousel FROM "Collections" WHERE seller_id = ? AND in_carousel = true AND banner is not null LIMIT 10', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+f.collectionsBySellerId = (seller_id) -> sequelize.query 'SELECT id, title, headline, button, banner, in_carousel FROM "Collections" WHERE seller_id = ? ORDER BY updated_at DESC', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+
+f.featuredStoreProducts = (seller_id, page) ->
+  perPage = constants.perPage
+  page  ||= 1
+  offset  = (page - 1) * perPage
+  data    = {}
+  console.log 'perPage, page, offset', perPage, page, offset
+  sequelize.query 'SELECT id, title, selling_price, image FROM "StoreProducts" WHERE seller_id = ? AND featured = true ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
+  .then (storeProducts) ->
+    data.rows = storeProducts
+    sequelize.query 'SELECT count(*) FROM "StoreProducts" WHERE seller_id = ? AND featured = true', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  .then (res) ->
+    data.count = res[0].count
+    data
 
 f.selectionsByFeatured    = (seller_id, page) ->
   perPage = constants.perPage

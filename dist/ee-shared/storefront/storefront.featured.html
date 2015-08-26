@@ -1,46 +1,40 @@
-<div ng-hide="storefront.ee.StoreProducts.reading" class="container vert-20 margin-top-0 text-center">
+<div ng-if="storefront.ee.StoreProducts.storeProducts.length > 0" ng-hide="storefront.ee.StoreProducts.reading" class="container vert-20 margin-top-0 text-center">
   <hr class="margin-top-0">
   <h4 class="margin-5 font-weight-200">Featured products</h4>
 
-  <div ng-if="storefront.ee.StoreProducts.storeProducts.length > 0">
-    <div class="margin-10">
-      <pagination ng-if="storefront.ee.StoreProducts.count > storefront.ee.StoreProducts.perPage"
-        total-items="storefront.ee.StoreProducts.count"
-        items-per-page="storefront.ee.StoreProducts.perPage"
-        ng-model="storefront.ee.StoreProducts.page"
-        max-size="5"
-        class="pagination-sm margin-0 vertical-align-top"
-        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-        boundary-links="true"
-        rotate="false"
-        ng-change="storefront.storeProductsUpdate()">
-      </pagination>
-    </div>
+  <div class="margin-10">
+    <pagination ng-if="storefront.ee.StoreProducts.count > storefront.ee.StoreProducts.perPage"
+      total-items="storefront.ee.StoreProducts.count"
+      items-per-page="storefront.ee.StoreProducts.perPage"
+      ng-model="storefront.ee.StoreProducts.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="storefront.storeProductsUpdate()">
+    </pagination>
+  </div>
 
-    <div class="full-width text-center vert-20 overflow-hidden">
-      <div ng-repeat="storeProduct in storefront.ee.StoreProducts.storeProducts" class="product-container text-left inline-block width-250 vertical-align-top">
-        <ee-storeproduct-for-storefront storeproduct="storeProduct"></ee-storeproduct-for-storefront>
-        <br>
-      </div>
-    </div>
-
-    <div class="pad-20 vert-20">
-      <pagination ng-if="storefront.ee.StoreProducts.count > storefront.ee.StoreProducts.perPage"
-        total-items="storefront.ee.StoreProducts.count"
-        items-per-page="storefront.ee.StoreProducts.perPage"
-        ng-model="storefront.ee.StoreProducts.page"
-        max-size="5"
-        class="pagination-sm margin-0 vertical-align-top"
-        previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-        boundary-links="true"
-        rotate="false"
-        ng-change="storefront.storeProductsUpdate()">
-      </pagination>
+  <div class="full-width text-center vert-20 overflow-hidden">
+    <div ng-repeat="storeProduct in storefront.ee.StoreProducts.storeProducts" class="product-container text-left inline-block width-250 vertical-align-top">
+      <ee-storeproduct-for-storefront storeproduct="storeProduct"></ee-storeproduct-for-storefront>
+      <br>
     </div>
   </div>
 
-  <div ng-if="storefront.ee.StoreProducts.storeProducts.length <= 0">
-    <h4 class="margin-5 font-weight-200">This collection is coming soon</h4>
+  <div class="pad-20 vert-20">
+    <pagination ng-if="storefront.ee.StoreProducts.count > storefront.ee.StoreProducts.perPage"
+      total-items="storefront.ee.StoreProducts.count"
+      items-per-page="storefront.ee.StoreProducts.perPage"
+      ng-model="storefront.ee.StoreProducts.page"
+      max-size="5"
+      class="pagination-sm margin-0 vertical-align-top"
+      previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+      boundary-links="true"
+      rotate="false"
+      ng-change="storefront.storeProductsUpdate()">
+    </pagination>
   </div>
 </div>
 

@@ -46,16 +46,17 @@ app.get '/', (req, res, next) ->
   finders.userByHost host
   .then (data) ->
     helpers.assignBootstrap bootstrap, data[0]
-    # Define carousel collections
-    finders.carouselCollectionsBySellerId bootstrap.id
-  .then (data) ->
-    bootstrap.carouselCollections = data
-    # Define all collections
-    finders.collectionsTitlesBySellerId bootstrap.id
+    # Define collections
+    finders.collectionsBySellerId bootstrap.id
   .then (data) ->
     helpers.assignCollectionTypes bootstrap, data
-
-    bootstrap.stringified = helpers.stringify bootstrap
+    # Define featured products
+    finders.featuredStoreProducts bootstrap.id, bootstrap.page
+  .then (data) ->
+    { rows, count } = data
+    bootstrap.storeProducts = rows || []
+    bootstrap.count         = count
+    bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     # TODO add better error pages
@@ -68,11 +69,11 @@ app.get ['/featured', '/shop/featured', '/about'], (req, res, next) ->
   finders.userByHost host
   .then (data) ->
     helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByFeatured data[0].id, bootstrap.pagination.page
+    finders.selectionsByFeatured data[0].id, bootstrap.page
   .then (data) ->
     { rows, count } = data
-    bootstrap.selections        = rows || []
-    bootstrap.pagination.count  = count
+    bootstrap.selections  = rows || []
+    bootstrap.count       = count
     if path.indexOf('featured') > -1
       bootstrap.collection  = 'Featured'
       bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
@@ -91,15 +92,15 @@ app.get ['/shop/:collection'], (req, res, next) ->
   finders.userByHost host
   .then (data) ->
     helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByCollection data[0].id, collection, bootstrap.pagination.page
+    finders.selectionsByCollection data[0].id, collection, bootstrap.page
   .then (data) ->
     { rows, count } = data
-    bootstrap.selections        = rows || []
-    bootstrap.pagination.count  = count
-    bootstrap.collection        = helpers.humanize collection
-    bootstrap.title             = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-    bootstrap.images            = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
-    bootstrap.stringified       = helpers.stringify bootstrap
+    bootstrap.selections  = rows || []
+    bootstrap.count       = count
+    bootstrap.collection  = helpers.humanize collection
+    bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
+    bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
+    bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in COLLECTIONS', err
