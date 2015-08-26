@@ -57,8 +57,10 @@ sources.storeModule = [
   # './src/store/core/svc.modal.coffee'
   # Module - store
   './src/store/store.controller.coffee'
-  # Module - selection
-  # './src/store/selection.controller.coffee'
+  # Module - collection
+  './src/store/collection.controller.coffee'
+  # Module - storeproduct
+  './src/store/storeproduct.controller.coffee'
   # Module - cart
   './src/store/cart.controller.coffee'
   # Module - modal
@@ -72,7 +74,8 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-storeproduct-card.coffee'
   './src/ee-shared/components/ee-collection-nav.coffee'
   './src/ee-shared/components/ee-storefront-header.coffee'
-  './src/ee-shared/components/ee-scroll-to-top.coffee'
+  # './src/ee-shared/components/ee-scroll-to-top.coffee'
+  './src/ee-shared/components/ee-product-images.coffee'
 ]
 
 module.exports = sources

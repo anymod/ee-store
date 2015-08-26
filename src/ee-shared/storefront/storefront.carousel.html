@@ -14,7 +14,7 @@
       <div style="max-width: 800px; max-height: 470px;" class="margin-0-auto">
         <carousel interval="5000" no-wrap="noWrapSlides">
           <slide ng-repeat="collection in storefront.ee.Collections.carouselCollections" active="collection.active">
-            <a ui-sref="collection({ id: collection.id })">
+            <a ui-sref="collection({ id: collection.id, title: (collection.title | urlText) })">
               <img ng-src="{{ collection.banner }}" style="margin:auto;">
               <div class="carousel-caption">
                 <h4>{{ collection.headline || collection.title }}</h4>

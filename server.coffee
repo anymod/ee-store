@@ -43,15 +43,8 @@ app.use cartCookie
 # HOME
 app.get '/', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  finders.userByHost host
-  .then (data) ->
-    helpers.assignBootstrap bootstrap, data[0]
-    # Define collections
-    finders.collectionsBySellerId bootstrap.id
-  .then (data) ->
-    helpers.assignCollectionTypes bootstrap, data
-    # Define featured products
-    finders.featuredStoreProducts bootstrap.id, bootstrap.page
+  helpers.defineStorefront host, bootstrap
+  .then () -> finders.featuredStoreProducts bootstrap.id, bootstrap.page
   .then (data) ->
     { rows, count } = data
     bootstrap.storeProducts = rows || []
@@ -60,79 +53,67 @@ app.get '/', (req, res, next) ->
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     # TODO add better error pages
-    console.error 'error in FEATURED', err
+    console.error 'error in HOME', err
     res.send 'Not found'
 
-# FEATURED (TODO give ABOUT its own route)
-app.get ['/featured', '/shop/featured', '/about'], (req, res, next) ->
+# ABOUT
+app.get ['/about'], (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  finders.userByHost host
-  .then (data) ->
-    helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByFeatured data[0].id, bootstrap.page
-  .then (data) ->
-    { rows, count } = data
-    bootstrap.selections  = rows || []
-    bootstrap.count       = count
-    if path.indexOf('featured') > -1
-      bootstrap.collection  = 'Featured'
-      bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-      bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
+  helpers.defineStorefront host, bootstrap
+  .then () ->
     bootstrap.stringified = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     # TODO add better error pages
-    console.error 'error in FEATURED', err
+    console.error 'error in ABOUT', err
     res.send 'Not found'
 
 # COLLECTIONS
-app.get ['/shop/:collection'], (req, res, next) ->
+app.get '/collections/:id/:title', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  collection = path.split('shop/')[1].replace(/[^\w]/gi, '_').toLowerCase()
-  finders.userByHost host
+  helpers.defineStorefront host, bootstrap
+  .then () -> finders.storeProductsInCollection req.params.id, bootstrap.id, bootstrap.page
   .then (data) ->
-    helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionsByCollection data[0].id, collection, bootstrap.page
-  .then (data) ->
-    { rows, count } = data
-    bootstrap.selections  = rows || []
-    bootstrap.count       = count
-    bootstrap.collection  = helpers.humanize collection
-    bootstrap.title       = helpers.formCollectionPageTitle bootstrap.collection, bootstrap.title
-    bootstrap.images      = helpers.makeMetaImages(_.pluck(bootstrap.selections.slice(0,3), 'image'))
-    bootstrap.stringified = helpers.stringify bootstrap
+    { collection, rows, count } = data
+    bootstrap.collection    = collection
+    bootstrap.storeProducts = rows || []
+    bootstrap.count         = count
+    bootstrap.title         = helpers.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
+    bootstrap.images        = helpers.makeMetaImages(_.pluck(bootstrap.storeProducts.slice(0,3), 'image'))
+    bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in COLLECTIONS', err
     res.send 'Not found'
 
-# SELECTIONS
-app.get '/selections/:id/:slug', (req, res, next) ->
+# STOREPRODUCTS
+app.get '/products/:id/:title', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  finders.userByHost host
-  .then (data) ->
-    helpers.assignBootstrap bootstrap, data[0]
-    finders.selectionByIds req.params.id, data[0].id
-  .then (selection) ->
-    bootstrap.selection   = selection[0]
-    bootstrap.title       = bootstrap.selection.title
-    bootstrap.images      = helpers.makeMetaImages([ bootstrap.selection?.image ])
-    bootstrap.description = bootstrap.selection.content
-    bootstrap.stringified = helpers.stringify bootstrap
+  helpers.defineStorefront host, bootstrap
+  .then () -> finders.storeProductByIds req.params.id, bootstrap.id
+  .then (storeProduct) ->
+    bootstrap.storeProduct  = storeProduct[0]
+    finders.productById bootstrap.storeProduct.product_id
+  .then (product) ->
+    bootstrap.storeProduct.product = product[0]
+    bootstrap.title         = bootstrap.storeProduct.title
+    bootstrap.images        = helpers.makeMetaImages([ bootstrap.storeProduct?.image ])
+    bootstrap.description   = bootstrap.storeProduct.content
+    bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
-    console.error 'error in SELECTIONS', err
+    console.error 'error in STOREPRODUCTS', err
     res.send 'Not found'
 
+# CART
 app.get '/cart', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  finders.userByHost host
-  .then (data) ->
-    helpers.assignBootstrap bootstrap, data[0]
+  helpers.defineStorefront host, bootstrap
+  .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
-      selection_ids = _.pluck req.cart.quantity_array, 'id'
-      finders.selectionsByIds selection_ids.join(','), data[0].id
-      .then (data) -> bootstrap.cart.selections = data
+      storeproduct_ids = _.pluck req.cart.quantity_array, 'id'
+      finders.storeProductsByIds storeproduct_ids.join(','), bootstrap.id
+      .then (data) -> bootstrap.cart.storeProducts = data
       .finally () ->
         bootstrap.stringified = helpers.stringify bootstrap
         res.render 'store.ejs', { bootstrap: bootstrap }

@@ -20,5 +20,6 @@ angular.module 'eeStore', [
   'ee-collection-nav'
   'ee-storeproduct-for-storefront'
   'ee-storeproduct-card'
+  'ee-product-images'
   # 'ee.templates' # commented out during build step for inline templates
 ]

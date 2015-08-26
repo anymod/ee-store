@@ -1,5 +1,5 @@
 <div class="margin-5">
-  <a class="storeproduct" ui-sref="storeproduct({ id: storeproduct.id, slug: (storeproduct.title | urlText) })">
+  <a class="storeproduct" ui-sref="storeproduct({ id: storeproduct.id, title: (storeproduct.title | urlText) })">
     <img ng-src="{{ storeproduct.image | midsize }}" class="img-responsive full-width">
     <h4 class="vert-5 text-dark-blue font-weight-200" ng-bind="storeproduct.title" class="storeproduct-title"></h4>
     <h4 class="margin-2 text-dark-gray" ng-bind="storeproduct.selling_price | centToDollar"></h4>

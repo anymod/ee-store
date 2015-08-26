@@ -16,10 +16,12 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
-  # shopViews =
-  #   header: views.header
-  #   top:    views.middle
-  #   footer: views.footer
+  collectionViews =
+    header: views.header
+    top:
+      controller: 'collectionCtrl as collection'
+      templateUrl: 'ee-shared/storefront/storefront.collection.html'
+    footer: views.footer
 
   aboutViews =
     header: views.header
@@ -40,30 +42,25 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    views
       data:     data
 
-    # .state 'storefront-shop',
-    #   url:      '/shop'
-    #   views:    shopViews
-    #   data:     data
-
-    # .state 'collection',
-    #   url:      '/shop/:title'
-    #   views:    shopViews
-    #   data:     data
+    .state 'collection',
+      url:      '/collections/:id/:title'
+      views:    collectionViews
+      data:     data
 
     .state 'storefront-about',
       url:      '/about'
       views:    aboutViews
       data:     data
 
-    .state 'selectionView',
-      url:      '/selections/:id/:slug'
+    .state 'storeproduct',
+      url: '/products/:id/:title'
       views:
         header:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
         top:
-          controller: 'selectionCtrl as storefront'
-          templateUrl: 'store/store.selection.html'
+          controller: 'storeproductCtrl as storeproduct'
+          templateUrl: 'ee-shared/storefront/storefront.product.html'
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'

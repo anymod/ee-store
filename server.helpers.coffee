@@ -1,6 +1,7 @@
 _         = require 'lodash'
 url       = require 'url'
 constants = require './server.constants'
+finders   = require './server.finders'
 
 h = {}
 
@@ -14,6 +15,15 @@ h.setup = (req) ->
     host: req.headers.host
     path: url.parse(req.url).pathname
   }
+
+h.defineStorefront = (host, bootstrap) ->
+  finders.userByHost host
+  .then (data) ->
+    h.assignBootstrap bootstrap, data[0]
+    finders.collectionsBySellerId bootstrap.id
+  .then (data) ->
+    h.assignCollectionTypes bootstrap, data
+    data
 
 h.collectionNames = (collections) ->
   collections ||= {}

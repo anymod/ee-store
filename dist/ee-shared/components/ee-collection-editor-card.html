@@ -7,7 +7,7 @@
           <i class="fa fa-fw fa-save"></i>&nbsp;{{ save_status }}
         </button>
         <div ng-click="deleteCollection()" ng-disabled="data.destroying" class="btn btn-default pull-right"><i class="fa fa-trash"></i></div>
-        <!-- <a ui-sref="collection({ id: collection.id })" class="btn btn-default pull-right">View</a> -->
+        <!-- <a ui-sref="collection({ id: collection.id, title: (collection.title | urlText) })" class="btn btn-default pull-right">View</a> -->
       </div>
     </div>
     <!-- /Save -->
