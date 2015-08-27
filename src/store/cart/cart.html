@@ -36,7 +36,7 @@
             <span ng-bind="storeproduct.selling_price | centToDollar"></span>
             <div class="text-muted">
               <em>
-                <span ng-bind="storeproduct.shipping_price | centToDollar"></span>&nbsp;s/h
+                <span ng-bind="(storeproduct.shipping_price || 0) | centToDollar"></span>&nbsp;s/h
               </em>
             </div>
           </div>
