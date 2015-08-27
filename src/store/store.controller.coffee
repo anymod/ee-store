@@ -15,6 +15,7 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
       page:                 eeBootstrap?.page
       perPage:              eeBootstrap?.perPage
       count:                eeBootstrap?.count
+    meta:                   eeBootstrap?.storefront_meta
 
   storefront.data = eeBootstrap
 
@@ -22,6 +23,6 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 
   storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.collections)
-  storefront.storeProductsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.StoreProducts.page 
+  storefront.storeProductsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.StoreProducts.page
 
   return
