@@ -20,5 +20,9 @@ module.directive "eeStoreproductCard", ($rootScope, $state, $cookies, eeBack) ->
     # outOfStock:         '='
     # discontinued:       '='
   link: (scope, ele, attrs) ->
-    scope.addToCart = () -> $rootScope.$emit 'add:storeproduct', $state.params.id
+    scope.adding = false
+    scope.addToCart = () ->
+      scope.adding = true
+      scope.addingText = 'Adding'
+      $rootScope.$emit 'add:storeproduct', $state.params.id
     return

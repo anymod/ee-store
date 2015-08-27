@@ -10,7 +10,7 @@
           <h1 ng-bind="storeProduct.title" class="vert-10 margin-top-0 font-weight-200"></h1>
           <h3 ng-bind="(price || storeProduct.selling_price) | centToDollar"></h3>
           <h4 ng-bind="storeProduct.content" class="vert-20 font-weight-200" style="white-space: pre-line;"></h4>
-          <div class="btn btn-lg btn-block" ng-disabled="disabled" ng-class="disabled ? 'btn-default' : 'btn-primary'" ng-if="!storeProduct.out_of_stock && !storeProduct.discontinued" ng-click="addToCart()">Add to cart</div>
+          <div class="btn btn-lg btn-block" ng-disabled="disabled || adding" ng-class="disabled ? 'btn-default' : 'btn-primary'" ng-if="!storeProduct.out_of_stock && !storeProduct.discontinued" ng-click="addToCart()">{{ addingText || 'Add to cart' }}</div>
           <div class="btn btn-info btn-lg btn-block disabled" ng-if="storeProduct.out_of_stock" disabled>Out of Stock</div>
           <div class="btn btn-info btn-lg btn-block disabled" ng-if="storeProduct.discontinued" disabled>Discontinued</div>
           <div class="btn btn-link pad-0 vert-20" ng-click="showDetails = !showDetails">{{ showDetails ? 'hide' : 'more' }} details</div>
