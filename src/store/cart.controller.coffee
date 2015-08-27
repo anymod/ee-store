@@ -5,28 +5,29 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
   cart = this
 
   # Define data
-  cart.selections     = eeBootstrap?.cart?.selections || []
+  cart.storeproducts  = eeBootstrap?.cart?.storeProducts || []
   cart.quantity_array = eeBootstrap?.cart?.quantity_array || []
 
   _syncArrays = () ->
     synced = []
     for pair in cart.quantity_array
-      for selection in cart.selections
-        synced.push selection if parseInt(selection.id) is parseInt(pair.id)
-    cart.selections = synced
+      for storeproduct in cart.storeproducts
+        synced.push storeproduct if parseInt(storeproduct.id) is parseInt(pair.id)
+    cart.storeproducts = synced
   _syncArrays()
 
   # Set lookup object
-  selection_lookup = {}
-  selection_lookup[selection.id] = selection for selection in cart.selections
+  storeproduct_lookup = {}
+  storeproduct_lookup[storeproduct.id] = storeproduct for storeproduct in cart.storeproducts
+  console.log storeproduct_lookup
 
   # Calculate selling_price_sum
   cart.selling_price_sum = 0
-  cart.selling_price_sum += (parseInt(pair.quantity) * parseInt(selection_lookup[parseInt(pair.id)].selling_price)) for pair in cart.quantity_array
+  cart.selling_price_sum += (parseInt(pair.quantity) * parseInt(storeproduct_lookup[parseInt(pair.id)]?.selling_price)) for pair in cart.quantity_array
 
   # Calculate shipping_price_sum
   cart.shipping_price_sum = 0
-  cart.shipping_price_sum += (parseInt(pair.quantity) * parseInt(selection_lookup[parseInt(pair.id)].product_meta.shipping_price)) for pair in cart.quantity_array
+  cart.shipping_price_sum += (parseInt(pair.quantity) * parseInt(storeproduct_lookup[parseInt(pair.id)]?.product_meta?.shipping_price)) for pair in cart.quantity_array
 
   # Calculate totals
   cart.subtotal = cart.selling_price_sum + cart.shipping_price_sum
@@ -36,7 +37,7 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
   # Other PayPal variables
   cart.quantity       = 0
   cart.quantity += pair.quantity for pair in cart.quantity_array
-  cart.item_name      = if cart.quantity_array.length > 1 then ('' + cart.quantity_array.length + ' items (qty: ' + cart.quantity + ')') else cart.selections[0]?.title
+  cart.item_name      = if cart.quantity_array.length > 1 then ('' + cart.quantity_array.length + ' items (qty: ' + cart.quantity + ')') else cart.storeproducts[0]?.title
   cart.item_number    = $cookies.cart?.split('.')[1]
   cart.return         = '' + $location.absUrl() + '/success'
   cart.cancel_return  = '' + $location.absUrl()
@@ -48,6 +49,6 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
     eeCart.fns.updateCartTo newVal
   , true
 
-  cart.removeSelection = (id) -> eeCart.fns.removeSelection id, cart.quantity_array
+  cart.removeStoreProduct = (id) -> eeCart.fns.removeStoreProduct id, cart.quantity_array
 
   return

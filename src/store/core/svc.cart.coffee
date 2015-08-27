@@ -2,25 +2,25 @@
 
 angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, eeBack) ->
 
-  _addOrIncrement = (selection_id, quantity_array) ->
+  _addOrIncrement = (storeproduct_id, quantity_array) ->
     quantity_array ||= []
     inArray = false
     for pair, i in quantity_array
-      if parseInt(selection_id) is parseInt(pair.id)
+      if parseInt(storeproduct_id) is parseInt(pair.id)
         pair.quantity += 1
         inArray = true
-    quantity_array.push { id: selection_id, quantity: 1 } unless inArray
+    quantity_array.push { id: storeproduct_id, quantity: 1 } unless inArray
     quantity_array
 
-  _remove = (selection_id, quantity_array) ->
+  _remove = (storeproduct_id, quantity_array) ->
     quantity_array ||= []
     temp = []
     for pair, i in quantity_array
-      if parseInt(selection_id) isnt parseInt(pair.id) then temp.push quantity_array[i]
+      if parseInt(storeproduct_id) isnt parseInt(pair.id) then temp.push quantity_array[i]
     temp
 
-  _addSelection = (selection_id, quantity_array) ->
-    quantity_array = _addOrIncrement selection_id, quantity_array
+  _addStoreProduct = (storeproduct_id, quantity_array) ->
+    quantity_array = _addOrIncrement storeproduct_id, quantity_array
     if $cookies.cart
       [ee, cart_id, token] = $cookies.cart.split('.')
       eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
@@ -35,8 +35,8 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
         $state.go 'cart'
       .catch (err) -> console.error err
 
-  _removeSelection = (selection_id, quantity_array) ->
-    quantity_array = _remove selection_id, quantity_array
+  _removeStoreProduct = (storeproduct_id, quantity_array) ->
+    quantity_array = _remove storeproduct_id, quantity_array
     [ee, cart_id, token] = $cookies.cart.split('.')
     eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
     .then (res) ->
@@ -56,6 +56,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
 
   ## EXPORTS
   fns:
-    addSelection: _addSelection
-    removeSelection: _removeSelection
-    updateCartTo: _updateCartTo
+    addStoreProduct:    _addStoreProduct
+    removeStoreProduct: _removeStoreProduct
+    updateCartTo:       _updateCartTo

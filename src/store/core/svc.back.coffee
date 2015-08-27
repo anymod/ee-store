@@ -28,41 +28,7 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
       .finally () -> _endRequest()
     deferred.promise
 
-  _formQueryString = (query) ->
-    if !query then return ''
-    keys = Object.keys(query)
-    parts = []
-    addQuery = (key) -> parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(query[key]))
-    addQuery(key) for key in keys
-    '?' + parts.join('&')
-
   data: _data
-
-  featuredGET: (username) ->
-    if !username then throw 'Missing username'
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'store/featured'
-      headers: authorization: username
-    }
-
-  collectionGET: (username, collection) ->
-    if !username then throw 'Missing username'
-    if !collection then throw 'Missing collection'
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'store/collections/' + collection
-      headers: authorization: username
-    }
-
-  selectionGET: (username, selection_id) ->
-    if !username then throw 'Missing username'
-    if !id then throw 'Missing selection id'
-    _makeRequest {
-      method: 'GET'
-      url: eeBackUrl + 'store/selections/' + selection_id
-      headers: authorization: username
-    }
 
   cartPOST: (quantity_array) ->
     _makeRequest {
