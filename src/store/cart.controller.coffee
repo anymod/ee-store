@@ -19,7 +19,6 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
   # Set lookup object
   storeproduct_lookup = {}
   storeproduct_lookup[storeproduct.id] = storeproduct for storeproduct in cart.storeproducts
-  console.log storeproduct_lookup
 
   # Calculate selling_price_sum
   cart.selling_price_sum = 0
