@@ -14,8 +14,6 @@ angular.module('eeStore').controller 'storeproductCtrl', ($rootScope, eeBootstra
   storeproduct.data =
     storeproduct: eeBootstrap.storeProduct
 
-  console.log storeproduct.data
-
   $rootScope.$on 'add:selection', (e, selection_id) ->
     eeCart.fns.addSelection selection_id, eeBootstrap.cart?.quantity_array
 

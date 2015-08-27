@@ -6,6 +6,7 @@ gp    = do require "gulp-load-plugins"
 
 streamqueue = require 'streamqueue'
 combine     = require 'stream-combiner'
+runSequence = require 'run-sequence'
 protractor  = require('gulp-protractor').protractor
 
 sources     = require './gulp.sources'
@@ -111,6 +112,11 @@ copyToDist = (url) ->
 
 gulp.task 'js-dev',   () -> copyToDist 'http://localhost:5000'
 gulp.task 'js-prod',  () -> copyToDist 'https://api.eeosk.com'
+gulp.task 'js-stage', () ->
+  gulp.src distPath + '/ee.store.js'
+    .pipe gp.plumber()
+    .pipe gp.replace /api\.eeosk\.com/g, 'ee-back-staging.herokuapp.com'
+    .pipe gulp.dest distPath
 
 # ==========================
 # other tasks
@@ -171,11 +177,13 @@ gulp.task 'protractor-live', () ->
 # ==========================
 # servers
 
-gulp.task 'server-dev', () ->
-  gulp.src('./src').pipe gp.webserver(
-    fallback: 'store.ejs' # for angular html5mode
-    port: 4000
-  )
+# gulp.task 'server-dev', () ->
+#   gulp.src('./src').pipe gp.webserver(
+#     fallback: 'store.ejs' # for angular html5mode
+#     port: 4000
+#   )
+gulp.task 'server-prod', () ->
+  spawn 'foreman', ['start'], stdio: 'inherit'
 
 gulp.task 'server-test-store', () ->
   gulp.src('./src').pipe gp.webserver(
@@ -196,26 +204,34 @@ gulp.task 'watch-test', () ->
     .pipe gp.watch { emit: 'one', name: 'test' }, ['protractor-test']
 
 gulp.task 'watch-dev', () ->
-  gulp.src './src/**/*.coffee'
-    .pipe gp.watch { emit: 'one', name: 'js' }, ['js-dev']
-  # gulp.src './src/store.ejs'
-  #   .pipe gp.watch { emit: 'one', name: 'html' }, ['html-prod']
-  gulp.src './src/ee-shared/**/*.*'
-    .pipe gp.watch { emit: 'one', name: 'html' }, ['copy-prod']
+  gulp.watch './src/**/*.coffee', (obj) -> copyToDist 'http://localhost:5000'
+  # gulp.watch './src/**/constants.coffee', (obj) -> copyConstantToSrcJs 'http://localhost:5000'
+  # gulp.watch './src/store.html', (obj) -> copyDevHtml()
+
+  # gulp.src './src/**/*.coffee'
+  #   .pipe gp.watch { emit: 'one', name: 'js' }, ['js-dev']
+  # gulp.src './src/ee-shared/**/*.*'
+  #   .pipe gp.watch { emit: 'one', name: 'html' }, ['copy-prod']
 
 gulp.task 'watch-prod', () ->
-  gulp.src './src/**/*.coffee'
-    .pipe gp.watch { emit: 'one', name: 'js' }, ['js-prod']
-  gulp.src ['./src/**/*.html', './src/**/*.ejs']
-    .pipe gp.watch { emit: 'one', name: 'html' }, ['html-prod']
-  gulp.src ['./src/ee-shared/**/*.*', './src/store/**/*.html']
-    .pipe gp.watch { emit: 'one', name: 'test' }, ['copy-prod']
+  gulp.watch './src/**/*.coffee', (obj) -> copyToDist 'https://api.eeosk.com'
+  # gulp.src './src/**/*.coffee'
+  #   .pipe gp.watch { emit: 'one', name: 'js' }, ['js-prod']
+  # gulp.src ['./src/**/*.html', './src/**/*.ejs']
+  #   .pipe gp.watch { emit: 'one', name: 'html' }, ['html-prod']
+  # gulp.src ['./src/ee-shared/**/*.*', './src/store/**/*.html']
+  #   .pipe gp.watch { emit: 'one', name: 'test' }, ['copy-prod']
 
 # ===========================
 # runners
 
-gulp.task 'test', ['js-test', 'html-dev', 'server-test', 'watch-test'], () -> return
 
-gulp.task 'dev', ['js-dev', 'html-dev', 'copy-prod', 'watch-dev', 'server-prod'], () -> return
 
-gulp.task 'prod', ['js-prod', 'html-dev', 'html-prod', 'copy-prod', 'watch-prod', 'server-prod'], () -> return
+
+gulp.task 'dev', (cb) -> runSequence 'js-dev', 'html-dev', 'copy-prod', 'server-prod', 'watch-dev', cb
+gulp.task 'prod', (cb) -> runSequence 'js-prod', 'html-dev', 'html-prod', 'copy-prod', 'server-prod', 'watch-prod', cb
+gulp.task 'stage', (cb) -> runSequence 'js-prod', 'html-dev', 'html-prod', 'copy-prod', 'js-stage', cb
+
+# gulp.task 'test', ['js-test', 'html-dev', 'server-test', 'watch-test'], () -> return
+# gulp.task 'dev', ['js-dev', 'html-dev', 'copy-prod', 'watch-dev', 'server-prod'], () -> return
+# gulp.task 'prod', ['js-prod', 'html-dev', 'html-prod', 'copy-prod', 'watch-prod', 'server-prod'], () -> return
