@@ -26,7 +26,7 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
 
   # Calculate shipping_price_sum
   cart.shipping_price_sum = 0
-  cart.shipping_price_sum += (parseInt(pair.quantity) * parseInt(storeproduct_lookup[parseInt(pair.id)]?.product_meta?.shipping_price)) for pair in cart.quantity_array
+  cart.shipping_price_sum += (parseInt(pair.quantity) * parseInt(storeproduct_lookup[parseInt(pair.id)]?.shipping_price || 0)) for pair in cart.quantity_array
 
   # Calculate totals
   cart.subtotal = cart.selling_price_sum + cart.shipping_price_sum
