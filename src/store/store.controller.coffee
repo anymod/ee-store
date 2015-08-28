@@ -20,7 +20,7 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
   storefront.fns =
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 
-  storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.collections)
+  storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.nav?.alphabetical)
   storefront.storeProductsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.StoreProducts.page
 
   return
