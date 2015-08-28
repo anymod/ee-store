@@ -1,19 +1,19 @@
-<div ng-if="storefront.ee.Collections.collections.length > 0" class="container">
+<div ng-if="storefront.ee.Collections.nav.carousel.length > 0" class="container">
   <div class="row vert-20 margin-bottom-0">
     <div class="col col-sm-2 hidden-xs">
       <h4 class="margin-5 margin-top-0 font-weight-200">Collections</h4>
-      <ee-collection-nav ng-show="storefront" collections="storefront.ee.Collections.firstTenCollections" class="nav nav-pills nav-stacked nav-compact"></ee-collection-nav>
-      <ul ng-if="storefront.ee.Collections.afterTenCollections.length > 0" class="nav nav-pills nav-stacked nav-compact">
-        <li>
-          <a href ng-click="storefront.openCollectionsModal()">More collections</a>
-        </li>
-      </ul>
+      <ee-collection-nav
+        ng-show="storefront"
+        collections="storefront.ee.Collections.nav.alphabetical"
+        limit="10"
+        class="nav nav-pills nav-stacked nav-compact">
+      </ee-collection-nav>
       <br>
     </div>
     <div class="col col-sm-10">
       <div style="max-width: 800px; max-height: 470px;" class="margin-0-auto">
         <carousel interval="5000" no-wrap="noWrapSlides">
-          <slide ng-repeat="collection in storefront.ee.Collections.carouselCollections" active="collection.active">
+          <slide ng-repeat="collection in storefront.ee.Collections.nav.carousel" active="collection.active">
             <a ui-sref="collection({ id: collection.id, title: (collection.title | urlText) })">
               <img ng-src="{{ collection.banner }}" style="margin:auto;">
               <div class="carousel-caption">
@@ -29,7 +29,7 @@
 </div>
 
 <ee-empty-message
-  ng-if="isBuilder && !storefront.ee.Collections.reading && storefront.ee.Collections.collections.length <= 0"
+  ng-if="isBuilder && !storefront.ee.Collections.nav.reading && storefront.ee.Collections.nav.carousel.length <= 0"
   main-message="Start your store"
   btn-message="Add collections"
   btn-sref="collectionsAdd"

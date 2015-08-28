@@ -6,16 +6,14 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
 
   storefront.ee =
     Collections:
-      collections:          eeBootstrap?.collections
-      carouselCollections:  eeBootstrap?.carouselCollections
-      firstTenCollections:  eeBootstrap?.firstTenCollections
-      afterTenCollections:  eeBootstrap?.afterTenCollections
+      collections:    eeBootstrap?.collections
+      nav:            eeBootstrap?.nav
     StoreProducts:
-      storeProducts:        eeBootstrap?.storeProducts
-      page:                 eeBootstrap?.page
-      perPage:              eeBootstrap?.perPage
-      count:                eeBootstrap?.count
-    meta:                   eeBootstrap?.storefront_meta
+      storeProducts:  eeBootstrap?.storeProducts
+      page:           eeBootstrap?.page
+      perPage:        eeBootstrap?.perPage
+      count:          eeBootstrap?.count
+    meta:             eeBootstrap?.storefront_meta
 
   storefront.data = eeBootstrap
 

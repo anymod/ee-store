@@ -2,40 +2,53 @@
 
 module = angular.module 'ee-collection-editor-card', []
 
-module.directive "eeCollectionEditorCard", ($state, $window, eeCollection) ->
+module.directive "eeCollectionEditorCard", ($state, $window, eeCollections) ->
   templateUrl: 'ee-shared/components/ee-collection-editor-card.html'
   restrict: 'E'
   scope:
     collection: '='
+    expanded:   '@'
   link: (scope, ele, attrs) ->
 
-    scope.data = eeCollection.data
-    scope.save_status = 'Saved'
-    scope.save_bool   = false
+    scope.save_status = 'Save'
+    scope.saved       = true
+    scope.expanded  ||= false
 
     scope.updateCollection = () ->
       scope.save_status = 'Saving'
-      eeCollection.fns.updateCollection()
+      eeCollections.fns.updateCollection scope.collection
       .then () ->
         scope.save_status = 'Saved'
-        scope.save_bool   = true
+        scope.saved       = true
+        scope.expanded    = false
       .catch (err) -> scope.save_status = 'Problem saving'
 
     scope.deleteCollection = () ->
-      deleteCollection = $window.confirm 'Delete this collection?'
+      deleteCollection = $window.confirm 'Remove this from your store?'
       if deleteCollection
-        eeCollection.fns.destroyCollection scope.collection.id
-        .then () -> $state.go 'collections'
+        scope.save_status = 'Removing'
+        eeCollections.fns.destroyCollection scope.collection
+        .then () ->
+          scope.collection.removed = true
+          $state.go 'collections'
+        .catch (err) -> scope.save_status = 'Problem removing'
 
-    scope.$watch () ->
-      return scope.collection
-    , (newVal, oldVal) ->
-      if oldVal and oldVal.id
-        if scope.save_status is 'Saved' and !scope.save_bool
-          scope.save_bool = true
-          scope.save_status = 'Save'
-        else
-          scope.save_bool = false
-    , true
+    scope.addToCarousel = () ->
+      scope.collection.in_carousel = true
+      scope.updateCollection()
+
+    scope.removeFromCarousel = () ->
+      scope.collection.in_carousel = false
+      scope.updateCollection()
+
+    scope.expand = () ->
+      scope.expanded = true
+      n = 0
+      scope.$watch () ->
+        return scope.collection
+      , (newVal, oldVal) ->
+        if oldVal and oldVal.id and n > 0 then scope.saved = false
+        if n is 0 then n += 1
+      , true
 
     return

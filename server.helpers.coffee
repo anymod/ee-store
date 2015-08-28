@@ -20,10 +20,12 @@ h.defineStorefront = (host, bootstrap) ->
   finders.userByHost host
   .then (data) ->
     h.assignBootstrap bootstrap, data[0]
-    finders.collectionsBySellerId bootstrap.id
+    finders.navCollectionsBySellerId bootstrap.id
   .then (data) ->
-    h.assignCollectionTypes bootstrap, data
-    data
+    bootstrap.nav =
+      carousel:     data.carousel
+      alphabetical: data.alphabetical
+    bootstrap
 
 h.collectionNames = (collections) ->
   collections ||= {}
@@ -61,13 +63,12 @@ h.humanize = (text) ->
 
 h.assignCollectionTypes = (bootstrap, collections) ->
   bootstrap.collections = collections
-  bootstrap.carouselCollections = []
-  bootstrap.firstTenCollections = []
-  bootstrap.afterTenCollections = []
+  bootstrap.nav = {}
+  bootstrap.nav.carousel = []
+  bootstrap.nav.alphabetical = []
   setCollection = (coll) ->
     return unless coll.title
-    if bootstrap.firstTenCollections?.length < 10 then bootstrap.firstTenCollections.push coll else bootstrap.afterTenCollections.push coll
-    if bootstrap.carouselCollections?.length < 10 and coll.in_carousel and coll.banner.indexOf('placehold.it') is -1 then bootstrap.carouselCollections.push coll
+    if bootstrap.nav?.carousel?.length < 10 and coll.in_carousel and coll.banner.indexOf('placehold.it') is -1 then bootstrap.nav.carousel.push coll
   setCollection collection for collection in bootstrap.collections
 
 h.formCollectionPageTitle = (collection, title) ->

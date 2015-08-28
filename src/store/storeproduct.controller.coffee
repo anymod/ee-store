@@ -6,10 +6,8 @@ angular.module('eeStore').controller 'storeproductCtrl', ($rootScope, eeBootstra
 
   storeproduct.ee =
     Collections:
-      collections:          eeBootstrap?.collections
-      carouselCollections:  eeBootstrap?.carouselCollections
-      firstTenCollections:  eeBootstrap?.firstTenCollections
-      afterTenCollections:  eeBootstrap?.afterTenCollections
+      collections:  eeBootstrap?.collections
+      nav:          eeBootstrap?.nav
 
   storeproduct.data =
     storeproduct: eeBootstrap.storeProduct

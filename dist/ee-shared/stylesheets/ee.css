@@ -8981,7 +8981,7 @@ html {
   padding-left: 20px;
 }
 .pad-top-0 {
-  padding-top: 0px;
+  padding-top: 0px !important;
 }
 .pad-top-50 {
   padding-top: 50px;
@@ -9043,11 +9043,14 @@ html {
 .max-width-80 {
   max-width: 80px;
 }
+.max-width-200 {
+  max-width: 200px !important;
+}
 .max-width-300 {
-  max-width: 300px;
+  max-width: 300px !important;
 }
 .max-width-400 {
-  max-width: 400px;
+  max-width: 400px !important;
 }
 .max-width-600 {
   max-width: 600px;
