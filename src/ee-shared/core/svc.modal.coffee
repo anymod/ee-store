@@ -30,6 +30,12 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
       templateUrl:    'store/modal/modal.offer.thanks.html'
       controller:     'modalCtrl as modal'
       backdropClass:  _backdropClass
+    themes:
+      templateUrl:    'builder/create/create.themes.modal.html'
+      controller:     'createCtrl as create'
+      size:           'lg'
+      backdropClass:  _backdropClass
+      windowClass:    'full-modal'
 
 
   ## PRIVATE FUNCTIONS

@@ -29,11 +29,19 @@
 </div>
 
 <ee-empty-message
-  ng-if="isBuilder && !storefront.ee.Collections.nav.reading && storefront.ee.Collections.nav.carousel.length <= 0"
+  ng-if="isBuilder && !storefront.ee.Collections.nav.reading && storefront.ee.Collections.nav.alphabetical.length <= 0"
   main-message="Start your store"
   btn-message="Add collections"
   btn-sref="collectionsAdd"
-  sub-message="When you add collections and products to your store, they will show here and will be ready for customers to purchase!">
+  sub-message="Get started by adding a few collections to your store!">
+</ee-empty-message>
+
+<ee-empty-message
+  ng-if="isBuilder && !storefront.ee.Collections.nav.reading && storefront.ee.Collections.nav.alphabetical.length > 0 && storefront.ee.Collections.nav.carousel.length <= 0"
+  main-message="Add to carousel"
+  btn-message="Your collections"
+  btn-sref="collections"
+  sub-message="Add collections to your carousel and they will show up here.">
 </ee-empty-message>
 
 <ee-empty-message
