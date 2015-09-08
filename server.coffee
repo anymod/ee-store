@@ -121,6 +121,10 @@ app.get '/cart', (req, res, next) ->
       bootstrap.stringified = helpers.stringify bootstrap
       res.render 'store.ejs', { bootstrap: bootstrap }
 
+# LEGACY REDIRECTS
+app.get ['/selections/:id/:title', '/shop', '/shop/:title'], (req, res, next) ->
+  res.redirect '/'
+
 app.listen process.env.PORT, ->
   console.log 'Store app listening on port ' + process.env.PORT
   return
