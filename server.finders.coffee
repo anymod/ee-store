@@ -25,7 +25,7 @@ f.featuredStoreProducts = (seller_id, page) ->
   page  ||= 1
   offset  = (page - 1) * perPage
   data    = {}
-  sequelize.query 'SELECT id, title, selling_price, image FROM "StoreProducts" WHERE seller_id = ? AND featured = true ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
+  sequelize.query 'SELECT id, title, selling_price, image, msrp FROM "StoreProducts" WHERE seller_id = ? AND featured = true ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
   .then (storeProducts) ->
     data.rows = storeProducts
     sequelize.query 'SELECT count(*) FROM "StoreProducts" WHERE seller_id = ? AND featured = true', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
@@ -38,7 +38,7 @@ f.featuredStoreProducts = (seller_id, page) ->
 #   page  ||= 1
 #   offset  = (page - 1) * perPage
 #   data    = {}
-#   sequelize.query 'SELECT id, title, selling_price, image, collection, discontinued, out_of_stock FROM "Selections" WHERE seller_id = ? AND featured = true LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
+#   sequelize.query 'SELECT id, title, selling_price, image, collection, discontinued, out_of_stock, msrp FROM "Selections" WHERE seller_id = ? AND featured = true LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
 #   .then (selections) ->
 #     data.rows = selections
 #     sequelize.query 'SELECT count(*) FROM "Selections" WHERE seller_id = ? AND featured = true', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
@@ -51,7 +51,7 @@ f.featuredStoreProducts = (seller_id, page) ->
 #   page  ||= 1
 #   offset  = (page - 1) * perPage
 #   data    = {}
-#   sequelize.query 'SELECT id, title, selling_price, image, collection, discontinued, out_of_stock FROM "Selections" WHERE seller_id = ? AND collection = ? LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, collection, perPage, offset] }
+#   sequelize.query 'SELECT id, title, selling_price, image, collection, discontinued, out_of_stock, msrp FROM "Selections" WHERE seller_id = ? AND collection = ? LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, collection, perPage, offset] }
 #   .then (selections) ->
 #     data.rows = selections
 #     sequelize.query 'SELECT count(*) FROM "Selections" WHERE seller_id = ? AND collection = ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, collection] }
@@ -60,8 +60,8 @@ f.featuredStoreProducts = (seller_id, page) ->
 #     data
 
 
-f.storeProductByIds   = (storeproduct_id, seller_id) -> sequelize.query 'SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id FROM "StoreProducts" WHERE id = ? AND seller_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [storeproduct_id, seller_id] }
-f.storeProductsByIds  = (id_string, seller_id) -> sequelize.query ('SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id FROM "StoreProducts" WHERE id in (' + id_string + ') AND seller_id = ?'), { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+f.storeProductByIds   = (storeproduct_id, seller_id) -> sequelize.query 'SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id, msrp FROM "StoreProducts" WHERE id = ? AND seller_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [storeproduct_id, seller_id] }
+f.storeProductsByIds  = (id_string, seller_id) -> sequelize.query ('SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id, msrp FROM "StoreProducts" WHERE id in (' + id_string + ') AND seller_id = ?'), { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
 f.storeProductsInCollection = (collection_id, seller_id, page) ->
   perPage = constants.perPage
   page  ||= 1
@@ -71,7 +71,7 @@ f.storeProductsInCollection = (collection_id, seller_id, page) ->
   .then (rows) ->
     data.collection = rows[0]
     data.id_string  = data.collection.product_ids.join(',') || '0'
-    sequelize.query 'SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id FROM "StoreProducts" WHERE product_id IN (' + data.id_string + ') AND seller_id = ? LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
+    sequelize.query 'SELECT id, title, selling_price, image, additional_images, content, discontinued, out_of_stock, featured, product_id, msrp FROM "StoreProducts" WHERE product_id IN (' + data.id_string + ') AND seller_id = ? LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
   .then (storeProducts) ->
     data.rows = storeProducts
     sequelize.query 'SELECT count(*) FROM "StoreProducts" WHERE product_id IN (' + data.id_string + ') AND seller_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }

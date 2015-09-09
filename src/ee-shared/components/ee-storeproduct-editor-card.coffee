@@ -40,8 +40,9 @@ module.directive "eeStoreproductEditorCard", ($window, eeCollection, eeCollectio
 
     _setEarningsAndMargin = () ->
       if !scope.storeProduct then return
-      scope.calculated.earnings = scope.storeProduct.selling_price - scope.storeProduct.baseline_price
-      scope.calculated.margin   = 1 - (scope.storeProduct.baseline_price / scope.storeProduct.selling_price)
+      scope.calculated.earnings     = scope.storeProduct.selling_price - scope.storeProduct.baseline_price
+      scope.calculated.margin       = 1 - (scope.storeProduct.baseline_price / scope.storeProduct.selling_price)
+      if scope.storeProduct.msrp then scope.calculated.msrpDiscount = (scope.storeProduct.msrp - scope.storeProduct.selling_price) / scope.storeProduct.msrp
       return
 
     _calculate = () ->

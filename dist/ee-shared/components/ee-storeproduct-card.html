@@ -8,7 +8,11 @@
       <div class="col col-sm-6">
         <div class="pad-10">
           <h1 ng-bind="storeProduct.title" class="vert-10 margin-top-0 font-weight-200"></h1>
-          <h3 ng-bind="(price || storeProduct.selling_price) | centToDollar"></h3>
+          <h4 ng-if="product.msrp && storeProduct.selling_price && product.msrp > storeProduct.selling_price" class="vert-10">
+            <span class="text-muted"><s>{{ product.msrp | centToDollar }}</s></span>
+            <span class="text-danger">&nbsp;{{ msrpDiscount | percentage:0 }} Off</span>
+          </h4>
+          <h3 class="vert-15 margin-top-0" ng-bind="storeProduct.selling_price | centToDollar"></h3>
           <h4 ng-bind="storeProduct.content" class="vert-20 font-weight-200" style="white-space: pre-line;"></h4>
           <div class="btn btn-lg btn-block" ng-disabled="disabled || adding" ng-class="disabled ? 'btn-default' : 'btn-primary'" ng-if="!storeProduct.out_of_stock && !storeProduct.discontinued" ng-click="addToCart()">{{ addingText || 'Add to cart' }}</div>
           <div class="btn btn-info btn-lg btn-block disabled" ng-if="storeProduct.out_of_stock" disabled>Out of Stock</div>

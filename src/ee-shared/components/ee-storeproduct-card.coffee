@@ -10,19 +10,17 @@ module.directive "eeStoreproductCard", ($rootScope, $state, $cookies, eeBack) ->
     product:      '='
     disabled:     '='
     price:        '='
-    # storeproductTitle:  '=' # storeproductTitle to avoid title="" in HTML (which causes popover note in some browsers)
-    # price:              '='
-    # content:            '='
-    # mainImage:          '@'
-    # image:              '@'
-    # additionalImages:   '@'
-    # details:            '='
-    # outOfStock:         '='
-    # discontinued:       '='
   link: (scope, ele, attrs) ->
+
     scope.adding = false
     scope.addToCart = () ->
       scope.adding = true
       scope.addingText = 'Adding'
       $rootScope.$emit 'add:storeproduct', $state.params.id
+
+    if scope.price and scope.storeProduct?.selling_price then scope.storeProduct.selling_price = scope.price
+
+    if scope.storeProduct?.msrp and scope.storeProduct?.selling_price
+      scope.msrpDiscount = (scope.storeProduct.msrp - scope.storeProduct.selling_price) / scope.storeProduct.msrp
+
     return

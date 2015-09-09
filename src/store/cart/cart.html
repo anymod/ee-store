@@ -33,7 +33,10 @@
             <small><a href ng-click="cart.removeStoreProduct(storeproduct.id)">Delete</a></small>
           </div>
           <div class="col col-xs-2">
-            <span ng-bind="storeproduct.selling_price | centToDollar"></span>
+            <span ng-if="storeproduct.msrp && storeproduct.msrp > storeproduct.selling_price">
+              <s class="text-muted" ng-bind="storeproduct.msrp | centToDollar"></s>
+            </span>
+            <strong ng-bind="storeproduct.selling_price | centToDollar"></strong>
             <div class="text-muted">
               <em>
                 <span ng-bind="(storeproduct.shipping_price || 0) | centToDollar"></span>&nbsp;s/h
