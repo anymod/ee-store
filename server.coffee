@@ -112,7 +112,7 @@ app.get '/cart', (req, res, next) ->
   .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
       storeproduct_ids = _.pluck req.cart.quantity_array, 'id'
-      finders.storeProductsByIds storeproduct_ids.join(','), bootstrap.id
+      finders.storeProductsForCart storeproduct_ids.join(','), bootstrap.id
       .then (data) -> bootstrap.cart.storeProducts = data
       .finally () ->
         bootstrap.stringified = helpers.stringify bootstrap

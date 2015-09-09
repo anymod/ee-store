@@ -25,7 +25,7 @@
   </div>
   <!-- COMPACT -->
 
-  <div class="row vert-10" ng-if="collection.products || collection.reading">
+  <div class="row vert-10 products-row" ng-if="collection.products || collection.reading">
     <div ng-show="collection.products" class="pad-10">
       <h3 class="font-weight-200 margin-0 text-info">Products in {{ collection.title }}</h3>
       <div class="text-muted">You can add & edit products when you add this collection to your store.</div>
@@ -42,8 +42,9 @@
       </div>
     </div>
     <div ng-show="collection.products" class="pad-20 max-width-600 margin-0-auto">
-      <div class="btn btn-success btn-lg btn-block" ng-click="cloneCollection()">
-        Add the collection '{{ collection.title }}' to your store
+      <div ng-if="collection.added" class="btn btn-success btn-lg btn-block" ng-click="removeFromStore()" ng-disabled="save_status == 'Adding'"><i class="fa fa-check"></i>&nbsp;&nbsp;Added</div>
+      <div ng-if="!collection.added" class="btn btn-default btn-lg btn-block" ng-click="cloneCollection()" ng-disabled="save_status == 'Adding'">
+        Add <span class="hidden-xs">the collection '{{ collection.title }}' </span>to your store
       </div>
     </div>
 

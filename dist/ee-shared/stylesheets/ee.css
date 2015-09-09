@@ -9604,5 +9604,31 @@ nav {
 .storeproduct a.storeproduct-title:hover {
   color: #03a9f4;
 }
+@media (max-width: 600px) {
+  ee-collection-editor-card .media-left,
+  ee-collection-add-card .media-left {
+    display: inline-block;
+    padding: 0;
+    width: 100%;
+  }
+  ee-collection-editor-card img.media-object,
+  ee-collection-add-card img.media-object {
+    width: 100% !important;
+    max-height: inherit !important;
+    margin: 0 0 10px;
+  }
+  ee-collection-editor-card img.max-width-300,
+  ee-collection-add-card img.max-width-300 {
+    max-width: 100% !important;
+  }
+  ee-collection-editor-card .products-row,
+  ee-collection-add-card .products-row {
+    text-align: center;
+  }
+  ee-collection-editor-card .product-well,
+  ee-collection-add-card .product-well {
+    width: 135px;
+  }
+}
 
 /*# sourceMappingURL=ee.css.map */

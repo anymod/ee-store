@@ -1,3 +1,4 @@
+Promise   = require 'bluebird'
 _         = require 'lodash'
 url       = require 'url'
 sequelize = require './config/sequelize/setup'
@@ -77,6 +78,17 @@ f.storeProductsInCollection = (collection_id, seller_id, page) ->
   .then (res) ->
     data.count = res[0].count
     data
+f.storeProductsForCart = (id_string, seller_id) ->
+  storeProductArray = []
+  f.storeProductsByIds id_string, seller_id
+  .then (storeProducts) ->
+    addCartInfo = (storeProduct) ->
+      f.productById storeProduct.product_id
+      .then (product) ->
+        storeProduct.shipping_price = product[0].shipping_price
+        storeProductArray.push storeProduct
+    Promise.reduce storeProducts, ((total, storeProduct) -> addCartInfo storeProduct), 0
+  .then () -> storeProductArray
 
 f.productById = (product_id) -> sequelize.query 'SELECT id, title, content, content_meta, availability_meta, shipping_price, discontinued, out_of_stock, quantity, regular_price, msrp FROM "Products" where id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [product_id] }
 
