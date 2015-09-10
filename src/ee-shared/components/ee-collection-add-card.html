@@ -36,7 +36,10 @@
           <img ng-src="{{ product.image | small }}" class="full-width gray-border">
           <div>
             <p ng-bind="product.title" class="font-weight-200" style="max-height: 50px; overflow: hidden;"></p>
-            <h4 ng-bind="product.regular_price | centToDollar"></h4>
+            <div class="vert-10">
+              <h4 class="inline-block vert-0" ng-bind="product.regular_price | centToDollar"></h4>
+              <h5 class="inline-block vert-0 text-muted font-weight-200" ng-if="product.msrp">&nbsp;<s>{{ product.msrp | centToDollar }}</s></h5>
+            </div>
           </div>
         </div>
       </div>
