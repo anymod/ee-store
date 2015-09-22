@@ -18,7 +18,7 @@ module.directive "eeStoreproductCard", ($rootScope, $state, $cookies, eeBack) ->
       scope.addingText = 'Adding'
       $rootScope.$emit 'add:storeproduct', $state.params.id
 
-    if scope.price and scope.storeProduct?.selling_price then scope.storeProduct.selling_price = scope.price
+    if scope.price and scope.storeProduct then scope.storeProduct.selling_price = scope.price
 
     if scope.storeProduct?.msrp and scope.storeProduct?.selling_price
       scope.msrpDiscount = (scope.storeProduct.msrp - scope.storeProduct.selling_price) / scope.storeProduct.msrp
