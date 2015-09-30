@@ -36,12 +36,18 @@ h.collectionNames = (collections) ->
 h.assignBootstrap = (bootstrap, attrs) ->
   bootstrap.id                = attrs.id
   bootstrap.username          = attrs.username
-  bootstrap.storefront_meta   = attrs.storefront_meta
+  bootstrap.storefront_meta   = attrs.storefront_meta or {}
   bootstrap.collections       = attrs.collections
   bootstrap.collection_names  = h.collectionNames attrs.collections
   bootstrap.title             = attrs.storefront_meta?.home?.name
   bootstrap.site_name         = attrs.storefront_meta?.home?.name
   bootstrap.images            = if attrs.storefront_meta?.home?.carousel[0]?.imgUrl then h.makeMetaImages([ attrs.storefront_meta?.home?.carousel[0]?.imgUrl ]) else []
+  bootstrap.tracking          = if attrs.storefront_meta?.tracking?.ga_id then attrs.storefront_meta?.tracking?.ga_id else 'UA-55625421-5'
+  bootstrap.h1                = attrs.storefront_meta?.seo?.h1 or bootstrap.title
+  bootstrap.description       = attrs.storefront_meta?.seo?.description
+  bootstrap.code              = if attrs.storefront_meta?.seo?.code then attrs.storefront_meta.seo.code.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '<meta name="blocked" content="Scripts not allowed"/>').replace(/<iframe\b[^<]*(?:(?!<\/iframe>)<[^<]*)*<\/iframe>/gi, '<meta name="blocked" content="Frames not allowed"/>').replace(/src=/gi, 'src not allowed') else ''
+  # Eliminate meta code to avoid stringify errors
+  bootstrap.storefront_meta.seo = {}
   bootstrap
 
 h.stringify = (obj) ->
