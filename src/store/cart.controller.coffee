@@ -51,6 +51,7 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $c
   cart.removeStoreProduct = (id) -> eeCart.fns.removeStoreProduct id, cart.quantity_array
 
   cart.buy = () ->
+    cart.processing = true
     $window.location.assign(eeSecureUrl + 'checkout/' + $cookies.cart?.split('.')[2])
 
   return
