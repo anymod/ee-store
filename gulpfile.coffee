@@ -60,7 +60,7 @@ gulp.task 'html-prod', () ->
 # ==========================
 # js tasks
 
-copyToSrcJs = (url) ->
+copyToSrcJs = (url, secureUrl) ->
 
   gulp.src ['./src/**/!(constants.coffee)*.coffee'] # ** glob forces dest to same subdir
     .pipe gp.plumber()
@@ -71,16 +71,14 @@ copyToSrcJs = (url) ->
 
   gulp.src ['./src/**/constants.coffee'] # ** glob forces dest to same subdir
     .pipe gp.replace /@@eeBackUrl/g, url
+    .pipe gp.replace /@@eeSecureUrl/g, secureUrl
     .pipe gp.plumber()
     .pipe gp.sourcemaps.init()
     .pipe gp.coffee()
     .pipe gp.sourcemaps.write './'
     .pipe gulp.dest './src/js'
 
-gulp.task 'js-test',  () -> copyToSrcJs 'http://localhost:5555'
-# gulp.task 'js-dev',   () -> copyToSrcJs 'http://localhost:5000'
-
-copyToDist = (url) ->
+copyToDist = (url, secureUrl) ->
   # inline templates; no need for ngAnnotate
   appTemplates = gulp.src './src/ee-shared/components/ee-*.html'
     .pipe gp.htmlmin htmlminOptions
@@ -107,16 +105,14 @@ copyToDist = (url) ->
   streamqueue objectMode: true, storeVendorMin, storeCustomMin
     .pipe gp.concat 'ee.store.js'
     .pipe gp.replace /@@eeBackUrl/g, url
+    .pipe gp.replace /@@eeSecureUrl/g, secureUrl
     .pipe gulp.dest distPath
 
 
-gulp.task 'js-dev',   () -> copyToDist 'http://localhost:5000'
-gulp.task 'js-prod',  () -> copyToDist 'https://api.eeosk.com'
-gulp.task 'js-stage', () ->
-  gulp.src distPath + '/ee.store.js'
-    .pipe gp.plumber()
-    .pipe gp.replace /api\.eeosk\.com/g, 'ee-back-staging.herokuapp.com'
-    .pipe gulp.dest distPath
+gulp.task 'js-test',  () -> copyToSrcJs 'http://localhost:5555', 'http://localhost:7777'
+gulp.task 'js-dev',   () -> copyToDist 'http://localhost:5000', 'http://localhost:7000'
+gulp.task 'js-prod',  () -> copyToDist 'https://api.eeosk.com', 'https://secure.eeosk.com'
+gulp.task 'js-stage', () -> copyToDist 'https://ee-back-staging.herokuapp.com', 'https://ee-secure-staging.herokuapp.com'
 
 # ==========================
 # other tasks

@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, eeBootstrap, eeCart) ->
+angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $cookies, eeBootstrap, eeSecureUrl, eeCart) ->
 
   cart = this
 
@@ -49,5 +49,8 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $location, $cookies, e
   , true
 
   cart.removeStoreProduct = (id) -> eeCart.fns.removeStoreProduct id, cart.quantity_array
+
+  cart.buy = () ->
+    $window.location.assign(eeSecureUrl + 'checkout/' + $cookies.cart?.split('.')[2])
 
   return
