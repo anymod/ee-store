@@ -19,12 +19,12 @@
       <div class="row margin-0" ng-repeat="storeproduct in cart.storeproducts">
         <div class="vert-10">
           <div class="col col-sm-2 col-xs-3">
-            <a ui-sref="storeProduct({ id: storeproduct.id, title: (storeproduct.title | urlText) })">
+            <a ui-sref="storeproduct({ id: storeproduct.id, title: (storeproduct.title | urlText) })">
               <img ng-src="{{ storeproduct.image | midsize }}" class="full-width" />
             </a>
           </div>
           <div class="col col-xs-4">
-            <a ui-sref="storeProduct({ id: storeproduct.id, title: (storeproduct.title | urlText) })">
+            <a ui-sref="storeproduct({ id: storeproduct.id, title: (storeproduct.title | urlText) })">
               <h4 ng-bind="storeproduct.title" class="margin-0 text-muted"></h4>
             </a>
             <h6 ng-if="storeproduct.availability_meta.supplier_name" class="vert-5">by {{ storeproduct.availability_meta.supplier_name }}</h6>
