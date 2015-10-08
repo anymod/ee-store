@@ -69,7 +69,7 @@ app.get ['/about'], (req, res, next) ->
     res.send 'Not found'
 
 # COLLECTIONS
-app.get '/collections/:id/:title', (req, res, next) ->
+app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
   helpers.defineStorefront host, bootstrap
   .then () -> finders.storeProductsInCollection req.params.id, bootstrap.id, bootstrap.page
@@ -87,7 +87,8 @@ app.get '/collections/:id/:title', (req, res, next) ->
     res.send 'Not found'
 
 # STOREPRODUCTS
-app.get '/products/:id/:title', (req, res, next) ->
+app.get '/products/:id/:title*?', (req, res, next) ->
+  console.log 'HERE', req.params
   { bootstrap, host, path } = helpers.setup req
   helpers.defineStorefront host, bootstrap
   .then () -> finders.storeProductByIds req.params.id, bootstrap.id
