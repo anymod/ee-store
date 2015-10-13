@@ -94,9 +94,9 @@ app.get '/products/:id/:title*?', (req, res, next) ->
   .then () -> finders.storeProductByIds req.params.id, bootstrap.id
   .then (storeProduct) ->
     bootstrap.storeProduct  = storeProduct[0]
-    finders.productById bootstrap.storeProduct.product_id
-  .then (product) ->
-    bootstrap.storeProduct.product = product[0]
+    finders.templateById bootstrap.storeProduct.template_id
+  .then (template) ->
+    bootstrap.storeProduct.template = template[0]
     bootstrap.title         = bootstrap.storeProduct.title
     bootstrap.images        = helpers.makeMetaImages([ bootstrap.storeProduct?.image ])
     bootstrap.description   = bootstrap.storeProduct.content
