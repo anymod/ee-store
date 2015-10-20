@@ -13,6 +13,7 @@ path          = require 'path'
 serveStatic   = require 'serve-static'
 cookieParser  = require 'cookie-parser'
 ejs           = require 'ejs'
+compression   = require 'compression'
 _             = require 'lodash'
 constants     = require './server.constants'
 finders       = require './server.finders'
@@ -26,6 +27,7 @@ if process.env.NODE_ENV is 'production' then app.use morgan 'common' else app.us
 
 app.use serveStatic(path.join __dirname, 'dist')
 app.use cookieParser()
+app.use compression()
 
 cartCookie = (req, res, next) ->
   if req.cookies and req.cookies.cart
