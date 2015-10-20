@@ -20,6 +20,8 @@ finders       = require './server.finders'
 helpers       = require './server.helpers'
 
 app = express()
+app.use compression()
+
 app.set 'view engine', 'ejs'
 app.set 'views', path.join __dirname, 'dist'
 
@@ -27,7 +29,6 @@ if process.env.NODE_ENV is 'production' then app.use morgan 'common' else app.us
 
 app.use serveStatic(path.join __dirname, 'dist')
 app.use cookieParser()
-app.use compression()
 
 cartCookie = (req, res, next) ->
   if req.cookies and req.cookies.cart
