@@ -1,4 +1,4 @@
-<div class="container" ng-hide="data.reading || data.storeProducts.length <= 0">
+<div class="container" ng-hide="data.reading || data.products.length <= 0">
 
   <div class="full-width text-center margin-0">
     <pagination ng-if="data.count > data.perPage"
@@ -17,8 +17,8 @@
   <!-- PRODUCTS -->
   <h4 class="margin-0" ng-if="showTitle" ng-bind="data.collection.title | humanize"></h4>
   <div class="full-width text-center vert-20 overflow-hidden">
-    <div ng-repeat="storeProduct in data.storeProducts" class="template-container text-left inline-block width-250 vertical-align-top">
-      <ee-storeproduct-for-storefront storeproduct="storeProduct"></ee-storeproduct-for-storefront>
+    <div ng-repeat="product in data.products" class="template-container text-left inline-block width-250 vertical-align-top">
+      <ee-product-for-store product="product"></ee-product-for-store>
     </div>
   </div>
   <!-- /PRODUCTS -->

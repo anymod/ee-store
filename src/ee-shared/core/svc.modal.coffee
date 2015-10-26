@@ -17,6 +17,10 @@ angular.module('app.core').factory 'eeModal', ($modal) ->
       templateUrl:    'builder/templates/templates.add.modal.html'
       controller:     'templatesCtrl as templates'
       backdropClass:  _backdropClass
+    addProduct:
+      templateUrl:    'builder/products/products.add.modal.html'
+      controller:     'productsCtrl as products'
+      backdropClass:  _backdropClass
     feedback:
       templateUrl:    'builder/contact/contact.modal.feedback.html'
       controller:     'contactCtrl as modal'

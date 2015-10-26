@@ -1,5 +1,5 @@
 <!doctype html>
-<% if (!!bootstrap.storeProduct) { %>
+<% if (!!bootstrap.product) { %>
   <html ng-app="eeStore" lang="en" itemscope itemtype="http://schema.org/Product">
 <% } else { %>
   <html ng-app="eeStore" lang="en">
@@ -26,25 +26,25 @@
     <% } %>
   <% } %>
 
-  <% if (!!bootstrap.storeProduct) { %>
+  <% if (!!bootstrap.product) { %>
     <!-- Schema.org markup for Google+ -->
-    <meta itemprop="name" content="<%= bootstrap.storeProduct.title %>">
-    <meta itemprop="description" content="<%= bootstrap.storeProduct.content %>">
+    <meta itemprop="name" content="<%= bootstrap.product.title %>">
+    <meta itemprop="description" content="<%= bootstrap.product.content %>">
 
     <!-- Twitter Card data -->
     <meta name="twitter:card" content="summary">
     <!-- <meta name="twitter:site" content="@publisher_handle"> -->
     <!-- <meta name="twitter:creator" content="@author_handle"> -->
-    <meta name="twitter:title" content="<%= bootstrap.storeProduct.title %>">
-    <meta name="twitter:description" content="<%= bootstrap.storeProduct.content %>">
+    <meta name="twitter:title" content="<%= bootstrap.product.title %>">
+    <meta name="twitter:description" content="<%= bootstrap.product.content %>">
 
     <!-- Open Graph data -->
-    <meta property="og:title" content="<%= bootstrap.storeProduct.title %>" />
+    <meta property="og:title" content="<%= bootstrap.product.title %>" />
     <meta property="og:type" content="article" />
     <meta property="og:url" content="<%= bootstrap.url %>" />
-    <meta property="og:description" content="<%= bootstrap.storeProduct.content %>" />
+    <meta property="og:description" content="<%= bootstrap.product.content %>" />
     <meta property="og:site_name" content="<%= bootstrap.site_name %>" />
-    <meta property="og:price:amount" content="<%= parseInt(bootstrap.storeProduct.selling_price) / 100 %>" />
+    <meta property="og:price:amount" content="<%= parseInt(bootstrap.product.selling_price) / 100 %>" />
     <meta property="og:price:currency" content="USD" />
   <% } %>
 
@@ -122,12 +122,12 @@
   <script src="js/store/core/svc.cart.js"></script>
   <script src="js/store/store.controller.js"></script>
   <script src="js/store/collection.controller.js"></script>
-  <script src="js/store/storeproduct.controller.js"></script>
+  <script src="js/store/product.controller.js"></script>
   <script src="js/store/cart.controller.js"></script>
   <script src="js/store/modal/modal.controller.js"></script>
   <script src="js/ee-shared/components/ee-button-add-to-cart.js"></script>
-  <script src="js/ee-shared/components/ee-storeproduct-for-storefront.js"></script>
-  <script src="js/ee-shared/components/ee-storeproduct-card.js"></script>
+  <script src="js/ee-shared/components/ee-product-for-store.js"></script>
+  <script src="js/ee-shared/components/ee-product-card.js"></script>
   <script src="js/ee-shared/components/ee-collection-nav.js"></script>
   <script src="js/ee-shared/components/ee-storefront-header.js"></script>
   <script src="js/ee-shared/components/ee-product-images.js"></script>

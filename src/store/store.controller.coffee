@@ -8,8 +8,8 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
     Collections:
       collections:    eeBootstrap?.collections
       nav:            eeBootstrap?.nav
-    StoreProducts:
-      storeProducts:  eeBootstrap?.storeProducts
+    Products:
+      products:  eeBootstrap?.products
       page:           eeBootstrap?.page
       perPage:        eeBootstrap?.perPage
       count:          eeBootstrap?.count
@@ -21,6 +21,6 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 
   storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.nav?.alphabetical)
-  storefront.storeProductsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.StoreProducts.page
+  storefront.productsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.Products.page
 
   return

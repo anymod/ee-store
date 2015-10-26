@@ -1,4 +1,4 @@
-<div class="well white-background box-shadow text-left" ng-hide="storeProduct.removed">
+<div class="well white-background box-shadow text-left" ng-hide="product.removed">
 
   <!-- COMPACT -->
   <div class="row" ng-show="!expanded">
@@ -6,19 +6,19 @@
       <div class="media">
         <div class="media-left">
           <a href>
-            <img class="media-object" ng-src="{{ storeProduct.image | thumbnail }}">
+            <img class="media-object" ng-src="{{ product.image | thumbnail }}">
           </a>
         </div>
         <div class="media-body">
           <h4 class="media-heading margin-0 font-weight-200">
-            <a href>{{ storeProduct.title }} <i class="fa fa-fw fa-pencil"></i></a>
+            <a href>{{ product.title }} <i class="fa fa-fw fa-pencil"></i></a>
           </h4>
-          <div ng-if="storeProduct.msrp && storeProduct.msrp > storeProduct.selling_price">
-            <s class="text-muted" ng-if="storeProduct.msrp">{{ storeProduct.msrp | centToDollar }}</s>
+          <div ng-if="product.msrp && product.msrp > product.selling_price">
+            <s class="text-muted" ng-if="product.msrp">{{ product.msrp | centToDollar }}</s>
             <span class="text-danger" ng-if="calculated.msrpDiscount">{{ calculated.msrpDiscount | percentage:0 }} Off</span>
           </div>
           <div>
-            <strong ng-bind="storeProduct.selling_price | centToDollar"></strong>
+            <strong ng-bind="product.selling_price | centToDollar"></strong>
             <div class="btn btn-link btn-xs"><i class="fa fa-fw fa-pencil"></i>&nbsp;edit</div>
           </div>
           <div class="text-muted">You earn <span ng-bind="calculated.earnings | centToDollar"></span> each sale.</div>
@@ -26,10 +26,10 @@
       </div>
     </div>
     <div class="col col-sm-5 text-right">
-      <div ng-if="storeProduct.featured" class="btn btn-info" ng-click="unfeature()" ng-disabled="save_status == 'Saving'"><i class="fa fa-times"></i>&nbsp;&nbsp;Featured</div>
-      <div ng-if="!storeProduct.featured" class="btn btn-default" ng-click="feature()" ng-disabled="save_status == 'Saving'">Add to featured</div>
+      <div ng-if="product.featured" class="btn btn-info" ng-click="unfeature()" ng-disabled="save_status == 'Saving'"><i class="fa fa-times"></i>&nbsp;&nbsp;Featured</div>
+      <div ng-if="!product.featured" class="btn btn-default" ng-click="feature()" ng-disabled="save_status == 'Saving'">Add to featured</div>
       &nbsp;
-      <div ng-click="removeStoreProduct()" ng-disabled="save_status == 'Removing'" class="btn btn-default"><i class="fa fa-trash"></i></div>
+      <div ng-click="removeProduct()" ng-disabled="save_status == 'Removing'" class="btn btn-default"><i class="fa fa-trash"></i></div>
     </div>
   </div>
   <!-- COMPACT -->
@@ -37,10 +37,10 @@
   <!-- EDITOR CARD -->
   <div class="row" ng-show="expanded">
     <div class="col col-sm-3">
-      <ee-product-images product="storeProduct"></ee-product-images>
+      <ee-product-images product="product"></ee-product-images>
     </div>
     <div class="col col-sm-9">
-      <form class="form-horizontal text-left" ng-submit="updateStoreProduct()">
+      <form class="form-horizontal text-left" ng-submit="updateProduct()">
         <!-- Save -->
         <div class="form-group vert-5">
           <div class="col-sm-offset-2 col-sm-10">
@@ -54,8 +54,8 @@
         <div class="form-group vert-5">
           <label class="col-sm-2 control-label font-weight-200">Title</label>
           <div class="col-sm-10">
-            <input type="text" ng-model="storeProduct.title" class="form-control" placeholder="Product Title (required)">
-            <a href="https://www.google.com/search?q={{ storeProduct.title | pluses }}" target="_blank" class="btn btn-xs btn-link pad-left-0">Search this title on google</a>
+            <input type="text" ng-model="product.title" class="form-control" placeholder="Product Title (required)">
+            <a href="https://www.google.com/search?q={{ product.title | pluses }}" target="_blank" class="btn btn-xs btn-link pad-left-0">Search this title on google</a>
           </div>
         </div>
         <!-- /Title -->
@@ -72,8 +72,8 @@
                   <input type="text" ng-model="calculated.selling_cents" class="form-control inline-block" style="width: 50px;">
                 </div>
               </div>
-              <div class="inline-block vertical-align-top pad-5" ng-if="storeProduct.msrp && storeProduct.msrp > storeProduct.selling_price">
-                <s class="text-muted" ng-if="storeProduct.msrp">{{ storeProduct.msrp | centToDollar }}</s>
+              <div class="inline-block vertical-align-top pad-5" ng-if="product.msrp && product.msrp > product.selling_price">
+                <s class="text-muted" ng-if="product.msrp">{{ product.msrp | centToDollar }}</s>
                 <span class="text-danger" ng-if="calculated.msrpDiscount">{{ calculated.msrpDiscount | percentage:0 }} Off MSRP</span>
               </div>
             </div>
@@ -84,7 +84,7 @@
               {{ calculated.margin * 100 | number:1 }}%&nbsp;margin. You earn&nbsp;<strong ng-bind="calculated.earnings | centToDollar"></strong>&nbsp;each sale.
             </div>
             <div class="vert-5 margin-top-0">
-              <div class="btn btn-xs btn-link pad-left-0" ng-click="setSellingPrice(storeProduct.regular_price)">Recommended</div>
+              <div class="btn btn-xs btn-link pad-left-0" ng-click="setSellingPrice(product.regular_price)">Recommended</div>
               <div class="btn btn-xs btn-link" ng-click="setSellingPrice(calculated.min_price)">Min</div>
               <div class="btn btn-xs btn-link" ng-click="calcByMargin(margin)" ng-repeat="margin in margins.margin_array">{{ margin*100 }}%</div>
             </div>
@@ -95,7 +95,7 @@
         <div class="form-group vert-5">
           <label class="col-sm-2 control-label font-weight-200">Description</label>
           <div class="col-sm-10">
-            <textarea type="text" ng-model="storeProduct.content" class="form-control full-width" rows=5 placeholder="Product Description"></textarea>
+            <textarea type="text" ng-model="product.content" class="form-control full-width" rows=5 placeholder="Product Description"></textarea>
           </div>
         </div>
         <!-- /Description -->

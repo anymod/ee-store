@@ -18,8 +18,8 @@ angular.module 'eeStore', [
   # custom
   'ee-storefront-header'
   'ee-collection-nav'
-  'ee-storeproduct-for-storefront'
-  'ee-storeproduct-card'
+  'ee-product-for-store'
+  'ee-product-card'
   'ee-product-images'
   # 'ee.templates' # commented out during build step for inline templates
 ]

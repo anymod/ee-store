@@ -9311,10 +9311,6 @@ img.media-object {
 .nav-compact li > a {
   padding: 1px 5px;
 }
-.input-group .btn:last-child {
-  border-radius: 0 3px 3px 0;
-  text-align: left;
-}
 .input-group-plain .input-group-addon {
   background: none;
 }
@@ -9636,10 +9632,10 @@ nav {
 .storefront-carousel .right .well {
   text-align: left;
 }
-.storeproduct a.storeproduct-title {
+.product a.product-title {
   color: #0286c2;
 }
-.storeproduct a.storeproduct-title:hover {
+.product a.product-title:hover {
   color: #03a9f4;
 }
 @media (max-width: 600px) {

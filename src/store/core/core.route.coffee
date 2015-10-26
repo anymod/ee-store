@@ -52,14 +52,14 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    aboutViews
       data:     data
 
-    .state 'storeproduct',
+    .state 'product',
       url: '/products/:id/:title'
       views:
         header:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
         top:
-          controller: 'storeproductCtrl as storeproduct'
+          controller: 'productCtrl as product'
           templateUrl: 'ee-shared/storefront/storefront.product.html'
         footer:
           controller: 'storeCtrl as storefront'

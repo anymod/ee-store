@@ -1,12 +1,12 @@
-<div ng-hide="storeproduct.data.reading" class="container text-center vert-20">
+<div ng-hide="product.data.reading" class="container text-center vert-20">
   <!-- PRODUCT PREVIEW -->
-  <ee-storeproduct-card
-    ng-if="storeproduct.data.storeproduct.id"
-    store-product="storeproduct.data.storeproduct"
-    template="storeproduct.data.storeproduct.template"
+  <ee-product-card
+    ng-if="product.data.product.id"
+    store-product="product.data.product"
+    template="product.data.product.template"
     disabled="isBuilder">
-  </ee-storeproduct-card>
+  </ee-product-card>
   <!-- /PRODUCT PREVIEW -->
 </div>
 
-<ee-loading loading="storeproduct.data.reading"></ee-loading>
+<ee-loading loading="product.data.reading"></ee-loading>

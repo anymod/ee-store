@@ -1,14 +1,14 @@
 'use strict'
 
-module = angular.module 'ee-storeproduct-editor-card', []
+module = angular.module 'ee-product-editor-card', []
 
-module.directive "eeStoreproductEditorCard", ($window, eeCollection, eeCollections, eeStoreProducts) ->
-  templateUrl: 'ee-shared/components/ee-storeproduct-editor-card.html'
+module.directive "eeProductEditorCard", ($window, eeCollection, eeCollections, eeProducts) ->
+  templateUrl: 'ee-shared/components/ee-product-editor-card.html'
   restrict: 'E'
   scope:
-    storeProduct: '='
-    collection:   '='
-    expanded:     '@'
+    product:    '='
+    collection: '='
+    expanded:   '@'
   link: (scope, ele, attrs) ->
     scope.save_status = 'Save'
     scope.saved       = true
@@ -28,21 +28,21 @@ module.directive "eeStoreproductEditorCard", ($window, eeCollection, eeCollectio
       margin_array:       [0.1, 0.2, 0.3, 0.5]
 
     _setMaxAndMinPrice = () ->
-      if !scope.storeProduct then return
-      scope.calculated.max_price = Math.floor(scope.storeProduct.baseline_price / (1 - scope.margins.max_margin))
-      scope.calculated.min_price = Math.ceil(scope.storeProduct.baseline_price / (1 - scope.margins.min_margin))
+      if !scope.product then return
+      scope.calculated.max_price = Math.floor(scope.product.baseline_price / (1 - scope.margins.max_margin))
+      scope.calculated.min_price = Math.ceil(scope.product.baseline_price / (1 - scope.margins.min_margin))
 
     _setDollarsAndCents = () ->
-      if !scope.storeProduct?.selling_price then return
-      scope.calculated.selling_cents    = Math.abs(parseInt(scope.storeProduct.selling_price % 100))
-      scope.calculated.selling_dollars  = parseInt(parseInt(scope.storeProduct.selling_price) - scope.calculated.selling_cents) / 100
+      if !scope.product?.selling_price then return
+      scope.calculated.selling_cents    = Math.abs(parseInt(scope.product.selling_price % 100))
+      scope.calculated.selling_dollars  = parseInt(parseInt(scope.product.selling_price) - scope.calculated.selling_cents) / 100
       return
 
     _setEarningsAndMargin = () ->
-      if !scope.storeProduct then return
-      scope.calculated.earnings     = scope.storeProduct.selling_price - scope.storeProduct.baseline_price
-      scope.calculated.margin       = 1 - (scope.storeProduct.baseline_price / scope.storeProduct.selling_price)
-      if scope.storeProduct.msrp then scope.calculated.msrpDiscount = (scope.storeProduct.msrp - scope.storeProduct.selling_price) / scope.storeProduct.msrp
+      if !scope.product then return
+      scope.calculated.earnings     = scope.product.selling_price - scope.product.baseline_price
+      scope.calculated.margin       = 1 - (scope.product.baseline_price / scope.product.selling_price)
+      if scope.product.msrp then scope.calculated.msrpDiscount = (scope.product.msrp - scope.product.selling_price) / scope.product.msrp
       return
 
     _calculate = () ->
@@ -56,17 +56,17 @@ module.directive "eeStoreproductEditorCard", ($window, eeCollection, eeCollectio
       selling_dollars = Math.abs(parseInt(scope.calculated.selling_dollars)*100)
       selling_cents   = Math.abs(parseInt(scope.calculated.selling_cents))
       if selling_cents > 99 then selling_cents = 99
-      scope.storeProduct.selling_price = selling_dollars + selling_cents
+      scope.product.selling_price = selling_dollars + selling_cents
       _calculate()
       return
 
     scope.setSellingPrice = (price) ->
-      scope.storeProduct.selling_price = price
+      scope.product.selling_price = price
       _calculate()
 
     scope.calcByMargin = (margin) ->
       if !margin then return
-      scope.storeProduct.selling_price = parseInt(scope.storeProduct.baseline_price / (1 - margin))
+      scope.product.selling_price = parseInt(scope.product.baseline_price / (1 - margin))
       _calculate()
       return
 
@@ -78,43 +78,43 @@ module.directive "eeStoreproductEditorCard", ($window, eeCollection, eeCollectio
       if oldVal then _calcByDollarsAndCents()
       return
 
-    scope.updateStoreProduct = () ->
+    scope.updateProduct = () ->
       scope.save_status = 'Saving'
-      eeStoreProducts.fns.updateStoreProduct scope.storeProduct
+      eeProducts.fns.updateProduct scope.product
       .then () ->
         scope.save_status = 'Save'
         scope.expanded    = false
         scope.saved       = true
       .catch (err) -> scope.save_status = 'Problem saving'
 
-    scope.removeStoreProduct = () ->
+    scope.removeProduct = () ->
       if scope.collection and scope.collection.id
-        removeStoreProduct = $window.confirm 'Remove this from your collection?'
-        if removeStoreProduct
+        removeProduct = $window.confirm 'Remove this from your collection?'
+        if removeProduct
           scope.save_status = 'Removing'
-          eeCollections.fns.removeTemplate scope.collection.id, scope.storeProduct
+          eeCollections.fns.removeTemplate scope.collection.id, scope.product
           .catch (err) -> scope.save_status = 'Problem removing'
       else
-        deleteStoreProduct = $window.confirm 'Remove this from your store?'
-        if deleteStoreProduct
+        deleteProduct = $window.confirm 'Remove this from your store?'
+        if deleteProduct
           scope.save_status = 'Removing'
-          eeStoreProducts.fns.destroyStoreProduct scope.storeProduct
-          .then () -> scope.storeProduct.removed = true
+          eeProducts.fns.destroyProduct scope.product
+          .then () -> scope.product.removed = true
           .catch (err) -> scope.save_status = 'Problem removing'
 
     scope.feature = () ->
-      scope.storeProduct.featured = true
-      scope.updateStoreProduct()
+      scope.product.featured = true
+      scope.updateProduct()
 
     scope.unfeature = () ->
-      scope.storeProduct.featured = false
-      scope.updateStoreProduct()
+      scope.product.featured = false
+      scope.updateProduct()
 
     scope.expand = () ->
       scope.expanded = true
       n = 0
       scope.$watch () ->
-        return scope.storeProduct
+        return scope.product
       , (newVal, oldVal) ->
         if oldVal and oldVal.id and n > 0 then scope.saved = false
         if n is 0 then n += 1

@@ -47,10 +47,10 @@ app.use cartCookie
 app.get '/', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
   helpers.defineStorefront host, bootstrap
-  .then () -> finders.featuredStoreProducts bootstrap.id, bootstrap.page
+  .then () -> finders.featuredProducts bootstrap.id, bootstrap.page
   .then (data) ->
     { rows, count } = data
-    bootstrap.storeProducts = rows || []
+    bootstrap.products = rows || []
     bootstrap.count         = count
     bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
@@ -75,38 +75,38 @@ app.get ['/about'], (req, res, next) ->
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
   helpers.defineStorefront host, bootstrap
-  .then () -> finders.storeProductsInCollection req.params.id, bootstrap.id, bootstrap.page
+  .then () -> finders.productsInCollection req.params.id, bootstrap.id, bootstrap.page
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection
-    bootstrap.storeProducts = rows || []
+    bootstrap.products = rows || []
     bootstrap.count         = count
     bootstrap.title         = helpers.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    bootstrap.images        = helpers.makeMetaImages(_.pluck(bootstrap.storeProducts.slice(0,3), 'image'))
+    bootstrap.images        = helpers.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
     bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in COLLECTIONS', err
     res.send 'Not found'
 
-# STOREPRODUCTS
+# PRODUCTS
 app.get '/products/:id/:title*?', (req, res, next) ->
   console.log 'HERE', req.params
   { bootstrap, host, path } = helpers.setup req
   helpers.defineStorefront host, bootstrap
-  .then () -> finders.storeProductByIds req.params.id, bootstrap.id
-  .then (storeProduct) ->
-    bootstrap.storeProduct  = storeProduct[0]
-    finders.templateById bootstrap.storeProduct.template_id
+  .then () -> finders.productByIds req.params.id, bootstrap.id
+  .then (product) ->
+    bootstrap.product  = product[0]
+    finders.templateById bootstrap.product.template_id
   .then (template) ->
-    bootstrap.storeProduct.template = template[0]
-    bootstrap.title         = bootstrap.storeProduct.title
-    bootstrap.images        = helpers.makeMetaImages([ bootstrap.storeProduct?.image ])
-    bootstrap.description   = bootstrap.storeProduct.content
+    bootstrap.product.template = template[0]
+    bootstrap.title         = bootstrap.product.title
+    bootstrap.images        = helpers.makeMetaImages([ bootstrap.product?.image ])
+    bootstrap.description   = bootstrap.product.content
     bootstrap.stringified   = helpers.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
-    console.error 'error in STOREPRODUCTS', err
+    console.error 'error in PRODUCTS', err
     res.send 'Not found'
 
 # CART
@@ -115,9 +115,9 @@ app.get '/cart', (req, res, next) ->
   helpers.defineStorefront host, bootstrap
   .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
-      storeproduct_ids = _.pluck req.cart.quantity_array, 'id'
-      finders.storeProductsForCart storeproduct_ids.join(','), bootstrap.id
-      .then (data) -> bootstrap.cart.storeProducts = data
+      product_ids = _.pluck req.cart.quantity_array, 'id'
+      finders.productsForCart product_ids.join(','), bootstrap.id
+      .then (data) -> bootstrap.cart.products = data
       .finally () ->
         bootstrap.stringified = helpers.stringify bootstrap
         res.render 'store.ejs', { bootstrap: bootstrap }

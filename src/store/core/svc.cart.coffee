@@ -2,25 +2,25 @@
 
 angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, eeBack) ->
 
-  _addOrIncrement = (storeproduct_id, quantity_array) ->
+  _addOrIncrement = (product_id, quantity_array) ->
     quantity_array ||= []
     inArray = false
     for pair, i in quantity_array
-      if parseInt(storeproduct_id) is parseInt(pair.id)
+      if parseInt(product_id) is parseInt(pair.id)
         pair.quantity += 1
         inArray = true
-    quantity_array.push { id: storeproduct_id, quantity: 1 } unless inArray
+    quantity_array.push { id: product_id, quantity: 1 } unless inArray
     quantity_array
 
-  _remove = (storeproduct_id, quantity_array) ->
+  _remove = (product_id, quantity_array) ->
     quantity_array ||= []
     temp = []
     for pair, i in quantity_array
-      if parseInt(storeproduct_id) isnt parseInt(pair.id) then temp.push quantity_array[i]
+      if parseInt(product_id) isnt parseInt(pair.id) then temp.push quantity_array[i]
     temp
 
-  _addStoreProduct = (storeproduct_id, quantity_array) ->
-    quantity_array = _addOrIncrement storeproduct_id, quantity_array
+  _addProduct = (product_id, quantity_array) ->
+    quantity_array = _addOrIncrement product_id, quantity_array
     if $cookies.cart
       [ee, cart_id, token] = $cookies.cart.split('.')
       eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
@@ -35,8 +35,8 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
         $state.go 'cart'
       .catch (err) -> console.error err
 
-  _removeStoreProduct = (storeproduct_id, quantity_array) ->
-    quantity_array = _remove storeproduct_id, quantity_array
+  _removeProduct = (product_id, quantity_array) ->
+    quantity_array = _remove product_id, quantity_array
     [ee, cart_id, token] = $cookies.cart.split('.')
     eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
     .then (res) ->
@@ -56,6 +56,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
 
   ## EXPORTS
   fns:
-    addStoreProduct:    _addStoreProduct
-    removeStoreProduct: _removeStoreProduct
+    addProduct:    _addProduct
+    removeProduct: _removeProduct
     updateCartTo:       _updateCartTo
