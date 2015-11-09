@@ -7,6 +7,7 @@ utils     = require './utils'
 
 Customization = require './customization'
 Collection    = require './collection'
+Sku           = require './sku'
 
 Product =
 
@@ -38,6 +39,7 @@ Product =
     .then (customizations) ->
       scope.customizations = customizations
       Product.findById id
+    .then (product) -> Sku.addAllToProduct product
     .then (product) -> Customization.alterProducts [product], scope.customizations
     .then (products) ->
       console.log products[0]

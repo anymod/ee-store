@@ -14,6 +14,9 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
         page:       eeBootstrap?.page
         perPage:    eeBootstrap?.perPage
         count:      eeBootstrap?.count
+    User:
+      user:
+        storefront_meta: eeBootstrap?.storefront_meta
     meta:           eeBootstrap?.storefront_meta
 
   storefront.data = eeBootstrap

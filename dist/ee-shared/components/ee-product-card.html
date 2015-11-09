@@ -25,7 +25,7 @@
           </div>
           <h4 ng-bind="currentSku.selection_text" class="font-weight-200"></h4>
           <div class="vert-10 margin-bottom-0">
-            <div class="btn btn-lg btn-block" ng-disabled="disabled || adding" ng-class="disabled ? 'btn-default' : 'btn-primary'" ng-if="!product.out_of_stock && !product.discontinued" ng-click="addToCart()">{{ addingText || 'Add to cart' }}</div>
+            <div class="btn btn-lg btn-block" ng-disabled="disabled || adding" ng-class="disabled ? 'btn-default' : 'btn-primary'" ng-if="!product.out_of_stock && !product.discontinued" ng-click="addToCart(currentSku)">{{ addingText || 'Add to cart' }}</div>
             <div class="btn btn-info btn-lg btn-block disabled" ng-if="product.out_of_stock" disabled>Out of Stock</div>
             <div class="btn btn-info btn-lg btn-block disabled" ng-if="product.discontinued" disabled>Discontinued</div>
           </div>

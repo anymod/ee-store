@@ -12,7 +12,7 @@ angular.module('eeStore').controller 'productCtrl', ($rootScope, eeBootstrap, ee
   product.data =
     product: eeBootstrap.product
 
-  $rootScope.$on 'add:product', (e, product_id) ->
-    eeCart.fns.addProduct product_id, eeBootstrap.cart?.quantity_array
+  $rootScope.$on 'cart:add:sku', (e, sku_id) ->
+    eeCart.fns.addSku sku_id, eeBootstrap.cart?.quantity_array
 
   return

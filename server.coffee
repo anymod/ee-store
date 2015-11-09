@@ -22,6 +22,7 @@ utils         = require './models/utils'
 
 User          = require './models/user'
 Product       = require './models/product'
+Sku           = require './models/sku'
 
 app = express()
 app.use compression()
@@ -112,12 +113,14 @@ app.get '/products/:id/:title*?', (req, res, next) ->
 # CART
 app.get '/cart', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  helpers.defineStorefront host, bootstrap
+  User.defineStorefront host, bootstrap
   .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
-      product_ids = _.pluck req.cart.quantity_array, 'id'
-      finders.productsForCart product_ids.join(','), bootstrap.id
-      .then (data) -> bootstrap.cart.products = data
+      sku_ids = _.pluck req.cart.quantity_array, 'sku_id'
+      Sku.forCart sku_ids.join(','), bootstrap.id
+      .then (data) ->
+        console.log 'data', data
+        bootstrap.cart.skus = data
       .finally () ->
         bootstrap.stringified = utils.stringify bootstrap
         res.render 'store.ejs', { bootstrap: bootstrap }

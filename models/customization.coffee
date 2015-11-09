@@ -23,6 +23,10 @@ Customization =
     product_ids ||= '0'
     sequelize.query 'SELECT id, product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND product_id IN (' + product_ids + ') ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
 
+  # findByProductId: (seller_id, product_id) ->
+  #   Customization.findAllByProductIds seller_id, [product_id]
+  #   .then (customizations) -> customizations[0]
+
   countByProductIds: (seller_id, product_ids) ->
     sequelize.query 'SELECT count(*) FROM "Customizations" WHERE seller_id = ? AND product_id IN (' + product_ids + ')', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
 

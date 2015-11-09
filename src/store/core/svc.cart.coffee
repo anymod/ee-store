@@ -2,25 +2,25 @@
 
 angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, eeBack) ->
 
-  _addOrIncrement = (product_id, quantity_array) ->
+  _addOrIncrement = (sku_id, quantity_array) ->
     quantity_array ||= []
     inArray = false
     for pair, i in quantity_array
-      if parseInt(product_id) is parseInt(pair.id)
+      if parseInt(sku_id) is parseInt(pair.sku_id)
         pair.quantity += 1
         inArray = true
-    quantity_array.push { id: product_id, quantity: 1 } unless inArray
+    quantity_array.push { sku_id: sku_id, quantity: 1 } unless inArray
     quantity_array
 
-  _remove = (product_id, quantity_array) ->
+  _remove = (sku_id, quantity_array) ->
     quantity_array ||= []
     temp = []
     for pair, i in quantity_array
-      if parseInt(product_id) isnt parseInt(pair.id) then temp.push quantity_array[i]
+      if parseInt(sku_id) isnt parseInt(pair.sku_id) then temp.push quantity_array[i]
     temp
 
-  _addProduct = (product_id, quantity_array) ->
-    quantity_array = _addOrIncrement product_id, quantity_array
+  _addSku = (sku_id, quantity_array) ->
+    quantity_array = _addOrIncrement sku_id, quantity_array
     if $cookies.cart
       [ee, cart_id, token] = $cookies.cart.split('.')
       eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
@@ -35,8 +35,8 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
         $state.go 'cart'
       .catch (err) -> console.error err
 
-  _removeProduct = (product_id, quantity_array) ->
-    quantity_array = _remove product_id, quantity_array
+  _removeSku = (sku_id, quantity_array) ->
+    quantity_array = _remove sku_id, quantity_array
     [ee, cart_id, token] = $cookies.cart.split('.')
     eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
     .then (res) ->
@@ -56,6 +56,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
 
   ## EXPORTS
   fns:
-    addProduct:    _addProduct
-    removeProduct: _removeProduct
-    updateCartTo:       _updateCartTo
+    addSku:       _addSku
+    removeSku:    _removeSku
+    updateCartTo: _updateCartTo

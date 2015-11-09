@@ -16,30 +16,31 @@
 
       <hr class="margin-0">
 
-      <div class="row margin-0" ng-repeat="product in cart.products">
+      <div class="row margin-0" ng-repeat="sku in cart.skus">
         <div class="vert-10">
           <div class="col col-sm-2 col-xs-3">
-            <a ui-sref="product({ id: product.id, title: (product.title | urlText) })">
-              <img ng-src="{{ product.image | midsize }}" class="full-width" />
+            <a ui-sref="product({ id: sku.product_id, title: (sku.product_title | urlText) })">
+              <img ng-src="{{ sku.product_image | midsize }}" class="full-width" />
             </a>
           </div>
           <div class="col col-xs-4">
-            <a ui-sref="product({ id: product.id, title: (product.title | urlText) })">
-              <h4 ng-bind="product.title" class="margin-0 text-muted"></h4>
+            <a ui-sref="product({ id: sku.product_id, title: (sku.product_title | urlText) })">
+              <h4 ng-bind="sku.product_title" class="margin-0 text-muted"></h4>
             </a>
-            <h6 ng-if="product.availability_meta.supplier_name" class="vert-5">by {{ product.availability_meta.supplier_name }}</h6>
+            <h5 ng-bind="sku.selection_text" class="font-weight-200 margin-0 text-muted"></h5>
+            <!-- <h6 ng-if="product.availability_meta.supplier_name" class="vert-5">by {{ product.availability_meta.supplier_name }}</h6> -->
             <small class="text-success">In Stock</small>
             <br>
-            <small><a href ng-click="cart.removeProduct(product.id)">Delete</a></small>
+            <small><a href ng-click="cart.removeSku(sku.id)">Delete</a></small>
           </div>
           <div class="col col-xs-2">
-            <span ng-if="product.msrp && product.msrp > product.selling_price">
-              <s class="text-muted" ng-bind="product.msrp | centToDollar"></s>
+            <span ng-if="sku.msrp && sku.msrp > sku.price">
+              <s class="text-muted" ng-bind="sku.msrp | centToDollar"></s>
             </span>
-            <strong ng-bind="product.selling_price | centToDollar"></strong>
+            <strong ng-bind="sku.price | centToDollar"></strong>
             <div class="text-muted">
               <em>
-                <span ng-bind="(product.shipping_price || 0) | centToDollar"></span>&nbsp;s/h
+                <span ng-bind="(sku.shipping_price || 0) | centToDollar"></span>&nbsp;s/h
               </em>
             </div>
           </div>
@@ -53,7 +54,7 @@
         <hr class="vert-5">
       </div>
 
-      <div ng-if="cart.products.length == 0" class="alert alert-info vert-10">
+      <div ng-if="cart.skus.length == 0" class="alert alert-info vert-10">
         Cart is empty.&nbsp;&nbsp;<a ui-sref="storefront" class="btn btn-primary">Shop now</a>
       </div>
     </div>
@@ -61,7 +62,7 @@
     <div class="col col-sm-4">
       <div class="well white-background box-shadow">
 
-        <div ng-click="cart.buy()" class="btn btn-lg btn-primary btn-block" ng-disabled="cart.processing || cart.products.length < 1">
+        <div ng-click="cart.buy()" class="btn btn-lg btn-primary btn-block" ng-disabled="cart.processing || cart.skus.length < 1">
           Buy Now
         </div>
         <div class="vert-10 full-width text-center">
@@ -69,13 +70,13 @@
         </div>
 
         <h4>Order Summary</h4>
-        <p class="margin-0">Items: <span class="pull-right" ng-bind="cart.selling_price_sum | centToDollar"></span></p>
-        <p class="margin-0">Shipping & handling: <span class="pull-right" ng-bind="cart.shipping_price_sum | centToDollar"></span></p>
+        <p class="margin-0">Items: <span class="pull-right" ng-bind="cart.cumulative_price | centToDollar"></span></p>
+        <p class="margin-0">Shipping & handling: <span class="pull-right" ng-bind="cart.shipping_total | centToDollar"></span></p>
         <hr class="vert-5">
         <p class="margin-0">Total before tax: <span class="pull-right" ng-bind="cart.subtotal | centToDollar"></span></p>
-        <p class="margin-0">Estimated tax: <span class="pull-right" ng-bind="cart.taxes | centToDollar"></span></p>
+        <p class="margin-0">Estimated tax: <span class="pull-right" ng-bind="cart.taxes_total | centToDollar"></span></p>
         <hr class="vert-5">
-        <h4 class="margin-0">Order total: <span class="pull-right" ng-bind="cart.total | centToDollar"></span></h4>
+        <h4 class="margin-0">Order total: <span class="pull-right" ng-bind="cart.grand_total | centToDollar"></span></h4>
       </div>
     </div>
 

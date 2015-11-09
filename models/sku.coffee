@@ -1,0 +1,58 @@
+Promise   = require 'bluebird'
+_         = require 'lodash'
+url       = require 'url'
+sequelize = require '../config/sequelize/setup'
+constants = require '../server.constants'
+utils     = require './utils'
+
+Customization = require './customization'
+
+Sku =
+
+  addAllToProduct: (product) ->
+    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? ORDER BY regular_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+    .then (skus) ->
+      product.skus = skus
+      product
+
+  forCart: (sku_ids, seller_id) ->
+    scope = {}
+    q =
+      'SELECT ' + _.map(Sku.attrs, (a) -> 's.' + a).join(',') + ', p.title as product_title, p.image as product_image
+        FROM "Skus" s
+        JOIN "Products" p
+        ON s.product_id = p.id
+        WHERE s.id IN (' + sku_ids + ')'
+    sequelize.query q, { type: sequelize.QueryTypes.SELECT }
+    .then (skus) ->
+      scope.skus = skus
+      product_ids = _.pluck(skus, 'product_id').join(',')
+      Customization.findAllByProductIds seller_id, product_ids
+    .then (customizations) ->
+      for customization in customizations
+        Customization.alterSkus scope.skus, customization
+      _.map scope.skus, (sku) -> _.omit(sku, ['identifier', 'regular_price'])
+
+Sku.attrs = [
+  'id'
+  'product_id'
+  'identifier'
+  # 'baseline_price'
+  'regular_price'
+  'msrp'
+  'shipping_price'
+  'selection_text'
+  'subcontent'
+  'style'
+  'color'
+  'material'
+  'length'
+  'width'
+  'height'
+  'weight'
+  'size'
+  'quantity'
+  'discontinued'
+]
+
+module.exports = Sku
