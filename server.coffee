@@ -119,7 +119,7 @@ app.get '/cart', (req, res, next) ->
       sku_ids = _.pluck req.cart.quantity_array, 'sku_id'
       Sku.forCart sku_ids.join(','), bootstrap.id
       .then (data) ->
-        console.log 'data', data
+        # console.log 'data', data
         bootstrap.cart.skus = data
       .finally () ->
         bootstrap.stringified = utils.stringify bootstrap
