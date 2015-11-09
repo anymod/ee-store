@@ -1,12 +1,12 @@
 <div ng-hide="product.data.reading" class="container text-center vert-20">
-  <!-- PRODUCT PREVIEW -->
+  <!-- PRODUCT -->
   <ee-product-card
     ng-if="product.data.product.id"
-    store-product="product.data.product"
-    template="product.data.product.template"
+    product="product.data.product"
+    skus="product.data.product.skus"
     disabled="isBuilder">
   </ee-product-card>
-  <!-- /PRODUCT PREVIEW -->
+  <!-- /PRODUCT -->
 </div>
 
 <ee-loading loading="product.data.reading"></ee-loading>

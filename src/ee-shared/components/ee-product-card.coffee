@@ -8,7 +8,6 @@ module.directive "eeProductCard", ($rootScope, $state, $cookies, eeBack) ->
   scope:
     product:        '='
     skus:           '='
-    customization:  '='
     disabled:       '='
   link: (scope, ele, attrs) ->
 

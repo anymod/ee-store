@@ -1,107 +1,18 @@
-<div class="well white-background box-shadow text-left" ng-hide="product.removed">
-
-  <!-- COMPACT -->
-  <div class="row" ng-show="!expanded">
-    <div class="col col-sm-7 hover-pointer" ng-click="expand()">
-      <div class="media">
-        <div class="media-left">
-          <a href>
-            <img class="media-object" ng-src="{{ product.image | thumbnail }}">
-          </a>
-        </div>
-        <div class="media-body">
-          <h4 class="media-heading margin-0 font-weight-200">
-            <a href>{{ product.title }} <i class="fa fa-fw fa-pencil"></i></a>
-          </h4>
-          <div ng-if="product.msrp && product.msrp > product.selling_price">
-            <s class="text-muted" ng-if="product.msrp">{{ product.msrp | centToDollar }}</s>
-            <span class="text-danger" ng-if="calculated.msrpDiscount">{{ calculated.msrpDiscount | percentage:0 }} Off</span>
-          </div>
-          <div>
-            <strong ng-bind="product.selling_price | centToDollar"></strong>
-            <div class="btn btn-link btn-xs"><i class="fa fa-fw fa-pencil"></i>&nbsp;edit</div>
-          </div>
-          <div class="text-muted">You earn <span ng-bind="calculated.earnings | centToDollar"></span> each sale.</div>
-        </div>
+<div class="well product-well text-center inline-block vertical-align-bottom pad-5 margin-2 white-background box-shadow">
+  <div class="pad-10 text-left">
+    <img ng-src="{{ product.image | small }}" class="full-width gray-border hover-success-border hover-pointer" ng-click="productsFns.addProductModal(product)">
+    <div>
+      <p ng-bind-html="product.highlight.title || product.title" class="font-weight-200" style="max-height: 50px; overflow: hidden;"></p>
+      <div class="vert-10">
+        <h4 class="inline-block vert-0" ng-bind="product.regular_prices | priceRange"></h4>
+        <h5 class="inline-block vert-0 text-muted font-weight-200" ng-if="product.msrps">&nbsp;<s>{{ product.msrps | priceRange }}</s></h5>
       </div>
     </div>
-    <div class="col col-sm-5 text-right">
-      <div ng-if="product.featured" class="btn btn-info" ng-click="unfeature()" ng-disabled="save_status == 'Saving'"><i class="fa fa-times"></i>&nbsp;&nbsp;Featured</div>
-      <div ng-if="!product.featured" class="btn btn-default" ng-click="feature()" ng-disabled="save_status == 'Saving'">Add to featured</div>
-      &nbsp;
-      <div ng-click="removeProduct()" ng-disabled="save_status == 'Removing'" class="btn btn-default"><i class="fa fa-trash"></i></div>
-    </div>
   </div>
-  <!-- COMPACT -->
-
-  <!-- EDITOR CARD -->
-  <div class="row" ng-show="expanded">
-    <div class="col col-sm-3">
-      <ee-product-images product="product"></ee-product-images>
-    </div>
-    <div class="col col-sm-9">
-      <form class="form-horizontal text-left" ng-submit="updateProduct()">
-        <!-- Save -->
-        <div class="form-group vert-5">
-          <div class="col-sm-offset-2 col-sm-10">
-            <button class="btn btn-default" type="submit" ng-disabled="save_status == 'Saving'" ng-class="{ 'btn-success': saved != true }">
-              <i class="fa fa-fw fa-save"></i>&nbsp;{{ save_status }}
-            </button>
-          </div>
-        </div>
-        <!-- /Save -->
-        <!-- Title -->
-        <div class="form-group vert-5">
-          <label class="col-sm-2 control-label font-weight-200">Title</label>
-          <div class="col-sm-10">
-            <input type="text" ng-model="product.title" class="form-control" placeholder="Product Title (required)">
-            <a href="https://www.google.com/search?q={{ product.title | pluses }}" target="_blank" class="btn btn-xs btn-link pad-left-0">Search this title on google</a>
-          </div>
-        </div>
-        <!-- /Title -->
-        <!-- Price -->
-        <div class="form-group vert-5">
-          <label class="col-sm-2 control-label font-weight-200">Price</label>
-          <div class="col-sm-10">
-            <div class="vert-10 margin-top-0">
-              <div class="inline-block" style="max-width: 170px;">
-                <div class="input-group">
-                  <span class="input-group-addon white-background"><i class="fa fa-fw fa-dollar"></i></span>
-                  <input type="text" ng-model="calculated.selling_dollars" class="form-control inline-block text-right">
-                  <span class="input-group-addon pad-5 white-background no-side-border">.</span>
-                  <input type="text" ng-model="calculated.selling_cents" class="form-control inline-block" style="width: 50px;">
-                </div>
-              </div>
-              <div class="inline-block vertical-align-top pad-5" ng-if="product.msrp && product.msrp > product.selling_price">
-                <s class="text-muted" ng-if="product.msrp">{{ product.msrp | centToDollar }}</s>
-                <span class="text-danger" ng-if="calculated.msrpDiscount">{{ calculated.msrpDiscount | percentage:0 }} Off MSRP</span>
-              </div>
-            </div>
-            <div ng-show="calculated.margin > margins.max_margin || calculated.margin < margins.min_margin" class="text-info">
-              Price is out of range
-            </div>
-            <div ng-hide="calculated.margin > margins.max_margin || calculated.margin < margins.min_margin" class="text-muted">
-              {{ calculated.margin * 100 | number:1 }}%&nbsp;margin. You earn&nbsp;<strong ng-bind="calculated.earnings | centToDollar"></strong>&nbsp;each sale.
-            </div>
-            <div class="vert-5 margin-top-0">
-              <div class="btn btn-xs btn-link pad-left-0" ng-click="setSellingPrice(product.regular_price)">Recommended</div>
-              <div class="btn btn-xs btn-link" ng-click="setSellingPrice(calculated.min_price)">Min</div>
-              <div class="btn btn-xs btn-link" ng-click="calcByMargin(margin)" ng-repeat="margin in margins.margin_array">{{ margin*100 }}%</div>
-            </div>
-          </div>
-        </div>
-        <!-- /Price -->
-        <!-- Description -->
-        <div class="form-group vert-5">
-          <label class="col-sm-2 control-label font-weight-200">Description</label>
-          <div class="col-sm-10">
-            <textarea type="text" ng-model="product.content" class="form-control full-width" rows=5 placeholder="Product Description"></textarea>
-          </div>
-        </div>
-        <!-- /Description -->
-      </form>
-    </div>
+  <div class="btn btn-group btn-group-sm pad-0">
+    <div class="btn btn-default font-weight-200">Feat<span class="hidden-xs">ure</span></div>
+    <div class="btn btn-default font-weight-200" ng-click="productsFns.addProductModal(product, { type: 'edit' })">Edit</div>
+    <div class="btn btn-default font-weight-200" ng-click="productsFns.addProductModal(product, { type: 'add' })">Add</div>
   </div>
-  <!-- /EDITOR CARD -->
-
+  <div class="btn btn-sm btn-link" ng-click="productsFns.search(product.title); scrollTo('body-top');">more like this</div>
 </div>

@@ -8,11 +8,11 @@
       <div class="col col-sm-6">
         <div class="pad-10">
           <h1 ng-bind="product.title" class="margin-0 font-weight-200"></h1>
-          <h4 ng-if="currentSku.msrp && currentSku.regular_price && currentSku.msrp > currentSku.regular_price" class="vert-10">
+          <h4 ng-if="currentSku.msrp && currentSku.price && currentSku.msrp > currentSku.price" class="vert-10">
             <span class="text-muted"><s>{{ currentSku.msrp | centToDollar }}</s></span>
             <span class="text-danger">&nbsp;{{ msrpDiscount | percentage:0 }} Off</span>
           </h4>
-          <h3 class="vert-15 margin-top-0" ng-bind="currentSku.regular_price | centToDollar"></h3>
+          <h3 class="vert-15 margin-top-0" ng-bind="currentSku.price | centToDollar"></h3>
           <div ng-if="skus.length > 1" class="btn-group" dropdown>
             <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
               Select <span class="caret"></span>

@@ -18,6 +18,10 @@ _             = require 'lodash'
 constants     = require './server.constants'
 finders       = require './server.finders'
 helpers       = require './server.helpers'
+utils         = require './models/utils'
+
+User          = require './models/user'
+Product       = require './models/product'
 
 app = express()
 app.use compression()
@@ -46,13 +50,13 @@ app.use cartCookie
 # HOME
 app.get '/', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  helpers.defineStorefront host, bootstrap
-  .then () -> finders.featuredProducts bootstrap.id, bootstrap.page
+  User.defineStorefront host, bootstrap
+  .then () -> Product.findAllFeatured bootstrap.id, bootstrap.page
   .then (data) ->
     { rows, count } = data
-    bootstrap.products = rows || []
-    bootstrap.count         = count
-    bootstrap.stringified   = helpers.stringify bootstrap
+    bootstrap.products    = rows || []
+    bootstrap.count       = count
+    bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     # TODO add better error pages
@@ -62,52 +66,48 @@ app.get '/', (req, res, next) ->
 # ABOUT
 app.get ['/about'], (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  helpers.defineStorefront host, bootstrap
+  User.defineStorefront host, bootstrap
   .then () ->
-    bootstrap.stringified = helpers.stringify bootstrap
+    bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     # TODO add better error pages
     console.error 'error in ABOUT', err
-    res.send 'Not found'
+    res.redirect '/'
 
 # COLLECTIONS
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = helpers.setup req
-  helpers.defineStorefront host, bootstrap
-  .then () -> finders.productsInCollection req.params.id, bootstrap.id, bootstrap.page
+  User.defineStorefront host, bootstrap
+  .then () -> Product.findAllByCollection req.params.id, bootstrap.id, bootstrap.page
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection
-    bootstrap.products = rows || []
+    bootstrap.products      = rows || []
     bootstrap.count         = count
-    bootstrap.title         = helpers.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    bootstrap.images        = helpers.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
-    bootstrap.stringified   = helpers.stringify bootstrap
+    bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
+    bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.stringified   = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in COLLECTIONS', err
-    res.send 'Not found'
+    res.redirect '/'
 
 # PRODUCTS
 app.get '/products/:id/:title*?', (req, res, next) ->
-  console.log 'HERE', req.params
   { bootstrap, host, path } = helpers.setup req
-  helpers.defineStorefront host, bootstrap
-  .then () -> finders.productByIds req.params.id, bootstrap.id
+  User.defineStorefront host, bootstrap
+  .then () -> Product.findCompleteById req.params.id, bootstrap.id
   .then (product) ->
-    bootstrap.product  = product[0]
-    finders.templateById bootstrap.product.template_id
-  .then (template) ->
-    bootstrap.product.template = template[0]
-    bootstrap.title         = bootstrap.product.title
-    bootstrap.images        = helpers.makeMetaImages([ bootstrap.product?.image ])
-    bootstrap.description   = bootstrap.product.content
-    bootstrap.stringified   = helpers.stringify bootstrap
+    bootstrap.product     = product
+    bootstrap.title       = bootstrap.product.title
+    bootstrap.images      = utils.makeMetaImages([ bootstrap.product?.image ])
+    bootstrap.description = bootstrap.product.content
+    bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in PRODUCTS', err
-    res.send 'Not found'
+    res.redirect '/'
 
 # CART
 app.get '/cart', (req, res, next) ->
@@ -119,11 +119,14 @@ app.get '/cart', (req, res, next) ->
       finders.productsForCart product_ids.join(','), bootstrap.id
       .then (data) -> bootstrap.cart.products = data
       .finally () ->
-        bootstrap.stringified = helpers.stringify bootstrap
+        bootstrap.stringified = utils.stringify bootstrap
         res.render 'store.ejs', { bootstrap: bootstrap }
     else
-      bootstrap.stringified = helpers.stringify bootstrap
+      bootstrap.stringified = utils.stringify bootstrap
       res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in CART', err
+    res.redirect '/'
 
 # LEGACY REDIRECTS
 app.get ['/selections/:id/:title', '/shop', '/shop/:title'], (req, res, next) ->
