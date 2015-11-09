@@ -29,8 +29,7 @@ Sku =
       product_ids = _.pluck(skus, 'product_id').join(',')
       Customization.findAllByProductIds seller_id, product_ids
     .then (customizations) ->
-      for customization in customizations
-        Customization.alterSkus scope.skus, customization
+      Customization.alterSkus scope.skus, customizations
       _.map scope.skus, (sku) -> _.omit(sku, ['identifier', 'regular_price'])
 
 Sku.attrs = [

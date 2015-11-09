@@ -40,30 +40,37 @@ Customization =
         product.msrps   = _.pluck product.skus, 'msrp'
         product.prices  = _.pluck product.skus, 'regular_price'
         sku.price = sku.regular_price for sku in product.skus
-      for customization in customizations
-        if customization.product_id is product.id
-          if product.skus then Customization.alterSkus product.skus, customization
-          Customization.alterProduct product, customization
+      Customization.alterSkus product.skus, customizations
+      Customization.alterProduct product, customizations
+      # for customization in customizations
+      #   if customization.product_id is product.id
+      #     if product.skus then Customization.alterSkus product.skus, customization
+      #     Customization.alterProduct product, customizations
       if !product.skus then product.skus = null
     # TODO return prices and msrps in order
     products
 
-  alterSkus: (skus, customization) ->
-    for sku in skus
-      if customization?.selling_prices
-        res = _.where customization.selling_prices, { sku_id: sku.id }
-        sku.price = if res and res.length > 0 then res[0].selling_price else sku.regular_price
-      else
-        sku.price = sku.regular_price
-    customization
+  alterSkus: (skus, customizations) ->
+    skus ||= []
+    customizations ||= []
+    for customization in customizations
+      for sku in skus
+        if sku.product_id is customization.product_id and customization?.selling_prices
+          match = _.where customization.selling_prices, { sku_id: sku.id }
+          if match and match.length > 0 then sku.price = match[0].selling_price
+        sku.price ||= sku.regular_price
+    skus
 
-  alterProduct: (product, customization) ->
-    if customization?.title then product.title = customization.title
-    product.featured = !!customization?.featured
-    if customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
-    if product.skus
-      product.msrps = _.pluck product.skus, 'msrp'
-      product.prices = _.pluck product.skus, 'price'
-    customization
+  alterProduct: (product, customizations) ->
+    customizations ||= []
+    for customization in customizations
+      if customization.product_id is product.id
+        if customization?.title then product.title = customization.title
+        product.featured = !!customization?.featured
+        if customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
+        if product.skus
+          product.msrps = _.pluck product.skus, 'msrp'
+          product.prices = _.pluck product.skus, 'price'
+    product
 
 module.exports = Customization
