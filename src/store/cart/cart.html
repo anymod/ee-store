@@ -19,13 +19,13 @@
       <div class="row margin-0" ng-repeat="sku in cart.skus">
         <div class="vert-10">
           <div class="col col-sm-2 col-xs-3">
-            <a ui-sref="product({ id: sku.product_id, title: (sku.product_title | urlText) })">
-              <img ng-src="{{ sku.product_image | midsize }}" class="full-width" />
+            <a ui-sref="product({ id: sku.product_id, title: (sku.product.title | urlText) })">
+              <img ng-src="{{ sku.product.image | midsize }}" class="full-width" />
             </a>
           </div>
           <div class="col col-xs-4">
-            <a ui-sref="product({ id: sku.product_id, title: (sku.product_title | urlText) })">
-              <h4 ng-bind="sku.product_title" class="margin-0 text-muted"></h4>
+            <a ui-sref="product({ id: sku.product_id, title: (sku.product.title | urlText) })">
+              <h4 ng-bind="sku.product.title" class="margin-0 text-muted"></h4>
             </a>
             <h5 ng-bind="sku.selection_text" class="font-weight-200 margin-0 text-muted"></h5>
             <!-- <h6 ng-if="product.availability_meta.supplier_name" class="vert-5">by {{ product.availability_meta.supplier_name }}</h6> -->

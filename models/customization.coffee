@@ -42,10 +42,6 @@ Customization =
         sku.price = sku.regular_price for sku in product.skus
       Customization.alterSkus product.skus, customizations
       Customization.alterProduct product, customizations
-      # for customization in customizations
-      #   if customization.product_id is product.id
-      #     if product.skus then Customization.alterSkus product.skus, customization
-      #     Customization.alterProduct product, customizations
       if !product.skus then product.skus = null
     # TODO return prices and msrps in order
     products
@@ -53,6 +49,7 @@ Customization =
   alterSkus: (skus, customizations) ->
     skus ||= []
     customizations ||= []
+    sku.price ||= sku.regular_price for sku in skus
     for customization in customizations
       for sku in skus
         if sku.product_id is customization.product_id and customization?.selling_prices

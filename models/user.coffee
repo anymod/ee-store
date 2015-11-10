@@ -7,6 +7,10 @@ utils     = require './utils'
 
 Collection = require './collection'
 
+### IMPORTANT ###
+# Users, Collections, and Orders should use
+# 'deleted_at IS NULL' as part of query
+
 User =
 
   findByHost: (host) ->

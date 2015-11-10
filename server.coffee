@@ -16,13 +16,12 @@ ejs           = require 'ejs'
 compression   = require 'compression'
 _             = require 'lodash'
 constants     = require './server.constants'
-finders       = require './server.finders'
-helpers       = require './server.helpers'
 utils         = require './models/utils'
 
 User          = require './models/user'
 Product       = require './models/product'
 Sku           = require './models/sku'
+Cart          = require './models/cart'
 
 app = express()
 app.use compression()
@@ -39,7 +38,7 @@ cartCookie = (req, res, next) ->
   if req.cookies and req.cookies.cart
     [ee, cart_id, uuid] = req.cookies.cart.split('.')
     if !cart_id or !uuid then return next()
-    finders.cartByIdAndUuid cart_id, uuid
+    Cart.findByIdAndUuid cart_id, uuid
     .then (data) -> req.cart = data[0]
     .catch (err) -> console.log 'Error in cartCookie', err
     .finally () -> next()
@@ -50,7 +49,7 @@ app.use cartCookie
 
 # HOME
 app.get '/', (req, res, next) ->
-  { bootstrap, host, path } = helpers.setup req
+  { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () -> Product.findAllFeatured bootstrap.id, bootstrap.page
   .then (data) ->
@@ -66,7 +65,7 @@ app.get '/', (req, res, next) ->
 
 # ABOUT
 app.get ['/about'], (req, res, next) ->
-  { bootstrap, host, path } = helpers.setup req
+  { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->
     bootstrap.stringified = utils.stringify bootstrap
@@ -78,7 +77,7 @@ app.get ['/about'], (req, res, next) ->
 
 # COLLECTIONS
 app.get '/collections/:id/:title*?', (req, res, next) ->
-  { bootstrap, host, path } = helpers.setup req
+  { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () -> Product.findAllByCollection req.params.id, bootstrap.id, bootstrap.page
   .then (data) ->
@@ -96,7 +95,7 @@ app.get '/collections/:id/:title*?', (req, res, next) ->
 
 # PRODUCTS
 app.get '/products/:id/:title*?', (req, res, next) ->
-  { bootstrap, host, path } = helpers.setup req
+  { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () -> Product.findCompleteById req.params.id, bootstrap.id
   .then (product) ->
@@ -112,7 +111,7 @@ app.get '/products/:id/:title*?', (req, res, next) ->
 
 # CART
 app.get '/cart', (req, res, next) ->
-  { bootstrap, host, path } = helpers.setup req
+  { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0

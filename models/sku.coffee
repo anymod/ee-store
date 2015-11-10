@@ -30,6 +30,12 @@ Sku =
       Customization.findAllByProductIds seller_id, product_ids
     .then (customizations) ->
       Customization.alterSkus scope.skus, customizations
+      for sku in scope.skus
+        sku.product =
+          id:     sku.product_id
+          title:  sku.product_title
+          image:  sku.product_image
+        Customization.alterProduct sku.product, customizations
       _.map scope.skus, (sku) -> _.omit(sku, ['identifier', 'regular_price'])
 
 Sku.attrs = [

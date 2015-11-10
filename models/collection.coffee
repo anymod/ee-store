@@ -5,6 +5,10 @@ sequelize = require '../config/sequelize/setup'
 constants = require '../server.constants'
 utils     = require './utils'
 
+### IMPORTANT ###
+# Users, Collections, and Orders should use
+# 'deleted_at IS NULL' as part of query
+
 Collection =
 
   navCollectionsBySellerId: (seller_id) ->
