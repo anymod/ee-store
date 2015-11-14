@@ -44,9 +44,7 @@ Product =
       Product.findById id
     .then (product) -> Sku.addAllToProduct product
     .then (product) -> Customization.alterProducts [product], scope.customizations
-    .then (products) ->
-      console.log products[0]
-      products[0]
+    .then (products) -> products[0]
 
   findAllFeatured: (seller_id, page) ->
     data  = {}

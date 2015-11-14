@@ -20,6 +20,8 @@ sources.storeModules = () ->
 
 ### VENDOR ###
 sources.storeVendorMin = [
+  # TODO remove once zoom.js gone
+  './src/bower_components/jquery/dist/jquery.min.js'
   './src/bower_components/angular/angular.min.js'
   './src/bower_components/angular-sanitize/angular-sanitize.min.js'
   './src/bower_components/angular-cookies/angular-cookies.min.js'
@@ -28,8 +30,12 @@ sources.storeVendorMin = [
   './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
   './src/bower_components/angulartics/dist/angulartics.min.js'
   './src/bower_components/angulartics/dist/angulartics-ga.min.js'
+  './src/bower_components/zoom.js/dist/zoom.min.js'
 ]
-sources.storeVendorUnmin = []
+sources.storeVendorUnmin = [
+  # TODO remove once zoom.js gone
+  './src/bower_components/bootstrap/js/transition.js'
+]
 
 ### MODULE ###
 sources.appModule = [

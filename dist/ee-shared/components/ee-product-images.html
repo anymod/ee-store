@@ -1,5 +1,8 @@
 <div>
-  <img ng-src="{{ mainImage | mainImg }}" class="full-width" name="mainImage">
+  <img ng-src="{{ mainImage | mainImg }}"
+      class="full-width"
+      name="mainImage"
+      data-action="zoom">
   <!-- images -->
   <div ng-show="product.additional_images.length > 0" class="vert-5">
     <img ng-src="{{ product.image | thumbnail }}"

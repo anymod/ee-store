@@ -42,7 +42,6 @@ Sku.attrs = [
   'id'
   'product_id'
   'identifier'
-  # 'baseline_price'
   'regular_price'
   'msrp'
   'shipping_price'
@@ -58,6 +57,13 @@ Sku.attrs = [
   'size'
   'quantity'
   'discontinued'
+  'supplier_id'
+  'supplier_name'
+  'details'
+  'manufacturer_name'
+  'brand_name'
+  'shipping_from'
+  'meta'
 ]
 
 module.exports = Sku
