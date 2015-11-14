@@ -9740,5 +9740,8 @@ img.zoom-img {
 .zoom-overlay-transitioning {
   cursor: default;
 }
+.zoom-overlay-open .zoom-img-wrap {
+  margin-top: 20px;
+}
 
 /*# sourceMappingURL=ee.css.map */

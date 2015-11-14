@@ -32,7 +32,7 @@ resizeCloudinaryImageTo = (url, w, h) ->
 angular.module('app.core').filter 'thumbnail',            () -> (url) -> resizeCloudinaryImageTo url, 80, 80
 angular.module('app.core').filter 'small',                () -> (url) -> resizeCloudinaryImageTo url, 120, 120
 angular.module('app.core').filter 'midsize',              () -> (url) -> resizeCloudinaryImageTo url, 250, 250
-angular.module('app.core').filter 'mainImg',              () -> (url) -> resizeCloudinaryImageTo url, 700, 700
+angular.module('app.core').filter 'mainImg',              () -> (url) -> resizeCloudinaryImageTo url, 600, 600
 angular.module('app.core').filter 'collectionThumbnail',  () -> (url) -> resizeCloudinaryImageTo url, 300, 177
 
 angular.module('app.core').filter 'scaledDownBackground', () ->
