@@ -51,6 +51,8 @@ app.use cartCookie
 app.get '/', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
+  # TODO finish new meta images
+  .then () -> User.setCollectionMetaImages bootstrap
   .then () -> Product.findAllFeatured bootstrap.id, bootstrap.page
   .then (data) ->
     { rows, count } = data

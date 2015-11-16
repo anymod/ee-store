@@ -42,4 +42,9 @@ User =
         alphabetical: data.alphabetical
       bootstrap
 
+  setCollectionMetaImages: (bootstrap) ->
+    Collection.metaImagesFor bootstrap.id
+    .then (images) ->
+      if images and images.length > 0 then bootstrap.images = utils.makeMetaImages images
+
 module.exports = User

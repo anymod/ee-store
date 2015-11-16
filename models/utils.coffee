@@ -47,10 +47,7 @@ utils =
       .replace /\\f/g, "\\f"
 
   makeMetaImage: (url) ->
-    if !!url and url.indexOf("image/upload") > -1
-      url.split("image/upload").join('image/upload/c_pad,w_600,h_314').replace('https://', 'http://')
-    else
-      url
+    if url and url.indexOf("image/upload") > -1 then url.split("image/upload").join('image/upload/c_pad,w_600,h_314').replace('https://', 'http://') else url
 
   makeMetaImages: (img_array) ->
     imgs = []
