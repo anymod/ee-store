@@ -1,32 +1,85 @@
+<!-- top supranav -->
+<div class="container supranav transition-400 margin-bottom-0">
+  <div class="position-relative vert-5 text-right">
+    <a ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
+      ng-if="meta.audience.social[site]"
+      href="http://{{ site }}.com/{{ meta.audience.social[site] }}"
+      target="_blank"
+      class="no-underline">
+      <i class="fa fa-fw fa-lg fa-{{ site }} text-{{ site }}"></i>
+    </a>
+    <!-- <a href="mailto:{{ meta.audience.contact.email }}"
+      target="_blank"
+      class="squeeze-5 no-underline"
+      ng-if="meta.audience.contact.email"
+      ng-style="{ color: meta.home.topBarColor }">
+      <i class="fa fa-fw fa-lg fa-envelope text-muted"></i>
+    </a> -->
+    <!-- blog -->
+    <a ng-if="meta.blog.url" href="{{ meta.blog.url | addHttp }}" target="_blank" class="text-muted" style="margin: 0 8px 0 3px;">blog</a>
+    <!-- /blog -->
+    <!-- help -->
+    <a href class="text-muted"></i>help</a>
+    <!-- /help -->
+  </div>
+</div>
+<!-- /top supranav -->
+
 <div class="position-relative box-shadow-2">
   <!-- blocker -->
   <div ng-show="blocked" class="navbar position-absolute" style="z-index: 2005; top: 0; left: 0; right: 0; height: 77px;"></div>
   <!-- /blocker -->
 
   <nav id="navtop"
-       class="navbar store-navbar navbar-default navbar-rgba-colors border-none box-shadow margin-0 round-0"
+       class="navbar navbar-form store-navbar navbar-default navbar-rgba-colors border-none box-shadow margin-0 round-0"
        ng-hide="loading"
        ng-style="{ 'background-color': meta.home.topBarBackgroundColor }">
 
     <div ng-class="fluid ? 'container-fluid' : 'container'" name="store-navbar">
-      <!-- Brand and toggle get grouped for better mobile display -->
-      <div class="navbar-header">
-        <button type="button" class="navbar-toggle pad-20 collapsed" ng-init="navCollapsed = true" ng-click="navCollapsed = !navCollapsed">
-          <span class="sr-only">Toggle navigation</span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-          <span class="icon-bar"></span>
-        </button>
-        <div ui-sref="storefront"
-           class="store-title inline-block hover-pointer font-weight-200 margin-0"
-           ng-style="{ color: meta.home.topBarColor }">
-          <img ng-if="meta.logo" ng-src="{{ meta.logo }}" class="small-thumb img-circle margin-right-4" />
-          <div class="inline-block height-50" style="height: 50px; padding: 5px 0; font-size: 28px; vertical-align: middle;" ng-bind="meta.home.name"></div>
+
+      <div class="row margin-bottom-0">
+        <div class="col col-sm-4 col-xs-10">
+          <div ui-sref="storefront"
+             class="store-title inline-block hover-pointer font-weight-200 margin-0"
+             ng-style="{ color: meta.home.topBarColor }">
+            <img ng-if="meta.logo" ng-src="{{ meta.logo }}" class="small-thumb img-circle margin-right-4" />
+            <div class="inline-block height-50" style="height: 50px; padding: 5px 0; font-size: 28px; vertical-align: middle;" ng-bind="meta.home.name"></div>
+          </div>
+        </div>
+        <!-- Search -->
+        <div class="hidden-xs">
+          <div class="col col-sm-7">
+            <form class="form-group input-group full-width vert-20" ng-submit="console.log('search')">
+              <input type="text" class="form-control full-width-important" placeholder="Search">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="submit"><i class="fa fa-fw fa-search"></i></button>
+              </span>
+            </form>
+          </div>
+        </div>
+        <!-- /Search -->
+        <div class="col col-sm-1 col-xs-2 text-right">
+          <div class="dropdown full-width vert-25" dropdown>
+            <a ng-if="isStore" ui-sref="cart" class="position-relative" ng-style="{ color: meta.home.topBarColor }">
+              <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
+              <strong ng-if="quantityArray && quantityArray.length > 0">{{ quantityArray.length }}</strong>
+            </a>
+
+            <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
+              <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-right">
+              <li>
+                <a href>This button takes<br>customers to their carts</a>
+              </li>
+            </ul>
+          </div>
         </div>
       </div>
 
+
       <!-- Collect the nav links, forms, and other content for toggling -->
-      <div collapse="navCollapsed" class="collapse navbar-collapse">
+      <div collapse="navCollapsed" class="collapse navbar-collapse" ng-if="false">
         <ul class="nav navbar-nav">
           <li ng-class="{ active: state == 'storefront' }"><a ui-sref="storefront" ng-click="navCollapsed = true" ng-style="{ color: meta.home.topBarColor }">Home</a></li>
           <li ng-if="collections.length > 0">

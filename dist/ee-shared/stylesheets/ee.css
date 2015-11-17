@@ -8695,6 +8695,14 @@ html {
     overflow: hidden;
   }
 }
+.supranav {
+  height: 30px;
+  max-height: 30px;
+  background: #fcfcfc;
+}
+.slid-up .supranav {
+  margin-top: -30px;
+}
 .white-background {
   background: white !important;
 }
@@ -8906,6 +8914,10 @@ html {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+.vert-25 {
+  margin-top: 25px;
+  margin-bottom: 25px;
+}
 .vert-50 {
   margin-top: 50px;
   margin-bottom: 50px;
@@ -9045,6 +9057,9 @@ html {
 }
 .full-width {
   width: 100%;
+}
+.full-width-important {
+  width: 100% !important;
 }
 .min-width-40 {
   min-width: 40px;
