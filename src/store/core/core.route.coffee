@@ -3,13 +3,13 @@
 angular.module('store.core').config ($locationProvider, $stateProvider, $urlRouterProvider, $httpProvider) ->
 
   views =
-    header:
-      controller: 'storeCtrl as storefront'
-      templateUrl: 'store/store.header.html'
     top:
       controller: 'storeCtrl as storefront'
-      templateUrl: 'ee-shared/storefront/storefront.carousel.html'
+      templateUrl: 'store/store.header.html'
     middle:
+      controller: 'storeCtrl as storefront'
+      templateUrl: 'ee-shared/storefront/storefront.carousel.html'
+    bottom:
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.featured.html'
     footer:
@@ -17,15 +17,15 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
   collectionViews =
-    header: views.header
-    top:
+    top: views.top
+    middle:
       controller: 'collectionCtrl as collection'
       templateUrl: 'ee-shared/storefront/storefront.collection.html'
     footer: views.footer
 
   aboutViews =
-    header: views.header
-    top:
+    top: views.top
+    middle:
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.about.html'
     footer: views.footer
@@ -55,10 +55,10 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     .state 'product',
       url: '/products/:id/:title'
       views:
-        header:
+        top:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
-        top:
+        middle:
           controller: 'productCtrl as product'
           templateUrl: 'ee-shared/storefront/storefront.product.html'
         footer:
@@ -73,8 +73,8 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     .state 'cart',
       url: '/cart'
       views:
-        header: views.header
-        top:
+        top: views.top
+        middle:
           controller:  'cartCtrl as cart'
           templateUrl: 'store/cart/cart.html'
         footer: views.footer
@@ -84,8 +84,8 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     .state 'cart-success',
       url: '/cart/success'
       views:
-        header: views.header
-        top:
+        top: views.top
+        middle:
           controller:  'cartCtrl as cart'
           templateUrl: 'store/cart/success.html'
         footer: views.footer
