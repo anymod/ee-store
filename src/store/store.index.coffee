@@ -14,6 +14,7 @@ angular.module 'eeStore', [
 
   # store
   'store.core'
+  'store.search'
 
   # custom
   'ee-storefront-header'

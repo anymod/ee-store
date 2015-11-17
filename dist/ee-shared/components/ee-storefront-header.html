@@ -1,5 +1,5 @@
 <!-- top supranav -->
-<div class="container supranav transition-400 margin-bottom-0">
+<div class="container supranav transition-200 margin-bottom-0" ng-if="showSupranav">
   <div class="position-relative vert-5 text-right">
     <a ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
       ng-if="meta.audience.social[site]"
@@ -49,8 +49,8 @@
         <!-- Search -->
         <div class="hidden-xs">
           <div class="col col-sm-7">
-            <form class="form-group input-group full-width vert-20" ng-submit="console.log('search')">
-              <input type="text" class="form-control full-width-important" placeholder="Search">
+            <form class="form-group input-group full-width vert-20" ng-submit="search()">
+              <input type="text" class="form-control full-width-important" placeholder="Search" ng-model="query">
               <span class="input-group-btn">
                 <button class="btn btn-default" type="submit"><i class="fa fa-fw fa-search"></i></button>
               </span>

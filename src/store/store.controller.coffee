@@ -24,6 +24,12 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
   storefront.fns =
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 
+  storefront.params = $location.search()
+  if storefront.params
+    storefront.query = storefront.params.q
+
+  if $state.current.name is 'storefront' then storefront.showSupranav = true
+
   storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.nav?.alphabetical)
   storefront.productsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.Products.storefront.page
 

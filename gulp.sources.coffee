@@ -69,6 +69,10 @@ sources.storeModule = [
   './src/store/product.controller.coffee'
   # Module - cart
   './src/store/cart.controller.coffee'
+  # Module - search
+  './src/store/search/search.module.coffee'
+  './src/store/search/search.route.coffee'
+  './src/store/search/search.controller.coffee'
   # Module - modal
   './src/store/modal/modal.controller.coffee'
 ]

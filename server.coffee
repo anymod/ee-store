@@ -111,6 +111,21 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     console.error 'error in PRODUCTS', err
     res.redirect '/'
 
+# SEARCH
+app.get '/search', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () ->
+    opts =
+      size: 48
+    if req.query.q then opts.search = req.query.q
+    if req.query.p then opts.page = req.query.p
+    Product.search { id: bootstrap.id }, opts
+  .then (products) ->
+    bootstrap.products = products
+    bootstrap.stringified = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+
 # CART
 app.get '/cart', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
