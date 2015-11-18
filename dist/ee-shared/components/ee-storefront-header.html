@@ -1,6 +1,7 @@
-<!-- top supranav -->
+<!-- Top supranav -->
 <div class="container supranav transition-200 margin-bottom-0" ng-if="showSupranav">
   <div class="position-relative vert-5 text-right">
+    <!-- social -->
     <a ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
       ng-if="meta.audience.social[site]"
       href="http://{{ site }}.com/{{ meta.audience.social[site] }}"
@@ -8,13 +9,7 @@
       class="no-underline">
       <i class="fa fa-fw fa-lg fa-{{ site }} text-{{ site }}"></i>
     </a>
-    <!-- <a href="mailto:{{ meta.audience.contact.email }}"
-      target="_blank"
-      class="squeeze-5 no-underline"
-      ng-if="meta.audience.contact.email"
-      ng-style="{ color: meta.home.topBarColor }">
-      <i class="fa fa-fw fa-lg fa-envelope text-muted"></i>
-    </a> -->
+    <!-- /social -->
     <!-- blog -->
     <a ng-if="meta.blog.url" href="{{ meta.blog.url | addHttp }}" target="_blank" class="text-muted" style="margin: 0 8px 0 3px;">blog</a>
     <!-- /blog -->
@@ -23,8 +18,9 @@
     <!-- /help -->
   </div>
 </div>
-<!-- /top supranav -->
+<!-- /Top supranav -->
 
+<!-- Main nav -->
 <div class="position-relative box-shadow-2">
   <!-- blocker -->
   <div ng-show="blocked" class="navbar position-absolute" style="z-index: 2005; top: 0; left: 0; right: 0; height: 77px;"></div>
@@ -150,3 +146,28 @@
   </nav>
 
 </div>
+<!-- /Main nav -->
+
+<!-- Scroll nav -->
+<!-- Main nav -->
+<div class="position-fixed full-width scrollnav transition-400">
+  <nav class="navbar navbar-form navbar-default navbar-rgba-colors border-none box-shadow-2 margin-0 round-0"
+       ng-hide="loading"
+       ng-style="{ 'background-color': meta.home.topBarBackgroundColor }">
+    <div ng-class="fluid ? 'container-fluid' : 'container'" name="store-navbar">
+      <!-- Search -->
+      <div class="row margin-bottom-0">
+        <div class="col col-sm-7 col-sm-offset-4">
+          <form class="form-group input-group full-width vert-7" ng-submit="search()">
+            <input type="text" class="form-control full-width-important" placeholder="Search" ng-model="query">
+            <span class="input-group-btn">
+              <button class="btn btn-default" type="submit"><i class="fa fa-fw fa-search"></i></button>
+            </span>
+          </form>
+        </div>
+      </div>
+      <!-- /Search -->
+    </div>
+  </nav>
+</div>
+<!-- /Scroll nav -->

@@ -13,12 +13,19 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, eeM
     quantityArray:  '='
     query:          '='
     showSupranav:   '='
+    showScrollnav:  '='
   link: (scope, ele, attrs) ->
     scope.isStore     = $rootScope.isStore
     scope.isBuilder   = $rootScope.isBuilder
     scope.state       = $state.current.name
     scope.cart        = eeCart.cart
     scope.openCollectionsModal = () -> eeModal.fns.openCollectionsModal scope.collections
+
+    if scope.showScrollnav
+      position = $window.pageYOffset
+      trigger = 75
+      angular.element($window).bind 'scroll', (e, a, b) ->
+        if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'
 
     # if scope.showSupranav
     #   position = $window.pageYOffset
@@ -30,7 +37,9 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, eeM
     #     # if new_pos > position + trigger then ele.addClass 'slid-up'
     #     # if new_pos < position or new_pos > position + trigger then position = new_pos
 
-    scope.search = () ->
-      $state.go 'search', { q: scope.query, p: scope.page }
+    scope.search = (query, page) ->
+      $state.go 'search', { q: (query || scope.query), p: (page || scope.page) }
+
+    $rootScope.$on 'search:query', (e, query) -> scope.search query, 1
 
     return

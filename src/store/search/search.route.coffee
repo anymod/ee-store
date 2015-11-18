@@ -7,10 +7,10 @@ angular.module('store.search').config ($stateProvider) ->
     .state 'search',
       url: '/search'
       views:
-        header:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
         top:
+          controller: 'storeCtrl as storefront'
+          templateUrl: 'store/search/search.header.html'
+        middle:
           controller: 'searchCtrl as search'
           templateUrl: 'ee-shared/storefront/storefront.search.html' #'store/search/search.html'
         footer:
