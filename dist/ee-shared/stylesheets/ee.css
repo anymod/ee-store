@@ -8517,6 +8517,7 @@ body.modal-open {
 }
 .carousel-control {
   bottom: 60px;
+  background: none !important;
 }
 .carousel-indicators {
   bottom: 16px !important;
@@ -9331,11 +9332,6 @@ img.small-thumb {
 }
 .store-title {
   padding: 10px 12px 12px 0px;
-}
-@media (max-width: 767px) {
-  .store-title {
-    padding: 10px 12px 12px 12px;
-  }
 }
 .navbar-addition {
   left: 70px;

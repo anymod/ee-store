@@ -117,9 +117,11 @@ app.get '/search', (req, res, next) ->
   User.defineStorefront host, bootstrap
   .then () ->
     opts =
-      size: 48
-    if req.query.q then opts.search = req.query.q
-    if req.query.p then opts.page = req.query.p
+      size:   bootstrap.perPage
+      search: bootstrap.query
+      page:   bootstrap.page
+    # if bootstrap.query  then opts.search  = bootstrap.query
+    # if bootstrap.page   then opts.page    = bootstrap.page
     Product.search { id: bootstrap.id }, opts
   .then (products) ->
     bootstrap.products = products

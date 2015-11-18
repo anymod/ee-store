@@ -16,6 +16,6 @@ angular.module('eeStore').controller 'collectionCtrl', ($rootScope, $location, e
     perPage:    eeBootstrap?.perPage
     count:      eeBootstrap?.count
 
-  collection.update = () -> $rootScope.forceReload $location.path(), '?page=' + collection.data.page
+  collection.update = () -> $rootScope.forceReload $location.path(), '?p=' + collection.data.page
 
   return

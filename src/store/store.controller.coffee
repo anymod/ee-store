@@ -31,6 +31,6 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
   if $state.current.name is 'storefront' then storefront.showSupranav = true
 
   storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.nav?.alphabetical)
-  storefront.productsUpdate = () -> $rootScope.forceReload $location.path(), '?page=' + storefront.ee.Products.storefront.page
+  storefront.productsUpdate = () -> $rootScope.forceReload $location.path(), '?p=' + storefront.ee.Products.storefront.page
 
   return

@@ -9,10 +9,11 @@ utils =
   setup: (req) ->
     {
       bootstrap:
-        cart: req.cart
-        url: req.protocol + '://' + req.get('host') + req.originalUrl
-        page: req.query.page
-        perPage: constants.perPage
+        cart:     req.cart
+        url:      req.protocol + '://' + req.get('host') + req.originalUrl
+        perPage:  constants.perPage
+        page:     req.query.p
+        query:    req.query.q
       host: req.headers.host
       path: url.parse(req.url).pathname
     }

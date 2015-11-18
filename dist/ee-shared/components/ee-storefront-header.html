@@ -58,7 +58,7 @@
           <div class="dropdown full-width vert-25" dropdown>
             <a ng-if="isStore" ui-sref="cart" class="position-relative" ng-style="{ color: meta.home.topBarColor }">
               <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
-              <strong ng-if="quantityArray && quantityArray.length > 0">{{ quantityArray.length }}</strong>
+              <strong ng-if="quantityArray && quantityArray.length > 0" ng-bind="quantityArray.length"></strong>
             </a>
 
             <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
