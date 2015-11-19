@@ -13,9 +13,74 @@
   orderNav:       when true show the sub-navbar for orders
 //-->
 
-<nav class="navbar ee-builder-navbar round-0" id="navbar-top" ng-class="{ 'navbar-transparent': transparent, 'box-shadow': !transparent, 'navbar-fixed-top': fixed, 'navbar-absolute-top': !fixed }">
+<nav class="navbar ee-builder-navbar round-0" id="navbar-top"
+    ng-class="{ 'navbar-transparent': transparent, 'box-shadow': !transparent && !productsNav && !editNav && !orderNav, 'navbar-fixed-top': fixed, 'navbar-absolute-top': !fixed }">
   <div class="container-fluid">
-    <div class="margin-7">
+
+    <div class="row vert-7">
+      <div class="col col-xs-2">
+        <a ui-sref="landing" id="logo">
+          <img ng-if="transparent" src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_150/v1432656685/eeosk_white.png" class="vert-5 width-120"/>
+          <img ng-if="!transparent" src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_400/v1432578504/eeosk_blue.png" class="vert-5 width-120"/>
+        </a>
+      </div>
+      <div class="col col-xs-8">
+        <!-- search bar -->
+        <form ng-if="search" class="margin-0-auto" ng-submit="productsFns.search(ee.Products.search.inputs.search)">
+          <div class="input-group input-group-lg">
+            <input type="text" ng-model="ee.Products.search.inputs.search" class="form-control input-lg" placeholder="Search your store">
+            <span ng-if="ee.Products.search.inputs.searchLabel" class="input-group-btn round-0">
+              <input type="submit" class="hidden"/>
+              <button class="btn btn-default round-0"
+                  style="border-right: none; border-left: none;"
+                  type="button"
+                  ng-if="ee.Products.search.inputs.searchLabel"
+                  ng-click="productsFns.clearSearch()">
+                <i class="fa fa-times text-muted"></i>
+              </button>
+            </span>
+            <div class="input-group-btn" dropdown>
+              <div class="btn btn-default dropdown-toggle" dropdown-toggle>
+                <i class="fa fa-chevron-down text-primary"></i>
+              </div>
+              <ul class="dropdown-menu dropdown-menu-right" dropdown-menu>
+                <li><a ui-sref="products"><h4 class="vert-5 font-weight-200"><i class="fa fa-fw fa-tags"></i>&nbsp;&nbsp;Products</h4></a></li>
+                <li><a ui-sref="edit"><h4 class="vert-5 font-weight-200"><i class="fa fa-fw fa-pencil"></i>&nbsp;&nbsp;Edit Store</h4></a></li>
+                <li><a ui-sref="orders"><h4 class="vert-5 font-weight-200"><i class="fa fa-fw fa-list"></i>&nbsp;&nbsp;Orders</h4></a></li>
+                <li><a ui-sref="account"><h4 class="vert-5 font-weight-200"><i class="fa fa-fw fa-gear"></i>&nbsp;&nbsp;Account Settings</h4></a></li>
+                <li class="divider"></li>
+                <li><a ui-sref="logout"><h4 class="vert-5 font-weight-200"><i class="fa fa-fw fa-sign-out"></i>&nbsp;&nbsp;Logout</h4></a></li>
+              </ul>
+            </div>
+          </div>
+        </form>
+        <!-- /search bar -->
+      </div>
+      <div class="col col-xs-2">
+        <!-- signin: sign in button -->
+        <div ng-if="signin" class="vert-5 pull-right" role="form">
+          <a ui-sref="login"
+             class="btn btn-success"
+             analytics-on
+             analytics-category="user-management"
+             analytics-event="signin">
+            Sign in
+          </a>
+        </div>
+        <!-- /signin -->
+        <!-- live button -->
+        <div ng-if="live" class="btn btn-success btn-sm vert-5 pull-right">
+          <span class="hidden-xs">Live </span><i class="fa fa-external-link"></i>
+        </div>
+        <!-- /live button -->
+      </div>
+    </div>
+
+
+
+
+
+    <div class="margin-7" ng-if="false">
 
       <!-- LOGO -->
       <!-- normal logo -->

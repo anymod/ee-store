@@ -77,6 +77,22 @@ app.get ['/about'], (req, res, next) ->
     console.error 'error in ABOUT', err
     res.redirect '/'
 
+# PRODUCTS
+app.get '/products/:id/:title*?', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () -> Product.findCompleteById req.params.id, bootstrap.id
+  .then (product) ->
+    bootstrap.product     = product
+    bootstrap.title       = bootstrap.product.title
+    bootstrap.images      = utils.makeMetaImages([ bootstrap.product?.image ])
+    bootstrap.description = bootstrap.product.content
+    bootstrap.stringified = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in PRODUCTS', err
+    res.redirect '/'
+
 # COLLECTIONS
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
@@ -95,20 +111,22 @@ app.get '/collections/:id/:title*?', (req, res, next) ->
     console.error 'error in COLLECTIONS', err
     res.redirect '/'
 
-# PRODUCTS
-app.get '/products/:id/:title*?', (req, res, next) ->
+# CATEGORIES
+app.get '/categories/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
-  .then () -> Product.findCompleteById req.params.id, bootstrap.id
-  .then (product) ->
-    bootstrap.product     = product
-    bootstrap.title       = bootstrap.product.title
-    bootstrap.images      = utils.makeMetaImages([ bootstrap.product?.image ])
-    bootstrap.description = bootstrap.product.content
-    bootstrap.stringified = utils.stringify bootstrap
+  .then () -> Product.findAllByCategory req.params.id, bootstrap.id, bootstrap.page
+  .then (data) ->
+    { collection, rows, count } = data
+    bootstrap.collection    = collection
+    bootstrap.products      = rows || []
+    bootstrap.count         = count
+    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
+    bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.stringified   = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
-    console.error 'error in PRODUCTS', err
+    console.error 'error in CATEGORIES', err
     res.redirect '/'
 
 # SEARCH

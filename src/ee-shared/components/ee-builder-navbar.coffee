@@ -1,6 +1,6 @@
 angular.module 'ee-builder-navbar', []
 
-angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $state, eeDefiner) ->
+angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $state, eeDefiner, eeProducts) ->
   templateUrl: 'ee-shared/components/ee-builder-navbar.html'
   restrict: 'E'
   scope:
@@ -10,6 +10,8 @@ angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $stat
     save: '@'
     back: '@'
     signin: '@'
+    search: '@'
+    live: '@'
     transparent: '@'
     fixed: '@'
     storefront: '@'
@@ -21,6 +23,7 @@ angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $stat
     orderNav: '@'
   link: (scope, ele, attrs) ->
     scope.ee          = eeDefiner.exports
+    scope.productsFns = eeProducts.fns
     scope.state       = $state.current.name
     scope.historyBack = () -> $window?.history?.back()
     return

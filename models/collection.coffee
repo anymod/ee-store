@@ -21,7 +21,7 @@ Collection =
       data.alphabetical = collections
       data
 
-  findAllById: (collection_id, seller_id) ->
+  findById: (collection_id, seller_id) ->
     sequelize.query 'SELECT id, title, headline, banner, seller_id, product_ids FROM "Collections" WHERE id = ? AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [collection_id, seller_id] }
 
   metaImagesFor: (seller_id) ->

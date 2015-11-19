@@ -85,7 +85,7 @@ Product = sequelize.define 'Product',
       offset  = (page - 1) * perPage
       data    = {}
       scope   = {}
-      Collection.findAllById collection_id, seller_id
+      Collection.findById collection_id, seller_id
       .then (rows) ->
         data.collection = rows[0]
         scope.ids = data.collection.product_ids.join(',') || '0'
@@ -98,6 +98,35 @@ Product = sequelize.define 'Product',
       .then (products) ->
         data.rows = products
         sequelize.query 'SELECT count(*) FROM "Products" WHERE id IN (' + scope.ids + ')', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+      .then (res) ->
+        data.count = res[0].count
+        data
+
+    findAllByCategory: (category_id, seller_id, page) ->
+      perPage = constants.perPage
+      page    = if page then parseInt(page) else 1
+      limit   = ' LIMIT ' + constants.perPage + ' '
+      offset  = ' OFFSET ' + (page - 1) * perPage + ' '
+      data    = {}
+      scope   = {}
+      q =
+      'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps
+        FROM "Products" p
+        JOIN "Skus" s
+        ON p.id = s.product_id
+        WHERE p.category_id = ?
+        GROUP BY p.id
+        ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';'
+      sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
+      .then (products) ->
+        scope.products = products
+        product_ids = _.pluck(products, 'id').join(',') || '0'
+        Customization.findAllByProductIds seller_id, product_ids
+      .then (customizations) ->
+        Customization.alterProducts scope.products, customizations
+      .then (products) ->
+        data.rows = products
+        sequelize.query 'SELECT count(*) FROM "Products" WHERE category_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
       .then (res) ->
         data.count = res[0].count
         data

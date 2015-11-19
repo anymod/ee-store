@@ -21,7 +21,7 @@
 <!-- /Top supranav -->
 
 <!-- Main nav -->
-<div class="position-relative box-shadow-2">
+<div class="position-relative box-shadow-2" style="z-index: 5;">
   <!-- blocker -->
   <div ng-show="blocked" class="navbar position-absolute" style="z-index: 2005; top: 0; left: 0; right: 0; height: 77px;"></div>
   <!-- /blocker -->
@@ -34,6 +34,7 @@
     <div ng-class="fluid ? 'container-fluid' : 'container'" name="store-navbar">
 
       <div class="row margin-bottom-0">
+        <!-- Logo -->
         <div class="col col-sm-4 col-xs-10">
           <div ui-sref="storefront"
              class="store-title inline-block hover-pointer font-weight-200 margin-0"
@@ -42,6 +43,7 @@
             <div class="inline-block height-50" style="height: 50px; padding: 5px 0; font-size: 28px; vertical-align: middle;" ng-bind="meta.home.name"></div>
           </div>
         </div>
+        <!-- /Logo -->
         <!-- Search -->
         <div class="hidden-xs">
           <div class="col col-sm-7">
@@ -148,8 +150,21 @@
 </div>
 <!-- /Main nav -->
 
+<!-- Categories subnav -->
+<div class="position-relative" ng-if="showSubnav">
+  <nav class="navbar navbar-default margin-0 round-0 no-side-border">
+    <div class="container">
+      <ul class="nav navbar-nav">
+        <li ng-repeat="category in [{ id: 1, title: 'Home Accents'}, { id: 2, title: 'Artwork' }]">
+          <a ui-sref="category({ id: category.id, title: (category.title | urlText) })" ng-bind="category.title"></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+</div>
+<!-- /Categories subnav -->
+
 <!-- Scroll nav -->
-<!-- Main nav -->
 <div class="position-fixed full-width scrollnav transition-400">
   <nav class="navbar navbar-form navbar-default navbar-rgba-colors border-none box-shadow-2 margin-0 round-0"
        ng-hide="loading"
