@@ -27,7 +27,7 @@
   <!-- /blocker -->
 
   <nav id="navtop"
-       class="navbar navbar-form store-navbar navbar-default navbar-rgba-colors border-none box-shadow margin-0 round-0"
+       class="navbar navbar-form store-navbar navbar-default navbar-rgba-colors border-none box-shadow margin-0 pad-0 round-0"
        ng-hide="loading"
        ng-style="{ 'background-color': meta.home.topBarBackgroundColor }">
 
@@ -39,8 +39,8 @@
           <div ui-sref="storefront"
              class="store-title inline-block hover-pointer font-weight-200 margin-0"
              ng-style="{ color: meta.home.topBarColor }">
-            <img ng-if="meta.logo" ng-src="{{ meta.logo }}" class="small-thumb img-circle margin-right-4" />
-            <div class="inline-block height-50" style="height: 50px; padding: 5px 0; font-size: 28px; vertical-align: middle;" ng-bind="meta.home.name"></div>
+            <ee-storefront-logo meta="meta" sref="storefront"></ee-storefront-logo>
+            <div ng-if="meta.home.name" class="title-text inline-block" ng-bind="meta.home.name"></div>
           </div>
         </div>
         <!-- /Logo -->

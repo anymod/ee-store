@@ -88,6 +88,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-product-card.coffee'
   './src/ee-shared/components/ee-collection-nav.coffee'
   './src/ee-shared/components/ee-storefront-header.coffee'
+  './src/ee-shared/components/ee-storefront-logo.coffee'
   # './src/ee-shared/components/ee-scroll-to-top.coffee'
   './src/ee-shared/components/ee-product-images.coffee'
 ]

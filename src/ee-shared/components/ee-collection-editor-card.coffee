@@ -15,13 +15,13 @@ module.directive "eeCollectionEditorCard", ($state, $window, eeCollections) ->
     scope.expanded  ||= false
 
     scope.updateCollection = () ->
-      scope.save_status = 'Saving'
+      scope.collection.updating = true
       eeCollections.fns.updateCollection scope.collection
       .then () ->
-        scope.save_status = 'Saved'
-        scope.saved       = true
-        scope.expanded    = false
-      .catch (err) -> scope.save_status = 'Problem saving'
+        scope.saved    = true
+        scope.expanded = false
+      .catch (err) -> scope.collection.err = err
+      .finally () -> scope.collection.updating = false
 
     scope.deleteCollection = () ->
       deleteCollection = $window.confirm 'Remove this from your store?'
@@ -33,12 +33,17 @@ module.directive "eeCollectionEditorCard", ($state, $window, eeCollections) ->
           $state.go 'collections'
         .catch (err) -> scope.save_status = 'Problem removing'
 
-    scope.addToCarousel = () ->
-      scope.collection.in_carousel = true
-      scope.updateCollection()
 
-    scope.removeFromCarousel = () ->
-      scope.collection.in_carousel = false
+    # scope.addToCarousel = () ->
+    #   scope.collection.in_carousel = true
+    #   scope.updateCollection()
+    #
+    # scope.removeFromCarousel = () ->
+    #   scope.collection.in_carousel = false
+    #   scope.updateCollection()
+
+    scope.toggleCarousel = () ->
+      scope.collection.in_carousel = !scope.collection.in_carousel
       scope.updateCollection()
 
     scope.expand = () ->
