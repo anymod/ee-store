@@ -9,21 +9,28 @@ angular.module('ee-builder-live-button').directive "eeBuilderLiveButton", ($stat
     hiddenXs: '@'
     btnClass: '@'
   link: (scope, ele, attrs) ->
-    scope.root = if scope.user?.domain then 'http://' + scope.user.domain else 'https://' + scope.user?.username + '.eeosk.com'
-    scope.path = '/'
+    scope.btnText = if scope.message then scope.message else 'View store'
+    scope.root    = if scope.user?.domain then 'http://' + scope.user.domain else 'https://' + scope.user?.username + '.eeosk.com'
+    scope.path    = '/'
 
     setButton = (toState, toParams) ->
       switch toState.name
-        when 'products'       then scope.path += 'search'
-        when 'productAdd'     then scope.path += 'products/' + toParams.id + '/'
-        when 'collectionEdit' then scope.path += 'collections/' + toParams.id + '/'
+        when 'products'
+          scope.path += 'search'
+        when 'productAdd'
+          scope.path += 'products/' + toParams.id + '/'
+          scope.btnText = 'See in store'
+        when 'collection'
+          scope.path += 'collections/' + toParams.id + '/'
+          if scope.btnText is 'View store' then scope.btnText = 'See in store'
         else ''
-        # else scope.root = 'https://' + scope.user.username + '.eeosk.com'
+
       scope.target = scope.root + scope.path
+      if scope.message is 'target' then scope.btnText = scope.target
 
     setButton $state.current, $stateParams
 
-    scope.$on '$stateChangeStart', (event, toState, toParams, fromState, fromParams) ->
+    scope.$on '$stateChangeStart', (event, toState, toParams) ->
       setButton toState, toParams
 
     return

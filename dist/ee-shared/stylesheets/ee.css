@@ -8510,7 +8510,7 @@ body.modal-open {
   overflow-x: hidden;
 }
 .carousel {
-  margin-bottom: 60px;
+  margin-bottom: 30px;
 }
 .carousel-inner {
   padding-bottom: 60px;
@@ -9262,7 +9262,7 @@ img.loading {
   background: #eceff1;
 }
 .product-well {
-  width: 180px;
+  width: 170px;
 }
 .collection-well {
   width: 356px;
@@ -9284,8 +9284,8 @@ img.loading {
 img.small-thumb {
   width: auto;
   height: auto;
-  max-width: 54px;
-  max-height: 54px;
+  max-width: 48px;
+  max-height: 48px;
 }
 .well.well-compact {
   padding: 5px 19px;

@@ -35,7 +35,7 @@
 
       <div class="row margin-bottom-0">
         <!-- Logo -->
-        <div class="col col-sm-4 col-xs-10">
+        <div class="col col-sm-4 col-xs-9">
           <div ui-sref="storefront"
              class="store-title inline-block hover-pointer font-weight-200 margin-0"
              ng-style="{ color: meta.home.topBarColor }">
@@ -56,13 +56,13 @@
           </div>
         </div>
         <!-- /Search -->
-        <div class="col col-sm-1 col-xs-2 text-right">
+        <!-- Cart -->
+        <div class="col col-sm-1 col-xs-3 text-right">
           <div class="dropdown full-width vert-25" dropdown>
             <a ng-if="isStore" ui-sref="cart" class="position-relative" ng-style="{ color: meta.home.topBarColor }">
               <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
               <strong ng-if="quantityArray && quantityArray.length > 0" ng-bind="quantityArray.length"></strong>
             </a>
-
             <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: meta.home.topBarColor }" dropdown-toggle>
               <i class="fa fa-fw fa-lg fa-shopping-cart"></i>
             </a>
@@ -73,6 +73,7 @@
             </ul>
           </div>
         </div>
+        <!-- /Cart -->
       </div>
 
 
@@ -149,6 +150,17 @@
 
 </div>
 <!-- /Main nav -->
+
+<!-- Search subnav -->
+<div class="position-relative visible-xs" style="z-index: 6;">
+  <form class="form-group input-group full-width margin-0" ng-submit="search()">
+    <input type="text" class="form-control full-width-important round-0" placeholder="Search" ng-model="query">
+    <span class="input-group-btn round-0">
+      <button class="btn btn-default round-0" type="submit"><i class="fa fa-fw fa-search"></i></button>
+    </span>
+  </form>
+</div>
+<!-- /Search subnav -->
 
 <!-- Categories subnav -->
 <div class="position-relative" ng-if="showSubnav">

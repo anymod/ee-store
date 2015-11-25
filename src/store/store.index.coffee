@@ -24,5 +24,6 @@ angular.module 'eeStore', [
   'ee-product-for-store'
   'ee-product-card'
   'ee-product-images'
+  'ee-empty-message'
   # 'ee.templates' # commented out during build step for inline templates
 ]

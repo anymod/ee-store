@@ -22,8 +22,11 @@ angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $stat
     editNav: '@'
     orderNav: '@'
   link: (scope, ele, attrs) ->
-    scope.ee          = eeDefiner.exports
+    scope.ee = eeDefiner.exports
     scope.productsFns = eeProducts.fns
-    scope.state       = $state.current.name
-    scope.historyBack = () -> $window?.history?.back()
+
+    scope.runSearch = () ->
+      $state.go 'products'
+      eeProducts.fns.search scope.ee.Products?.search?.inputs?.search
+
     return

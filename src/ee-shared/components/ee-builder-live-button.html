@@ -2,5 +2,6 @@
   href="{{ target }}"
   target="_blank"
   ng-class="btnClass ? btnClass : 'btn btn-sm btn-success'">
-  {{ message || target }}<span ng-class="{ 'hidden-xs': hiddenXs }">&nbsp;<i class="fa fa-fw fa-external-link"></span></i>
+  <span ng-bind="btnText"></span>
+  <span ng-class="{ 'hidden-xs': hiddenXs }">&nbsp;<i class="fa fa-fw fa-external-link"></span></i>
 </a>
