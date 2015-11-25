@@ -11,10 +11,11 @@
   productsNav:    when true show the sub-navbar for products & collections
   editNav:        when true show the sub-navbar for edit
   orderNav:       when true show the sub-navbar for orders
+  noShadow:       when true do not show box-shadow
 //-->
 
 <nav class="navbar ee-builder-navbar round-0" id="navbar-top"
-    ng-class="{ 'navbar-transparent': transparent, 'box-shadow': !transparent && !productsNav && !editNav && !orderNav, 'navbar-fixed-top': fixed, 'navbar-absolute-top': !fixed }">
+    ng-class="{ 'navbar-transparent': transparent, 'box-shadow': !noShadow && !transparent && !productsNav && !editNav && !orderNav && !createNav, 'navbar-fixed-top': fixed, 'navbar-absolute-top': !fixed }">
   <div class="container-fluid">
 
     <div class="row vert-7">

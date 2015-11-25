@@ -1,5 +1,6 @@
 <!-- Top supranav -->
-<div class="container supranav transition-200 margin-bottom-0" ng-if="showSupranav">
+<div class="container supranav transition-200 margin-bottom-0"
+  ng-if="showSupranav && (meta.blog.url || meta.audience.social.facebook || meta.audience.social.pinterest || meta.audience.social.twitter || meta.audience.social.instagram)">
   <div class="position-relative vert-5 text-right">
     <!-- social -->
     <a ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
@@ -14,7 +15,7 @@
     <a ng-if="meta.blog.url" href="{{ meta.blog.url | addHttp }}" target="_blank" class="text-muted" style="margin: 0 8px 0 3px;">blog</a>
     <!-- /blog -->
     <!-- help -->
-    <a href class="text-muted"></i>help</a>
+    <!-- <a href class="text-muted"></i>help</a> -->
     <!-- /help -->
   </div>
 </div>
@@ -152,7 +153,7 @@
 <!-- /Main nav -->
 
 <!-- Search subnav -->
-<div class="position-relative visible-xs" style="z-index: 6;">
+<div ng-hide="blocked" class="position-relative visible-xs" style="z-index: 6;">
   <form class="form-group input-group full-width margin-0" ng-submit="search()">
     <input type="text" class="form-control full-width-important round-0" placeholder="Search" ng-model="query">
     <span class="input-group-btn round-0">
