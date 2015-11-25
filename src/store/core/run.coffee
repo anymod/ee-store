@@ -12,7 +12,7 @@ angular.module('store.core').run ($rootScope, $window, $cookies, eeModal, eeBoot
 
   n = 0
   $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
-    if n is 1
+    if n > 0
       e.preventDefault()
       frags = toState.url.replace(/\//g, '').split(':')
       # Path
