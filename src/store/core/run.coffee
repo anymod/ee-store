@@ -49,9 +49,11 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
     if $location.search().s is 't'
       $cookies._eeself = true
       $location.search 's', null
+
     keenio =
       user:       eeBootstrap.tr_uuid
       url:        $location.absUrl()
+      host:       $location.host()
       path:       $location.path()
       toState:    toState?.name
       toParams:   toParams
@@ -62,7 +64,7 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
       _ga:        $cookies._ga
       _gat:       $cookies._gat
 
-    if keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
+    if $location.host() isnt 'localhost' and keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
 
     return
 
