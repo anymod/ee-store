@@ -45,7 +45,9 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
     $rootScope.mouseleave = () -> false
 
   $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
-    if !$cookies._ee then $cookies._ee = Math.random().toString(36).substr(2,8);
+    if !$cookies._ee
+      d = new Date()
+      $cookies._ee = ('' + d.getFullYear()).slice(-2) + ('0' + d.getUTCMonth()).slice(-2) + ('0' + d.getUTCDay()).slice(-2) + '.' + Math.random().toString().substr(2,8)
     if $location.search().s is 't'
       $cookies._eeself = true
       $location.search 's', null
