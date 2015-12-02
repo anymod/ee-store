@@ -25,8 +25,8 @@ angular.module('ee-builder-live-button').directive "eeBuilderLiveButton", ($stat
           if scope.btnText is 'View store' then scope.btnText = 'See in store'
         else ''
 
-      scope.target = scope.root + scope.path
-      if scope.message is 'target' then scope.btnText = scope.target
+      scope.target = scope.root + scope.path + '?s=t'
+      if scope.message is 'target' then scope.btnText = scope.root + scope.path
 
     setButton $state.current, $stateParams
 

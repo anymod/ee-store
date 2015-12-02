@@ -62,9 +62,7 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
       _ga:        $cookies._ga
       _gat:       $cookies._gat
 
-    console.log keenio
-
-    # if keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
+    if keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
 
     return
 
