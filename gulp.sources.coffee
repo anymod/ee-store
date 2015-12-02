@@ -31,6 +31,7 @@ sources.storeVendorMin = [
   './src/bower_components/angulartics/dist/angulartics.min.js'
   './src/bower_components/angulartics/dist/angulartics-ga.min.js'
   './src/bower_components/zoom.js/dist/zoom.min.js'
+  './src/bower_components/keen-js/dist/keen.min.js'
 ]
 sources.storeVendorUnmin = [
   # TODO remove once zoom.js gone

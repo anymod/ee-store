@@ -13,6 +13,12 @@ Collection = require './collection'
 
 User =
 
+  storeByDomain: (host) ->
+    sequelize.query 'SELECT id, tr_uuid, username, storefront_meta, collections FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
+
+  storeByUsername: (username) ->
+    sequelize.query 'SELECT id, tr_uuid, username, storefront_meta, collections FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
+
   findByHost: (host) ->
     host  = host.replace 'www.', ''
     searchTerm  = host
@@ -24,12 +30,6 @@ User =
       searchTerm  = username
       queryUser   = User.storeByUsername
     queryUser searchTerm
-
-  storeByDomain: (host) ->
-    sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
-
-  storeByUsername: (username) ->
-    sequelize.query 'SELECT id, username, storefront_meta, collections FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
 
   defineStorefront: (host, bootstrap) ->
     User.findByHost host

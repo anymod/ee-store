@@ -21,6 +21,7 @@
     "bootstrap": "~3.3.5",
     "cloudinary": "~1.0.12",
     "font-awesome": "~4.2",
+    "keen-js": "~3.3.0",
     "ng-file-upload": "~2.2.2",
     "zoom.js": "~0.0.1"
   }

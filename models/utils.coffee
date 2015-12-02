@@ -21,6 +21,7 @@ utils =
   assignBootstrap: (bootstrap, attrs) ->
     bootstrap.id                = attrs.id
     bootstrap.username          = attrs.username
+    bootstrap.tr_uuid           = attrs.tr_uuid
     bootstrap.storefront_meta   = attrs.storefront_meta or {}
     bootstrap.collections       = attrs.collections
     bootstrap.collection_names  = utils.collectionNames attrs.collections
