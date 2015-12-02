@@ -14,6 +14,7 @@ utils =
         perPage:  constants.perPage
         page:     req.query.p
         query:    req.query.q
+        referer:  req.headers.referer
       host: req.headers.host
       path: url.parse(req.url).pathname
     }

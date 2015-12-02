@@ -54,6 +54,7 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
 
     keenio =
       user:       eeBootstrap.tr_uuid
+      referer:    eeBootstrap.referer
       url:        $location.absUrl()
       host:       $location.host()
       path:       $location.path()
