@@ -9081,6 +9081,9 @@ html {
 .max-width-80 {
   max-width: 80px;
 }
+.max-width-120 {
+  max-width: 120px;
+}
 .max-width-200 {
   max-width: 200px !important;
 }
