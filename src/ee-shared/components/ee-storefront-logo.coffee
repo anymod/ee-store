@@ -7,6 +7,7 @@ module.directive "eeStorefrontLogo", () ->
   scope:
     meta:     '='
     blocked:  '@'
+    mobile:   '@'
   link: (scope, ele, attrs) ->
 
     setBackgroundPath = () ->
@@ -43,9 +44,7 @@ module.directive "eeStorefrontLogo", () ->
       scope.path = setBackgroundPath() + '/' + setImagePath() + '/' + setTextPath() + '/v1450113176/260x60.png'
 
     scope.$watch 'meta', (newVal, oldVal) ->
-      console.log scope.meta
       setPath()
-      console.log scope.path
     , true
 
     setPath()

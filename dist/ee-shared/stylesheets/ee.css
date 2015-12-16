@@ -8994,6 +8994,12 @@ html {
 .margin-right-4 {
   margin-right: 4px;
 }
+.margin-right-0 {
+  margin-right: 0px !important;
+}
+.margin-left-0 {
+  margin-left: 0px !important;
+}
 .margin-left-10 {
   margin-left: 10px;
 }
@@ -9281,6 +9287,11 @@ html {
   left: 274px;
   right: 0;
   padding: 7px 7px 0 0;
+}
+.navbar-default .navbar-toggle:hover,
+.navbar-default .navbar-toggle:focus {
+  background-color: none;
+  background: rgba(0, 0, 0, 0.15);
 }
 img.loading {
   width: 100%;
