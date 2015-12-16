@@ -6,7 +6,7 @@
   <div id="store-main-region">
     <nav id="navtop"
          class="navbar navbar-default navbar-rgba-colors margin-0 round-0"
-         ng-style="{ 'background-color': user.storefront_meta.home.topBarBackgroundColor }">
+         ng-style="{ 'background-color': user.storefront_meta.brand.color.primary }">
 
       <div ng-show="loading" class="container-fluid">
         <h2 class="inline-block pull-left" style="margin: 7px 7px 0 0">
@@ -26,18 +26,18 @@
           </button>
           <a ui-sref="storefront.home"
              class="navbar-brand margin-0"
-             ng-style="{ color: user.storefront_meta.home.topBarColor }"
-             ng-bind="user.storefront_meta.home.name">
+             ng-style="{ color: user.storefront_meta.brand.color.secondary }"
+             ng-bind="user.storefront_meta.name">
           </a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div collapse="navCollapsed" class="collapse navbar-collapse">
           <ul class="nav navbar-nav">
-            <li ng-class="{ active: $state.current.name == 'storefront.home' }"><a ui-sref="storefront.home" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">Home</a></li>
+            <li ng-class="{ active: $state.current.name == 'storefront.home' }"><a ui-sref="storefront.home" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.brand.color.secondary }">Home</a></li>
 
             <li ng-class="{ active: $state.current.name == 'storefront-shop' }" class="dropdown" dropdown>
-              <a href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.home.topBarColor }" dropdown-toggle>
+              <a href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.brand.color.secondary }" dropdown-toggle>
                 Shop <span class="caret"></span>
               </a>
               <ee-shop-nav ng-if="storefront" categories="storefront.categories" class="dropdown-menu"></ee-shop-nav>
@@ -45,8 +45,8 @@
 
             <li ng-class="{ active: $state.current.name == 'storefront.blog' }"
                 ng-show="$state.current.name == 'storefront.blog' || !!user.storefront_meta.blog.url">
-              <a ng-if="isStore" href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank" ng-style="{ color: user.storefront_meta.home.topBarColor }">Blog</a>
-              <a ng-if="isBuilder" ui-sref="storefront.blog" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+              <a ng-if="isStore" href="{{ user.storefront_meta.blog.url | addHttp }}" target="_blank" ng-style="{ color: user.storefront_meta.brand.color.secondary }">Blog</a>
+              <a ng-if="isBuilder" ui-sref="storefront.blog" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 Blog
               </a>
               <div class="popover bottom in inline-block"
@@ -67,7 +67,7 @@
 
             <li ng-class="{ active: $state.current.name == 'storefront.about' }"
                 ng-show="$state.current.name == 'storefront.about' || !!user.storefront_meta.about.headline">
-              <a ui-sref="storefront.about" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+              <a ui-sref="storefront.about" ng-click="navCollapsed = true" ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 About
               </a>
               <div class="popover bottom in inline-block"
@@ -88,7 +88,7 @@
                 ng-if="isStore && !!user.storefront_meta.audience.social[site]">
               <a href="http://{{ site }}.com/{{ user.storefront_meta.audience.social[site] }}"
                  target="_blank" class="squeeze-5"
-                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                 ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-{{ site }}"></i>
               </a>
             </li>
@@ -96,7 +96,7 @@
               <a href="mailto:{{ user.storefront_meta.audience.contact.email }}"
                  target="_blank"
                  class="squeeze-5"
-                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                 ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-envelope"></i>
               </a>
             </li>
@@ -106,19 +106,19 @@
                 ng-if="isBuilder && !!user.storefront_meta.audience.social[site]">
               <a ui-sref="storefront.audience"
                  class="squeeze-5"
-                 ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                 ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-{{ site }}"></i>
               </a>
             </li>
             <li ng-if="isBuilder && !!user.storefront_meta.audience.contact.email">
-              <a ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+              <a ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-envelope"></i>
               </a>
             </li>
 
             <li ng-show="$state.current.name == 'storefront.audience'">
               <a ng-if="isBuilder && !user.storefront_meta.audience.social.facebook && !user.storefront_meta.audience.social.pinterest && !user.storefront_meta.audience.social.twitter && !user.storefront_meta.audience.social.instagram && !user.storefront_meta.audience.contact.email"
-                 ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+                 ui-sref="storefront.audience" class="squeeze-5" ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-fw fa-facebook"></i>
                 <i class="fa fa-fw fa-pinterest"></i>
                 <i class="fa fa-fw fa-twitter"></i>
@@ -157,13 +157,13 @@
             </li>
 
             <!-- TODO implement search on storefront products -->
-            <!-- <li><a ui-sref="storefront.home" ng-style="{ color: user.storefront_meta.home.topBarColor }"><i class="fa fa-search"></i></a></li> -->
+            <!-- <li><a ui-sref="storefront.home" ng-style="{ color: user.storefront_meta.brand.color.secondary }"><i class="fa fa-search"></i></a></li> -->
 
             <li class="dropdown" dropdown>
-              <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.home.topBarColor }" dropdown-toggle>
+              <a ng-if="isBuilder" href class="dropdown-toggle" ng-style="{ color: user.storefront_meta.brand.color.secondary }" dropdown-toggle>
                 <i class="fa fa-shopping-cart"></i>
               </a>
-              <a ng-if="isStore" ui-sref="storefront.cart" class="position-relative" ng-style="{ color: user.storefront_meta.home.topBarColor }">
+              <a ng-if="isStore" ui-sref="storefront.cart" class="position-relative" ng-style="{ color: user.storefront_meta.brand.color.secondary }">
                 <i class="fa fa-shopping-cart"></i>
                 <span ng-show="cart.calc_meta.count >= 1" ng-bind="cart.calc_meta.count"></span>
               </a>
@@ -190,7 +190,7 @@
 
       <div class="row">
         <div class="col col-md-11 col-md-offset-1">
-          <h4 ng-bind="user.storefront_meta.home.name"></h4>
+          <h4 ng-bind="user.storefront_meta.name"></h4>
         </div>
       </div> <!-- /row -->
 
@@ -241,7 +241,7 @@
       <div class="row margin-0">
         <div class="col col-sm-7 col-md-offset-1">
           <small>
-            &copy;&nbsp;2015&nbsp;<span ng-bind="user.storefront_meta.home.name"></span>.&nbsp;&nbsp;
+            &copy;&nbsp;2015&nbsp;<span ng-bind="user.storefront_meta.name"></span>.&nbsp;&nbsp;
             <a href="https://eeosk.com" target="_blank" class="gray-color">Ecommerce by eeosk</a>.
           </small>
         </div>

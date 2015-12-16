@@ -20,6 +20,7 @@ angular.module 'eeStore', [
   # custom
   'ee-storefront-header'
   'ee-storefront-logo'
+  'ee-storefront-brand'
   'ee-collection-nav'
   'ee-product-for-store'
   'ee-product-card'

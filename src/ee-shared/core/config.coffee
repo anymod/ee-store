@@ -11,7 +11,7 @@ angular.module('app.core').config ($locationProvider, $stateProvider, $urlRouter
   $httpProvider.defaults.headers.common["Content-Type"] = "application/json"
   # $httpProvider.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest"
 
-  otherwise = if !!$cookiesProvider.$get().loginToken then '/storefront' else '/'
+  otherwise = if !!$cookiesProvider.$get().loginToken then '/dashboard' else '/'
 
   $urlRouterProvider.otherwise otherwise
 

@@ -23,6 +23,11 @@ angular.module('app.core').filter 'truncate', ($filter) ->
     return '' unless input
     if input.length <= (n-3) then input else input.substring(0, n-3) + '...'
 
+angular.module('app.core').filter 'removeHash', ($filter) ->
+  (input, n) ->
+    return '' unless input
+    input.replace(/#/g, '')
+
 resizeCloudinaryImageTo = (url, w, h) ->
   if !!url and url.indexOf("image/upload") > -1
     url.split("image/upload").join('image/upload/c_pad,w_' + w + ',h_' + h)

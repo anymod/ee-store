@@ -21,6 +21,15 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, eeM
     scope.cart        = eeCart.cart
     scope.openCollectionsModal = () -> eeModal.fns.openCollectionsModal scope.collections
 
+    scope.categories = [
+      { id: 1, title: 'Artwork' }
+      { id: 2, title: 'Bed & Bath' }
+      { id: 3, title: 'Furniture' }
+      { id: 4, title: 'Home Accents' }
+      { id: 5, title: 'Kitchen' }
+      { id: 6, title: 'Outdoor' }
+    ]
+
     if scope.showScrollnav
       position = $window.pageYOffset
       trigger = 75

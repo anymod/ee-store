@@ -8428,13 +8428,25 @@ colorpicker-preview {
 .text-facebook {
   color: #3b5998 !important;
 }
+.text-facebook:hover {
+  color: #3b5998 !important;
+}
 .text-pinterest {
+  color: #cc2127 !important;
+}
+.text-pinterest:hover {
   color: #cc2127 !important;
 }
 .text-twitter {
   color: #55acee !important;
 }
+.text-twitter:hover {
+  color: #55acee !important;
+}
 .text-instagram {
+  color: #3f729b !important;
+}
+.text-instagram:hover {
   color: #3f729b !important;
 }
 .text-dark-gray {
@@ -8442,6 +8454,9 @@ colorpicker-preview {
 }
 .text-dark-blue {
   color: #0286c2 !important;
+}
+a.link-muted {
+  color: #777777 !important;
 }
 .dropdown-menu {
   z-index: 1070;
@@ -8674,9 +8689,9 @@ html {
   color: #40a397;
 }
 .store-navbar {
-  height: 75px;
-  min-height: 75px;
-  max-height: 75px;
+  height: 90px;
+  min-height: 90px;
+  max-height: 90px;
   overflow: hidden;
 }
 .store-navbar .navbar-nav > li > a {
@@ -8796,6 +8811,9 @@ html {
 }
 .gray-border {
   border: 1px solid #eceff1 !important;
+}
+.border-bottom-gray {
+  border-bottom: 1px solid #eceff1 !important;
 }
 .dark-gray-border {
   border: 1px solid #474747 !important;
@@ -8988,6 +9006,9 @@ html {
 .pad-5 {
   padding: 5px;
 }
+.pad-7 {
+  padding: 7px;
+}
 .pad-10 {
   padding: 10px;
 }
@@ -9000,17 +9021,20 @@ html {
 .pad-50 {
   padding: 50px;
 }
-.pad-right-20 {
-  padding-right: 20px;
+.pad-right-0 {
+  padding-right: 0px !important;
 }
 .pad-left-0 {
-  padding-left: 0px;
-}
-.pad-left-20 {
-  padding-left: 20px;
+  padding-left: 0px !important;
 }
 .pad-top-0 {
   padding-top: 0px !important;
+}
+.pad-right-20 {
+  padding-right: 20px;
+}
+.pad-left-20 {
+  padding-left: 20px;
 }
 .pad-top-50 {
   padding-top: 50px;
@@ -9027,6 +9051,9 @@ html {
 }
 .round-20 {
   border-radius: 20px;
+}
+.round-50-pct {
+  border-radius: 50%;
 }
 .round-top {
   border-top-left-radius: 5px !important;
@@ -9165,6 +9192,9 @@ html {
 .inline-block {
   display: inline-block;
 }
+.line-height-08 {
+  line-height: 0.8em;
+}
 .line-height-1 {
   line-height: 1em;
 }
@@ -9236,6 +9266,21 @@ html {
   .jumbotron p {
     font-size: 18px;
   }
+}
+.brand-area,
+.activity-area {
+  top: 0;
+  height: 80px;
+}
+.brand-area {
+  width: 274px;
+  left: 0;
+  padding: 7px;
+}
+.activity-area {
+  left: 274px;
+  right: 0;
+  padding: 7px 7px 0 0;
 }
 img.loading {
   width: 100%;
@@ -9332,9 +9377,6 @@ img.small-thumb {
 .navbar-rgba-colors .navbar-toggle:focus {
   opacity: 1;
   background: rgba(255, 255, 255, 0.1) !important;
-}
-.store-title ee-storefront-logo {
-  padding: 14px 0;
 }
 .store-title .title-text {
   line-height: 1em;
