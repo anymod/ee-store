@@ -13,7 +13,7 @@
       <div class="btn btn-default font-weight-200" ng-click="toggleCarousel()" ng-class="{ 'btn-info': collection.banner.indexOf('placehold.it') < 0 && collection.in_carousel }">
         <span ng-if="collection.banner.indexOf('placehold.it') > -1">Add image</span>
         <span ng-if="collection.banner.indexOf('placehold.it') < 0">
-          <span ng-if="collection.in_carousel">In</span><span ng-if="!collection.in_carousel">+</span>&nbsp;Carousel
+          Feature<span ng-if="collection.in_carousel">d</span>
         </span>
       </div>
       <a ui-sref="collection({ id: collection.id })" class="btn btn-default font-weight-200">Edit</a>
@@ -23,9 +23,10 @@
     <!-- Add buttons -->
     <div ng-if="modal" class="btn btn-group btn-group-sm pad-0">
       <div class="btn btn-default" ng-click="editOrOpenModal()">View products</div>
-      <div class="btn btn-default" ng-click="collectionsFns.toggleAddToStore(collection)">
+      <div class="btn" ng-click="collectionsFns.toggleAddToStore(collection)"
+        ng-class="collection.added ? 'btn-info' : 'btn-default'">
         <span ng-if="!collection.added">Add to store</span>
-        <span ng-if="collection.added"><i class="fa fa-fw fa-times"></i>&nbsp;In store</span>
+        <span ng-if="collection.added">In store&nbsp;<i class="fa fa-check"></i></span>
       </div>
     </div>
     <!-- Add buttons -->
