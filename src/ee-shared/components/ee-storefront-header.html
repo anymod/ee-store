@@ -113,28 +113,58 @@
       </div>
     </nav>
     <div class="pad-20 pad-top-0">
-      <!-- categories -->
       <ul class="nav navbar-nav">
+        <!-- categories -->
         <li ng-repeat="category in categories">
           <a ui-sref="category({ id: category.id, title: (category.title | urlText) })"
             class="text-muted"
             ng-bind="category.title">
           </a>
         </li>
-      </ul>
-      <!-- /categories -->
-      <!-- collections -->
-      <ul class="nav navbar-nav">
-        Collections
+        <!-- /categories -->
+        <li ng-if="collections.length > 0">
+          <hr class="vert-5">
+        </li>
+        <!-- collections -->
         <li ng-repeat="collection in collections">
           <a ui-sref="collection({ id: collection.id, title: (collection.title | urlText) })"
             class="text-muted"
             ng-bind="collection.title">
           </a>
         </li>
+        <!-- /collections -->
+        <li ng-if="collections.length > 0">
+          <hr class="vert-5">
+        </li>
+        <!-- blog -->
+        <li ng-if="meta.blog.url">
+          <a href="{{ meta.blog.url | addHttp }}" target="_blank" class="text-muted">Blog</a>
+        </li>
+        <!-- /blog -->
+        <li ng-if="meta.blog.url">
+          <hr class="vert-5">
+        </li>
+        <!-- social media -->
+        <li>
+          <div class="pad-10">
+            <a ng-repeat="site in ['facebook','pinterest','twitter','instagram']"
+              ng-if="meta.audience.social[site]"
+              href="https://{{ site }}.com/{{ meta.audience.social[site] }}" target="_blank"
+              class="link-muted text-{{ site }} no-underline margin-2 margin-top-0 margin-bottom-0">
+              <i class="fa fa-fw fa-2x fa-{{ site }} vertical-align-middle"></i>
+            </a>
+          </div>
+        </li>
+        <!-- /social media -->
       </ul>
-      <!-- /collections -->
     </div>
   </div>
 </div>
 <!-- /Mobile Sidenav -->
+
+<!-- scrollToTop -->
+<div ng-ifz="showScrollToTop" class="position-fixed white-background round-50-pct text-center"
+  style="bottom: 24px; right: 24px; width: 40px; height: 40px; z-index: 5000;">
+  <i class="fa fa-3x fa-chevron-circle-up"></i>
+</div>
+<!-- /scrollToTop -->

@@ -21,6 +21,8 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
 
   storefront.data = eeBootstrap
 
+  console.log storefront.ee
+
   storefront.fns =
     update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
 

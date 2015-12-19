@@ -17,14 +17,18 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
   collectionViews =
-    top: views.top
+    top:
+      controller: 'storeCtrl as storefront'
+      templateUrl: 'store/store.header.html'
     middle:
       controller: 'collectionCtrl as collection'
       templateUrl: 'ee-shared/storefront/storefront.collection.html'
     footer: views.footer
 
   aboutViews =
-    top: views.top
+    top:
+      controller: 'storeCtrl as storefront'
+      templateUrl: 'store/store.header.html'
     middle:
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.about.html'

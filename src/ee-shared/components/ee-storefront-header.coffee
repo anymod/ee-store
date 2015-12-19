@@ -30,10 +30,14 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart) ->
     ]
 
     if scope.showScrollnav
-      position = $window.pageYOffset
       trigger = 75
       angular.element($window).bind 'scroll', (e, a, b) ->
         if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'
+
+    if scope.showScrollToTop
+      trigger = 150
+      angular.element($window).bind 'scroll', (e, a, b) ->
+        if $window.pageYOffset > trigger then ele.addClass 'show-scrolltop' else ele.removeClass 'show-scrolltop'
 
     scope.search = (query, page) ->
       $state.go 'search', { q: (query || scope.query), p: (page || scope.page) }
