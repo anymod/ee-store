@@ -14,11 +14,13 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart) ->
     query:          '='
     showSupranav:   '='
     showScrollnav:  '='
+    showScrollToTop: '@'
   link: (scope, ele, attrs) ->
     scope.isStore     = $rootScope.isStore
     scope.isBuilder   = $rootScope.isBuilder
     scope.state       = $state.current.name
     scope.cart        = eeCart.cart
+    scope.showScrollButton = false
 
     scope.categories = [
       { id: 1, title: 'Artwork' }
@@ -35,9 +37,15 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart) ->
         if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'
 
     if scope.showScrollToTop
-      trigger = 150
+      trigger = 200
       angular.element($window).bind 'scroll', (e, a, b) ->
-        if $window.pageYOffset > trigger then ele.addClass 'show-scrolltop' else ele.removeClass 'show-scrolltop'
+        console.log 'offset', $window.pageYOffset
+        if scope.showScrollButton and $window.pageYOffset < trigger
+          scope.showScrollButton = false
+          scope.$apply()
+        else if scope.showScrollButton isnt $window.pageYOffset > trigger
+          scope.showScrollButton = $window.pageYOffset > trigger
+          scope.$apply()
 
     scope.search = (query, page) ->
       $state.go 'search', { q: (query || scope.query), p: (page || scope.page) }

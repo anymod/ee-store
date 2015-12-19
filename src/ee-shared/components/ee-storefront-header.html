@@ -163,8 +163,9 @@
 <!-- /Mobile Sidenav -->
 
 <!-- scrollToTop -->
-<div ng-ifz="showScrollToTop" class="position-fixed white-background round-50-pct text-center"
-  style="bottom: 24px; right: 24px; width: 40px; height: 40px; z-index: 5000;">
-  <i class="fa fa-3x fa-chevron-circle-up"></i>
+<div ng-if="showScrollToTop" ee-scroll-to-top class="position-fixed round-50-pct text-center pad-2 transition-400"
+  style="bottom: 24px; width: 44px; height: 44px; z-index: 3020; opacity: 0.9;"
+  ng-style="{ 'background-color': meta.brand.color.secondary, right: showScrollButton ? '24px' : '-200px' }">
+  <i class="fa fa-3x fa-chevron-circle-up" ng-style="{ color: meta.brand.color.tertiary }"></i>
 </div>
 <!-- /scrollToTop -->
