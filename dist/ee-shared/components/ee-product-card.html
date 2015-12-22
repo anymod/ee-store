@@ -65,7 +65,7 @@
             ng-click="setCurrentSku(sku)"
             class="hover-pointer">
           <td>
-            <small ng-bind="sku.regular_price | centToDollar"></small>
+            <small ng-bind="sku.price | centToDollar"></small>
           </td>
           <td>
             <small ng-if="sku.msrp && sku.price && sku.msrp > sku.price" class="vert-10">
