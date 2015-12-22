@@ -54,12 +54,14 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
 
     # Set referer domain to make filtering easier
     refererDomain = () ->
-      rd = if eeBootstrap.referer then new URL(eeBootstrap.referer).hostname else null
-      if rd
-        parts = rd.split('.')
-        if parts.length > 1 then parts.splice(-1,1)
-        rd = parts.join('.')
-      rd
+      refDomain = if eeBootstrap.referer then new URL(eeBootstrap.referer).hostname else null
+      if refDomain
+        if refDomain.indexOf('google.') > -1 then refDomain = 'Google'
+        else if refDomain.indexOf('facebook.') > -1 or refDomain.indexOf('fb.me') > -1 then refDomain = 'Facebook'
+        else if refDomain.indexOf('pinterest.') > -1 then refDomain = 'Pinterest'
+        else if refDomain.indexOf('twitter.') > -1 or refDomain is 't.co' then refDomain = 'Twitter'
+        else if refDomain.indexOf('instagram.') > -1 then refDomain = 'Instagram'
+      refDomain
 
     keenio =
       user:           eeBootstrap.tr_uuid
