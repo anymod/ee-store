@@ -39,7 +39,6 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart) ->
     if scope.showScrollToTop
       trigger = 200
       angular.element($window).bind 'scroll', (e, a, b) ->
-        console.log 'offset', $window.pageYOffset
         if scope.showScrollButton and $window.pageYOffset < trigger
           scope.showScrollButton = false
           scope.$apply()

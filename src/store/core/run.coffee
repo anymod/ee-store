@@ -52,20 +52,30 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
       $cookies._eeself = true
       $location.search 's', null
 
+    # Set referer domain to make filtering easier
+    refererDomain = () ->
+      rd = if eeBootstrap.referer then new URL(eeBootstrap.referer).hostname else null
+      if rd
+        parts = rd.split('.')
+        if parts.length > 1 then parts.splice(-1,1)
+        rd = parts.join('.')
+      rd
+
     keenio =
-      user:       eeBootstrap.tr_uuid
-      referer:    eeBootstrap.referer
-      url:        $location.absUrl()
-      host:       $location.host()
-      path:       $location.path()
-      toState:    toState?.name
-      toParams:   toParams
-      fromState:  fromState?.name
-      fromParams: fromParams
-      self:       !!$cookies._eeself
-      _ee:        $cookies._ee
-      _ga:        $cookies._ga
-      _gat:       $cookies._gat
+      user:           eeBootstrap.tr_uuid
+      referer:        eeBootstrap.referer
+      refererDomain:  refererDomain()
+      url:            $location.absUrl()
+      host:           $location.host()
+      path:           $location.path()
+      toState:        toState?.name
+      toParams:       toParams
+      fromState:      fromState?.name
+      fromParams:     fromParams
+      self:           !!$cookies._eeself
+      _ee:            $cookies._ee
+      _ga:            $cookies._ga
+      _gat:           $cookies._gat
 
     if $location.host() isnt 'localhost' and keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
 
