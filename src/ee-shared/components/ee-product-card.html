@@ -70,7 +70,7 @@
           <td>
             <small ng-if="sku.msrp && sku.price && sku.msrp > sku.price" class="vert-10">
               <span class="text-muted"><s>{{ sku.msrp | centToDollar }}</s></span>
-              <span class="text-danger">&nbsp;{{ (sku.msrp - sku.regular_price) / sku.msrp | percentage:0 }} Off</span>
+              <span class="text-danger">&nbsp;{{ (sku.msrp - sku.price) / sku.msrp | percentage:0 }} Off</span>
             </small>
           </td>
           <td><small ng-bind="sku.selection_text"></small></td>
