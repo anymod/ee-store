@@ -16,6 +16,8 @@ angular.module('store.categories').config ($stateProvider) ->
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
+      params:
+        p: null
       data:
         pageTitle:        'Search'
         pageDescription:  'Search our products'

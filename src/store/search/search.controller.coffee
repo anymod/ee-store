@@ -17,7 +17,7 @@ angular.module('store.search').controller 'searchCtrl', ($location, $state, eeBo
       nav:          eeBootstrap?.nav
 
   search.update = () ->
-    search.ee.Products.page
+    # search.ee.Products.page
     search.params.p = search.ee.Products.page
     $state.go 'search', search.params
 

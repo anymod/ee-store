@@ -114,7 +114,7 @@ Product = sequelize.define 'Product',
         FROM "Products" p
         JOIN "Skus" s
         ON p.id = s.product_id
-        WHERE p.category_id = ?
+        WHERE p.category_id = ? AND p.hide_from_catalog = FALSE
         GROUP BY p.id
         ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';'
       sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
@@ -126,7 +126,7 @@ Product = sequelize.define 'Product',
         Customization.alterProducts scope.products, customizations
       .then (products) ->
         data.rows = products
-        sequelize.query 'SELECT count(*) FROM "Products" WHERE category_id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
+        sequelize.query 'SELECT count(*) FROM "Products" WHERE category_id = ? AND hide_from_catalog = FALSE', { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
       .then (res) ->
         data.count = res[0].count
         data

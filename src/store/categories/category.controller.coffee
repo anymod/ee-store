@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.categories').controller 'categoryCtrl', (eeBootstrap) ->
+angular.module('store.categories').controller 'categoryCtrl', ($state, $stateParams, eeBootstrap) ->
 
   search = this
 
@@ -13,5 +13,8 @@ angular.module('store.categories').controller 'categoryCtrl', (eeBootstrap) ->
     Collections:
       collections:  eeBootstrap?.collections
       nav:          eeBootstrap?.nav
+
+  search.update = () ->
+    $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: search.ee.Products.page }
 
   return
