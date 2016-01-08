@@ -39,17 +39,18 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
       $rootScope.forceReload path, query
     n++
 
-  if eeBootstrap.username is 'stylishrustic' and !$cookies.offered then $rootScope.mouseleave = () ->
-    $cookies.offered = true
+  if eeBootstrap.username is 'stylishrustic' and !$cookies.get('offered') then $rootScope.mouseleave = () ->
+    $cookies.put 'offered', true
     eeModal.fns.open 'offer'
     $rootScope.mouseleave = () -> false
 
   $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
-    if !$cookies._ee
+    if !$cookies.get('_ee')
       d = new Date()
-      $cookies._ee = ('' + d.getFullYear()).slice(-2) + ('0' + d.getUTCMonth()).slice(-2) + ('0' + d.getUTCDay()).slice(-2) + '.' + Math.random().toString().substr(2,8)
+      str = '' + ('' + d.getFullYear()).slice(-2) + ('0' + d.getUTCMonth()).slice(-2) + ('0' + d.getUTCDay()).slice(-2) + '.' + Math.random().toString().substr(2,8)
+      $cookies.put '_ee', str
     if $location.search().s is 't'
-      $cookies._eeself = true
+      $cookies.put '_eeself', true
       $location.search 's', null
 
     # Set referer domain to make filtering easier
@@ -74,10 +75,10 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
       toParams:       toParams
       fromState:      fromState?.name
       fromParams:     fromParams
-      self:           !!$cookies._eeself
-      _ee:            $cookies._ee
-      _ga:            $cookies._ga
-      _gat:           $cookies._gat
+      self:           !!$cookies.get('_eeself')
+      _ee:            $cookies.get('_ee')
+      _ga:            $cookies.get('_ga')
+      _gat:           $cookies.get('_gat')
 
     if $location.host() isnt 'localhost' and keenio.user then keen.addEvent 'store', keenio, (err, res) -> return
 

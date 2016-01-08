@@ -13,11 +13,11 @@
           </a>
           <div>
             <h4 ng-bind="currentSku.selection_text" class="inline-block font-weight-200"></h4>
-            <div ng-if="skus.length > 1" class="pull-right btn-group" dropdown>
-              <button type="button" class="btn btn-default dropdown-toggle" dropdown-toggle>
+            <div ng-if="skus.length > 1" class="pull-right btn-group" uib-dropdown>
+              <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
                 <span class="caret"></span>
               </button>
-              <ul class="dropdown-menu dropdown-menu-right">
+              <ul class="dropdown-menu-right" uib-dropdown-menu>
                 <li ng-repeat="sku in skus" ng-if="!sku.discontinued">
                   <a href ng-click="setCurrentSku(sku)">
                     <small ng-bind="sku.price | centToDollar" class="inline-block text-muted min-width-40"></small>

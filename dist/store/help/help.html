@@ -1,0 +1,37 @@
+<div class="container">
+  <uib-tabset>
+    <uib-tab heading="Static title">Static content</uib-tab>
+    <uib-tab ng-repeat="tab in tabs" heading="{{tab.title}}" active="tab.active" disable="tab.disabled">
+      {{tab.content}}
+    </uib-tab>
+    <uib-tab select="alertMe()">
+      <uib-tab-heading>
+        <i class="glyphicon glyphicon-bell"></i> Alert!
+      </uib-tab-heading>
+      I've got an HTML heading, and a select callback. Pretty cool!
+    </uib-tab>
+  </uib-tabset>
+  <!-- <p>Customers may return a product up to 14 days after it has been received. Partial returns will not be accepted and merchandise must be unused and unwashed and returned in its original packaging.</p> -->
+  <!-- <p>Return items being shipped back will be shipped at the cost of the customer, with the exception of damaged merchandise and warehouse error, in which case the cost of shipping will be reimbursed to the customer. At the time of return please indicate whether this is a refund or if you would like a replacement product.</p> -->
+
+  <h4>Customer satisfaction is our #1 goal. Because we want you to have the best possible experience, we make returning your items simple and easy.</h4>
+
+Returns Policy 101:
+Customers may return a product up to 14 days after it has been received.
+Partial returns will not be accepted, please do not use or wash merchandise, and return the items in their original packaging.
+If you receive damaged merchandise, or there is a shipping or warehouse error, than the cost of shipping will be reimbursed by us as a credit to your account.
+If package is lost, stolen, or refused/undeliverable/returned to sender, a credit cannot be issued until the package is received back in the supplier's warehouse. We cap the refund at $100.
+At the time of return please indicate whether you prefer a refund, exchange or replacement product and we’ll work to make that happen for you.
+Fine Print:  We will provide a full refund (less shipping costs), but there is a 25% restocking fee if the items are not returned  in original packaging. this includes "refused", "unclaimed", or "undeliverable” items returned by shipping company. Shipping cost is non-refundable for undelivered, unclaimed or returned packages, unless we made the error. Also; if you have multiple returns, please fill out an individual form for each item and keep them all in original packaging.
+
+Instructions for Returning an Item:
+Fill out the Feedback Form  for all item returns and cancellations within 7 days of delivery.
+A unique RMA label will be generated and a Return Label will be emailed to you.
+Print the Return Label.
+Pack the merchandise in their ORIGINAL PACKAGING, and place the Return Label inside the package.
+Ship the package within 15 days of delivery.
+That’s it! If you have any questions, comments or concerns, please email us at returns@eeosk.com and we will be happy to help.
+
+Thanks!
+the Eeosk Team
+</div>

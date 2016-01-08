@@ -2,12 +2,13 @@
 
 angular.module 'eeStore', [
   # vendor
+  'ngCookies'
+  'ngAnimate'
   'ui.router'
   'ui.bootstrap'
-  'ngCookies'
-  'ngSanitize'
-  'angulartics'
-  'angulartics.google.analytics'
+  # 'ngSanitize'
+  # 'angulartics'
+  # 'angulartics.google.analytics'
 
   # core
   'app.core'
@@ -15,6 +16,7 @@ angular.module 'eeStore', [
   # store
   'store.core'
   'store.categories'
+  'store.help'
   'store.search'
 
   # custom

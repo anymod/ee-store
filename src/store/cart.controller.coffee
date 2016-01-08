@@ -37,7 +37,7 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $c
   cart.quantity       = 0
   cart.quantity      += pair.quantity for pair in cart.quantity_array
   cart.item_name      = if cart.quantity_array.length > 1 then ('' + cart.quantity_array.length + ' items (qty: ' + cart.quantity + ')') else cart.skus[0]?.title
-  cart.item_number    = $cookies.cart?.split('.')[1]
+  cart.item_number    = $cookies.get('cart')?.split('.')[1]
   cart.return         = '' + $location.absUrl() + '/success'
   cart.cancel_return  = '' + $location.absUrl()
 
@@ -52,6 +52,6 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $c
 
   cart.buy = () ->
     cart.processing = true
-    $window.location.assign(eeSecureUrl + 'checkout/' + $cookies.cart?.split('.')[2])
+    $window.location.assign(eeSecureUrl + 'checkout/' + $cookies.get('cart')?.split('.')[2])
 
   return

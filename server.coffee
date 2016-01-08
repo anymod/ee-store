@@ -129,6 +129,17 @@ app.get '/categories/:id/:title*?', (req, res, next) ->
     console.error 'error in CATEGORIES', err
     res.redirect '/'
 
+# HELP
+app.get '/help', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () ->
+    bootstrap.stringified = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in HELP', err
+    res.redirect '/'
+
 # SEARCH
 app.get '/search', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
@@ -145,6 +156,9 @@ app.get '/search', (req, res, next) ->
     bootstrap.products = products
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in SEARCH', err
+    res.redirect '/'
 
 # CART
 app.get '/cart', (req, res, next) ->

@@ -23,13 +23,14 @@ sources.storeVendorMin = [
   # TODO remove once zoom.js gone
   './src/bower_components/jquery/dist/jquery.min.js'
   './src/bower_components/angular/angular.min.js'
-  './src/bower_components/angular-sanitize/angular-sanitize.min.js'
+  './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
+  # './src/bower_components/angular-sanitize/angular-sanitize.min.js'
   './src/bower_components/angular-cookies/angular-cookies.min.js'
+  './src/bower_components/angular-animate/angular-animate.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-  './src/bower_components/angular-ui-router/release/angular-ui-router.min.js'
-  './src/bower_components/angulartics/dist/angulartics.min.js'
-  './src/bower_components/angulartics/dist/angulartics-ga.min.js'
+  # './src/bower_components/angulartics/dist/angulartics.min.js'
+  # './src/bower_components/angulartics/dist/angulartics-ga.min.js'
   './src/bower_components/zoom.js/dist/zoom.min.js'
   './src/bower_components/keen-js/dist/keen.min.js'
 ]
@@ -61,7 +62,6 @@ sources.storeModule = [
   # Services
   './src/store/core/svc.back.coffee'
   './src/store/core/svc.cart.coffee'
-  # './src/store/core/svc.modal.coffee'
   # Module - store
   './src/store/store.controller.coffee'
   # Module - collection
@@ -74,6 +74,10 @@ sources.storeModule = [
   './src/store/categories/categories.module.coffee'
   './src/store/categories/categories.route.coffee'
   './src/store/categories/category.controller.coffee'
+  # Module - help
+  './src/store/help/help.module.coffee'
+  './src/store/help/help.route.coffee'
+  './src/store/help/help.controller.coffee'
   # Module - search
   './src/store/search/search.module.coffee'
   './src/store/search/search.route.coffee'
