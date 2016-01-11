@@ -12,11 +12,15 @@
         <p>Because we want you to have the best possible experience, we make returning your items simple and easy.</p>
         <p>
           To initiate a return, simply submit your order number here. We will send you instructions on how to return your order.
-          <form action="" class="form-inline">
+          <form ng-submit="help.initiateReturn()" class="form-inline max-width-300">
             <small>Order Number</small>
             <br>
-            <input type="text" class="form-control" placeholder="111111-111111">
-            <button type="submit" class="btn btn-default">Start your return</button>
+            <input type="text" class="form-control" style="max-width: 160px;" placeholder="111111-111111" ng-model="help.orderNumber">
+            <button type="submit" class="btn btn-default" ng-disabled="help.initiating">Start your return</button>
+            <div ng-if="help.initiated" class="alert alert-success vert-5">
+              Return initiated. We will send you an email shortly with instructions on how to proceed with your return.
+            </div>
+            <div class="alert alert-info vert-5" ng-show='help.returnAlert' ng-bind="help.returnAlert"></div>
           </form>
         </p>
         <br>
@@ -58,7 +62,7 @@
       <uib-tab-heading class="text-muted">Contact Us</uib-tab-heading>
       <div class="pad-10">
         <h4>Contact Us</h4>
-
+        <p>Use the form below to contact us with questions, comments, or feedback.</p>
         <form ng-submit="help.submit()" ng-hide="help.success" class="max-width-300">
           <div class="alert alert-info" ng-show='help.alert' ng-bind="help.alert"></div>
           <textarea cols="30" rows="8"
@@ -80,7 +84,7 @@
             ng-disabled="help.btnText != 'Send'"></button>
         </form>
       </div>
-      <div ng-show="help.success" class="alert alert-info">
+      <div ng-show="help.success" class="alert alert-success max-width-300">
         Your message was sent. Thanks!
       </div>
     </uib-tab>

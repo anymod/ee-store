@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.help').controller 'helpCtrl', (eeBootstrap, eeBack) ->
+angular.module('store.help').controller 'helpCtrl', ($location, eeBootstrap, eeBack) ->
 
   help = this
 
@@ -14,12 +14,24 @@ angular.module('store.help').controller 'helpCtrl', (eeBootstrap, eeBack) ->
   resetBtnText()
 
   help.initiateReturn = () ->
-    # TODO use same method as help.submit to initiate return
+    if !help.orderNumber then return help.returnAlert = 'Please enter your order number'
+    help.initiating = true
+    help.returnAlert = false
+    eeBack.fns.contactPOST 'Return via ' + $location.host(), '', 'For order ' + help.orderNumber
+    .then (res) ->
+      help.orderNumber = null
+      help.initiated = true
+    .catch (err) ->
+      alert = err.message || err || 'Problem sending'
+      if typeof alert is 'object' then alert = 'Problem sending'
+      help.returnAlert = alert
+    .finally () -> help.initiating = false
 
   help.submit = () ->
     if !help.message then return help.alert = 'Please enter a message'
     setBtnText 'Sending'
-    eeBack.fns.contactPOST help.name, help.email, help.message
+    help.alert = false
+    eeBack.fns.contactPOST help.name + ' (via ' + $location.host() + ')', help.email, help.message
     .then (res) -> help.success = true
     .catch (err) ->
       alert = err.message || err || 'Problem sending'
