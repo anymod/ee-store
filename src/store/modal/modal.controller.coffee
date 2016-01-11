@@ -7,7 +7,7 @@ angular.module('eeStore').controller 'modalCtrl', (eeBootstrap, eeBack, eeModal)
 
   modal.subscribe = () ->
     modal.submitting = true
-    eeBack.customerPOST modal.email, eeBootstrap.id
+    eeBack.fns.customerPOST modal.email, eeBootstrap.id
     .then (res) ->
       modal.alert = false
       eeModal.fns.close 'offer'

@@ -23,13 +23,13 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
     quantity_array = _addOrIncrement sku_id, quantity_array
     if $cookies.get('cart')
       [ee, cart_id, token] = $cookies.get('cart').split('.')
-      eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
+      eeBack.fns.cartPUT cart_id, { quantity_array: quantity_array, token: token }
       .then (res) ->
         $cookies.put 'cart', ['ee', res.id, res.uuid].join('.')
         $state.go 'cart'
       .catch (err) -> console.error err
     else
-      eeBack.cartPOST quantity_array
+      eeBack.fns.cartPOST quantity_array
       .then (res) ->
         $cookies.put 'cart', ['ee', res.id, res.uuid].join('.')
         $state.go 'cart'
@@ -38,7 +38,7 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
   _removeSku = (sku_id, quantity_array) ->
     quantity_array = _remove sku_id, quantity_array
     [ee, cart_id, token] = $cookies.get('cart').split('.')
-    eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
+    eeBack.fns.cartPUT cart_id, { quantity_array: quantity_array, token: token }
     .then (res) ->
       $cookies.put 'cart', ['ee', res.id, res.uuid].join('.')
       $state.go 'cart', null, reload: true
@@ -47,7 +47,7 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
   _updateCartTo = (quantity_array) ->
     quantity_array ||= []
     [ee, cart_id, token] = $cookies.get('cart').split('.')
-    eeBack.cartPUT cart_id, { quantity_array: quantity_array, token: token }
+    eeBack.fns.cartPUT cart_id, { quantity_array: quantity_array, token: token }
     .then (res) ->
       $cookies.put 'cart', ['ee', res.id, res.uuid].join('.')
       $state.go 'cart', null, reload: true

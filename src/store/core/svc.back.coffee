@@ -30,28 +30,36 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
 
   data: _data
 
-  cartPOST: (quantity_array) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'carts'
-      data:
-        quantity_array: quantity_array
-        seller_id: eeBootstrap?.id
-        domain: eeBootstrap?.url
-    }
+  fns:
+    cartPOST: (quantity_array) ->
+      _makeRequest {
+        method: 'POST'
+        url: eeBackUrl + 'carts'
+        data:
+          quantity_array: quantity_array
+          seller_id: eeBootstrap?.id
+          domain: eeBootstrap?.url
+      }
 
-  cartPUT: (cart_id, data) ->
-    _makeRequest {
-      method: 'PUT'
-      url: eeBackUrl + 'carts/' + cart_id
-      data: data
-    }
+    cartPUT: (cart_id, data) ->
+      _makeRequest {
+        method: 'PUT'
+        url: eeBackUrl + 'carts/' + cart_id
+        data: data
+      }
 
-  customerPOST: (email, seller_id) ->
-    _makeRequest {
-      method: 'POST'
-      url: eeBackUrl + 'customers'
-      data:
-        email: email
-        seller_id: seller_id
-    }
+    customerPOST: (email, seller_id) ->
+      _makeRequest {
+        method: 'POST'
+        url: eeBackUrl + 'customers'
+        data:
+          email: email
+          seller_id: seller_id
+      }
+
+    contactPOST: (name, email, message) ->
+      _makeRequest {
+        method: 'POST'
+        url: eeBackUrl + 'contact'
+        data: { name: name, email: email, message: message }
+      }

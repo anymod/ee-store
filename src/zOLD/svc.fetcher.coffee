@@ -14,7 +14,7 @@ angular.module('store.core').factory 'eeFetcher', ($q, $state, eeBootstrap, eeBa
     deferred = $q.defer()
     if !!eeBootstrap.loading then return eeBootstrap.loading
     eeBootstrap.loading = deferred.promise
-    eeBack.featuredGET eeBootstrap.username
+    eeBack.fns.featuredGET eeBootstrap.username
     .then (data) ->
       _redefineBootstrap data
       deferred.resolve data
@@ -26,7 +26,7 @@ angular.module('store.core').factory 'eeFetcher', ($q, $state, eeBootstrap, eeBa
     deferred = $q.defer()
     if !!eeBootstrap.loading then return eeBootstrap.loading
     eeBootstrap.loading = deferred.promise
-    eeBack.collectionGET eeBootstrap.username, title
+    eeBack.fns.collectionGET eeBootstrap.username, title
     .then (data) ->
       _redefineBootstrap data
       deferred.resolve data
