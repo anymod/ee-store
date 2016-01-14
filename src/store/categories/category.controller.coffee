@@ -1,10 +1,16 @@
 'use strict'
 
-angular.module('store.categories').controller 'categoryCtrl', ($state, $stateParams, eeBootstrap) ->
+angular.module('store.categories').controller 'categoryCtrl', ($state, $stateParams, eeBootstrap, categories) ->
 
-  search = this
+  category = this
 
-  search.ee =
+  category.id = $stateParams.id
+  category.categories = categories
+
+  for cat in category.categories
+    if cat.id is parseInt(category.id) then category.title = cat.title
+
+  category.ee =
     Products:
       products:     eeBootstrap?.products
       count:        eeBootstrap?.count
@@ -13,8 +19,11 @@ angular.module('store.categories').controller 'categoryCtrl', ($state, $statePar
     Collections:
       collections:  eeBootstrap?.collections
       nav:          eeBootstrap?.nav
+    User:
+      user:
+        storefront_meta: eeBootstrap?.storefront_meta
 
-  search.update = () ->
+  category.update = () ->
     $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: search.ee.Products.page }
 
   return

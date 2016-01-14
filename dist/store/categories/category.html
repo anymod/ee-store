@@ -1,3 +1,75 @@
-Category.html
+<div ng-if="category.ee.Products.products.length > 0" ng-hide="category.ee.Products.reading" class="container vert-20">
 
-<pre>{{ category.ee.Products | json }}</pre>
+  <!-- breadcrumb -->
+  <ol class="breadcrumb">
+    <li><a ui-sref="storefront" class="text-muted">Home</a></li>
+    <li>
+      <span class="dropdown" uib-dropdown>
+        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Collections<span class="caret"></span></a>
+        <ee-collection-nav collections="category.ee.Collections.nav.alphabetical" class="dropdown-menu" uib-dropdown-menu></ee-collection-nav>
+      </span>
+      &nbsp;&&nbsp;
+      <span class="dropdown" uib-dropdown>
+        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
+        <ul class="dropdown-menu" uib-dropdown-menu>
+          <li ng-repeat="cat in category.categories">
+            <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })"
+              ng-style="{ 'background-color': cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.secondary : '', color: cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.tertiary : '' }"
+              ng-bind="cat.title"></a>
+          </li>
+        </ul>
+      </span>
+    </li>
+    <li class="active" ng-bind="category.title"></li>
+  </ol>
+  <!-- /breadcrumb -->
+
+  <div class="row">
+
+    <h1 class="text-center font-weight-200" ng-bind="category.title"></h1>
+
+    <div class="col col-xs-12 position-inherit text-center">
+
+      <div class="margin-10">
+        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.perPage"
+          total-items="category.ee.Products.count"
+          items-per-page="category.ee.Products.perPage"
+          ng-model="category.ee.Products.page"
+          max-size="5"
+          class="pagination-sm margin-0 vertical-align-top"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+          boundary-links="true"
+          rotate="false"
+          ng-change="category.update()">
+        </uib-pagination>
+      </div>
+
+      <div class="full-width text-center vert-20 overflow-hidden">
+        <div ng-repeat="product in category.ee.Products.products" class="text-left inline-block vertical-align-top">
+          <ee-product-for-store product="product"></ee-product-for-store>
+          <br>
+        </div>
+      </div>
+
+      <div class="pad-20 vert-20">
+        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.perPage"
+          total-items="category.ee.Products.count"
+          items-per-page="category.ee.Products.perPage"
+          ng-model="category.ee.Products.page"
+          max-size="5"
+          class="pagination-sm margin-0 vertical-align-top"
+          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+          boundary-links="true"
+          rotate="false"
+          ng-change="category.update()">
+        </uib-pagination>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div ng-if="category.ee.Products.products.length <= 0" class="container vert-20 text-center min-height-600">
+  No results found
+</div>
+
+<ee-loading loading="category.ee.Products.reading"></ee-loading>

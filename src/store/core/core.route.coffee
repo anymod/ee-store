@@ -22,7 +22,7 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       templateUrl: 'store/store.header.html'
     middle:
       controller: 'collectionCtrl as collection'
-      templateUrl: 'ee-shared/storefront/storefront.collection.html'
+      templateUrl: 'store/collections/collection.html'
     footer: views.footer
 
   aboutViews =

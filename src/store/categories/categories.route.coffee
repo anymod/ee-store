@@ -11,8 +11,8 @@ angular.module('store.categories').config ($stateProvider) ->
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
         middle:
-          controller: 'categoryCtrl as search'# 'categoryCtrl as category'
-          templateUrl: 'ee-shared/storefront/storefront.search.html' # 'store/categories/category.html'
+          controller: 'categoryCtrl as category'
+          templateUrl: 'store/categories/category.html'
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
