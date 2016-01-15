@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.categories').controller 'categoryCtrl', ($state, $stateParams, eeBootstrap, categories) ->
+angular.module('store.categories').controller 'categoryCtrl', ($rootScope, $location, $state, $stateParams, eeBootstrap, categories) ->
 
   category = this
 
@@ -24,6 +24,7 @@ angular.module('store.categories').controller 'categoryCtrl', ($state, $statePar
         storefront_meta: eeBootstrap?.storefront_meta
 
   category.update = () ->
-    $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: search.ee.Products.page }
+    $rootScope.forceReload $location.path(), '?p=' + category.ee.Products.page
+    # $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: search.ee.Products.page }
 
   return

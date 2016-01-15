@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('eeStore').controller 'collectionCtrl', ($rootScope, $location, eeBootstrap, categories) ->
+angular.module('store.collections').controller 'collectionCtrl', ($rootScope, $location, eeBootstrap, categories) ->
 
   collection = this
 

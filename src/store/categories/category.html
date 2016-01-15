@@ -26,11 +26,11 @@
 
   <div class="row">
 
-    <h1 class="text-center font-weight-200" ng-bind="category.title"></h1>
+    <h1 class="text-center font-weight-200 margin-top-0" ng-bind="category.title"></h1>
 
     <div class="col col-xs-12 position-inherit text-center">
 
-      <div class="margin-10">
+      <div class="margin-5">
         <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.perPage"
           total-items="category.ee.Products.count"
           items-per-page="category.ee.Products.perPage"
@@ -42,6 +42,26 @@
           rotate="false"
           ng-change="category.update()">
         </uib-pagination>
+
+        <!-- <div class="vert-5">
+          <span class="dropdown" uib-dropdown>
+            <div class="btn btn-sm btn-default" uib-dropdown-toggle>Sort by <i class="caret"></i></div>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
+                <a href ng-bind="opt"></a>
+              </li>
+            </ul>
+          </span>
+          <span class="dropdown" uib-dropdown>
+            <div class="btn btn-sm btn-default" uib-dropdown-toggle>Set price range <i class="caret"></i></div>
+            <ul class="dropdown-menu" uib-dropdown-menu>
+              <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
+                <a href ng-bind="opt"></a>
+              </li>
+            </ul>
+          </span>
+        </div> -->
+
       </div>
 
       <div class="full-width text-center vert-20 overflow-hidden">

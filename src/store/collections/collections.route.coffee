@@ -1,18 +1,18 @@
 'use strict'
 
-angular.module('store.categories').config ($stateProvider) ->
+angular.module('store.collections').config ($stateProvider) ->
 
   $stateProvider
 
-    .state 'category',
-      url: '/categories/:id/:title'
+    .state 'collection',
+      url: '/collections/:id/:title'
       views:
         top:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.header.html'
         middle:
-          controller: 'categoryCtrl as category'
-          templateUrl: 'store/categories/category.html'
+          controller: 'collectionCtrl as collection'
+          templateUrl: 'store/collections/collection.html'
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
@@ -20,7 +20,3 @@ angular.module('store.categories').config ($stateProvider) ->
         p: null
         sort: null
         range: null
-      data:
-        pageTitle:        'Search'
-        pageDescription:  'Search our products'
-        padTop:           '51px'

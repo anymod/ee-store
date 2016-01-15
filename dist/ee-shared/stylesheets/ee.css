@@ -8575,6 +8575,19 @@ body.modal-open {
     background: #474747;
   }
 }
+.pagination > li > a,
+.pagination > li > span {
+  color: #777777;
+}
+.pagination > .active > a,
+.pagination > .active > span,
+.pagination > .active > a:hover,
+.pagination > .active > span:hover,
+.pagination > .active > a:focus,
+.pagination > .active > span:focus {
+  background-color: #777777;
+  border-color: #777777;
+}
 [ng\:cloak],
 [ng-cloak],
 .ng-cloak {

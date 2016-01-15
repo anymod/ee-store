@@ -16,15 +16,6 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       controller: 'storeCtrl as storefront'
       templateUrl: 'ee-shared/storefront/storefront.footer.html'
 
-  collectionViews =
-    top:
-      controller: 'storeCtrl as storefront'
-      templateUrl: 'store/store.header.html'
-    middle:
-      controller: 'collectionCtrl as collection'
-      templateUrl: 'store/collections/collection.html'
-    footer: views.footer
-
   aboutViews =
     top:
       controller: 'storeCtrl as storefront'
@@ -35,8 +26,8 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     footer: views.footer
 
   data =
-    pageTitle:        'Add products | eeosk'
-    pageDescription:  'Choose products to add to your store.'
+    pageTitle:        ''
+    pageDescription:  ''
     padTop:           '51px'
 
   $stateProvider
@@ -44,11 +35,6 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
     .state 'storefront',
       url:      '/'
       views:    views
-      data:     data
-
-    .state 'collection',
-      url:      '/collections/:id/:title'
-      views:    collectionViews
       data:     data
 
     .state 'storefront-about',

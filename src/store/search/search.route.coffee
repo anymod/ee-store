@@ -19,6 +19,8 @@ angular.module('store.search').config ($stateProvider) ->
       params:
         q: null
         p: null
+        sort: null
+        range: null
       data:
         pageTitle:        'Search'
         pageDescription:  'Search our products'
