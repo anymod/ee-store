@@ -5,7 +5,7 @@ angular.module('store.search').config ($stateProvider) ->
   $stateProvider
 
     .state 'search',
-      url: '/search'
+      url: '/search?p&sort&range'
       views:
         top:
           controller: 'storeCtrl as storefront'

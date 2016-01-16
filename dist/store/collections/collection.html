@@ -1,39 +1,43 @@
-<div ng-hide="collection.data.reading" class="container vert-20">
+<!-- breadcrumb -->
+<div style="background-color: #F5F5F5">
+  <div class="container">
+    <ol class="breadcrumb margin-0">
+      <li><a ui-sref="storefront" class="text-muted">Home</a></li>
+      <li>
+        <span class="dropdown" uib-dropdown>
+          <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Collections<span class="caret"></span></a>
+          <ee-collection-nav collections="collection.ee.Collections.nav.alphabetical" class="dropdown-menu" uib-dropdown-menu></ee-collection-nav>
+        </span>
+        &nbsp;&&nbsp;
+        <span class="dropdown" uib-dropdown>
+          <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="cat in collection.ee.User.categories">
+              <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })" ng-bind="cat.title"></a>
+            </li>
+          </ul>
+        </span>
+      </li>
+      <li class="active" ng-bind="collection.title"></li>
+    </ol>
+  </div>
+</div>
+<!-- /breadcrumb -->
 
-  <!-- breadcrumb -->
-  <ol class="breadcrumb">
-    <li><a ui-sref="storefront" class="text-muted">Home</a></li>
-    <li>
-      <span class="dropdown" uib-dropdown>
-        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Collections<span class="caret"></span></a>
-        <ee-collection-nav collections="collection.ee.Collections.nav.alphabetical" class="dropdown-menu" uib-dropdown-menu></ee-collection-nav>
-      </span>
-      &nbsp;&&nbsp;
-      <span class="dropdown" uib-dropdown>
-        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
-        <ul class="dropdown-menu" uib-dropdown-menu>
-          <li ng-repeat="cat in collection.categories">
-            <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })" ng-bind="cat.title"></a>
-          </li>
-        </ul>
-      </span>
-    </li>
-    <li class="active" ng-bind="collection.data.collection.title"></li>
-  </ol>
-  <!-- /breadcrumb -->
+<div class="container vert-20">
 
   <div class="row">
 
-    <h1 class="text-center font-weight-200 margin-top-0" ng-bind="collection.data.collection.title"></h1>
+    <h1 class="text-center font-weight-200 margin-top-0" ng-bind="collection.title"></h1>
 
     <div class="col col-xs-12 position-inherit">
 
-      <div ng-if="collection.data.products.length > 0" class="text-center">
+      <div ng-if="collection.ee.Collection.products.length > 0" class="text-center">
         <div class="margin-10">
-          <uib-pagination ng-if="collection.data.count > collection.data.perPage"
-            total-items="collection.data.count"
-            items-per-page="collection.data.perPage"
-            ng-model="collection.data.page"
+          <uib-pagination ng-if="collection.ee.Collection.count > collection.ee.Collection.inputs.perPage"
+            total-items="collection.ee.Collection.count"
+            items-per-page="collection.ee.Collection.inputs.perPage"
+            ng-model="collection.ee.Collection.inputs.page"
             max-size="5"
             class="pagination-sm margin-0 vertical-align-top"
             previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
@@ -43,18 +47,18 @@
           </uib-pagination>
         </div>
 
-        <div class="full-width text-center vert-20 overflow-hidden">
-          <div ng-repeat="product in collection.data.products" class="text-left inline-block vertical-align-top">
+        <div class="full-width text-center vert-20 overflow-hidden" ng-hide="collection.ee.Collection.reading">
+          <div ng-repeat="product in collection.ee.Collection.products" class="text-left inline-block vertical-align-top">
             <ee-product-for-store product="product"></ee-product-for-store>
             <br>
           </div>
         </div>
 
-        <div class="pad-20 vert-20">
-          <uib-pagination ng-if="collection.data.count > collection.data.perPage"
-            total-items="collection.data.count"
-            items-per-page="collection.data.perPage"
-            ng-model="collection.data.page"
+        <div class="pad-20 vert-20" ng-hide="collection.ee.Collection.reading">
+          <uib-pagination ng-if="collection.ee.Collection.count > collection.ee.Collection.inputs.perPage"
+            total-items="collection.ee.Collection.count"
+            items-per-page="collection.ee.Collection.inputs.perPage"
+            ng-model="collection.ee.Collection.inputs.page"
             max-size="5"
             class="pagination-sm margin-0 vertical-align-top"
             previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
@@ -65,7 +69,7 @@
         </div>
       </div>
 
-      <div ng-if="collection.data.products.length <= 0">
+      <div ng-if="collection.ee.Collection.products.length <= 0">
         <h4 class="margin-5 font-weight-200">This collection is coming soon</h4>
       </div>
 
@@ -74,4 +78,4 @@
 
 </div>
 
-<ee-loading loading="collection.data.reading"></ee-loading>
+<ee-loading loading="collection.ee.Collection.reading"></ee-loading>

@@ -48,8 +48,6 @@ sources.appModule = [
   './src/ee-shared/core/config.coffee'
   './src/ee-shared/core/run.coffee'
   # Services
-  # './src/ee-shared/core/svc.selections.coffee'
-  # './src/ee-shared/core/svc.collections.coffee'
   './src/ee-shared/core/svc.modal.coffee'
 ]
 sources.storeModule = [
@@ -61,6 +59,11 @@ sources.storeModule = [
   './src/store/core/core.route.coffee'
   # Services
   './src/store/core/svc.back.coffee'
+  './src/store/core/svc.user.coffee'
+  './src/store/core/svc.products.coffee'
+  './src/store/core/svc.collection.coffee'
+  './src/store/core/svc.collections.coffee'
+  './src/store/core/svc.definer.coffee'
   './src/store/core/svc.cart.coffee'
   # Module - store
   './src/store/store.controller.coffee'
@@ -69,9 +72,9 @@ sources.storeModule = [
   './src/store/collections/collections.route.coffee'
   './src/store/collections/collection.controller.coffee'
   # Module - product
-  './src/store/product.controller.coffee'
+  './src/store/product/product.controller.coffee'
   # Module - cart
-  './src/store/cart.controller.coffee'
+  './src/store/cart/cart.controller.coffee'
   # Module - categories
   './src/store/categories/categories.module.coffee'
   './src/store/categories/categories.route.coffee'
@@ -100,6 +103,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-scroll-to-top.coffee'
   './src/ee-shared/components/ee-product-images.coffee'
   './src/ee-shared/components/ee-empty-message.coffee'
+  './src/ee-shared/components/ee-loading.coffee'
 ]
 
 module.exports = sources

@@ -152,8 +152,11 @@ app.get '/search', (req, res, next) ->
     # if bootstrap.query  then opts.search  = bootstrap.query
     # if bootstrap.page   then opts.page    = bootstrap.page
     Product.search { id: bootstrap.id }, opts
-  .then (products) ->
-    bootstrap.products = products
+  .then (data) ->
+    bootstrap.products = data.rows
+    bootstrap.count = data.count
+    bootstrap.page = data.page
+    bootstrap.perPage = data.perPage
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->

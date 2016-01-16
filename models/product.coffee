@@ -151,7 +151,6 @@ Product = sequelize.define 'Product',
         products
 
     search: (user, opts) ->
-      console.log 'opts', opts
       scope = {}
 
       # Initial body
@@ -195,8 +194,6 @@ Product = sequelize.define 'Product',
               terms:
                 category_id: ids
         })
-
-      # console.log 'body', body.filter.and
 
       elasticsearch.client.search
         index: 'products_search'

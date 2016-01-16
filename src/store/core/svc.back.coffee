@@ -28,9 +28,29 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
       .finally () -> _endRequest()
     deferred.promise
 
+  _formQueryString = (query) ->
+    if !query then return ''
+    keys = Object.keys(query)
+    parts = []
+    addQuery = (key) -> parts.push(encodeURIComponent(key) + '=' + encodeURIComponent(query[key]))
+    addQuery(key) for key in keys
+    '?' + parts.join('&')
+
   data: _data
 
   fns:
+    productsGET: (query) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/products' + _formQueryString(query)
+      }
+
+    collectionGET: (id, query) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/collections/' + id + _formQueryString(query)
+      }
+
     cartPOST: (quantity_array) ->
       _makeRequest {
         method: 'POST'

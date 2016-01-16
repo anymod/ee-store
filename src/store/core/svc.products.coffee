@@ -1,17 +1,17 @@
 'use strict'
 
-angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBack, eeAuth, eeModal) ->
+angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBootstrap, eeBack) ->
 
   ## SETUP
   _inputDefaults =
-    perPage:      48
-    page:         null
+    perPage:      eeBootstrap?.perPage
+    page:         eeBootstrap?.page
     search:       null
     searchLabel:  null
     range:
       min:        null
       max:        null
-    category:     null
+    category:     eeBootstrap?.category
     order:        { order: null, title: 'Most relevant' }
     rangeArray: [
       { min: 0,     max: 2500   },
@@ -30,55 +30,47 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBa
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
-    count:    null
-    products: []
     inputs:   angular.copy _inputDefaults
     reading:  false
-    lastCollectionAddedTo: null
+    products: eeBootstrap?.products
+    count:    eeBootstrap?.count
 
   ## PRIVATE FUNCTIONS
-  _clearSection = () ->
+  _clearProducts = () ->
     _data.products = []
     _data.count    = 0
 
-  _formQuery = (section) ->
+  _formQuery = () ->
     query = {}
-    query.size = _data[section].inputs.perPage
-    # if section is 'featured'            then query.feat         = 'true'
-    if _data[section].inputs.featured   then query.feat         = 'true'
-    if _data[section].inputs.page       then query.page         = _data[section].inputs.page
-    if _data[section].inputs.search     then query.search       = _data[section].inputs.search
-    if _data[section].inputs.range.min  then query.min_price    = _data[section].inputs.range.min
-    if _data[section].inputs.range.max  then query.max_price    = _data[section].inputs.range.max
-    if _data[section].inputs.order.use  then query.order        = _data[section].inputs.order.order
-    if _data[section].inputs.category   then query.category_ids = [_data[section].inputs.category.id]
+    console.log _data.inputs
+    query.size = _data.inputs.perPage
+    if _data.inputs.page        then query.page           = _data.inputs.page
+    if _data.inputs.search      then query.search         = _data.inputs.search
+    if _data.inputs.range.min   then query.min_price      = _data.inputs.range.min
+    if _data.inputs.range.max   then query.max_price      = _data.inputs.range.max
+    if _data.inputs.order.use   then query.order          = _data.inputs.order.order
+    if _data.inputs.category    then query.category_ids   = [_data.inputs.category.id]
+    if _data.inputs.collection  then query.collection_id  = _data.inputs.collection.id
     query
 
-  _runQuery = (section, queryPromise) ->
-    if _data[section].reading then return
-    _data[section].reading = true
-    queryPromise
+  _runQuery = () ->
+    if _data.reading then return
+    _data.reading = true
+    eeBack.fns.productsGET _formQuery()
     .then (res) ->
       { rows, count, took } = res
-      _data[section].products      = rows
-      _data[section].count         = count
-      _data[section].took = took
-      _data[section].inputs.searchLabel = _data[section].inputs.search
-    .catch (err) -> _data[section].count = null
-    .finally () -> _data[section].reading = false
-
-  _runSection = (section) ->
-    if _data[section].reading then return
-    switch section
-      when 'storefront' then promise = eeBack.fns.productsGET(eeAuth.fns.getToken(), _formQuery('storefront'))
-      when 'search'     then promise = eeBack.fns.productsGET(eeAuth.fns.getToken(), _formQuery('search'))
-    _runQuery section, promise
+      _data.products      = rows
+      _data.count         = count
+      _data.took = took
+      _data.inputs.searchLabel = _data.inputs.search
+    .catch (err) -> _data.count = null
+    .finally () -> _data.reading = false
 
   _search = (term) ->
-    _data.search.inputs.order = _data.search.inputs.orderArray[0]
-    _data.search.inputs.search = term
-    _data.search.inputs.page = 1
-    _runSection 'search'
+    _data.inputs.order = _data.inputs.orderArray[0]
+    _data.inputs.search = term
+    _data.inputs.page = 1
+    _runQuery()
 
   ## MESSAGING
   # none
@@ -86,27 +78,26 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBa
   ## EXPORTS
   data: _data
   fns:
-    runSection: _runSection
+    runQuery: _runQuery
     search: _search
     featured: () ->
-      section = 'storefront'
-      _clearSection section
-      _data[section].inputs.page      = 1
-      _data[section].inputs.featured  = true
-      _runSection section
+      _clearProducts()
+      _data.inputs.page      = 1
+      _data.inputs.featured  = true
+      _runQuery()
     clearSearch: () -> _search ''
-    setOrder: (order, section) ->
-      _data[section].inputs.search  = if !order?.order then _data[section].inputs.searchLabel else null
-      _data[section].inputs.page    = 1
-      _data[section].inputs.order   = order
-      _runSection section
-    setRange: (range, section) ->
+    setOrder: (order) ->
+      _data.inputs.search  = if !order?.order then _data.inputs.searchLabel else null
+      _data.inputs.page    = 1
+      _data.inputs.order   = order
+      _runQuery()
+    setRange: (range) ->
       range = range || {}
-      _data[section].inputs.page = 1
-      if _data[section].inputs.range.min is range.min and _data[section].inputs.range.max is range.max
-        _data[section].inputs.range.min = null
-        _data[section].inputs.range.max = null
+      _data.inputs.page = 1
+      if _data.inputs.range.min is range.min and _data.inputs.range.max is range.max
+        _data.inputs.range.min = null
+        _data.inputs.range.max = null
       else
-        _data[section].inputs.range.min = range.min
-        _data[section].inputs.range.max = range.max
-      _runSection section
+        _data.inputs.range.min = range.min
+        _data.inputs.range.max = range.max
+      _runQuery()

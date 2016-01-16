@@ -1,28 +1,31 @@
-<div ng-if="category.ee.Products.products.length > 0" ng-hide="category.ee.Products.reading" class="container vert-20">
+<!-- breadcrumb -->
+<div style="background-color: #F5F5F5">
+  <div class="container">
+    <ol class="breadcrumb margin-0">
+      <li><a ui-sref="storefront" class="text-muted">Home</a></li>
+      <li>
+        <span class="dropdown" uib-dropdown>
+          <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Collections<span class="caret"></span></a>
+          <ee-collection-nav collections="category.ee.Collections.nav.alphabetical" class="dropdown-menu" uib-dropdown-menu></ee-collection-nav>
+        </span>
+        &nbsp;&&nbsp;
+        <span class="dropdown" uib-dropdown>
+          <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
+          <ul class="dropdown-menu" uib-dropdown-menu>
+            <li ng-repeat="cat in category.ee.User.categories">
+              <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })"
+                ng-style="{ 'background-color': cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.secondary : '', color: cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.tertiary : '' }"
+                ng-bind="cat.title"></a>
+            </li>
+          </ul>
+        </span>
+      </li>
+      <li class="active" ng-bind="category.title"></li>
+    </ol>
+  </div>
+</div>
 
-  <!-- breadcrumb -->
-  <ol class="breadcrumb">
-    <li><a ui-sref="storefront" class="text-muted">Home</a></li>
-    <li>
-      <span class="dropdown" uib-dropdown>
-        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Collections<span class="caret"></span></a>
-        <ee-collection-nav collections="category.ee.Collections.nav.alphabetical" class="dropdown-menu" uib-dropdown-menu></ee-collection-nav>
-      </span>
-      &nbsp;&&nbsp;
-      <span class="dropdown" uib-dropdown>
-        <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
-        <ul class="dropdown-menu" uib-dropdown-menu>
-          <li ng-repeat="cat in category.categories">
-            <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })"
-              ng-style="{ 'background-color': cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.secondary : '', color: cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.tertiary : '' }"
-              ng-bind="cat.title"></a>
-          </li>
-        </ul>
-      </span>
-    </li>
-    <li class="active" ng-bind="category.title"></li>
-  </ol>
-  <!-- /breadcrumb -->
+<div ng-if="category.ee.Products.products.length > 0" ng-hide="category.ee.Products.reading" class="container vert-20">
 
   <div class="row">
 
@@ -31,10 +34,10 @@
     <div class="col col-xs-12 position-inherit text-center">
 
       <div class="margin-5">
-        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.perPage"
+        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
           total-items="category.ee.Products.count"
-          items-per-page="category.ee.Products.perPage"
-          ng-model="category.ee.Products.page"
+          items-per-page="category.ee.Products.inputs.perPage"
+          ng-model="category.ee.Products.inputs.page"
           max-size="5"
           class="pagination-sm margin-0 vertical-align-top"
           previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
@@ -43,7 +46,7 @@
           ng-change="category.update()">
         </uib-pagination>
 
-        <!-- <div class="vert-5">
+        <div class="vert-5">
           <span class="dropdown" uib-dropdown>
             <div class="btn btn-sm btn-default" uib-dropdown-toggle>Sort by <i class="caret"></i></div>
             <ul class="dropdown-menu" uib-dropdown-menu>
@@ -60,7 +63,7 @@
               </li>
             </ul>
           </span>
-        </div> -->
+        </div>
 
       </div>
 
@@ -72,10 +75,10 @@
       </div>
 
       <div class="pad-20 vert-20">
-        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.perPage"
+        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
           total-items="category.ee.Products.count"
-          items-per-page="category.ee.Products.perPage"
-          ng-model="category.ee.Products.page"
+          items-per-page="category.ee.Products.inputs.perPage"
+          ng-model="category.ee.Products.inputs.page"
           max-size="5"
           class="pagination-sm margin-0 vertical-align-top"
           previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"

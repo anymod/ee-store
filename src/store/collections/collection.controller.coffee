@@ -1,23 +1,19 @@
 'use strict'
 
-angular.module('store.collections').controller 'collectionCtrl', ($rootScope, $location, eeBootstrap, categories) ->
+angular.module('store.collections').controller 'collectionCtrl', ($rootScope, $stateParams, $state, eeDefiner, eeCollection) ->
 
   collection = this
 
-  collection.categories = categories
+  collection.ee = eeDefiner.exports
+  collection.id = $stateParams.id
 
-  collection.ee =
-    Collections:
-      collections: eeBootstrap?.collections
-      nav:         eeBootstrap?.nav
+  for coll in collection.ee.Collections.nav.alphabetical
+    if coll.id is parseInt(collection.id) then collection.title = coll.title
 
-  collection.data =
-    collection: eeBootstrap?.collection
-    products:   eeBootstrap?.products
-    page:       eeBootstrap?.page
-    perPage:    eeBootstrap?.perPage
-    count:      eeBootstrap?.count
+  if $rootScope.pageDepth > 1 then eeCollection.fns.defineCollection collection.id
 
-  collection.update = () -> $rootScope.forceReload $location.path(), '?p=' + collection.data.page
+  collection.update = () ->
+    page = if collection.ee.Collection.inputs.page > 1 then collection.ee.Collection.inputs.page else null
+    $state.go 'collection', { id: $stateParams.id, title: $stateParams.title, p: page }
 
   return
