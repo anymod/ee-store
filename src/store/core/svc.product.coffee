@@ -10,8 +10,6 @@ angular.module('store.core').factory 'eeProduct', (eeBootstrap, eeBack) ->
     reading:  false
     product:  eeBootstrap?.product
 
-  console.log eeBootstrap
-
   ## PRIVATE FUNCTIONS
   _defineProduct = (id, reset) ->
     _data.reading = true

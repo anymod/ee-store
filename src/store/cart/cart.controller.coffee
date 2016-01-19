@@ -1,12 +1,18 @@
 'use strict'
 
-angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $cookies, eeBootstrap, eeSecureUrl, eeCart) ->
+angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $cookies, eeBootstrap, eeDefiner, eeSecureUrl, eeCart) ->
 
   cart = this
 
+  cart.ee = eeDefiner.exports
+  cart.skus = cart.ee.Cart?.cart?.skus || []
+  cart.quantity_array = cart.ee.Cart?.cart?.quantity_array || []
+
+  ###### OLD
+
   # Define data
-  cart.skus = eeBootstrap?.cart?.skus || []
-  cart.quantity_array = eeBootstrap?.cart?.quantity_array || []
+  # cart.skus = eeBootstrap?.cart?.skus || []
+  # cart.quantity_array = eeBootstrap?.cart?.quantity_array || []
 
   _syncArrays = () ->
     synced = []
@@ -48,7 +54,7 @@ angular.module('eeStore').controller 'cartCtrl', ($scope, $window, $location, $c
     eeCart.fns.updateCartTo newVal
   , true
 
-  cart.removeSku = (sku_id) -> eeCart.fns.removeSku sku_id, cart.quantity_array
+  cart.removeSku = (sku_id) -> eeCart.fns.removeSku sku_id
 
   cart.buy = () ->
     cart.processing = true
