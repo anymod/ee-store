@@ -13,7 +13,7 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
   if storefront.params
     storefront.query = storefront.params.q
 
-  if $state.current.name is 'storefront' then storefront.showSupranav = true
+  # if $state.current.name is 'storefront' then storefront.showSupranav = true
 
   storefront.openCollectionsModal = () -> eeModal.fns.openCollectionsModal(storefront.ee?.Collections?.nav?.alphabetical)
   storefront.productsUpdate = () ->

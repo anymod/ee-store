@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.core').factory 'eeCollection', ($rootScope, $q, eeBootstrap, eeBack) ->
+angular.module('store.core').factory 'eeCollection', ($rootScope, $q, $state, $stateParams, $location, eeBootstrap, eeBack) ->
 
   ## SETUP
   _inputDefaults =
@@ -16,6 +16,12 @@ angular.module('store.core').factory 'eeCollection', ($rootScope, $q, eeBootstra
     products:   eeBootstrap?.products
 
   ## PRIVATE FUNCTIONS
+  _resetPage = () ->
+    _data.inputs.page = null
+    _data.inputs.category = parseInt $stateParams.id
+    $stateParams.p = null
+    $location.search 'p', null
+
   _formQuery = () ->
     query = {}
     if _data.inputs.page then query.page = _data.inputs.page
@@ -27,12 +33,15 @@ angular.module('store.core').factory 'eeCollection', ($rootScope, $q, eeBootstra
     eeBack.fns.collectionGET id, _formQuery()
     .then (res) ->
       { collection, rows, count, page, perPage } = res
-      _data.page        = page
-      _data.perPage     = perPage
-      _data.count       = count
-      _data.collection  = collection
-      _data.products    = rows
+      _data.inputs.page     = page
+      _data.inputs.perPage  = perPage
+      _data.count           = count
+      _data.collection      = collection
+      _data.products        = rows
     .finally () -> _data.reading = false
+
+  # MESSAGING
+  $rootScope.$on 'reset:page', () -> _resetPage()
 
   ## EXPORTS
   data: _data

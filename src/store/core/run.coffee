@@ -13,9 +13,15 @@ angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeMo
     eeModal.fns.open 'offer'
     $rootScope.mouseleave = () -> false
 
+  # Broadcast page reset on stateChangeStart and stateChangeSuccess to remove page param
+  $rootScope.$on '$stateChangeStart', (e, toState, toParams, fromState, fromParams) ->
+    if $rootScope.pageDepth > 1 and (toState.name isnt fromState.name or toParams.id isnt fromParams.id) then $rootScope.$broadcast 'reset:page'
+
   $rootScope.pageDepth = 0
   $rootScope.$on '$stateChangeSuccess', (event, toState, toParams, fromState, fromParams) ->
     $rootScope.pageDepth++
+
+    if $rootScope.pageDepth > 1 and (toState.name isnt fromState.name or toParams.id isnt fromParams.id) then $rootScope.$broadcast 'reset:page'
 
     if !$cookies.get('_ee')
       d = new Date()

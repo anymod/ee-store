@@ -42,24 +42,6 @@ angular.module('store.core').config ($locationProvider, $stateProvider, $urlRout
       views:    aboutViews
       data:     data
 
-    .state 'product',
-      url: '/products/:id/:title'
-      views:
-        top:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
-        middle:
-          controller: 'productCtrl as product'
-          templateUrl: 'ee-shared/storefront/storefront.product.html'
-        footer:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'ee-shared/storefront/storefront.footer.html'
-      data: data,
-      params:
-        slug:
-          value: null
-          squash: true
-
     .state 'cart',
       url: '/cart'
       views:

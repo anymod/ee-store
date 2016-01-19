@@ -25,67 +25,70 @@
   </div>
 </div>
 
-<div ng-if="category.ee.Products.products.length > 0" ng-hide="category.ee.Products.reading" class="container vert-20">
+<div class="container vert-20">
 
   <div class="row">
 
     <h1 class="text-center font-weight-200 margin-top-0" ng-bind="category.title"></h1>
 
-    <div class="col col-xs-12 position-inherit text-center">
+    <div class="col col-xs-12 position-inherit">
 
-      <div class="margin-5">
-        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
-          total-items="category.ee.Products.count"
-          items-per-page="category.ee.Products.inputs.perPage"
-          ng-model="category.ee.Products.inputs.page"
-          max-size="5"
-          class="pagination-sm margin-0 vertical-align-top"
-          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-          boundary-links="true"
-          rotate="false"
-          ng-change="category.update()">
-        </uib-pagination>
+      <div ng-if="category.ee.Products.products.length > 0" class="text-center" ng-class="{ 'opacity-05': category.ee.Products.reading }">
 
-        <div class="vert-5">
-          <span class="dropdown" uib-dropdown>
-            <div class="btn btn-sm btn-default" uib-dropdown-toggle>Sort by <i class="caret"></i></div>
-            <ul class="dropdown-menu" uib-dropdown-menu>
-              <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
-                <a href ng-bind="opt"></a>
-              </li>
-            </ul>
-          </span>
-          <span class="dropdown" uib-dropdown>
-            <div class="btn btn-sm btn-default" uib-dropdown-toggle>Set price range <i class="caret"></i></div>
-            <ul class="dropdown-menu" uib-dropdown-menu>
-              <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
-                <a href ng-bind="opt"></a>
-              </li>
-            </ul>
-          </span>
+        <div class="margin-10">
+          <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
+            total-items="category.ee.Products.count"
+            items-per-page="category.ee.Products.inputs.perPage"
+            ng-model="category.ee.Products.inputs.page"
+            max-size="5"
+            class="pagination-sm margin-0 vertical-align-top"
+            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            boundary-links="true"
+            rotate="false"
+            ng-change="category.update()">
+          </uib-pagination>
+
+          <div class="vert-5">
+            <span class="dropdown" uib-dropdown>
+              <div class="btn btn-sm btn-default" uib-dropdown-toggle>Sort by <i class="caret"></i></div>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
+                  <a href ng-bind="opt"></a>
+                </li>
+              </ul>
+            </span>
+            <span class="dropdown" uib-dropdown>
+              <div class="btn btn-sm btn-default" uib-dropdown-toggle>Set price range <i class="caret"></i></div>
+              <ul class="dropdown-menu" uib-dropdown-menu>
+                <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
+                  <a href ng-bind="opt"></a>
+                </li>
+              </ul>
+            </span>
+          </div>
+
         </div>
 
-      </div>
-
-      <div class="full-width text-center vert-20 overflow-hidden">
-        <div ng-repeat="product in category.ee.Products.products" class="text-left inline-block vertical-align-top">
-          <ee-product-for-store product="product"></ee-product-for-store>
-          <br>
+        <div ng-hide="category.ee.Products.reading" class="full-width text-center vert-20 overflow-hidden">
+          <div ng-repeat="product in category.ee.Products.products" class="text-left inline-block vertical-align-top">
+            <ee-product-for-store product="product"></ee-product-for-store>
+            <br>
+          </div>
         </div>
-      </div>
 
-      <div class="pad-20 vert-20">
-        <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
-          total-items="category.ee.Products.count"
-          items-per-page="category.ee.Products.inputs.perPage"
-          ng-model="category.ee.Products.inputs.page"
-          max-size="5"
-          class="pagination-sm margin-0 vertical-align-top"
-          previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
-          boundary-links="true"
-          rotate="false"
-          ng-change="category.update()">
-        </uib-pagination>
+        <div ng-hide="category.ee.Products.reading" class="pad-20 vert-20">
+          <uib-pagination ng-if="category.ee.Products.count > category.ee.Products.inputs.perPage"
+            total-items="category.ee.Products.count"
+            items-per-page="category.ee.Products.inputs.perPage"
+            ng-model="category.ee.Products.inputs.page"
+            max-size="5"
+            class="pagination-sm margin-0 vertical-align-top"
+            previous-text="&lsaquo;" next-text="&rsaquo;" first-text="&laquo;" last-text="&raquo;"
+            boundary-links="true"
+            rotate="false"
+            ng-change="category.update()">
+          </uib-pagination>
+        </div>
       </div>
     </div>
   </div>

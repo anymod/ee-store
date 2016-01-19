@@ -1,20 +1,13 @@
 'use strict'
 
-angular.module('store.search').controller 'searchCtrl', ($location, $state, eeDefiner) ->
+angular.module('store.search').controller 'searchCtrl', ($rootScope, $location, $state, eeDefiner, eeProducts) ->
 
   search = this
 
   search.params = $location.search()
-
   search.ee = eeDefiner.exports
-    # Products:
-    #   products:     eeBootstrap?.products.rows
-    #   count:        eeBootstrap?.products.count
-    #   page:         eeBootstrap?.products.page
-    #   perPage:      eeBootstrap?.products.perPage
-    # Collections:
-    #   collections:  eeBootstrap?.collections
-    #   nav:          eeBootstrap?.nav
+
+  if $rootScope.pageDepth > 1 then eeProducts.fns.search(search.params.q)
 
   search.update = () ->
     search.params.p = search.ee.Products.page

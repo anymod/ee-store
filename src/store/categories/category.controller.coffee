@@ -10,9 +10,11 @@ angular.module('store.categories').controller 'categoryCtrl', ($rootScope, $loca
   for cat in category.ee.User.categories
     if cat.id is parseInt(category.id) then category.title = cat.title
 
+  if $rootScope.pageDepth > 1 then eeProducts.fns.setCategory($stateParams.id)
+
   category.update = () ->
-    eeProducts.fns.runQuery()
-    # $rootScope.forceReload $location.path(), '?p=' + category.ee.Products.page
-    # $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: category.ee.Products.page }
+    # eeProducts.fns.runQuery()
+    page = if category.ee.Products.inputs.page > 1 then category.ee.Products.inputs.page else null
+    $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: page }
 
   return

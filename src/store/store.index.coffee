@@ -17,6 +17,7 @@ angular.module 'eeStore', [
   'store.core'
   'store.collections'
   'store.categories'
+  'store.product'
   'store.help'
   'store.search'
 

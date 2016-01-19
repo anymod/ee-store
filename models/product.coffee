@@ -49,7 +49,7 @@ Product = sequelize.define 'Product',
         ON p.id = s.product_id
         WHERE p.id IN (' + ids + ')
         GROUP BY p.id
-        ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';'
+        ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';' # ORDER BY needs to match ee-back for consistent sorting
       sequelize.query q, { type: sequelize.QueryTypes.SELECT }
 
     findCompleteById: (id, seller_id) ->
@@ -116,7 +116,7 @@ Product = sequelize.define 'Product',
         ON p.id = s.product_id
         WHERE p.category_id = ? AND p.hide_from_catalog = FALSE
         GROUP BY p.id
-        ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';'
+        ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';' # ORDER BY needs to match ee-back for consistent sorting
       sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [parseInt(category_id)] }
       .then (products) ->
         scope.products = products

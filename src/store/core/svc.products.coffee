@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBootstrap, eeBack) ->
+angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $stateParams, $location, eeBootstrap, eeBack) ->
 
   ## SETUP
   _inputDefaults =
@@ -40,16 +40,21 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBo
     _data.products = []
     _data.count    = 0
 
+  _resetPage = () ->
+    _data.inputs.page = null
+    _data.inputs.category = parseInt $stateParams.id
+    $stateParams.p = null
+    $location.search 'p', null
+
   _formQuery = () ->
     query = {}
-    console.log _data.inputs
     query.size = _data.inputs.perPage
     if _data.inputs.page        then query.page           = _data.inputs.page
     if _data.inputs.search      then query.search         = _data.inputs.search
     if _data.inputs.range.min   then query.min_price      = _data.inputs.range.min
     if _data.inputs.range.max   then query.max_price      = _data.inputs.range.max
     if _data.inputs.order.use   then query.order          = _data.inputs.order.order
-    if _data.inputs.category    then query.category_ids   = [_data.inputs.category.id]
+    if _data.inputs.category    then query.category_ids   = [_data.inputs.category]
     if _data.inputs.collection  then query.collection_id  = _data.inputs.collection.id
     query
 
@@ -73,7 +78,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBo
     _runQuery()
 
   ## MESSAGING
-  # none
+  $rootScope.$on 'reset:page', () -> _resetPage()
 
   ## EXPORTS
   data: _data
@@ -86,6 +91,11 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, eeBo
       _data.inputs.featured  = true
       _runQuery()
     clearSearch: () -> _search ''
+    setCategory: (id) ->
+      _data.inputs.search = null
+      # _data.inputs.page = 1
+      _data.inputs.category = parseInt(id)
+      _runQuery()
     setOrder: (order) ->
       _data.inputs.search  = if !order?.order then _data.inputs.searchLabel else null
       _data.inputs.page    = 1

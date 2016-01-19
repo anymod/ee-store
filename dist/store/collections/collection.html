@@ -32,7 +32,8 @@
 
     <div class="col col-xs-12 position-inherit">
 
-      <div ng-if="collection.ee.Collection.products.length > 0" class="text-center">
+      <div ng-if="collection.ee.Collection.products.length > 0" class="text-center" ng-class="{ 'opacity-05': collection.ee.Collection.reading }">
+
         <div class="margin-10">
           <uib-pagination ng-if="collection.ee.Collection.count > collection.ee.Collection.inputs.perPage"
             total-items="collection.ee.Collection.count"

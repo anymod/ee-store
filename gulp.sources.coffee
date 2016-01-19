@@ -60,6 +60,7 @@ sources.storeModule = [
   # Services
   './src/store/core/svc.back.coffee'
   './src/store/core/svc.user.coffee'
+  './src/store/core/svc.product.coffee'
   './src/store/core/svc.products.coffee'
   './src/store/core/svc.collection.coffee'
   './src/store/core/svc.collections.coffee'
@@ -72,6 +73,8 @@ sources.storeModule = [
   './src/store/collections/collections.route.coffee'
   './src/store/collections/collection.controller.coffee'
   # Module - product
+  './src/store/product/product.module.coffee'
+  './src/store/product/product.route.coffee'
   './src/store/product/product.controller.coffee'
   # Module - cart
   './src/store/cart/cart.controller.coffee'

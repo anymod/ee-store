@@ -39,6 +39,12 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
   data: _data
 
   fns:
+    productGET: (id) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/products/' + id
+      }
+
     productsGET: (query) ->
       _makeRequest {
         method: 'GET'
