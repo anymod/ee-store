@@ -15,9 +15,11 @@ angular.module 'eeStore', [
 
   # store
   'store.core'
+  'store.home'
   'store.collections'
   'store.categories'
   'store.product'
+  'store.cart'
   'store.help'
   'store.search'
 

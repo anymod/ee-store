@@ -1,13 +1,10 @@
 'use strict'
 
-angular.module('store.help').controller 'helpCtrl', ($location, eeBootstrap, eeBack) ->
+angular.module('store.help').controller 'helpCtrl', ($location, eeDefiner, eeBack) ->
 
   help = this
 
-  help.ee =
-    Collections:
-      collections:  eeBootstrap?.collections
-      nav:          eeBootstrap?.nav
+  help.ee = eeDefiner.exports
 
   setBtnText    = (txt) -> help.btnText = txt
   resetBtnText  = ()    -> setBtnText 'Send'

@@ -68,20 +68,26 @@ sources.storeModule = [
   './src/store/core/svc.cart.coffee'
   # Module - store
   './src/store/store.controller.coffee'
+  # Module - home
+  './src/store/home/home.module.coffee'
+  './src/store/home/home.route.coffee'
+  './src/store/home/home.controller.coffee'
   # Module - collection
   './src/store/collections/collections.module.coffee'
   './src/store/collections/collections.route.coffee'
   './src/store/collections/collection.controller.coffee'
+  # Module - categories
+  './src/store/categories/categories.module.coffee'
+  './src/store/categories/categories.route.coffee'
+  './src/store/categories/category.controller.coffee'
   # Module - product
   './src/store/product/product.module.coffee'
   './src/store/product/product.route.coffee'
   './src/store/product/product.controller.coffee'
   # Module - cart
+  './src/store/cart/cart.module.coffee'
+  './src/store/cart/cart.route.coffee'
   './src/store/cart/cart.controller.coffee'
-  # Module - categories
-  './src/store/categories/categories.module.coffee'
-  './src/store/categories/categories.route.coffee'
-  './src/store/categories/category.controller.coffee'
   # Module - help
   './src/store/help/help.module.coffee'
   './src/store/help/help.route.coffee'

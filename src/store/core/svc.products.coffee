@@ -49,6 +49,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   _formQuery = () ->
     query = {}
     query.size = _data.inputs.perPage
+    if _data.inputs.featured    then query.feat           = 'true'
     if _data.inputs.page        then query.page           = _data.inputs.page
     if _data.inputs.search      then query.search         = _data.inputs.search
     if _data.inputs.range.min   then query.min_price      = _data.inputs.range.min
