@@ -42,6 +42,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
 
   _resetPage = () ->
     _data.inputs.page = null
+    _data.inputs.featured = false
     _data.inputs.category = parseInt $stateParams.id
     $stateParams.p = null
     $location.search 'p', null
@@ -92,10 +93,8 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
       _data.inputs.featured  = true
       _runQuery()
     clearSearch: () -> _search ''
-    setCategory: (id) ->
-      _data.inputs.search = null
-      # _data.inputs.page = 1
-      _data.inputs.category = parseInt(id)
+    setCategory: () ->
+      _resetPage()
       _runQuery()
     setOrder: (order) ->
       _data.inputs.search  = if !order?.order then _data.inputs.searchLabel else null
