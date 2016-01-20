@@ -9,8 +9,5 @@ angular.module('eeStore').controller 'productCtrl', ($rootScope, $stateParams, e
   product.data = product.ee.Product
 
   if product.ee.Product?.product?.id isnt product.id then eeProduct.fns.defineProduct product.id
-
-  $rootScope.$on 'cart:add:sku', (e, sku_id) ->
-    eeCart.fns.addSku sku_id
-
+  
   return

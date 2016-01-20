@@ -171,9 +171,7 @@ app.get '/cart', (req, res, next) ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
       sku_ids = _.pluck req.cart.quantity_array, 'sku_id'
       Sku.forCart sku_ids.join(','), bootstrap.id
-      .then (data) ->
-        # console.log 'data', data
-        bootstrap.cart.skus = data
+      .then (data) -> bootstrap.cart.skus = data
       .finally () ->
         bootstrap.stringified = utils.stringify bootstrap
         res.render 'store.ejs', { bootstrap: bootstrap }

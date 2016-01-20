@@ -1,13 +1,13 @@
 'use strict'
 
-angular.module('eeStore').controller 'modalCtrl', (eeBootstrap, eeBack, eeModal) ->
+angular.module('eeStore').controller 'modalCtrl', (eeBack, eeModal) ->
 
   modal = this
   modal.alert = false
 
   modal.subscribe = () ->
     modal.submitting = true
-    eeBack.fns.customerPOST modal.email, eeBootstrap.id
+    eeBack.fns.customerPOST modal.email
     .then (res) ->
       modal.alert = false
       eeModal.fns.close 'offer'

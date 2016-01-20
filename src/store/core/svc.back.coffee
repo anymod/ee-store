@@ -2,6 +2,8 @@
 
 angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstrap) ->
 
+  back = this
+
   _data =
     requesting: false
     requestingArray: []
@@ -36,20 +38,35 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
     addQuery(key) for key in keys
     '?' + parts.join('&')
 
-  data: _data
 
+  _productGET = (id) ->
+    _makeRequest {
+      method: 'GET'
+      url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/products/' + id
+    }
+
+  data: _data
   fns:
-    productGET: (id) ->
-      _makeRequest {
-        method: 'GET'
-        url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/products/' + id
-      }
+
+    productGET: _productGET
 
     productsGET: (query) ->
       _makeRequest {
         method: 'GET'
         url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/products' + _formQueryString(query)
       }
+
+    skuGET: (product_id, sku_id) ->
+      _productGET product_id
+      .then (product) ->
+        sku = {}
+        if !product.skus or product.skus.length < 1 then return sku
+        (if s.id is sku_id then sku = s) for s in product.skus
+        sku.product =
+          id: product.id
+          image: product.image
+          title: product.title
+        sku
 
     collectionGET: (id, query) ->
       _makeRequest {
@@ -67,6 +84,12 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
           domain: eeBootstrap?.url
       }
 
+    cartGET: (cart_id) ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'carts/' + cart_id + '?u=' + eeBootstrap?.id
+      }
+
     cartPUT: (cart_id, data) ->
       _makeRequest {
         method: 'PUT'
@@ -74,13 +97,13 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
         data: data
       }
 
-    customerPOST: (email, seller_id) ->
+    customerPOST: (email) ->
       _makeRequest {
         method: 'POST'
         url: eeBackUrl + 'customers'
         data:
           email: email
-          seller_id: seller_id
+          seller_id: eeBootstrap?.id
       }
 
     contactPOST: (name, email, message) ->

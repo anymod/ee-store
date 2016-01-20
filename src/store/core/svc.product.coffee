@@ -11,7 +11,7 @@ angular.module('store.core').factory 'eeProduct', (eeBootstrap, eeBack) ->
     product:  eeBootstrap?.product
 
   ## PRIVATE FUNCTIONS
-  _defineProduct = (id, reset) ->
+  _defineProduct = (id) ->
     _data.reading = true
     _data.product = {}
     eeBack.fns.productGET id
