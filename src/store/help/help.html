@@ -5,13 +5,13 @@
 <div class="container vert-20 help-page">
   <uib-tabset>
     <!-- Returns -->
-    <uib-tab>
+    <uib-tab active="help.returnsTab">
       <uib-tab-heading class="text-muted">Returns</uib-tab-heading>
       <div class="pad-10">
         <h4>Customer satisfaction is our #1 goal</h4>
         <p>Because we want you to have the best possible experience, we make returning your items simple and easy.</p>
         <p>
-          To initiate a return, simply submit your order number here. We will send you instructions on how to return your order.
+          To initiate a return, simply submit your order number here and we will send you instructions on how to return your order.  To find your order number, please refer to your confirmation email you received when you placed your order. Having trouble locating the order number? Send us a note in the <a href ng-click="help.contactTab = true">Contact Us</a> tab.
           <form ng-submit="help.initiateReturn()" class="form-inline max-width-300">
             <small>Order Number</small>
             <br>
@@ -27,10 +27,12 @@
         <h4>Returns Policy 101</h4>
         <ul>
           <li>Customers may return a product up to 14 days after it has been received.</li>
-          <li>Return the items in their original packaging, and do not use or wash merchandise.</li>
+          <li>Return the items in their original packaging.</li>
+          <li>Returns will only be accepted if the entire original item is included in the return.</li>
+          <li>Items that have been used or washed cannot be returned.</li>
+          <li>The customer will pay the return shipping costs.</li>
           <li>If you receive damaged merchandise or there is a shipping or warehouse error, then the cost of shipping will be reimbursed by us as a credit to your account.</li>
           <li>If a package is lost, stolen, refused, undeliverable, or returned to sender, a credit cannot be issued until the package is received back in our supplier's warehouse.</li>
-          <li>Returns will only be accepted if the entire original item is included in the return.</li>
           <li>At the time of return please indicate whether you prefer a refund, exchange, or replacement product, and we will work to make that happen for you.</li>
         </ul>
         <p>We will provide a full refund for items that arrive back to our warehouse in their original packaging and condition. Shipping cost is non-refundable, unless we made an error in the order.</p>
@@ -41,14 +43,14 @@
     <!-- /Returns -->
 
     <!-- Shipping -->
-    <uib-tab>
+    <uib-tab active="help.shippingTab">
       <uib-tab-heading class="text-muted">Shipping</uib-tab-heading>
       <div class="pad-10">
         <h4>We typically ship within 1-2 business days</h4>
         <p>We strive to have fast turnaround times so that you can receive your order quickly.</p>
         <br>
         <h4>Shipping within the United States</h4>
-        <p>Our supplier warehouses are located in the United States, which in turn makes our shipment times faster and more reliable.</p>
+        <p>Our supplier warehouses are located in the United States, which makes our shipment times faster and more reliable.</p>
         <p>We use UPS, FedEx, and USPS to ship orders within the United States.  Most orders receive a shipment tracking number that is included when we send your shipment confirmation email.</p>
         <br>
         <h4>Shipping outside of the United States</h4>
@@ -58,7 +60,7 @@
     <!-- /Shipping -->
 
     <!-- Contact -->
-    <uib-tab>
+    <uib-tab active="help.contactTab">
       <uib-tab-heading class="text-muted">Contact Us</uib-tab-heading>
       <div class="pad-10">
         <h4>Contact Us</h4>
