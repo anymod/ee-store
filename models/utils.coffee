@@ -12,8 +12,10 @@ utils =
         cart:     req.cart
         url:      req.protocol + '://' + req.get('host') + req.originalUrl
         perPage:  constants.perPage
-        page:     req.query.p
         query:    req.query.q
+        page:     req.query.p
+        order:    req.query.s
+        range:    req.query.r
         referer:  req.headers.referer
       host: req.headers.host
       path: url.parse(req.url).pathname
@@ -65,5 +67,10 @@ utils =
 
   formCollectionPageTitle: (collection, title) ->
     if collection and title then (collection + ' | ' + title) else collection
+
+  rangeToPrices: (range) ->
+    return [null, null] unless range
+    [min, max] = range.split('-')
+    [parseInt(min)*100, parseInt(max)*100]
 
 module.exports = utils

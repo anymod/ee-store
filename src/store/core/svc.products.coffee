@@ -11,7 +11,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     range:
       min:        null
       max:        null
-    category:     eeBootstrap?.category
+    category:     $stateParams.id
     order:        { order: null, title: 'Most relevant' }
     rangeArray: [
       { min: 0,     max: 2500   },
@@ -21,12 +21,19 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
       { min: 20000, max: null   }
     ]
     orderArray: [
-      { order: null,          title: 'Most relevant' },
-      { order: 'price ASC',   title: 'Price, low to high',  use: true },
-      { order: 'price DESC',  title: 'Price, high to low',  use: true },
-      { order: 'title ASC',   title: 'A to Z',              use: true },
-      { order: 'title DESC',  title: 'Z to A',              use: true }
+      # { order: null,          title: 'Most relevant' },
+      { order: 'pa',  title: 'Price, low to high',  use: true }, # price ASC (pa)
+      { order: 'pd',  title: 'Price, high to low',  use: true }, # price DESC (pd)
+      { order: 'ta',  title: 'A to Z',              use: true }, # title ASC (ta)
+      { order: 'td',  title: 'Z to A',              use: true }  # title DESC (td)
     ]
+  if eeBootstrap?.order
+    for order in _inputDefaults.orderArray
+      if order.order is eeBootstrap?.order then _inputDefaults.order = angular.copy order
+  if eeBootstrap?.range
+    [min, max] = eeBootstrap?.range.split('-')
+    for range in _inputDefaults.rangeArray
+      if range.min is parseInt(min)*100 then _inputDefaults.range = angular.copy range
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
@@ -40,12 +47,33 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     _data.products = []
     _data.count    = 0
 
+  _setPage = (p) ->
+    _data.inputs.page = p
+    $stateParams.p = p
+    $location.search 'p', p
+
+  _setSort = (order) ->
+    if !order then order = { order: null, title: 'Most relevant' }
+    _data.inputs.order = order
+    $stateParams.s = order.order?.replace(/ /g, '_')
+    $location.search 's', order.order?.replace(/ /g, '_')
+
+  _setRange = (range) ->
+    range ||= {}
+    str = if range.min or range.max then [range.min/100, range.max/100].join('-') else null
+    if _data.inputs.range.min is range.min and _data.inputs.range.max is range.max
+      _data.inputs.range.min = null
+      _data.inputs.range.max = null
+    else
+      _data.inputs.range.min = range.min
+      _data.inputs.range.max = range.max
+    $stateParams.r = str
+    $location.search 'r', str
+
   _resetPage = () ->
-    _data.inputs.page = null
+    _setPage null
     _data.inputs.feat = false
     _data.inputs.category = parseInt $stateParams.id
-    $stateParams.p = null
-    $location.search 'p', null
 
   _formQuery = () ->
     query = {}
@@ -76,7 +104,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   _search = (term) ->
     _data.inputs.order = _data.inputs.orderArray[0]
     _data.inputs.search = term
-    _data.inputs.page = 1
+    _setPage null
     _runQuery()
 
   ## MESSAGING
@@ -89,7 +117,9 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     search: _search
     featured: () ->
       _clearProducts()
-      _data.inputs.page      = 1
+      _setPage null
+      _setSort null
+      _setRange null
       _data.inputs.featured  = true
       _runQuery()
     clearSearch: () -> _search ''
@@ -100,16 +130,10 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
       _runQuery()
     setOrder: (order) ->
       _data.inputs.search  = if !order?.order then _data.inputs.searchLabel else null
-      _data.inputs.page    = 1
-      _data.inputs.order   = order
+      _setPage null
+      _setSort order
       _runQuery()
     setRange: (range) ->
-      range = range || {}
-      _data.inputs.page = 1
-      if _data.inputs.range.min is range.min and _data.inputs.range.max is range.max
-        _data.inputs.range.min = null
-        _data.inputs.range.max = null
-      else
-        _data.inputs.range.min = range.min
-        _data.inputs.range.max = range.max
+      _setPage null
+      _setRange range
       _runQuery()

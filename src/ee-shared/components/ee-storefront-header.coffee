@@ -12,7 +12,6 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, cat
     collections:    '='
     quantityArray:  '='
     query:          '='
-    showSupranav:   '='
     showScrollnav:  '='
     showScrollToTop: '@'
   link: (scope, ele, attrs) ->

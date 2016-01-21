@@ -87,6 +87,22 @@
 </head>
 
 <body id="body-top" ng-mouseleave="mouseleave()">
+  <% if (!!bootstrap.storefront_meta && !!bootstrap.storefront_meta.brand && !!bootstrap.storefront_meta.brand.color) { %>
+    <style>
+      .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
+        background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>;
+        color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
+      }
+      .navbar.ee-store-subnav { background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>; }
+      .navbar.ee-store-subnav .nav > li > a {
+        color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
+        border-bottom: 5px solid <%= bootstrap.storefront_meta.brand.color.tertiary %>;
+      }
+      .ee-scroll-to-top { background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>; }
+      .ee-scroll-to-top i { color: <%= bootstrap.storefront_meta.brand.color.tertiary %>; }
+    </style>
+  <% } %>
+
   <% if (!!bootstrap.h1) { %>
     <h1 class="position-fixed overflow-hidden height-0" style="top: -5000px;"><%= bootstrap.h1 %></h1>
   <% } %>

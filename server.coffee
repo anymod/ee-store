@@ -77,7 +77,7 @@ app.get ['/about'], (req, res, next) ->
     console.error 'error in ABOUT', err
     res.redirect '/'
 
-# PRODUCTS
+# PRODUCT
 app.get '/products/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
@@ -93,11 +93,11 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     console.error 'error in PRODUCTS', err
     res.redirect '/'
 
-# COLLECTIONS
+# COLLECTION
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
-  .then () -> Product.findAllByCollection req.params.id, bootstrap.id, bootstrap.page
+  .then () -> Product.findAllByCollection { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, range: bootstrap.range, collection_id: req.params.id }
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection
@@ -111,11 +111,13 @@ app.get '/collections/:id/:title*?', (req, res, next) ->
     console.error 'error in COLLECTIONS', err
     res.redirect '/'
 
-# CATEGORIES
+# CATEGORY
 app.get '/categories/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
-  .then () -> Product.findAllByCategory req.params.id, bootstrap.id, bootstrap.page
+  .then () ->
+    [min_price, max_price] = utils.rangeToPrices bootstrap.range
+    Product.sort { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, min_price: min_price, max_price: max_price, category_ids: '' + req.params.id }
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection

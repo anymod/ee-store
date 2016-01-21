@@ -3,6 +3,8 @@
 angular.module('store.core').run ($rootScope, $window, $cookies, $location, eeModal, eeBootstrap) ->
   $rootScope.isStore = true
 
+  console.log eeBootstrap
+
   ## Keen.js
   keen = new Keen
     projectId: '565c9b27c2266c0bb36521db',

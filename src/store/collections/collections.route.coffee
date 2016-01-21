@@ -5,7 +5,7 @@ angular.module('store.collections').config ($stateProvider) ->
   $stateProvider
 
     .state 'collection',
-      url: '/collections/:id/:title?p&sort&range'
+      url: '/collections/:id/:title?p&s&r'
       views:
         top:
           controller: 'storeCtrl as storefront'
@@ -17,6 +17,6 @@ angular.module('store.collections').config ($stateProvider) ->
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
       params:
-        p: null
-        sort: null
-        range: null
+        p: null # page
+        s: null # sort
+        r: null # range

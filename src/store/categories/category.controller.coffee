@@ -17,4 +17,7 @@ angular.module('store.categories').controller 'categoryCtrl', ($rootScope, $loca
     page = if category.ee.Products.inputs.page > 1 then category.ee.Products.inputs.page else null
     $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: page }
 
+  category.setOrder = (order) -> eeProducts.fns.setOrder order
+  category.setRange = (range) -> eeProducts.fns.setRange range
+
   return

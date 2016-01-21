@@ -10,8 +10,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
     taxes_total:      0
     grand_total:      0
 
-  console.log eeBootstrap?.cart
-
   ## PRIVATE EXPORT DEFAULTS
   _data =
     reading:  false

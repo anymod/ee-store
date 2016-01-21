@@ -5,6 +5,8 @@ sequelize = require '../config/sequelize/setup'
 constants = require '../server.constants'
 utils     = require './utils'
 
+Shared = require '../copied-from-ee-back/shared'
+
 Customization =
 
   findAllFeatured: (seller_id, page) ->
@@ -46,28 +48,30 @@ Customization =
     # TODO return prices and msrps in order
     products
 
-  alterSkus: (skus, customizations) ->
-    skus ||= []
-    customizations ||= []
-    sku.price ||= sku.regular_price for sku in skus
-    for customization in customizations
-      for sku in skus
-        if sku.product_id is customization.product_id and customization?.selling_prices
-          match = _.where customization.selling_prices, { sku_id: sku.id }
-          if match and match.length > 0 then sku.price = match[0].selling_price
-        sku.price ||= sku.regular_price
-    skus
+  alterSkus: (skus, customizations) -> Shared.Customization.alterSkus skus, customizations
+    # skus ||= []
+    # customizations ||= []
+    # sku.price ||= sku.regular_price for sku in skus
+    # for customization in customizations
+    #   for sku in skus
+    #     if sku.product_id is customization.product_id and customization?.selling_prices
+    #       match = _.where customization.selling_prices, { sku_id: sku.id }
+    #       if match and match.length > 0 then sku.price = match[0].selling_price
+    #     sku.price ||= sku.regular_price
+    # skus
 
   alterProduct: (product, customizations) ->
     customizations ||= []
     for customization in customizations
       if customization.product_id is product.id
-        if customization?.title then product.title = customization.title
-        product.featured = !!customization?.featured
-        if customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
-        if product.skus
-          product.msrps = _.pluck product.skus, 'msrp'
-          product.prices = _.pluck product.skus, 'price'
+        Shared.Customization.alterProduct product, customization
+      # if customization.product_id is product.id
+      #   if customization?.title then product.title = customization.title
+      #   product.featured = !!customization?.featured
+      #   if customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
+      #   if product.skus
+      #     product.msrps = _.pluck product.skus, 'msrp'
+      #     product.prices = _.pluck product.skus, 'price'
     product
 
 module.exports = Customization

@@ -12,10 +12,8 @@
         <span class="dropdown" uib-dropdown>
           <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
           <ul class="dropdown-menu" uib-dropdown-menu>
-            <li ng-repeat="cat in category.ee.User.categories">
-              <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })"
-                ng-style="{ 'background-color': cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.secondary : '', color: cat.id == category.id ? category.ee.User.user.storefront_meta.brand.color.tertiary : '' }"
-                ng-bind="cat.title"></a>
+            <li ng-repeat="cat in category.ee.User.categories" ng-class="{ active: cat.id == category.id }">
+              <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })" ng-bind="cat.title"></a>
             </li>
           </ul>
         </span>
@@ -24,6 +22,7 @@
     </ol>
   </div>
 </div>
+<!-- /breadcrumb -->
 
 <div class="container vert-20">
 
@@ -49,22 +48,40 @@
           </uib-pagination>
 
           <div class="vert-5">
+            <!-- sort order -->
             <span class="dropdown" uib-dropdown>
-              <div class="btn btn-sm btn-default" uib-dropdown-toggle>Sort by <i class="caret"></i></div>
+              <div class="btn btn-sm btn-default" ng-class="{ active: category.ee.Products.inputs.order.order }" uib-dropdown-toggle>
+                <span ng-show="category.ee.Products.inputs.order.order" ng-bind="category.ee.Products.inputs.order.title"></span>
+                <span ng-hide="category.ee.Products.inputs.order.order">Sort by</span>&nbsp;<i class="caret"></i>
+              </div>
               <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
-                  <a href ng-bind="opt"></a>
+                <li ng-repeat="order in category.ee.Products.inputs.orderArray" ng-class="{ active: category.ee.Products.inputs.order.order == order.order }">
+                  <a href ng-bind="order.title" ng-click="category.setOrder(order)"></a>
+                </li>
+                <li ng-show="category.ee.Products.inputs.order.order" class="divider"></li>
+                <li ng-show="category.ee.Products.inputs.order.order">
+                  <a href ng-click="category.setOrder({})">Reset</a>
                 </li>
               </ul>
             </span>
+            <!-- /sort order -->
+            <!-- price range -->
             <span class="dropdown" uib-dropdown>
-              <div class="btn btn-sm btn-default" uib-dropdown-toggle>Set price range <i class="caret"></i></div>
+              <div class="btn btn-sm btn-default" ng-class="{ active: category.ee.Products.inputs.range.min || category.ee.Products.inputs.range.max }" uib-dropdown-toggle>
+                <span ng-show="category.ee.Products.inputs.range.min || category.ee.Products.inputs.range.max" ng-bind="category.ee.Products.inputs.range | rangeToText"></span>
+                <span ng-hide="category.ee.Products.inputs.range.min || category.ee.Products.inputs.range.max">Set price range</span>&nbsp;<i class="caret"></i>
+              </div>
               <ul class="dropdown-menu" uib-dropdown-menu>
-                <li ng-repeat="opt in ['Price, low to high', 'Price, high to low', 'A to Z', 'Z to A']">
-                  <a href ng-bind="opt"></a>
+                <li ng-repeat="range in category.ee.Products.inputs.rangeArray" ng-class="{ active: category.ee.Products.inputs.range.min == range.min }">
+                  <a href ng-bind="range | rangeToText" ng-click="category.setRange(range)"></a>
+                </li>
+                <li ng-show="category.ee.Products.inputs.range.min" class="divider"></li>
+                <li ng-show="category.ee.Products.inputs.range.min">
+                  <a href ng-click="category.setRange({})">Reset</a>
                 </li>
               </ul>
             </span>
+            <!-- /price range -->
           </div>
 
         </div>

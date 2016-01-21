@@ -1,9 +1,9 @@
 <ul>
   <li ng-repeat="collection in collections"
-      ng-if="collection.title && (!limit || $index < limit)">
+      ng-if="collection.title && (!limit || $index < limit)"
+      ng-class="{ active: collection.id == $state.params.id }">
     <a ui-sref="collection({ id: collection.id, title: (collection.title | urlText) })"
       class="text-muted"
-      ng-style="{ 'background-color': collection.id == $state.params.id ? ee.User.user.storefront_meta.brand.color.secondary : '', color: collection.id == $state.params.id ? ee.User.user.storefront_meta.brand.color.tertiary : '' }"
       ng-bind="collection.title | humanize">
     </a>
   </li>
