@@ -84,7 +84,7 @@
     ga('require', 'linkid', 'linkid.js');
   </script>
 
-  <% if (!!bootstrap.id && bootstrap.id == 49) { %>
+  <% if (!!bootstrap.id && bootstrap.id == 49 && !!bootstrap.url && bootstrap.url.indexOf('localhost') < 0) { %>
     <!-- Facebook Pixel Code for SR -->
     <script>
       !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?

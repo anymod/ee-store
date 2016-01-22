@@ -64,22 +64,22 @@ Product = sequelize.define 'Product',
       .then (product) -> Customization.alterProducts [product], scope.customizations
       .then (products) -> products[0]
 
-    findAllFeatured: (seller_id, page) ->
-      data  = {}
-      scope = {}
-      Customization.findAllFeatured seller_id, page
-      .then (customizations) ->
-        if !customizations or customizations.length < 1 then return {}
-        scope.customizations = customizations
-        product_ids = _.map customizations, 'product_id'
-        Shared.Product.findAllByIds product_ids
-      .then (products) -> Customization.alterProducts products, scope.customizations
-      .then (products) ->
-        data.rows = products
-        Customization.countFeatured seller_id
-      .then (res) ->
-        data.count = res[0].count
-        data
+    # findAllFeatured: (seller_id, page) ->
+    #   data  = {}
+    #   scope = {}
+    #   Customization.findAllFeatured seller_id, page
+    #   .then (customizations) ->
+    #     if !customizations or customizations.length < 1 then return {}
+    #     scope.customizations = customizations
+    #     product_ids = _.map customizations, 'product_id'
+    #     Shared.Product.findAllByIds product_ids
+    #   .then (products) -> Customization.alterProducts products, scope.customizations
+    #   .then (products) ->
+    #     data.rows = products
+    #     Customization.countFeatured seller_id
+    #   .then (res) ->
+    #     data.count = res[0].count
+    #     data
 
     findAllByCollection: (user, opts) ->
       Collection.findById opts.collection_id, user.id

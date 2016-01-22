@@ -53,7 +53,7 @@ app.get '/', (req, res, next) ->
   User.defineStorefront host, bootstrap
   # TODO finish new meta images
   .then () -> User.setCollectionMetaImages bootstrap
-  .then () -> Product.findAllFeatured bootstrap.id, bootstrap.page
+  .then () -> Product.sort { id: bootstrap.id }, { page: bootstrap.page, feat: true }
   .then (data) ->
     { rows, count } = data
     bootstrap.products    = rows || []

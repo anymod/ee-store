@@ -9,11 +9,11 @@ Shared = require '../copied-from-ee-back/shared'
 
 Customization =
 
-  findAllFeatured: (seller_id, page) ->
-    perPage = constants.perPage
-    page  ||= 1
-    offset  = (page - 1) * perPage
-    sequelize.query 'SELECT id, product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND featured = true ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
+  # findAllFeatured: (seller_id, page) ->
+  #   perPage = constants.perPage
+  #   page  ||= 1
+  #   offset  = (page - 1) * perPage
+  #   sequelize.query 'SELECT id, product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND featured = true ORDER BY updated_at DESC LIMIT ? OFFSET ?', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id, perPage, offset] }
 
   countFeatured: (seller_id) ->
     sequelize.query 'SELECT count(*) FROM "Customizations" WHERE seller_id = ? AND featured = true', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
