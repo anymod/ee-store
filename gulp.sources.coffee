@@ -76,6 +76,7 @@ sources.storeModule = [
   './src/store/collections/collections.module.coffee'
   './src/store/collections/collections.route.coffee'
   './src/store/collections/collection.controller.coffee'
+  './src/store/collections/collections.controller.coffee'
   # Module - categories
   './src/store/categories/categories.module.coffee'
   './src/store/categories/categories.route.coffee'

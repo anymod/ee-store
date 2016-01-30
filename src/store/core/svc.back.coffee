@@ -74,6 +74,12 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
         url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/collections/' + id + _formQueryString(query)
       }
 
+    collectionsGET: () ->
+      _makeRequest {
+        method: 'GET'
+        url: eeBackUrl + 'store/' + eeBootstrap?.tr_uuid + '/collections'
+      }
+
     cartPOST: (quantity_array) ->
       _makeRequest {
         method: 'POST'

@@ -1,15 +1,18 @@
 angular.module 'ee-web-colorpicker', []
 
-angular.module('ee-web-colorpicker').directive 'eeWebColorpicker', () ->
+angular.module('ee-web-colorpicker').directive 'eeWebColorpicker', ($rootScope) ->
     templateUrl: 'ee-shared/components/ee-web-colorpicker.html'
     restrict: 'EA'
     scope:
       dabPrimary: '='
       dabSecondary: '='
       dabTertiary: '='
+      dabDimension: '@'
     link: (scope, ele, attrs) ->
 
       scope.compress = true
+
+      scope.dabDimension = if scope.dabDimension then parseInt(scope.dabDimension) else 27
 
       setDabFor = (rank) ->
         scope.selected = null
@@ -29,11 +32,12 @@ angular.module('ee-web-colorpicker').directive 'eeWebColorpicker', () ->
         setDabFor rank
         scope.compress = false
 
-      scope.selectColor = (color) ->
+      scope.selectColor = (color, broadcast) ->
         scope.selected = color
         if scope.rank is 1 then scope.dabPrimary = color
         if scope.rank is 2 then scope.dabSecondary = color
         if scope.rank is 3 then scope.dabTertiary = color
+        if broadcast then $rootScope.$broadcast 'eeWebColorPicked', color
 
       scope.rows = [
         { offset: 3,    colors: ['#003366', '#336699', '#3366CC', '#003399', '#000099', '#0000CC', '#000066'] },

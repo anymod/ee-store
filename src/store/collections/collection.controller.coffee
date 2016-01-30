@@ -7,8 +7,8 @@ angular.module('store.collections').controller 'collectionCtrl', ($rootScope, $s
   collection.ee = eeDefiner.exports
   collection.id = $stateParams.id
 
-  for coll in collection.ee.Collections.nav.alphabetical
-    if coll.id is parseInt(collection.id) then collection.title = coll.title
+  # for coll in collection.ee.Collections.nav.alphabetical
+  #   if coll.id is parseInt(collection.id) then collection.title = coll.title
 
   if $rootScope.pageDepth > 1 then eeCollection.fns.defineCollection collection.id
 

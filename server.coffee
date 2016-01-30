@@ -20,6 +20,7 @@ utils         = require './models/utils'
 
 User          = require './models/user'
 Product       = require './models/product'
+Collection    = require './models/collection'
 Sku           = require './models/sku'
 Cart          = require './models/cart'
 
@@ -93,6 +94,22 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     console.error 'error in PRODUCTS', err
     res.redirect '/'
 
+# COLLECTIONS
+app.get '/collections', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () -> Collection.findAll bootstrap.id
+  .then (data) ->
+    bootstrap.collections   = data
+    # bootstrap.count         = count
+    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
+    # bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.stringified   = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in COLLECTIONS', err
+    res.redirect '/'
+    
 # COLLECTION
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req

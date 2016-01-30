@@ -4,7 +4,7 @@ $.cloudinary.config({ cloud_name: 'eeosk' })
 
 angular.module 'ee-cloudinaryUpload', []
 
-angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", () ->
+angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", ($rootScope) ->
   templateUrl: 'ee-shared/components/ee-cloudinary-upload.html'
   restrict: 'E'
   replace: true
@@ -40,6 +40,7 @@ angular.module('ee-cloudinaryUpload').directive "eeCloudinaryUpload", () ->
           unbindCloudinary()
           assignAttr(data)
           scope.$apply()
+          $rootScope.$broadcast 'cloudinaryUploadFinished'
           bindCloudinary()
         .bind 'cloudinaryprogress', (e, data) ->
           percentage = Math.round((data.loaded * 100.0) / data.total)

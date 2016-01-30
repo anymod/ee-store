@@ -30,7 +30,9 @@ angular.module('app.core').filter 'removeHash', ($filter) ->
 
 resizeCloudinaryImageTo = (url, w, h) ->
   if !!url and url.indexOf("image/upload") > -1
-    url.split("image/upload").join('image/upload/c_pad,w_' + w + ',h_' + h)
+    regex = /\/v\d{8,12}\//g
+    id = url.match(regex)[0]
+    url.split(regex).join('/c_pad,w_' + w + ',h_' + h + id)
   else
     url
 
@@ -39,6 +41,7 @@ angular.module('app.core').filter 'small',                () -> (url) -> resizeC
 angular.module('app.core').filter 'midsize',              () -> (url) -> resizeCloudinaryImageTo url, 250, 250
 angular.module('app.core').filter 'mainImg',              () -> (url) -> resizeCloudinaryImageTo url, 600, 600
 angular.module('app.core').filter 'collectionThumbnail',  () -> (url) -> resizeCloudinaryImageTo url, 300, 177
+angular.module('app.core').filter 'collectionEdit',       () -> (url) -> resizeCloudinaryImageTo url, 425, 250
 
 angular.module('app.core').filter 'scaledDownBackground', () ->
   (url) ->
@@ -46,6 +49,14 @@ angular.module('app.core').filter 'scaledDownBackground', () ->
       url.replace('h_400,w_1200', 'h_133,w_400')
     else
       url
+
+angular.module('app.core').filter 'cloudinaryAttachment', () ->
+  (url) ->
+    if !!url and url.indexOf("image/upload") > -1
+      url.split('image/upload').join('image/upload/fl_attachment')
+    else
+      url
+
 
 angular.module('app.core').filter 'urlText', () ->
   (text) ->

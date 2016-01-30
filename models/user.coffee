@@ -36,10 +36,10 @@ User =
     .then (data) ->
       utils.assignBootstrap bootstrap, data[0]
       Collection.navCollectionsBySellerId bootstrap.id
-    .then (data) ->
+    .then (collections) ->
       bootstrap.nav =
-        carousel:     data.carousel
-        alphabetical: data.alphabetical
+        carousel: collections
+        # alphabetical: data.alphabetical
       bootstrap
 
   setCollectionMetaImages: (bootstrap) ->
