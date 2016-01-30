@@ -20,8 +20,9 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
 
   ## PRIVATE FUNCTIONS
   _defineCart = () ->
+    return if !$cookies.get('cart')
     _data.reading = true
-    [ee, cart_id, token] = $cookies.get('cart').split('.')
+    [ee, cart_id, token] = $cookies.get('cart')?.split('.')
     eeBack.fns.cartGET cart_id
     .then (cart) ->
       _data.quantity_array = cart.quantity_array
