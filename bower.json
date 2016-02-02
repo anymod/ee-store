@@ -19,6 +19,8 @@
     "angular-cookies": "^1.2",
     "angular-scroll": "~0.6",
     "keen-js": "~3.3.0",
-    "zoom.js": "~0.0.1"
+    "zoom.js": "~0.0.1",
+    "angulartics": "~1.0.3",
+    "angulartics-google-analytics": "~0.1.4"
   }
 }

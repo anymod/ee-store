@@ -29,8 +29,8 @@ sources.storeVendorMin = [
   './src/bower_components/angular-animate/angular-animate.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap.min.js'
   './src/bower_components/angular-bootstrap/ui-bootstrap-tpls.min.js'
-  # './src/bower_components/angulartics/dist/angulartics.min.js'
-  # './src/bower_components/angulartics/dist/angulartics-ga.min.js'
+  './src/bower_components/angulartics/dist/angulartics.min.js'
+  './src/bower_components/angulartics-google-analytics/dist/angulartics-google-analytics.min.js'
   './src/bower_components/zoom.js/dist/zoom.min.js'
   './src/bower_components/keen-js/dist/keen.min.js'
 ]

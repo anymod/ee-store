@@ -7,8 +7,8 @@ angular.module 'eeStore', [
   'ui.router'
   'ui.bootstrap'
   # 'ngSanitize'
-  # 'angulartics'
-  # 'angulartics.google.analytics'
+  'angulartics'
+  'angulartics.google.analytics'
 
   # core
   'app.core'
