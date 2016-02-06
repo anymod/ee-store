@@ -8513,6 +8513,12 @@ a.link-muted {
 .popover-primary.top > .arrow-primary:after {
   border-top-color: #03a9f4 !important;
 }
+uib-accordion i {
+  color: #f5f5f5;
+}
+uib-accordion a:focus {
+  outline: none;
+}
 .modal {
   z-index: 5001 !important;
 }
@@ -9057,6 +9063,9 @@ html {
 }
 .pad-5 {
   padding: 5px;
+}
+.pad-5-important {
+  padding: 5px !important;
 }
 .pad-7 {
   padding: 7px;
