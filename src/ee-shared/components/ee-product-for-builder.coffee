@@ -8,6 +8,7 @@ module.directive "eeProductForBuilder", (eeProducts) ->
   scope:
     product:      '='
     collection:   '='
+    buttonSet:    '='
     hideButtons:  '='
   link: (scope, ele, attrs) ->
     scope.productsFns = eeProducts.fns

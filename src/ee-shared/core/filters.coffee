@@ -36,12 +36,16 @@ resizeCloudinaryImageTo = (url, w, h) ->
   else
     url
 
-angular.module('app.core').filter 'thumbnail',            () -> (url) -> resizeCloudinaryImageTo url, 80, 80
-angular.module('app.core').filter 'small',                () -> (url) -> resizeCloudinaryImageTo url, 120, 120
-angular.module('app.core').filter 'midsize',              () -> (url) -> resizeCloudinaryImageTo url, 250, 250
-angular.module('app.core').filter 'mainImg',              () -> (url) -> resizeCloudinaryImageTo url, 600, 600
-angular.module('app.core').filter 'collectionThumbnail',  () -> (url) -> resizeCloudinaryImageTo url, 300, 177
-angular.module('app.core').filter 'collectionEdit',       () -> (url) -> resizeCloudinaryImageTo url, 425, 250
+angular.module('app.core').filter 'cloudinaryResizeTo', () ->
+  # Usage: | cloudinaryResizeTo:400:200
+  (input, w, h) -> resizeCloudinaryImageTo input, w, h
+
+# angular.module('app.core').filter 'thumbnail',            () -> (url) -> resizeCloudinaryImageTo url, 80, 80
+# angular.module('app.core').filter 'small',                () -> (url) -> resizeCloudinaryImageTo url, 120, 120
+# angular.module('app.core').filter 'midsize',              () -> (url) -> resizeCloudinaryImageTo url, 250, 250
+# angular.module('app.core').filter 'mainImg',              () -> (url) -> resizeCloudinaryImageTo url, 600, 600
+# angular.module('app.core').filter 'collectionThumbnail',  () -> (url) -> resizeCloudinaryImageTo url, 300, 177
+# angular.module('app.core').filter 'collectionEdit',       () -> (url) -> resizeCloudinaryImageTo url, 425, 250
 
 angular.module('app.core').filter 'scaledDownBackground', () ->
   (url) ->
@@ -56,7 +60,6 @@ angular.module('app.core').filter 'cloudinaryAttachment', () ->
       url.split('image/upload').join('image/upload/fl_attachment')
     else
       url
-
 
 angular.module('app.core').filter 'urlText', () ->
   (text) ->
@@ -151,9 +154,3 @@ angular.module('app.core').filter 'timeago', () ->
 
     if raw is true then return span
     if time <= local then (span + ' ago') else ('in ' + span)
-
-
-# angular.module('app.core').filter 'dashify', () ->
-#   (text) ->
-#     if !text or typeof(text) isnt 'string' then return ''
-#     text.replace(/_/g, '-')

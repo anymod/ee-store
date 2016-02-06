@@ -263,7 +263,7 @@ fns.Collection.formattedResponse = (collection, user, opts) ->
     res.collection = _.omit collection, data.Collection.restricted_attrs
     res
 
-data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'product_ids', 'deleted_at', 'featured', 'template_ids']
+data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at', 'featured', 'template_ids']
 
 ### /COLLECTION ###
 

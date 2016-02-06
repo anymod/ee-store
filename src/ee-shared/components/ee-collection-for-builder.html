@@ -2,7 +2,7 @@
     ng-class="{ 'opacity-05': collection.updating || collection.destroying }"
     class="well collection-well text-center inline-block vertical-align-bottom pad-5 margin-2 white-background box-shadow">
   <div class="pad-10 text-left" ng-click="editOrOpenModal()">
-    <img ng-src="{{ collection.banner | collectionThumbnail }}" class="full-width gray-border hover-success-border hover-pointer" ng-click="productsFns.addProductModal(product)">
+    <img ng-src="{{ collection.banner | cloudinaryResizeTo:300:177 }}" class="full-width gray-border hover-success-border hover-pointer" ng-click="productsFns.addProductModal(product)">
     <!-- <div>
       <h4 ng-bind="collection.headline" class="vert-2 font-weight-200"></h4>
     </div> -->
@@ -17,7 +17,7 @@
         </span>
       </div>
       <a ui-sref="collection({ id: collection.id })" class="btn btn-default font-weight-200">Edit</a>
-      <div class="btn btn-default font-weight-200" ng-click="collectionsFns.destroyCollection(collection)"><i class="fa fa-fw fa-times"></i></div>
+      <div class="btn btn-default font-weight-200" ng-click="collectionsFns.destroyCollection(collection)">Remove</div>
     </div>
     <!-- /Edit buttons -->
     <!-- Add buttons -->

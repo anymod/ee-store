@@ -21,7 +21,7 @@
           <div class="vert-10">
             <div class="col col-sm-2 col-xs-3">
               <a ui-sref="product({ id: sku.product_id, title: (sku.product.title | urlText) })">
-                <img ng-src="{{ sku.product.image | midsize }}" class="full-width" />
+                <img ng-src="{{ sku.product.image | cloudinaryResizeTo:250:250 }}" class="full-width" />
               </a>
             </div>
             <div class="col col-xs-4">

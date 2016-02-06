@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-sm-6" ng-repeat="collection in collections.ee.Collections.collections">
       <a ui-sref="collection({ id: collection.id })">
-        <img ng-src="{{ collection.banner | collectionEdit }}" class="full-width vert-5"/>
+        <img ng-src="{{ collection.banner | cloudinaryResizeTo:425:250 }}" class="full-width vert-5"/>
       </a>
     </div>
   </div>

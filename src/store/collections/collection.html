@@ -22,7 +22,7 @@
 
 <div class="container vert-20 text-center" ng-class="{ 'opacity-05': collection.ee.Collection.reading }">
 
-  <img ng-src="{{ collection.ee.Collection.collection.banner | collectionEdit }}" class="max-width-400"/>
+  <img ng-src="{{ collection.ee.Collection.collection.banner | cloudinaryResizeTo:425:250 }}" class="max-width-400"/>
 
   <div class="row">
 

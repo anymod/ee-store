@@ -51,7 +51,6 @@ module.directive "eeCollectionImagePreview", ($state, $window, $timeout, eeColle
     #   y: 20
     #   co_rgb: '#FFF'
 
-    console.log 'scope.collection.layers', scope.collection.layers
     scope.layers = scope.collection.layers || []
 
     scope.$on 'slideEnded', () ->
