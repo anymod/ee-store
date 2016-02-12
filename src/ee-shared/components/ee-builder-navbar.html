@@ -41,34 +41,17 @@
         </div>
         <!-- /showDropdown -->
       </div>
-      <div class="col col-xs-8 col-sm-7">
-
-        <!-- mainNav -->
-        <div class="btn-group btn-group-justified vert-2">
+      <!-- mainNav -->
+      <div ng-if="mainNav" class="col col-xs-8 col-sm-7">
+        <div class="btn-group btn-group-justified max-width-600 vert-2">
           <a ui-sref="daily" class="btn btn-default border-none pad-5 line-height-1" ng-class="{ active: btn1Active }" style="border-radius: 5px !important;">Your<br><small>Playbook</small></a>
           <a ui-sref="collections"    class="btn btn-default border-none pad-5 line-height-1" ng-class="{ active: btn2Active }" style="border-radius: 5px !important;">Product<br><small>Collections</small></a>
           <a ui-sref="orders"         class="btn btn-default border-none pad-5 line-height-1" ng-class="{ active: btn3Active }" style="border-radius: 5px !important;">Your<br><small>Orders</small></a>
         </div>
-        <!-- /mainNav -->
-
-        <!-- search bar -->
-        <!-- <form ng-if="search" class="margin-0-auto" style="margin-left: 50px !important" ng-submit="runSearch()">
-          <div ng-class="{ 'input-group input-group-lg': ee.Products.search.inputs.searchLabel }">
-            <input type="text" ng-model="ee.Products.search.inputs.search" class="form-control input-lg" placeholder="Search products">
-            <span ng-if="ee.Products.search.inputs.searchLabel" class="input-group-btn">
-              <input type="submit" class="hidden"/>
-              <button type="button" class="btn btn-default"
-                  ng-if="ee.Products.search.inputs.searchLabel"
-                  ng-click="productsFns.clearSearch()">
-                <i class="fa fa-times text-muted"></i>
-              </button>
-            </span>
-          </div>
-        </form> -->
-        <!-- /search bar -->
       </div>
+      <!-- /mainNav -->
+      <!-- signin: sign in button -->
       <div ng-if="signin" class="col col-xs-8 col-sm-9">
-        <!-- signin: sign in button -->
         <div class="vert-5 pull-right" role="form">
           <a ui-sref="login"
              class="btn btn-success"
@@ -78,23 +61,27 @@
             Sign in
           </a>
         </div>
-        <!-- /signin -->
       </div>
+      <!-- /signin -->
+      <!-- live button -->
       <div ng-if="live && ee.User.user" class="col col-xs-2 hidden-xs">
-        <!-- live button -->
         <ee-builder-live-button
           class="vert-2 pull-right"
           user="ee.User.user"
           hidden-xs="true">
         </ee-builder-live-button>
-        <!-- /live button -->
       </div>
+      <!-- /live button -->
     </div>
   </div>
 </nav>
 
 <style ng-if="ee.User.user.storefront_meta.brand.color">
-  .ee-builder-subnav { background-color: {{ ee.User.user.storefront_meta.brand.color.secondary }}; }
+  .ee-builder-subnav,
+  .ee-builder-subnav .builder-subnav-btn {
+    background-color: {{ ee.User.user.storefront_meta.brand.color.secondary }};
+    color: {{ ee.User.user.storefront_meta.brand.color.tertiary }};
+  }
   .ee-builder-subnav a.builder-subnav-btn {
     border-bottom: 5px solid {{ ee.User.user.storefront_meta.brand.color.tertiary }};
     color: {{ ee.User.user.storefront_meta.brand.color.tertiary }};
@@ -105,8 +92,8 @@
   class="navbar navbar-fixed-top ee-builder-subnav border-bottom-gray round-0 text-center">
   <div class="max-width-600 margin-0-auto pad-2 position-relative">
     <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="daily">Daily<br><small>Action</small></a>
-    <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="tracks">Marketing<br><small>Tracks</small></a>
-    <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="brand">Your<br><small>Brand</small></a>
+    <!-- <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="tracks">Marketing<br><small>Tracks</small></a> -->
+    <!-- <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="brand">Your<br><small>Brand</small></a> -->
     <!-- <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="store">Store<br><small>Management</small></a> -->
     <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="start">Getting<br><small>Started</small></a>
     <!-- <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="updates">eeosk<br><small>Updates</small></a> -->
@@ -117,7 +104,7 @@
   class="navbar navbar-fixed-top ee-builder-subnav border-bottom-gray round-0 text-center">
   <div class="max-width-600 margin-0-auto pad-2 position-relative">
     <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="collections">Your<br><small>Collections</small></a>
-    <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="categories">Your<br><small>Categories</small></a>
+    <!-- <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="categories">Your<br><small>Categories</small></a> -->
     <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="products">Featured<br><small>Products</small></a>
     <a class="builder-subnav-btn vert-8 no-underline transition-200" ui-sref-active="active" ui-sref="collectionsAdd">Add<br><small>Collections</small></a>
   </div>

@@ -1,16 +1,11 @@
 <form class="form vert-10">
   <uib-tabset>
     <uib-tab>
-      <uib-tab-heading>Preview</uib-tab-heading>
-      <img ng-src="{{ url }}" class="text-center max-width-100-pct">
-      <!-- <pre>{{ url }}</pre> -->
-    </uib-tab>
-    <uib-tab>
       <uib-tab-heading>Main <i class="fa fa-fw fa-image"></i></uib-tab-heading>
       <div class="row vert-5">
         <div class="col-sm-4">
           <p class="vert-2 text-info">Main image layer <small class="text-muted">800x470px</small></p>
-          <img ng-src="{{ base_path + '/' + base_transform + '/' + base_image | collectionThumbnail }}" class="full-width gray-border" style="max-width: 100px;" ng-if="collection.banner"/>
+          <img ng-src="{{ base_path + '/' + base_transform + '/' + base_image | cloudinaryResizeTo:300:177 }}" class="full-width gray-border" style="max-width: 100px;" ng-if="collection.banner"/>
           <div class="inline-block vertical-align-top">
             <div ng-if="base_transform.indexOf('o_0') < 0"
               class="btn btn-link pad-0"
@@ -23,7 +18,7 @@
         <div class="col-sm-8">
           <div class="row">
             <div class="col-xs-offset-1 col-xs-11">
-              <img ng-src="{{ url | collectionEdit }}" class="text-center max-width-100-pct" style="max-height: 250px;">
+              <img ng-src="{{ url | cloudinaryResizeTo:425:250 }}" class="text-center max-width-100-pct" style="max-height: 250px;">
             </div>
           </div>
         </div>
@@ -88,7 +83,7 @@
               <rzslider rz-slider-model="layer.y" rz-slider-high="layer.temp.maxY" rz-slider-options="{ floor: 0, ceil: 470, hideLimitLabels: true, vertical: true }"></rzslider>
             </div>
             <div class="col-xs-11" style="max-width: 446px;">
-              <img ng-src="{{ url | collectionEdit }}" class="text-center max-width-100-pct" style="max-height: 250px;">
+              <img ng-src="{{ url | cloudinaryResizeTo:425:250 }}" class="text-center max-width-100-pct" style="max-height: 250px;">
               <rzslider rz-slider-model="layer.x" rz-slider-high="layer.temp.maxX" rz-slider-options="{ floor: 0, ceil: 800, hideLimitLabels: true }"></rzslider>
             </div>
           </div>
@@ -107,12 +102,16 @@
         <div class="col-sm-8">
           <div class="row">
             <div class="col-xs-offset-1 col-xs-11">
-              <img ng-src="{{ url | collectionEdit }}" class="text-center max-width-100-pct" style="max-height: 250px;">
+              <img ng-src="{{ url | cloudinaryResizeTo:425:250 }}" class="text-center max-width-100-pct" style="max-height: 250px;">
             </div>
           </div>
         </div>
       </div>
     </uib-tab> -->
+    <uib-tab>
+      <uib-tab-heading>Preview</uib-tab-heading>
+      <img ng-src="{{ url }}" class="text-center max-width-100-pct">
+    </uib-tab>
   </uib-tabset>
 </form>
 <!-- <div class="btn btn-default" ng-click="construct()">Construct</div> -->

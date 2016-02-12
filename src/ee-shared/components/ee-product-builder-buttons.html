@@ -1,8 +1,12 @@
-<div class="btn btn-group pad-0" ng-class="btnClass">
-  <div class="btn btn-default font-weight-200" ng-click="customizationFns.toggleFeatured(product)" ng-class="{ 'btn-info': product.featured }">
-    Feat<span class="hidden-xs">ure<span ng-if="product.featured">d</span></span>
+<div class="pad-0" ng-class="btnClass">
+  <div ng-if="buttonSet.indexOf('feature') > -1" class="btn btn-default font-weight-200 pad-5-important" ng-click="customizationFns.toggleFeatured(product)" ng-class="{ 'btn-info': product.featured }">
+    Feature<span ng-if="product.featured">d</span>
   </div>
-  <div class="btn btn-default font-weight-200" ng-click="productsFns.addProductModal(product, { type: 'edit' })">Edit</div>
-  <div class="btn btn-default font-weight-200" ng-click="productsFns.addProductModal(product, { type: 'add' })" ng-if="!collection">Add</div>
-  <div class="btn btn-default font-weight-200" ng-click="collectionsFns.removeProduct(collection, product)" ng-if="collection"><i class="fa fa-fw fa-times"></i></div>
+  <a ng-if="buttonSet.indexOf('edit') > -1" ui-sref="productAdd({ id: product.id, title: (product.title | urlText) })" class="btn btn-default font-weight-200 pad-5-important">Edit</a>
+  <div ng-if="buttonSet.indexOf('add') > -1" class="btn btn-default font-weight-200" ng-click="add()">&nbsp;&nbsp;Add&nbsp;&nbsp;</div>
+  <div ng-if="buttonSet.indexOf('remove') > -1" class="btn btn-default font-weight-200 pad-5-important" ng-click="remove()" ng-class="{ 'btn-primary': buttonSet == 'remove' }">Remove</div>
+</div>
+
+<div class="btn btn-sm btn-link full-width font-weight-200" ng-click="productsFns.search(product.title); scrollTo('body-top');">
+  <i class="fa fa-search"></i> More like this
 </div>

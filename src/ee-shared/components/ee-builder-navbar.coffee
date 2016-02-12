@@ -23,7 +23,7 @@ angular.module('ee-builder-navbar').directive "eeBuilderNavbar", ($window, $stat
 
     switch $state.current?.name
       when 'daily', 'tracks', 'brand', 'store', 'start' then scope.btn1Active = true
-      when 'collections', 'categories', 'products', 'collectionsAdd', 'collection' then scope.btn2Active = true
+      when 'collections', 'categories', 'products', 'collectionsAdd' then scope.btn2Active = true
       when 'orders' then scope.btn3Active = true
 
     scope.runSearch = () ->

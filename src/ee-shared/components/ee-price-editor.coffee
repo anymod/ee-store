@@ -22,7 +22,7 @@ module.directive "eePriceEditor", () ->
       100 * scope.dollars + scope.cents
 
     _setAll = () ->
-      scope.sku.price     = _findPrice()
+      scope.sku.price = _findPrice()
       scope.discount  = _findDiscount()
       scope.margin    = _findMargin()
       scope.earnings  = _findEarnings()
