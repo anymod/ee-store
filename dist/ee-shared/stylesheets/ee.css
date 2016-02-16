@@ -8513,14 +8513,6 @@ a.link-muted {
 .popover-primary.top > .arrow-primary:after {
   border-top-color: #03a9f4 !important;
 }
-<<<<<<< HEAD
-uib-accordion i {
-  color: #f5f5f5;
-}
-uib-accordion a:focus {
-  outline: none;
-}
-=======
 uib-accordion.track-accordion .panel-group {
   -webkit-box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
   box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
@@ -8541,10 +8533,12 @@ uib-accordion.track-accordion .panel-heading i.fa-hide {
 uib-accordion.track-accordion .panel-heading a:focus {
   outline: none;
 }
-uib-accordion.track-accordion .panel-collapse {
-  background: #F5F5F5;
+uib-accordion.track-accordion .panel-title {
+  font-size: 20px;
 }
->>>>>>> playbook
+uib-accordion.track-accordion .panel-collapse {
+  background: #AFE1F7;
+}
 .modal {
   z-index: 5001 !important;
 }
@@ -9406,6 +9400,9 @@ img.loading {
 }
 .product-well {
   width: 170px;
+}
+.product-well img {
+  min-height: 111px;
 }
 .collection-well {
   width: 356px;
