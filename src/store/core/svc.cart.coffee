@@ -101,7 +101,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
     _createOrUpdate()
 
   _removeSku = (sku_id) ->
-    console.log '_removeSku', JSON.stringify(_data.quantity_array)
     tempQA = []
     for pair in _data.quantity_array
       if parseInt(sku_id) isnt parseInt(pair.sku_id) then tempQA.push pair
