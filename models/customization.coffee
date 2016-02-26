@@ -48,7 +48,9 @@ Customization =
     # TODO return prices and msrps in order
     products
 
-  alterSkus: (skus, customizations) -> Shared.Customization.alterSkus skus, customizations
+  alterSkus: (skus, customizations) ->
+    for customization in customizations
+      Shared.Customization.alterSkus skus, customization
     # skus ||= []
     # customizations ||= []
     # sku.price ||= sku.regular_price for sku in skus

@@ -60,10 +60,12 @@ Product = sequelize.define 'Product',
       .then (customizations) ->
         scope.customizations = customizations
         Shared.Product.findById id
-      .then (product) -> Sku.addAllToProduct product
-      .then (product) -> Customization.alterProducts [product], scope.customizations
-      .then (products) -> Customization.alterSkus products, scope.customizations
-      .then (products) -> products[0]
+      .then (product) ->
+        scope.product = product
+        Sku.addAllToProduct scope.product
+      .then () -> Customization.alterProducts [scope.product], scope.customizations
+      .then () -> Customization.alterSkus scope.product.skus, scope.customizations
+      .then () -> scope.product
 
     # findAllFeatured: (seller_id, page) ->
     #   data  = {}

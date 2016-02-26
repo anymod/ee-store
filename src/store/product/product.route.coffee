@@ -5,7 +5,7 @@ angular.module('store.product').config ($stateProvider) ->
   $stateProvider
 
     .state 'product',
-      url: '/products/:id/:title'
+      url: '/products/:id/:title?'
       views:
         top:
           controller: 'storeCtrl as storefront'
@@ -17,6 +17,6 @@ angular.module('store.product').config ($stateProvider) ->
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
       params:
-        slug:
+        title:
           value: null
           squash: true

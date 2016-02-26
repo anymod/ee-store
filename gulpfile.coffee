@@ -58,6 +58,9 @@ gulp.task 'html-prod', () ->
       js: 'ee.store.js'
     .pipe gp.htmlmin htmlminOptions
     .pipe gulp.dest distPath
+  gulp.src './src/sitemap.ejs'
+    .pipe gp.plumber()
+    .pipe gulp.dest distPath
 
 # ==========================
 # css tasks handled with copy-prod

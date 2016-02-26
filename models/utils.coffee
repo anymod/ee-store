@@ -73,4 +73,13 @@ utils =
     [min, max] = range.split('-')
     [parseInt(min)*100, parseInt(max)*100]
 
+  yyyymmdd: () ->
+    date = new Date()
+    yyyy = '' + date.getFullYear()
+    mm = '' + (date.getMonth() + 1)
+    dd = '' + date.getDate()
+    if !mm[1] then mm = '0' + mm
+    if !dd[1] then dd = '0' + dd
+    [yyyy,mm,dd].join('-')
+
 module.exports = utils

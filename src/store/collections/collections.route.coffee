@@ -5,7 +5,7 @@ angular.module('store.collections').config ($stateProvider) ->
   $stateProvider
 
     .state 'collection',
-      url: '/collections/:id?p&s&r'
+      url: '/collections/:id/:title?p&s&r'
       views:
         top:
           controller: 'storeCtrl as storefront'
@@ -20,6 +20,9 @@ angular.module('store.collections').config ($stateProvider) ->
         p: null # page
         s: null # sort
         r: null # range
+        title:
+          value: null
+          squash: true
 
     .state 'collections',
       url: '/collections'

@@ -94,22 +94,6 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     console.error 'error in PRODUCTS', err
     res.redirect '/'
 
-# COLLECTIONS
-app.get '/collections', (req, res, next) ->
-  { bootstrap, host, path } = utils.setup req
-  User.defineStorefront host, bootstrap
-  .then () -> Collection.findAll bootstrap.id
-  .then (data) ->
-    bootstrap.collections   = data
-    # bootstrap.count         = count
-    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    # bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
-    bootstrap.stringified   = utils.stringify bootstrap
-    res.render 'store.ejs', { bootstrap: bootstrap }
-  .catch (err) ->
-    console.error 'error in COLLECTIONS', err
-    res.redirect '/'
-    
 # COLLECTION
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
@@ -122,6 +106,22 @@ app.get '/collections/:id/:title*?', (req, res, next) ->
     bootstrap.count         = count
     bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
     bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.stringified   = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+  .catch (err) ->
+    console.error 'error in COLLECTIONS', err
+    res.redirect '/'
+
+# COLLECTIONS
+app.get '/collections', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () -> Collection.findAll bootstrap.id
+  .then (data) ->
+    bootstrap.collections   = data
+    # bootstrap.count         = count
+    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
+    # bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
     bootstrap.stringified   = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -199,6 +199,18 @@ app.get '/cart', (req, res, next) ->
       res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in CART', err
+    res.redirect '/'
+
+# SITEMAP
+app.get ['/sitemap', '/sitemap.xml'], (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  console.log host
+  User.defineSitemap host, bootstrap
+  .then (entries) ->
+    res.setHeader 'content-type', 'text/xml'
+    res.render 'sitemap.ejs', { entries: entries }
+  .catch (err) ->
+    console.error 'error in SITEMAP', err
     res.redirect '/'
 
 # LEGACY REDIRECTS
