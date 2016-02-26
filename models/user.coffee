@@ -63,7 +63,7 @@ User =
       Collection.findAll user.id
     .then (collections) ->
       for collection in collections
-        entries.push { baseLoc: host + '/collections/' + collection.id + '/', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
+        entries.push { loc: baseLoc + '/collections/' + collection.id + '/', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
       entries
 
 
