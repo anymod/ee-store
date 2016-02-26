@@ -19,6 +19,7 @@ utils =
         referer:  req.headers.referer
       host: req.headers.host
       path: url.parse(req.url).pathname
+      protocol: req.headers.protocol
     }
 
   assignBootstrap: (bootstrap, attrs) ->

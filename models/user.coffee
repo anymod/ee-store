@@ -47,22 +47,23 @@ User =
     .then (images) ->
       if images and images.length > 0 then bootstrap.images = utils.makeMetaImages images
 
-  defineSitemap: (host, bootstrap) ->
+  defineSitemap: (protocol, host, bootstrap) ->
+    baseLoc = protocol + '://' + host
     lastmod = utils.yyyymmdd()
     entries = [
-      { loc: host, lastmod: lastmod, changefreq: 'weekly', priority: '1.0' }
-      { loc: host + '/collections', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
-      { loc: host + '/help', lastmod: lastmod, changefreq: 'monthly', priority: '0.8' }
-      { loc: host + '/search', lastmod: lastmod, changefreq: 'monthly', priority: '0.6' }
+      { loc: baseLoc, lastmod: lastmod, changefreq: 'weekly', priority: '1.0' }
+      { loc: baseLoc + '/collections', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
+      { loc: baseLoc + '/help', lastmod: lastmod, changefreq: 'monthly', priority: '0.8' }
+      { loc: baseLoc + '/search', lastmod: lastmod, changefreq: 'monthly', priority: '0.6' }
     ]
     User.findByHost host
     .then (data) ->
       user = data[0]
-      if user.storefront_meta.about?.headline then entries.push { loc: host + '/about', lastmod: lastmod, changefreq: 'monthly', priority: '0.7' }
+      if user.storefront_meta.about?.headline then entries.push { loc: baseLoc + '/about', lastmod: lastmod, changefreq: 'monthly', priority: '0.7' }
       Collection.findAll user.id
     .then (collections) ->
       for collection in collections
-        entries.push { loc: host + '/collections/' + collection.id + '/', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
+        entries.push { baseLoc: host + '/collections/' + collection.id + '/', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
       entries
 
 

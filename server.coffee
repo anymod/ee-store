@@ -203,8 +203,8 @@ app.get '/cart', (req, res, next) ->
 
 # SITEMAP
 app.get ['/sitemap', '/sitemap.xml'], (req, res, next) ->
-  { bootstrap, host, path } = utils.setup req
-  User.defineSitemap req.protocol + '://' + host, bootstrap
+  { bootstrap, protocol, host, path } = utils.setup req
+  User.defineSitemap protocol, host, bootstrap
   .then (entries) ->
     res.setHeader 'content-type', 'text/xml'
     res.render 'sitemap.ejs', { entries: entries }
