@@ -117,7 +117,9 @@ fns.Product.sort = (user, opts) ->
   if opts.product_ids then product_ids_filter = ' AND p.id IN (' + opts.product_ids.split(',').join(',') + ') '
 
   # Categorization
-  category_ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
+  category_ids = null
+  if opts.categorized
+    category_ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
   if !category_ids then category_ids = [1,2,3,4,5,6]
 
   # Price
@@ -207,13 +209,13 @@ fns.Product.findAllByIds = (ids, opts) ->
 
 fns.Product.addCustomizationsFor = (user, products) ->
   if !products or products.length < 1 then return
-  product_ids = _.pluck products, 'id'
+  product_ids = _.map products, 'id'
   for product in products
     product.featured  = false
     product.prices    = product.regular_prices
     if product.skus
-      product.msrps   = _.pluck product.skus, 'msrp'
-      product.prices  = _.pluck product.skus, 'regular_price'
+      product.msrps   = _.map product.skus, 'msrp'
+      product.prices  = _.map product.skus, 'regular_price'
       sku.price = sku.regular_price for sku in product.skus
   q = 'SELECT product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND product_id IN (' + product_ids.join(',') + ');'
   sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
@@ -222,7 +224,7 @@ fns.Product.addCustomizationsFor = (user, products) ->
       for customization in customizations
         if customization.product_id is product.id
           if product.skus then fns.Customization.alterSkus product.skus, customization
-          if !product.skus and customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.pluck customization.selling_prices, 'selling_price'
+          if !product.skus and customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
           fns.Customization.alterProduct product, customization
       if !product.skus then product.skus = null
     # TODO return prices and msrps in order
@@ -230,7 +232,7 @@ fns.Product.addCustomizationsFor = (user, products) ->
 
 fns.Product.addAdminDetailsFor = (user, products) ->
   if user.admin isnt true or !products or products.length < 1 then return
-  product_ids = _.pluck products, 'id'
+  product_ids = _.map products, 'id'
   q = 'SELECT * FROM "Products" WHERE id IN (' + product_ids.join(',') + ');'
   sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
   # Product.findAll where: { id: $in: product_ids }
@@ -273,7 +275,7 @@ fns.Customization.alterSkus = (skus, customization) ->
   customization ||= {}
   for sku in skus
     if customization?.selling_prices
-      res = _.where customization.selling_prices, { sku_id: sku.id }
+      res = _.filter customization.selling_prices, { sku_id: sku.id }
       sku.price = if res and res.length > 0 then res[0].selling_price else sku.regular_price
     else
       sku.price = sku.regular_price
@@ -285,8 +287,8 @@ fns.Customization.alterProduct = (product, customization) ->
   if customization?.title then product.title = customization.title
   product.featured = !!customization?.featured
   if product.skus
-    product.msrps = _.pluck product.skus, 'msrp'
-    product.prices = _.pluck product.skus, 'price'
+    product.msrps = _.map product.skus, 'msrp'
+    product.prices = _.map product.skus, 'price'
   customization
 
 ### /CUSTOMIZATION ###

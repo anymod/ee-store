@@ -23,12 +23,11 @@ utils =
     }
 
   assignBootstrap: (bootstrap, attrs) ->
-    bootstrap.id                = attrs.id
-    bootstrap.username          = attrs.username
-    bootstrap.tr_uuid           = attrs.tr_uuid
+    bootstrap[attr] = attrs[attr] for attr in ['id', 'username', 'tr_uuid', 'logo', 'categorization_ids']
     bootstrap.storefront_meta   = attrs.storefront_meta or {}
-    bootstrap.collections       = attrs.collections
-    bootstrap.collection_names  = utils.collectionNames attrs.collections
+    bootstrap.home_carousel     = attrs.home_carousel or []
+    bootstrap.home_arranged     = attrs.home_arranged or []
+    # bootstrap.collection_names  = utils.collectionNames attrs.collections
     bootstrap.title             = attrs.storefront_meta?.home?.name
     bootstrap.site_name         = attrs.storefront_meta?.home?.name
     bootstrap.images            = if attrs.storefront_meta?.home?.carousel[0]?.imgUrl then utils.makeMetaImages([ attrs.storefront_meta?.home?.carousel[0]?.imgUrl ]) else []
@@ -51,6 +50,14 @@ utils =
       .replace /\\t/g, "\\t"
       .replace /\\b/g, "\\b"
       .replace /\\f/g, "\\f"
+
+  orderedResults: (results, ids) ->
+    return [] unless results and ids
+    ordered = []
+    for id in ids
+      for result in results
+        if parseInt(id) is parseInt(result.id) then ordered.push result
+    ordered
 
   makeMetaImage: (url) ->
     if url and url.indexOf("image/upload") > -1 then url.split("image/upload").join('image/upload/c_pad,w_600,h_314').replace('https://', 'http://') else url

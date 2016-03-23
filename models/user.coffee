@@ -14,10 +14,10 @@ Collection = require './collection'
 User =
 
   storeByDomain: (host) ->
-    sequelize.query 'SELECT id, tr_uuid, username, storefront_meta, collections FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
+    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
   storeByUsername: (username) ->
-    sequelize.query 'SELECT id, tr_uuid, username, storefront_meta, collections FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
+    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
 
   findByHost: (host) ->
     host  = host.replace 'www.', ''
@@ -33,14 +33,14 @@ User =
 
   defineStorefront: (host, bootstrap) ->
     User.findByHost host
-    .then (data) ->
-      utils.assignBootstrap bootstrap, data[0]
-      Collection.navCollectionsBySellerId bootstrap.id
+    .then (data) -> utils.assignBootstrap bootstrap, data[0]
+
+  defineHomepage: (bootstrap) ->
+    bootstrap.home_carousel ||= []
+    bootstrap.home_arranged ||= []
+    Collection.findHomeCarousel bootstrap.home_carousel.join(','), bootstrap.id
     .then (collections) ->
-      bootstrap.nav =
-        carousel: collections
-        # alphabetical: data.alphabetical
-      bootstrap
+      bootstrap.home_carousel = collections
 
   setCollectionMetaImages: (bootstrap) ->
     Collection.metaImagesFor bootstrap.id

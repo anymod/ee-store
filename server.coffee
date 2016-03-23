@@ -52,6 +52,7 @@ app.use cartCookie
 app.get '/', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
+  .then () -> User.defineHomepage bootstrap
   # TODO finish new meta images
   .then () -> User.setCollectionMetaImages bootstrap
   .then () -> Product.sort { id: bootstrap.id }, { page: bootstrap.page, feat: true }
