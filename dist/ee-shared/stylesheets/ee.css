@@ -10325,7 +10325,7 @@ a.product:focus .product-title {
   border-radius: 2px;
   margin: 3px;
   transition: all 0.2s ease-in-out;
-  max-width: 225px;
+  max-width: 210px;
 }
 .product-container:hover,
 .product-container:focus {
@@ -10338,14 +10338,9 @@ a.product:focus .product-title {
     max-width: 100%;
   }
 }
-@media (min-width: 481px) and (max-width: 767px) {
-  .product-container {
-    max-width: 212px;
-  }
-}
-@media (min-width: 1200px) {
-  .product-container {
-    max-width: 260px;
+@media (max-width: 480px) {
+  .product-repeater {
+    max-width: 49%;
   }
 }
 .homepage-product {

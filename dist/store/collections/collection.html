@@ -20,9 +20,9 @@
 </div> -->
 <!-- /breadcrumb -->
 
-<div class="container vert-20 text-center" ng-class="{ 'opacity-05': collection.ee.Collection.reading }">
+<div class="container max-width-900 vert-20 text-center" ng-class="{ 'opacity-05': collection.ee.Collection.reading }">
 
-  <img ng-src="{{ collection.ee.Collection.collection.banner | cloudinaryResizeTo:425:250 }}" class="max-width-400"/>
+  <img ng-src="{{ collection.ee.Collection.collection.banner | cloudinaryResizeTo:425:250 }}" class="full-width max-width-400"/>
 
   <div class="row">
 
@@ -45,9 +45,9 @@
         </div>
 
         <div class="full-width text-center vert-20 overflow-hidden" ng-hide="collection.ee.Collection.reading">
-          <div ng-repeat="product in collection.ee.Collection.products" class="text-left inline-block vertical-align-top">
+          <div ng-repeat="product in collection.ee.Collection.products"
+            class="product-repeater text-left inline-block vertical-align-top">
             <ee-product-for-store product="product"></ee-product-for-store>
-            <br>
           </div>
         </div>
 
