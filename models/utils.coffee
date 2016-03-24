@@ -4,6 +4,8 @@ url       = require 'url'
 sequelize = require '../config/sequelize/setup'
 constants = require '../server.constants'
 
+Shared    = require '../copied-from-ee-back/shared'
+
 utils =
 
   setup: (req) ->
@@ -51,13 +53,7 @@ utils =
       .replace /\\b/g, "\\b"
       .replace /\\f/g, "\\f"
 
-  orderedResults: (results, ids) ->
-    return [] unless results and ids
-    ordered = []
-    for id in ids
-      for result in results
-        if parseInt(id) is parseInt(result.id) then ordered.push result
-    ordered
+  orderedResults: Shared.Utils.orderedResults
 
   makeMetaImage: (url) ->
     if url and url.indexOf("image/upload") > -1 then url.split("image/upload").join('image/upload/c_pad,w_600,h_314').replace('https://', 'http://') else url

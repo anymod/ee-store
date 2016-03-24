@@ -1,16 +1,15 @@
 'use strict'
 
-angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location, eeDefiner, eeModal, categories) ->
+angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location, eeDefiner, eeUser, categories) ->
 
   storefront = this
 
   storefront.ee = eeDefiner.exports
   storefront.categories = categories
 
-  console.log 'storefront.ee', storefront.ee
-
   # storefront.fns =
   #   update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
+  if $state.current.name is 'storefront' and $rootScope.pageDepth > 1 then eeUser.fns.getUser()
 
   storefront.params = $location.search()
   if storefront.params

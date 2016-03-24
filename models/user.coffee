@@ -41,6 +41,11 @@ User =
     Collection.findHomeCarousel bootstrap.home_carousel.join(','), bootstrap.id
     .then (collections) ->
       bootstrap.home_carousel = collections
+      Collection.findHomeArranged bootstrap.home_arranged.join(','), bootstrap.id
+    .then (collections) ->
+      bootstrap.home_arranged = collections
+      # console.log 'bootstrap', bootstrap
+      bootstrap
 
   setCollectionMetaImages: (bootstrap) ->
     Collection.metaImagesFor bootstrap.id

@@ -35,7 +35,6 @@ angular.module('store.core').factory 'eeFetcher', ($q, $state, eeBootstrap, eeBa
     deferred.promise
 
   _setSelection   = (id) ->
-    console.log '_setSelection', id
     _data.loading = true
 
   _fetch = () ->

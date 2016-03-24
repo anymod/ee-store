@@ -4,16 +4,28 @@ Promise       = require 'bluebird'
 _             = require 'lodash'
 
 data =
+  Utils: {}
   User: {}
   Product: {}
   Collection: {}
   Customization: {}
 
 fns =
+  Utils: {}
   User: {}
   Product: {}
   Collection: {}
   Customization: {}
+
+### UTILS ###
+fns.Utils.orderedResults = (results, ids) ->
+  return [] unless results and ids
+  ordered = []
+  for id in ids
+    for result in results
+      if parseInt(id) is parseInt(result.id) then ordered.push result
+  ordered
+### /UTILS ###
 
 ### USER ###
 ### /USER ###
@@ -264,6 +276,32 @@ fns.Collection.formattedResponse = (collection, user, opts) ->
   .then (res) ->
     res.collection = _.omit collection, data.Collection.restricted_attrs
     res
+
+fns.Collection.findHomeCarousel = (collection_ids, seller_id) ->
+  collection_ids ||= '0'
+  sequelize.query 'SELECT id, banner FROM "Collections" WHERE id IN (' + collection_ids + ') AND banner IS NOT NULL AND show_banner IS TRUE AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  .then (collections) -> fns.Utils.orderedResults collections, collection_ids.split(',')
+
+fns.Collection.findHomeArranged = (collection_ids, seller_id) ->
+  collection_ids ||= '0'
+  arranged = []
+  sequelize.query 'SELECT id, banner, show_banner, product_ids FROM "Collections" WHERE id IN (' + collection_ids + ') AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  .then (collections) ->
+    addProductsIfNoBanner = (collection) ->
+      return if !collection.product_ids or collection.product_ids.length < 1
+      if collection.banner and collection.show_banner
+        delete collection.product_ids
+        return arranged.push collection
+      fns.Collection.formattedResponse collection, { id: seller_id }, { size: 8 }
+      .then (coll) ->
+        delete collection.product_ids
+        collection.products = coll.rows
+        arranged.push collection
+    Promise.reduce collections, ((total, collection) -> addProductsIfNoBanner collection), 0
+  .then () -> fns.Utils.orderedResults arranged, collection_ids.split(',')
+
+fns.Collection.findForHomepage = (collection, user, opts) ->
+  collection
 
 data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at', 'featured', 'template_ids']
 

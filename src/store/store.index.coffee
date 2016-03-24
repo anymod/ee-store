@@ -29,6 +29,7 @@ angular.module 'eeStore', [
   'ee-storefront-brand'
   'ee-scroll-to-top'
   'ee-collection-nav'
+  'ee-collection-for-store'
   'ee-product-for-store'
   'ee-product-card'
   'ee-product-images'

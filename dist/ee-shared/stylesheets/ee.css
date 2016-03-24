@@ -10348,6 +10348,14 @@ a.product:focus .product-title {
     max-width: 260px;
   }
 }
+.homepage-product {
+  max-width: 25%;
+}
+@media (max-width: 480px) {
+  .homepage-product {
+    max-width: 50%;
+  }
+}
 @media (max-width: 600px) {
   ee-collection-for-builder .media-left {
     display: inline-block;
