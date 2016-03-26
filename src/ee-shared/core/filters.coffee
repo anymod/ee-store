@@ -67,6 +67,15 @@ angular.module('app.core').filter 'cloudinaryAttachment', () ->
     else
       url
 
+angular.module('app.core').filter 'cloudinaryTrim', () ->
+  (url) ->
+    if !!url and url.indexOf("image/upload") > -1
+      regex = /\/v\d{8,12}\//g
+      id = url.match(regex)[0]
+      url.split(regex).join('/e_trim' + id)
+    else
+      url
+
 angular.module('app.core').filter 'urlText', () ->
   (text) ->
     if !text or typeof(text) isnt 'string' then return ''
