@@ -90,7 +90,7 @@
     </a>
     <!-- Logo -->
     <a ui-sref="storefront">
-      <img ng-src="{{ user.logo }}" style="max-height: 34px;"/>
+      <img ng-src="{{ user.logo | cloudinaryTrim }}" style="max-height: 34px;"/>
     </a>
     <!-- /Logo -->
     <a ui-sref="cart" class="pad-5 pull-right inline-block text-muted">
