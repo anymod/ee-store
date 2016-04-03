@@ -124,13 +124,16 @@ fns.Product.sort = (user, opts) ->
   opts        ||= {}
   replacements  = []
 
+  # Attributes
+  attributes = 'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.id) as sku_ids, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps, min(s.regular_price) AS min_price, max(s.regular_price) AS max_price'
+
   # Product IDs
   product_ids_filter = ' '
   if opts.product_ids then product_ids_filter = ' AND p.id IN (' + opts.product_ids.split(',').join(',') + ') '
 
   # Categorization
   category_ids = null
-  if opts.categorized
+  if opts.categorized or opts.category_ids
     category_ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
   if !category_ids then category_ids = [1,2,3,4,5,6]
 
@@ -150,12 +153,48 @@ fns.Product.sort = (user, opts) ->
   featured_join = ' '
   if opts.feat then featured_join = ' JOIN "Customizations" c ON c.product_id = p.id AND c.seller_id = ' + user.id + ' AND c.featured = true '
 
+
   # Order
   order = 'p.updated_at DESC'
-  if opts.order is 'pa' then order = 'min_price ASC'
-  if opts.order is 'pd' then order = 'max_price DESC'
-  if opts.order is 'ta' then order = "LOWER(regexp_replace(p.title, '[^[:alpha:]]', '', 'g')) ASC"
-  if opts.order is 'td' then order = "LOWER(regexp_replace(p.title, '[^[:alpha:]]', '', 'g')) DESC"
+  switch opts.order
+    when 'pa' then order = 'min_price ASC'
+    when 'pd' then order = 'max_price DESC'
+    when 'ta' then order = "LOWER(regexp_replace(p.title, '[^[:alpha:]]', '', 'g')) ASC"
+    when 'td' then order = "LOWER(regexp_replace(p.title, '[^[:alpha:]]', '', 'g')) DESC"
+    when 'shipd'
+      attributes += ', max(s.shipping_price*1.0/s.baseline_price) as shipping'
+      order = "shipping DESC"
+    when 'shipa'
+      attributes += ', min(s.shipping_price*1.0/s.baseline_price) as shipping'
+      order = "shipping ASC"
+    when 'discd'
+      attributes += ', max((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
+      order = "discount DESC"
+    when 'disca'
+      attributes += ', min((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
+      order = "discount ASC"
+    when 'eeprofd'
+      attributes += ', max(1.0 - (1.0*s.supply_price + s.supply_shipping_price) / (1.0*s.baseline_price + s.shipping_price)) as profit'
+      order = "profit DESC"
+    when 'eeprofa'
+      attributes += ', min(1.0 - (1.0*s.supply_price + s.supply_shipping_price) / (1.0*s.baseline_price + s.shipping_price)) as profit'
+      order = "profit ASC"
+    when 'sellprofd'
+      attributes += ', max(1.0*regular_price - baseline_price) as profit'
+      order = "profit DESC"
+    when 'sellprofa'
+      attributes += ', min(1.0*regular_price - baseline_price) as profit'
+      order = "profit ASC"
+
+  # Filters
+  other_filters = ''
+  if opts.discontinued
+    other_filters += ' AND (p.discontinued IS true OR s.discontinued IS true) '
+  else
+    other_filters += ' AND p.discontinued IS NOT true AND s.discontinued IS NOT true '
+    other_filters += if opts.hide_from_catalog then ' AND (p.hide_from_catalog IS true OR s.hide_from_catalog IS true) ' else ' AND p.hide_from_catalog IS NOT true AND s.hide_from_catalog IS NOT true'
+    other_filters += if opts.out_of_stock then ' AND s.quantity < 1 ' else ' AND s.quantity > 0 '
+  if opts.manual_pricing then other_filters += ' AND s.auto_pricing IS NOT true '
 
   # Limit
   limit = if opts.size then parseInt(opts.size) else 48
@@ -171,15 +210,14 @@ fns.Product.sort = (user, opts) ->
       ' + featured_join + '
       JOIN "Skus" s
       ON p.id = s.product_id
-      WHERE p.category_id in (' + category_ids.join(',') + ') AND p.hide_from_catalog IS NOT true
+      WHERE p.category_id in (' + category_ids.join(',') + ')
       ' + product_ids_filter + '
       ' + supplier_filter + '
       ' + price_filter + '
+      ' + other_filters + '
       GROUP BY p.id '
 
-  q =
-    'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps, min(s.regular_price) AS min_price, max(s.regular_price) AS max_price' +
-    baseQuery + 'ORDER BY ' + order + ' LIMIT ' + limit + ' OFFSET ' + offset + ';'
+  q = attributes + baseQuery + 'ORDER BY ' + order + ' LIMIT ' + limit + ' OFFSET ' + offset + ';'
 
   countQuery = 'SELECT count(*) FROM (SELECT p.id' + baseQuery + ') AS countable;'
 
@@ -190,7 +228,9 @@ fns.Product.sort = (user, opts) ->
   .then (res) ->
     scope.count = if res[0]?.count then parseInt(res[0].count) else null
     fns.Product.addAdminDetailsFor user, scope.rows
-  .then () -> fns.Product.addCustomizationsFor user, scope.rows
+  .then () ->
+    if opts.uncustomized is 'true' then return scope
+    fns.Product.addCustomizationsFor user, scope.rows
   .then () ->
     scope
 
