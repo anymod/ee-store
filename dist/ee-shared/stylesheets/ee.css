@@ -8841,6 +8841,12 @@ rzslider.vertical .rz-ticks .tick .tick-value {
 .text-envelope:hover {
   color: #ffac00 !important;
 }
+.text-flag {
+  color: #6b5c84 !important;
+}
+.text-flag:hover {
+  color: #6b5c84 !important;
+}
 .text-dark-gray {
   color: #474747 !important;
 }
@@ -9732,6 +9738,12 @@ html {
 }
 .width-45 {
   width: 45px;
+}
+.width-50 {
+  width: 50px;
+}
+.width-55 {
+  width: 55px;
 }
 .width-62 {
   width: 62px;
