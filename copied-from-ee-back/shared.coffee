@@ -28,9 +28,25 @@ fns.Utils.orderedResults = (results, ids) ->
     for result in results
       if parseInt(id) is parseInt(result.id) then ordered.push result
   ordered
+
+fns.Utils.luminance = (hex, lum) ->
+  hex = String(hex).replace /[^0-9a-f]/gi, ''
+  if hex.length < 6 then hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+  lum = lum || 0
+  rgb = '#'
+  for i in [0..2]
+    c = parseInt(hex.substr(i * 2,2), 16)
+    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16)
+    rgb += ("00" + c).substr(c.length)
+  rgb
 ### /UTILS ###
 
 ### USER ###
+fns.User.addAccentColors = (obj) ->
+  return obj unless obj?.storefront_meta?.brand?.color?
+  for attr in ['primary', 'secondary', 'tertiary']
+    obj.storefront_meta.brand.color[attr + 'Accent'] = fns.Utils.luminance(obj.storefront_meta.brand.color[attr], -0.1)
+  obj
 ### /USER ###
 
 ### PRODUCT ###

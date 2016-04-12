@@ -6,6 +6,7 @@ constants = require '../server.constants'
 utils     = require './utils'
 
 Collection = require './collection'
+Shared    = require '../copied-from-ee-back/shared'
 
 ### IMPORTANT ###
 # Users, Collections, and Orders should use
@@ -24,7 +25,7 @@ User =
     searchTerm  = host
     queryUser   = User.storeByDomain
     if process.env.NODE_ENV isnt 'production' or host.indexOf('eeosk.com') > -1 or host.indexOf('herokuapp.com') > -1 or host.indexOf('.demoseller.com') > -1
-      username = 'demoseller' # 'stylishrustic'
+      username = 'demoseller' # 'stylishrustic' # 'demoseller'
       if host.indexOf('herokuapp.com') > -1 then username = 'stylishrustic' # 'demoseller'
       if host.indexOf('eeosk.com') > -1 or host.indexOf('.demoseller.com') > -1 then username = host.split('.')[0]
       searchTerm  = username
@@ -33,7 +34,10 @@ User =
 
   defineStorefront: (host, bootstrap) ->
     User.findByHost host
-    .then (data) -> utils.assignBootstrap bootstrap, data[0]
+    .then (data) ->
+      user = data[0]
+      Shared.User.addAccentColors user
+      utils.assignBootstrap bootstrap, user
 
   defineHomepage: (bootstrap) ->
     bootstrap.home_carousel ||= []

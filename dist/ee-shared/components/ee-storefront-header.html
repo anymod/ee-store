@@ -31,7 +31,7 @@
               </form>
               <!-- /Search -->
             </div>
-            <div class="full-width text-right pad-5 vert-5 vertical-align-middle">
+            <div class="full-width text-right pad-5 vert-5 margin-top-0 vertical-align-middle">
               <!-- social media -->
               <a ng-repeat="site in ['facebook','pinterest','twitter','instagram']"
                 ng-if="user.storefront_meta.audience.social[site]"
@@ -172,9 +172,9 @@
 <!-- /Mobile Sidenav -->
 
 <!-- scrollToTop -->
-<div ng-if="showScrollToTop" ee-scroll-to-top class="ee-scroll-to-top position-fixed round-50-pct text-center pad-2 hover-pointer transition-400"
-  style="right: 24px; width: 44px; height: 44px; z-index: 3020; opacity: 0.9;"
+<div ng-if="showScrollToTop" ee-scroll-to-top class="ee-scroll-to-top position-fixed text-center pad-5 hover-pointer transition-400"
+  style="right: 24px; width: 44px; height: 44px; z-index: 3020;"
   ng-style="{ bottom: showScrollButton ? '24px' : '-200px' }">
-  <i class="fa fa-3x fa-chevron-circle-up"></i>
+  <i class="fa fa-2x fa-chevron-up" ng-style="{ color: user.storefront_meta.brand.color.tertiary, 'text-shadow': '0 2px ' + user.storefront_meta.brand.color.secondaryAccent }"></i>
 </div>
 <!-- /scrollToTop -->

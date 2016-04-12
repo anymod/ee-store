@@ -110,13 +110,35 @@
         background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>;
         color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
       }
-      .navbar.ee-store-subnav { background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>; }
+      .navbar.ee-store-subnav {
+        background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>;
+        border-bottom: 2px solid <%= bootstrap.storefront_meta.brand.color.secondaryAccent %>;
+      }
       .navbar.ee-store-subnav .nav > li > a {
         color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
-        border-bottom: 5px solid <%= bootstrap.storefront_meta.brand.color.tertiary %>;
+        text-shadow: 1px 1px <%= bootstrap.storefront_meta.brand.color.secondaryAccent %>;
+      }
+      .ee-store-subnav .store-subnav-btn:hover,
+      .ee-store-subnav .store-subnav-btn:focus,
+      .ee-store-subnav .store-subnav-btn.active {
+        background: <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
       }
       .ee-scroll-to-top { background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>; }
       .ee-scroll-to-top i { color: <%= bootstrap.storefront_meta.brand.color.tertiary %>; }
+      .btn-themed {
+        color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
+        text-shadow: 1px 1px <%= bootstrap.storefront_meta.brand.color.secondaryAccent %>;
+        background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>;
+        border-color: <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
+        border-bottom: 2px solid <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
+      }
+      .btn-themed:hover,
+      .btn-themed:focus,
+      .btn-themed:active {
+        color: <%= bootstrap.storefront_meta.brand.color.tertiary %> !important;
+        background: <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
+      }
+      .btn-themed.btn-lg { font-weight: bold; }
     </style>
   <% } %>
 
