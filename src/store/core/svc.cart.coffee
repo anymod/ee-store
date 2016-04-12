@@ -56,7 +56,12 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
 
     # Calculate shipping_total
     _data.summary.shipping_total = 0
-    _data.summary.shipping_total += (parseInt(pair.quantity) * parseInt(sku_lookup[parseInt(pair.sku_id)]?.shipping_price || 0)) for pair in _data.quantity_array
+    # For Free shipping over $50
+    if _data.summary.cumulative_price < 5000
+      _data.summary.free_shipping = false
+      _data.summary.shipping_total += (parseInt(pair.quantity) * parseInt(sku_lookup[parseInt(pair.sku_id)]?.shipping_price || 0)) for pair in _data.quantity_array
+    else
+      _data.summary.free_shipping = true
 
     # Calculate totals
     _data.summary.subtotal    = _data.summary.cumulative_price + _data.summary.shipping_total

@@ -66,7 +66,7 @@
     <div class="col col-sm-4">
       <div class="well white-background box-shadow" style="min-width: 225px;">
 
-        <div ng-click="cart.buy()" class="btn btn-lg btn-block btn-default btn-themed" ng-disabled="cart.processing || cart.ee.Cart.updating || cart.ee.Cart.skus.length < 1">
+        <div ng-click="cart.buy()" class="btn btn-lg btn-block btn-themed" ng-disabled="cart.processing || cart.ee.Cart.updating || cart.ee.Cart.skus.length < 1">
           Buy Now
         </div>
         <div class="vert-10 full-width text-center">
@@ -75,7 +75,7 @@
 
         <h4>Order Summary</h4>
         <p class="margin-0">Items: <span class="pull-right" ng-bind="cart.ee.Cart.summary.cumulative_price | centToDollar"></span></p>
-        <p class="margin-0">Shipping & handling: <span class="pull-right" ng-bind="cart.ee.Cart.summary.shipping_total | centToDollar"></span></p>
+        <p class="margin-0">Shipping & handling: <span class="pull-right"><span ng-hide="cart.ee.Cart.summary.free_shipping" ng-bind="cart.ee.Cart.summary.shipping_total | centToDollar"></span><span ng-show="cart.ee.Cart.summary.free_shipping">Free</span></span></p>
         <hr class="vert-5">
         <p class="margin-0">Total before tax: <span class="pull-right" ng-bind="cart.ee.Cart.summary.subtotal | centToDollar"></span></p>
         <p class="margin-0">Estimated tax: <span class="pull-right" ng-bind="cart.ee.Cart.summary.taxes_total | centToDollar"></span></p>

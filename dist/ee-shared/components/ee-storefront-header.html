@@ -37,7 +37,7 @@
                 ng-if="user.storefront_meta.audience.social[site]"
                 href="https://{{ site }}.com/{{ user.storefront_meta.audience.social[site] }}" target="_blank"
                 class="link-muted text-{{ site }} no-underline margin-2 margin-top-0 margin-bottom-0">
-                <i class="fa fa-{{ site }} vertical-align-middle"></i>
+                <i class="fa fa-lg fa-{{ site }} vertical-align-middle"></i>
               </a>
               <!-- /social media -->
               <!-- blog -->
@@ -83,7 +83,7 @@
 <!-- /Desktop Subnav -->
 
 <!-- Mobile nav -->
-<nav class="navbar navbar-default white-background round-0 margin-0 no-side-border text-center visible-xs">
+<nav class="navbar navbar-default white-background round-0 margin-0 no-side-border text-center visible-xs" style="border-top: none;">
   <div class="margin-7">
     <a href ng-click="sidenavOpen = true" class="pad-5 pull-left inline-block text-muted">
       <i class="fa fa-fw fa-2x fa-bars"></i>
