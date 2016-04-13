@@ -30,20 +30,55 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
       _syncSkus()
     .finally () -> _data.reading = false
 
+  _getSku = (pair) ->
+    _data.updating = true
+    eeBack.fns.skuGET pair.product_id, pair.sku_id
+    .then (fullSku) ->
+      delete fullSku[attr] for attr in ['baseline_price','regular_price']
+      fullSku
+    .finally () ->
+      _defineSummary()
+      _data.updating = false
+
+  _addDataSku = (pair) ->
+    _getSku pair
+    .then (fullSku) ->
+      _data.skus.push fullSku
+      _defineSummary()
+
+  _syncSku = (pair, sku) ->
+    _getSku pair
+    .then (fullSku) ->
+      sku[attr] = fullSku[attr] for attr in Object.keys(fullSku)
+      _defineSummary()
+
   _syncSkus = () ->
     for pair in _data.quantity_array
-      unmatched = true
+      matchSku = undefined
       for sku in _data.skus
-        if sku.id is pair.sku_id then unmatched = false
-      if unmatched
-        _data.updating = true
-        eeBack.fns.skuGET pair.product_id, pair.sku_id
-        .then (sku) ->
-          delete sku.baseline_price
-          delete sku.regular_price
-          _data.skus.push sku
-          _defineSummary()
-        .finally () -> _data.updating = false
+        if sku.id is pair.sku_id then matchSku = sku
+      if !matchSku
+        _addDataSku pair
+      else if !matchSku.price?
+        _syncSku pair, matchSku
+      console.log pair, matchSku,
+
+      # matchingSku = undefined
+      # for sku in _data.skus
+      #   if sku.id is pair.sku_id then matchingSku = sku
+      # if !matchingSku and matchingSku.price
+      #   _data.updating = true
+      #   eeBack.fns.skuGET pair.product_id, pair.sku_id
+      #   .then (fullSku) ->
+      #     delete fullSku.baseline_price
+      #     delete fullSku.regular_price
+      #     # for sku in _data.skus
+      #     #   if sku.id is fullSku.id
+      #     matchingSku[attr] = fullSku[attr] for attr in Object.keys(fullSku)
+      #     if unmatched then _data.skus.push fullSku
+      #   .finally () ->
+      #     _defineSummary()
+      #     _data.updating = false
 
   _defineSummary = () ->
     # Set lookup object

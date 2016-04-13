@@ -8,7 +8,7 @@ angular.module('eeStore').controller 'cartCtrl', ($rootScope, $scope, $window, $
 
   ###### OLD
 
-  if $rootScope.pageDepth > 1 then eeCart.fns.defineCart()
+  eeCart.fns.defineCart()
 
   cart.removeSku = (sku_id) -> eeCart.fns.removeSku sku_id
 
