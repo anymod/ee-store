@@ -14,12 +14,12 @@ Shared    = require '../copied-from-ee-back/shared'
 Collection =
 
   findAll: (seller_id) ->
-    sequelize.query 'SELECT id, banner, updated_at, in_carousel FROM "Collections" WHERE seller_id = ? AND banner NOT ILIKE \'%white.jpg%\' AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 48', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+    sequelize.query 'SELECT id, banner, updated_at FROM "Collections" WHERE seller_id = ? AND banner NOT ILIKE \'%white.jpg%\' AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 48', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
     .then (collections) -> collections
 
   # navCollectionsBySellerId: (seller_id) ->
   #   data = {}
-  #   sequelize.query 'SELECT id, title, headline, button, banner, in_carousel FROM "Collections" WHERE seller_id = ? AND in_carousel = true AND banner NOT ILIKE \'%white.jpg%\' AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 10', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  #   sequelize.query 'SELECT id, title, headline, button, banner FROM "Collections" WHERE seller_id = ? AND banner NOT ILIKE \'%white.jpg%\' AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 10', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
   #   .then (collections) -> collections
 
   findById: (collection_id, seller_id) ->
@@ -49,7 +49,7 @@ Collection =
     # .then () -> utils.orderedResults arranged, collection_ids.split(',')
 
   metaImagesFor: (seller_id) ->
-    sequelize.query 'SELECT banner FROM "Collections" WHERE seller_id = ? AND in_carousel IS true AND banner IS NOT NULL AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 5', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+    sequelize.query 'SELECT banner FROM "Collections" WHERE seller_id = ? AND banner IS NOT NULL AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 5', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
     .then (images) ->
       _.pluck images, 'banner'
 

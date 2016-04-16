@@ -532,7 +532,7 @@ fns.Collection.findHomeArranged = (collection_ids, seller_id) ->
 fns.Collection.findForHomepage = (collection, user, opts) ->
   collection
 
-data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at', 'featured', 'template_ids']
+data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at']
 
 ### /COLLECTION ###
 

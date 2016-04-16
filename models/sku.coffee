@@ -46,7 +46,7 @@ Sku.attrs = [
   'msrp'
   'shipping_price'
   'selection_text'
-  'subcontent'
+  # 'subcontent'
   'style'
   'color'
   'material'
