@@ -25,7 +25,7 @@ utils =
     }
 
   assignBootstrap: (bootstrap, attrs) ->
-    bootstrap[attr] = attrs[attr] for attr in ['id', 'username', 'tr_uuid', 'logo', 'categorization_ids']
+    bootstrap[attr] = attrs[attr] for attr in ['id', 'username', 'tr_uuid', 'logo', 'categorization_ids', 'pricing']
     bootstrap.storefront_meta   = attrs.storefront_meta or {}
     bootstrap.home_carousel     = attrs.home_carousel or []
     bootstrap.home_arranged     = attrs.home_arranged or []

@@ -43,6 +43,7 @@ Sku.attrs = [
   'product_id'
   'identifier'
   'regular_price'
+  'baseline_price'
   'msrp'
   'shipping_price'
   'selection_text'

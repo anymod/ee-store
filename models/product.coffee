@@ -54,9 +54,9 @@ Product = sequelize.define 'Product',
       #   ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';' # ORDER BY needs to match ee-back for consistent sorting
       # sequelize.query q, { type: sequelize.QueryTypes.SELECT }
 
-    findCompleteById: (id, seller_id) ->
+    findCompleteById: (id, user) ->
       scope = {}
-      Customization.findAllByProductIds seller_id, [id], null
+      Customization.findAllByProductIds user.id, [id], null
       .then (customizations) ->
         scope.customizations = customizations
         Shared.Product.findById id
@@ -64,13 +64,14 @@ Product = sequelize.define 'Product',
         scope.product = product
         Sku.addAllToProduct scope.product
       .then () -> Customization.alterProducts [scope.product], scope.customizations
-      .then () -> Customization.alterSkus scope.product.skus, scope.customizations
-      .then () -> scope.product
+      .then () ->
+        Shared.Sku.setPricesFor scope.product.skus, user.pricing
+        scope.product
 
-    # findAllFeatured: (seller_id, page) ->
+    # findAllFeatured: (user, page) ->
     #   data  = {}
     #   scope = {}
-    #   Customization.findAllFeatured seller_id, page
+    #   Customization.findAllFeatured user.id, page
     #   .then (customizations) ->
     #     if !customizations or customizations.length < 1 then return {}
     #     scope.customizations = customizations
@@ -79,7 +80,7 @@ Product = sequelize.define 'Product',
     #   .then (products) -> Customization.alterProducts products, scope.customizations
     #   .then (products) ->
     #     data.rows = products
-    #     Customization.countFeatured seller_id
+    #     Customization.countFeatured user.id
     #   .then (res) ->
     #     data.count = res[0].count
     #     data

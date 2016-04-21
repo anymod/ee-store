@@ -5,6 +5,7 @@ _             = require 'lodash'
 argv          = require('yargs').argv
 
 data =
+  Defaults: {}
   Utils: {}
   User: {}
   Sku: {}
@@ -13,6 +14,7 @@ data =
   Customization: {}
 
 fns =
+  Defaults: {}
   Utils: {}
   User: {}
   Sku: {}
@@ -20,7 +22,35 @@ fns =
   Collection: {}
   Customization: {}
 
+### DEFAULTS ###
+fns.Defaults.marginRows = [
+  { min: 0,     max: 2499,      margin: 0.20 }
+  { min: 2500,  max: 4999,      margin: 0.15 }
+  { min: 5000,  max: 9999,      margin: 0.10 }
+  { min: 10000, max: 19999,     margin: 0.07 }
+  { min: 20000, max: 99999999,  margin: 0.05 }
+]
+### /DEFAULTS ###
+
 ### UTILS ###
+fns.Utils.getMargin = (marginRows, price) ->
+  marginRows ||= []
+  for row in marginRows
+    if price <= row.max and price >= row.min
+      return row.margin
+  for row in fns.Defaults.marginRows
+    if price <= row.max and price >= row.min
+      return row.margin
+  throw 'No margin found'
+
+fns.Utils.calcPrice = (marginRows, baseline_price) ->
+  margin = fns.Utils.getMargin marginRows, baseline_price
+  parseInt((baseline_price / (1 - margin))/100) * 100 + 99
+
+fns.Utils.calcSellerEarnings = (marginRows, baseline_price) ->
+  margin = fns.Utils.getMargin marginRows, baseline_price
+  parseInt(baseline_price * margin)
+
 fns.Utils.orderedResults = (results, ids) ->
   return [] unless results and ids
   ordered = []
@@ -65,7 +95,8 @@ fns.Product.search = (user, opts) ->
           type: 'sku',
           filter:
             and: [
-              { bool: must: range: regular_price: { gte: opts.min_price, lte: opts.max_price } }
+              # TODO change elasticsearch to be based on baseline_price instead of regular_price
+              { bool: must: range: baseline_price: { gte: opts.min_price, lte: opts.max_price } }
               # { bool: must: range: supplier_id: { gte: 3797, lte: 3797 } }
             ]
         } }
@@ -146,7 +177,7 @@ fns.Product.sort = (user, opts) ->
   replacements  = []
 
   # Attributes
-  attributes = 'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.id) as sku_ids, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps, min(s.regular_price) AS min_price, max(s.regular_price) AS max_price'
+  attributes = 'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.id) as sku_ids, array_agg(s.msrp) as msrps, min(s.baseline_price) AS min_price, max(s.baseline_price) AS max_price, array_agg(s.baseline_price) as baseline_prices'
 
   # Product IDs
   product_ids_filter = ' '
@@ -160,8 +191,8 @@ fns.Product.sort = (user, opts) ->
 
   # Price
   price_filter = ' '
-  if opts.min_price then price_filter += ' AND s.regular_price > ' + parseInt(opts.min_price) + ' '
-  if opts.max_price then price_filter += ' AND s.regular_price < ' + parseInt(opts.max_price) + ' '
+  if opts.min_price then price_filter += ' AND s.baseline_price > ' + parseInt(opts.min_price) + ' ' # fmrly regular_price
+  if opts.max_price then price_filter += ' AND s.baseline_price < ' + parseInt(opts.max_price) + ' ' # fmrly regular_price
 
   # Supplier
   supplier_filter = ' '
@@ -173,7 +204,6 @@ fns.Product.sort = (user, opts) ->
   featured_join = ' '
   ## TEMPORARILY (?) removing for disabled custom pricing.  May not need this at all anymore though.
   # if opts.feat then featured_join = ' JOIN "Customizations" c ON c.product_id = p.id AND c.seller_id = ' + user.id + ' AND c.featured = true '
-
 
   # Order
   order = 'p.updated_at DESC'
@@ -188,24 +218,26 @@ fns.Product.sort = (user, opts) ->
     when 'shipa'
       attributes += ', min(s.shipping_price*1.0/s.baseline_price) as shipping'
       order = "shipping ASC"
-    when 'discd'
-      attributes += ', max((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
-      order = "discount DESC"
-    when 'disca'
-      attributes += ', min((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
-      order = "discount ASC"
+    # TODO rework without regular_price column
+    # when 'discd'
+    #   attributes += ', max((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
+    #   order = "discount DESC"
+    # when 'disca'
+    #   attributes += ', min((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
+    #   order = "discount ASC"
     when 'eeprofd'
       attributes += ', max(1.0 - (1.0*s.supply_price + s.supply_shipping_price) / (1.0*s.baseline_price + s.shipping_price)) as profit'
       order = "profit DESC"
     when 'eeprofa'
       attributes += ', min(1.0 - (1.0*s.supply_price + s.supply_shipping_price) / (1.0*s.baseline_price + s.shipping_price)) as profit'
       order = "profit ASC"
-    when 'sellprofd'
-      attributes += ', max(1.0*regular_price - baseline_price) as profit'
-      order = "profit DESC"
-    when 'sellprofa'
-      attributes += ', min(1.0*regular_price - baseline_price) as profit'
-      order = "profit ASC"
+    # TODO rework without regular_price column
+    # when 'sellprofd'
+    #   attributes += ', max(1.0*regular_price - baseline_price) as profit'
+    #   order = "profit DESC"
+    # when 'sellprofa'
+    #   attributes += ', min(1.0*regular_price - baseline_price) as profit'
+    #   order = "profit ASC"
 
   # Filters
   other_filters = ''
@@ -257,7 +289,7 @@ fns.Product.sort = (user, opts) ->
 
 fns.Product.findById = (id) ->
   q =
-  'SELECT p.id, p.title, p.image, p.content, p.additional_images, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps
+  'SELECT p.id, p.title, p.image, p.content, p.additional_images, p.category_id, p.discontinued, array_agg(s.msrp) as msrps, array_agg(s.baseline_price) as baseline_prices
     FROM "Products" p
     JOIN "Skus" s
     ON p.id = s.product_id
@@ -271,25 +303,26 @@ fns.Product.findAllByIds = (ids, opts) ->
   limit  = if opts?.limit  then (' LIMIT '  + parseInt(opts.limit) + ' ') else ' '
   offset = if opts?.offset then (' OFFSET ' + parseInt(opts.offset) + ' ') else ' '
   q =
-  'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps
+  'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.msrp) as msrps
     FROM "Products" p
     JOIN "Skus" s
     ON p.id = s.product_id
     WHERE p.id IN (' + ids + ')
     GROUP BY p.id
-    ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';'
+    ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';' # , array_agg(s.regular_price) as regular_prices
   sequelize.query q, { type: sequelize.QueryTypes.SELECT }
 
 fns.Product.addCustomizationsFor = (user, products) ->
   if !products or products.length < 1 then return
   product_ids = _.map products, 'id'
   for product in products
-    product.featured  = false
-    product.prices    = product.regular_prices
+    # product.featured  = false
+    if product.baseline_prices
+      product.prices = _.map(product.baseline_prices, (baseline_price) -> fns.Utils.calcPrice(user.pricing, baseline_price))
     if product.skus
-      product.msrps   = _.map product.skus, 'msrp'
-      product.prices  = _.map product.skus, 'regular_price'
-      sku.price = sku.regular_price for sku in product.skus
+      fns.Sku.setPricesFor product.skus, user.pricing
+      product.msrps = _.map product.skus, 'msrp'
+      product.prices = _.map product.skus, 'price'
   q = 'SELECT product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND product_id IN (' + product_ids.join(',') + ');'
   sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
   .then (customizations) ->
@@ -299,6 +332,7 @@ fns.Product.addCustomizationsFor = (user, products) ->
           ## TEMPORARILY disabling sku custom pricing
           # if product.skus then fns.Customization.alterSkus product.skus, customization
           # if !product.skus and customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
+          # if product.skus then fns.Sku.setPricesFor(product.skus, user.pricing)
           fns.Customization.alterProduct product, customization
       if !product.skus then product.skus = null
     products
@@ -327,6 +361,15 @@ data.Product.elasticsearch_findall_attrs = [
 ### /PRODUCT ###
 
 ### SKU ###
+
+fns.Sku.setPriceFor = (sku, marginArray) ->
+  sku.price = fns.Utils.calcPrice(marginArray, sku.baseline_price)
+  delete sku.baseline_price
+  sku
+
+fns.Sku.setPricesFor = (skus, marginArray) ->
+  fns.Sku.setPriceFor(sku, marginArray) for sku in skus
+  skus
 
 # fns.Sku.elasticsearch = (opts) ->
 #   scope   = {}
@@ -506,22 +549,22 @@ fns.Collection.formattedResponse = (collection, user, opts) ->
     res.collection = _.omit collection, data.Collection.restricted_attrs
     res
 
-fns.Collection.findHomeCarousel = (collection_ids, seller_id) ->
+fns.Collection.findHomeCarousel = (collection_ids, user) ->
   collection_ids ||= '0'
-  sequelize.query 'SELECT id, banner FROM "Collections" WHERE id IN (' + collection_ids + ') AND banner IS NOT NULL AND show_banner IS TRUE AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  sequelize.query 'SELECT id, banner FROM "Collections" WHERE id IN (' + collection_ids + ') AND banner IS NOT NULL AND show_banner IS TRUE AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
   .then (collections) -> fns.Utils.orderedResults collections, collection_ids.split(',')
 
-fns.Collection.findHomeArranged = (collection_ids, seller_id) ->
+fns.Collection.findHomeArranged = (collection_ids, user) ->
   collection_ids ||= '0'
   arranged = []
-  sequelize.query 'SELECT id, banner, show_banner, product_ids FROM "Collections" WHERE id IN (' + collection_ids + ') AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+  sequelize.query 'SELECT id, banner, show_banner, product_ids FROM "Collections" WHERE id IN (' + collection_ids + ') AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
   .then (collections) ->
     addProductsIfNoBanner = (collection) ->
       return if !collection.product_ids or collection.product_ids.length < 1
       if collection.banner and collection.show_banner
         delete collection.product_ids
         return arranged.push collection
-      fns.Collection.formattedResponse collection, { id: seller_id }, { size: 8 }
+      fns.Collection.formattedResponse collection, user, { size: 8 }
       .then (coll) ->
         delete collection.product_ids
         collection.products = coll.rows
@@ -537,18 +580,19 @@ data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from'
 ### /COLLECTION ###
 
 ### CUSTOMIZATION ###
-fns.Customization.alterSkus = (skus, customization) ->
-  skus ||= []
-  customization ||= {}
-  for sku in skus
-    ## TEMPORARILY disabling sku custom pricing
-    sku.price = sku.regular_price
-    # if customization?.selling_prices
-    #   res = _.filter customization.selling_prices, { sku_id: sku.id }
-    #   sku.price = if res and res.length > 0 then res[0].selling_price else sku.regular_price
-    # else
-    #   sku.price = sku.regular_price
-  customization
+
+# fns.Customization.alterSkus = (skus, customization) ->
+#   skus ||= []
+#   customization ||= {}
+#   for sku in skus
+#     ## TEMPORARILY disabling sku custom pricing
+#     sku.price = sku.regular_price
+#     # if customization?.selling_prices
+#     #   res = _.filter customization.selling_prices, { sku_id: sku.id }
+#     #   sku.price = if res and res.length > 0 then res[0].selling_price else sku.regular_price
+#     # else
+#     #   sku.price = sku.regular_price
+#   customization
 
 fns.Customization.alterProduct = (product, customization) ->
   product ||= {}

@@ -15,17 +15,17 @@ Shared    = require '../copied-from-ee-back/shared'
 User =
 
   storeByDomain: (host) ->
-    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
+    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids, pricing FROM "Users" WHERE domain = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [host] }
 
   storeByUsername: (username) ->
-    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
+    sequelize.query 'SELECT id, tr_uuid, username, logo, storefront_meta, home_carousel, home_arranged, categorization_ids, pricing FROM "Users" WHERE username = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [username] }
 
   findByHost: (host) ->
     host  = host.replace 'www.', ''
     searchTerm  = host
     queryUser   = User.storeByDomain
     if process.env.NODE_ENV isnt 'production' or host.indexOf('eeosk.com') > -1 or host.indexOf('herokuapp.com') > -1 or host.indexOf('.demoseller.com') > -1
-      username = 'elsafaul' # 'stylishrustic' # 'demoseller'
+      username = 'demoseller' # 'stylishrustic' # 'demoseller'
       if host.indexOf('herokuapp.com') > -1 then username = 'stylishrustic' # 'demoseller'
       if host.indexOf('eeosk.com') > -1 or host.indexOf('.demoseller.com') > -1 then username = host.split('.')[0]
       searchTerm  = username
@@ -42,10 +42,10 @@ User =
   defineHomepage: (bootstrap) ->
     bootstrap.home_carousel ||= []
     bootstrap.home_arranged ||= []
-    Collection.findHomeCarousel bootstrap.home_carousel.join(','), bootstrap.id
+    Collection.findHomeCarousel bootstrap.home_carousel.join(','), { id: bootstrap.id, pricing: bootstrap.pricing }
     .then (collections) ->
       bootstrap.home_carousel = collections
-      Collection.findHomeArranged bootstrap.home_arranged.join(','), bootstrap.id
+      Collection.findHomeArranged bootstrap.home_arranged.join(','), { id: bootstrap.id, pricing: bootstrap.pricing }
     .then (collections) ->
       bootstrap.home_arranged = collections
       # console.log 'bootstrap', bootstrap
