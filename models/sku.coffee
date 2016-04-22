@@ -29,7 +29,7 @@ Sku =
       product_ids = _.pluck(skus, 'product_id').join(',')
       Customization.findAllByProductIds seller_id, product_ids
     .then (customizations) ->
-      Customization.alterSkus scope.skus, customizations
+      # Customization.alterSkus scope.skus, customizations
       for sku in scope.skus
         sku.product =
           id:     sku.product_id

@@ -34,33 +34,35 @@ Customization =
 
   alterProducts: (products, customizations) ->
     if !products or products.length < 1 then return
-    product_ids = _.pluck products, 'id'
     for product in products
-      product.featured  = false
-      product.prices    = product.regular_prices
-      if product.skus
-        product.msrps   = _.pluck product.skus, 'msrp'
-        product.prices  = _.pluck product.skus, 'regular_price'
-        sku.price = sku.regular_price for sku in product.skus
-      Customization.alterSkus product.skus, customizations
-      Customization.alterProduct product, customizations
-      if !product.skus then product.skus = null
-    # TODO return prices and msrps in order
-    products
+      Shared.Customization.alterProduct product, customizations
+    # product_ids = _.pluck products, 'id'
+    # for product in products
+    #   product.featured  = false
+    #   product.prices    = product.regular_prices
+    #   if product.skus
+    #     product.msrps   = _.pluck product.skus, 'msrp'
+    #     product.prices  = _.pluck product.skus, 'regular_price'
+    #     sku.price = sku.regular_price for sku in product.skus
+    #   Customization.alterSkus product.skus, customizations
+    #   Customization.alterProduct product, customizations
+    #   if !product.skus then product.skus = null
+    # # TODO return prices and msrps in order
+    # products
 
-  alterSkus: (skus, customizations) ->
-    for customization in customizations
-      Shared.Customization.alterSkus skus, customization
-    # skus ||= []
-    # customizations ||= []
-    # sku.price ||= sku.regular_price for sku in skus
-    # for customization in customizations
-    #   for sku in skus
-    #     if sku.product_id is customization.product_id and customization?.selling_prices
-    #       match = _.where customization.selling_prices, { sku_id: sku.id }
-    #       if match and match.length > 0 then sku.price = match[0].selling_price
-    #     sku.price ||= sku.regular_price
-    # skus
+  # alterSkus: (skus, customizations) ->
+  #   for customization in customizations
+  #     Shared.Customization.alterSkus skus, customization
+  #   # skus ||= []
+  #   # customizations ||= []
+  #   # sku.price ||= sku.regular_price for sku in skus
+  #   # for customization in customizations
+  #   #   for sku in skus
+  #   #     if sku.product_id is customization.product_id and customization?.selling_prices
+  #   #       match = _.where customization.selling_prices, { sku_id: sku.id }
+  #   #       if match and match.length > 0 then sku.price = match[0].selling_price
+  #   #     sku.price ||= sku.regular_price
+  #   # skus
 
   alterProduct: (product, customizations) ->
     customizations ||= []
