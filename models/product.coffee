@@ -30,29 +30,8 @@ Product = sequelize.define 'Product',
   classMethods:
 
     findById: (id) -> Shared.Product.findById id
-      # q =
-      # 'SELECT p.id, p.title, p.image, p.content, p.additional_images, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps
-      #   FROM "Products" p
-      #   JOIN "Skus" s
-      #   ON p.id = s.product_id
-      #   WHERE p.id = ?
-      #   GROUP BY p.id'
-      # sequelize.query q, { type: sequelize.QueryTypes.SELECT, replacements: [id] }
-      # .then (products) -> products[0]
 
     findAllByIds: (ids, opts) -> Shared.Product.findAllByIds ids, opts
-      # opts ||= {}
-      # limit  = if opts?.limit  then (' LIMIT '  + parseInt(opts.limit) + ' ') else ' '
-      # offset = if opts?.offset then (' OFFSET ' + parseInt(opts.offset) + ' ') else ' '
-      # q =
-      # 'SELECT p.id, p.title, p.image, p.category_id, p.discontinued, array_agg(s.regular_price) as regular_prices, array_agg(s.msrp) as msrps
-      #   FROM "Products" p
-      #   JOIN "Skus" s
-      #   ON p.id = s.product_id
-      #   WHERE p.id IN (' + ids + ')
-      #   GROUP BY p.id
-      #   ORDER BY p.updated_at DESC' + limit + ' ' + offset + ';' # ORDER BY needs to match ee-back for consistent sorting
-      # sequelize.query q, { type: sequelize.QueryTypes.SELECT }
 
     findCompleteById: (id, user) ->
       scope = {}
@@ -67,23 +46,6 @@ Product = sequelize.define 'Product',
       .then () ->
         Shared.Sku.setPricesFor scope.product.skus, user.pricing
         scope.product
-
-    # findAllFeatured: (user, page) ->
-    #   data  = {}
-    #   scope = {}
-    #   Customization.findAllFeatured user.id, page
-    #   .then (customizations) ->
-    #     if !customizations or customizations.length < 1 then return {}
-    #     scope.customizations = customizations
-    #     product_ids = _.map customizations, 'product_id'
-    #     Shared.Product.findAllByIds product_ids
-    #   .then (products) -> Customization.alterProducts products, scope.customizations
-    #   .then (products) ->
-    #     data.rows = products
-    #     Customization.countFeatured user.id
-    #   .then (res) ->
-    #     data.count = res[0].count
-    #     data
 
     findAllByCollection: (user, opts) ->
       Collection.findById opts.collection_id, user.id
