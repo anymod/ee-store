@@ -4,78 +4,37 @@ Promise       = require 'bluebird'
 _             = require 'lodash'
 argv          = require('yargs').argv
 
-data =
-  Defaults: {}
-  Utils: {}
-  User: {}
-  Sku: {}
-  Product: {}
-  Collection: {}
-  Customization: {}
+shared =
+  defaults: require './shared.defaults'
+  utils:    require './shared.utils'
+  sku:      require './shared.sku'
 
 fns =
-  Defaults: {}
-  Utils: {}
-  User: {}
-  Sku: {}
-  Product: {}
+  Defaults: shared.defaults
+  Utils:    shared.utils
+  Sku:      shared.sku
+  User:     {}
+  Product:  {}
   Collection: {}
   Customization: {}
-
-### DEFAULTS ###
-fns.Defaults.marginRows = [
-  { min: 0,     max: 2499,      margin: 0.20 }
-  { min: 2500,  max: 4999,      margin: 0.15 }
-  { min: 5000,  max: 9999,      margin: 0.10 }
-  { min: 10000, max: 19999,     margin: 0.07 }
-  { min: 20000, max: 99999999,  margin: 0.05 }
-]
-### /DEFAULTS ###
-
-### UTILS ###
-fns.Utils.getMargin = (marginRows, price) ->
-  marginRows ||= []
-  for row in marginRows
-    if price <= row.max and price >= row.min
-      return row.margin
-  for row in fns.Defaults.marginRows
-    if price <= row.max and price >= row.min
-      return row.margin
-  throw 'No margin found'
-
-fns.Utils.calcPrice = (marginRows, baseline_price) ->
-  margin = fns.Utils.getMargin marginRows, baseline_price
-  parseInt((baseline_price / (1 - margin))/100) * 100 + 99
-
-fns.Utils.calcSellerEarnings = (marginRows, baseline_price) ->
-  margin = fns.Utils.getMargin marginRows, baseline_price
-  parseInt(baseline_price * margin)
-
-fns.Utils.orderedResults = (results, ids) ->
-  return [] unless results and ids
-  ordered = []
-  for id in ids
-    for result in results
-      if parseInt(id) is parseInt(result.id) then ordered.push result
-  ordered
-
-fns.Utils.luminance = (hex, lum) ->
-  hex = String(hex).replace /[^0-9a-f]/gi, ''
-  if hex.length < 6 then hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
-  lum = lum || 0
-  rgb = '#'
-  for i in [0..2]
-    c = parseInt(hex.substr(i * 2,2), 16)
-    c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16)
-    rgb += ("00" + c).substr(c.length)
-  rgb
-### /UTILS ###
 
 ### USER ###
 fns.User.addAccentColors = (obj) ->
   return obj unless obj?.storefront_meta?.brand?.color?
   for attr in ['primary', 'secondary', 'tertiary']
-    obj.storefront_meta.brand.color[attr + 'Accent'] = fns.Utils.luminance(obj.storefront_meta.brand.color[attr], -0.1)
+    obj.storefront_meta.brand.color[attr + 'Accent'] = shared.utils.luminance(obj.storefront_meta.brand.color[attr], -0.1)
+  obj
+
+fns.User.addPricing = (obj) ->
+  defaultMargins = shared.defaults.marginRows
+  if !obj?.pricing
+    obj.pricing = defaultMargins
+  else
+    tempPricing = []
+    for row in defaultMargins
+      match = _.find(obj.pricing, { min: row.min, max: row.max })
+      if match then tempPricing.push(match) else tempPricing.push(row)
+    obj.pricing = tempPricing
   obj
 ### /USER ###
 
@@ -154,7 +113,7 @@ fns.Product.search = (user, opts) ->
 
   elasticsearch.client.search
     index: 'products_search'
-    _source: data.Product.elasticsearch_findall_attrs
+    _source: fns.Product.elasticsearch_findall_attrs
     body: body
   .then (res) ->
     scope.rows    = _.map res?.hits?.hits, '_source'
@@ -318,9 +277,9 @@ fns.Product.addCustomizationsFor = (user, products) ->
   for product in products
     # product.featured  = false
     if product.baseline_prices
-      product.prices = _.map(product.baseline_prices, (baseline_price) -> fns.Utils.calcPrice(user.pricing, baseline_price))
+      product.prices = _.map(product.baseline_prices, (baseline_price) -> shared.utils.calcPrice(user.pricing, baseline_price))
     if product.skus
-      fns.Sku.setPricesFor product.skus, user.pricing
+      shared.sku.setPricesFor product.skus, user.pricing
       product.msrps = _.map product.skus, 'msrp'
       product.prices = _.map product.skus, 'price'
   q = 'SELECT product_id, title, featured, selling_prices FROM "Customizations" WHERE seller_id = ? AND product_id IN (' + product_ids.join(',') + ');'
@@ -332,7 +291,7 @@ fns.Product.addCustomizationsFor = (user, products) ->
           ## TEMPORARILY disabling sku custom pricing
           # if product.skus then fns.Customization.alterSkus product.skus, customization
           # if !product.skus and customization.selling_prices and customization.selling_prices.length > 0 then product.prices = _.map customization.selling_prices, 'selling_price'
-          # if product.skus then fns.Sku.setPricesFor(product.skus, user.pricing)
+          # if product.skus then shared.sku.setPricesFor(product.skus, user.pricing)
           fns.Customization.alterProduct product, customization
       if !product.skus then product.skus = null
     products
@@ -348,7 +307,7 @@ fns.Product.addAdminDetailsFor = (user, products) ->
       for product in products
         if prod.id is product.id then product.external_identity = prod.external_identity
 
-data.Product.elasticsearch_findall_attrs = [
+fns.Product.elasticsearch_findall_attrs = [
   'id'
   'title'
   'discontinued'
@@ -360,183 +319,6 @@ data.Product.elasticsearch_findall_attrs = [
 ]
 ### /PRODUCT ###
 
-### SKU ###
-
-fns.Sku.setPriceFor = (sku, marginArray) ->
-  sku.price = fns.Utils.calcPrice(marginArray, sku.baseline_price)
-  delete sku.baseline_price
-  sku
-
-fns.Sku.setPricesFor = (skus, marginArray) ->
-  fns.Sku.setPriceFor(sku, marginArray) for sku in skus
-  skus
-
-# fns.Sku.elasticsearch = (opts) ->
-#   scope   = {}
-#   user    = {}
-#   opts  ||= {}
-#
-#   # Initial body
-#   body =
-#     size: opts.size
-#     filter:
-#       and: [
-#         { bool: must_not: term: hide_from_catalog: true },
-#         { bool: must: has_child: {
-#           type: 'sku',
-#           filter:
-#             and: [
-#               { bool: must: range: regular_price: { gte: opts.min_price, lte: opts.max_price } }
-#               # { bool: must: range: supplier_id: { gte: 3797, lte: 3797 } }
-#             ]
-#         } }
-#       ]
-#
-#   # Pagination
-#   if opts.size and opts.page then body.from = parseInt(opts.size) * (parseInt(opts.page) - 1)
-#
-#   # Search
-#   if opts.search
-#     body.query =
-#       fuzzy_like_this:
-#         fields: ['title', 'content']
-#         like_text: opts.search
-#         fuzziness: 1
-#       # multi_match:
-#       #   type: 'most_fields'
-#       #   query: opts.search
-#       #   fields: ['title', 'content']
-#     # body.highlight =
-#     #   pre_tags: ['<strong>']
-#     #   post_tags: ['</strong>']
-#     #   fields:
-#     #     title:
-#     #       force_source: true
-#     #       fragment_size: 150
-#     #       number_of_fragments: 1
-#
-#   # Sort
-#   if opts.order is 'updated_at DESC'
-#     body.sort = [{ updated_at: { order: 'DESC' }} ]
-#
-#   # Categorization
-#   ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
-#   if ids
-#     body.filter.and.push({
-#       bool:
-#         must:
-#           terms:
-#             category_id: ids
-#     })
-#
-#   # Supplier
-#   if user?.admin? and opts.supplier_id
-#     body.filter.and[1].bool.must.has_child.filter.and.push({
-#       bool:
-#         must:
-#           term:
-#             supplier_id: parseInt(opts.supplier_id)
-#     })
-#
-#   # console.log 'body'
-#
-#   elasticsearch.client.search
-#     index: 'products_search'
-#     _source: data.Product.elasticsearch_findall_attrs
-#     body: body
-#   .then (res) ->
-#     scope.rows    = _.map res?.hits?.hits, '_source'
-#     scope.count   = res?.hits?.total
-#     scope.took    = res.took
-#     scope.page    = opts?.page
-#     scope.perPage = opts?.size
-#     fns.Product.addAdminDetailsFor user, scope.rows
-#   .then () -> fns.Product.addCustomizationsFor user, scope.rows
-#   .then () ->
-#     scope
-#     console.log res
-#   .catch (err) ->
-#     console.log 'err', err
-#     throw err
-#
-# if argv.elasticsearch
-#   ### coffee models/shared.coffee --elasticsearch ###
-#   Bodybuilder = require 'bodybuilder'
-#   body = new Bodybuilder()
-#     # .query('match', 'message', 'this is a test')
-#     # .fuzzyQuery('match', 'message', 'this is a test')
-#     # fuzzy_like_this:
-#     #   fields: [ 'title', 'content' ],
-#     #   like_text: 'chair',
-#     #   fuzziness: 1
-#     # .notFilter('term', 'hide_from_catalog', true)
-#     # .filter('terms', 'category_id', [1,2,3])
-#     .sort('updated_at')
-#     .size(2)
-#     # .from(10)
-#     .build()
-#   console.log '----------------------------------------- body'
-#   body.query =
-#     # multi_match:
-#     #   query: "white birdhouse"
-#     #   fields: ["title", "content"]
-#     #   fuzziness: 0.5
-#       # prefix_length: 1
-#     fuzzy_like_this:
-#       fields: ["title", "content"]
-#       like_text: "red birdhouse"
-#       fuzziness: 1
-#
-#   body =
-#     size: 2
-#     filter:
-#       and:
-#         [
-#           bool:
-#             must_not:
-#               term:
-#                 hide_from_catalog: true
-#           bool:
-#             must:
-#               has_child:
-#                 type: 'sku'
-#                 filter:
-#                   and: [
-#                     bool:
-#                       must:
-#                         range:
-#                           regular_price: {}
-#                   ]
-#         ]
-#     query:
-#       fuzzy_like_this:
-#         fields: ["title", "content"]
-#         like_text: "faux blanket"
-#         fuzziness: 1
-#     sort: [ { updated_at: { order: "DESC" } } ]
-#
-#   body = JSON.parse('{"size":"48","filter":{"and":[{"bool":{"must_not":{"term":{"hide_from_catalog":true}}}},{"bool":{"must":{"has_child":{"type":"sku","filter":{"and":[{"bool":{"must":{"range":{"regular_price":{}}}}}]}}}}},{"bool":{"must":{"terms":{"category_id":[1,2,3,4,5,6]}}}}]},"from":0,"query":{"fuzzy_like_this":{"fields":["title","content"],"like_text":"faux blanket","fuzziness":1}}}')
-#
-#   console.log body
-#   opts =
-#     search: 'chair'
-#     order: 'updated_at DESC'
-#     size: 2
-#   # fns.Sku.elasticsearch opts
-#   elasticsearch.client.search
-#     index: 'products_search'
-#     _source: data.Product.elasticsearch_findall_attrs
-#     body: body
-#   .then (res) ->
-#     console.log res.hits.hits[0]._source
-#     return
-#   .catch (err) ->
-#     console.log 'err', err
-#     throw err
-#   .finally () -> process.exit()
-
-### /SKU ###
-
 ### COLLECTION ###
 fns.Collection.formattedResponse = (collection, user, opts) ->
   scope         = {}
@@ -546,13 +328,13 @@ fns.Collection.formattedResponse = (collection, user, opts) ->
   opts.product_ids = if collection.product_ids?.length > 0 then collection.product_ids.join(',') else '0'
   fns.Product.sort user, opts
   .then (res) ->
-    res.collection = _.omit collection, data.Collection.restricted_attrs
+    res.collection = _.omit collection, fns.Collection.restricted_attrs
     res
 
 fns.Collection.findHomeCarousel = (collection_ids, user) ->
   collection_ids ||= '0'
   sequelize.query 'SELECT id, banner FROM "Collections" WHERE id IN (' + collection_ids + ') AND banner IS NOT NULL AND show_banner IS TRUE AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [user.id] }
-  .then (collections) -> fns.Utils.orderedResults collections, collection_ids.split(',')
+  .then (collections) -> shared.utils.orderedResults collections, collection_ids.split(',')
 
 fns.Collection.findHomeArranged = (collection_ids, user) ->
   collection_ids ||= '0'
@@ -570,12 +352,12 @@ fns.Collection.findHomeArranged = (collection_ids, user) ->
         collection.products = coll.rows
         arranged.push collection
     Promise.reduce collections, ((total, collection) -> addProductsIfNoBanner collection), 0
-  .then () -> fns.Utils.orderedResults arranged, collection_ids.split(',')
+  .then () -> shared.utils.orderedResults arranged, collection_ids.split(',')
 
 fns.Collection.findForHomepage = (collection, user, opts) ->
   collection
 
-data.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at']
+fns.Collection.restricted_attrs = ['title', 'headline', 'button', 'cloned_from', 'creator_id', 'seller_id', 'deleted_at']
 
 ### /COLLECTION ###
 
