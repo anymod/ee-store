@@ -7,13 +7,10 @@
       </div>
       <div class="col col-sm-6">
         <div class="pad-10">
-          <h1 ng-bind="product.title" class="margin-0 font-weight-200"></h1>
-          <a href ui-sref="search({ q: product.title })" class="text-muted">
-            <small class="hover-pointer"><i class="fa fa-fw fa-search"></i>more like this</small>
-          </a>
-          <div>
+          <h1 ng-bind="product.title" class="vert-15 margin-top-0 font-weight-200"></h1>
+          <div ng-if="product.skus.length > 1">
             <h4 ng-bind="currentSku.selection_text" class="inline-block font-weight-200"></h4>
-            <div ng-if="skus.length > 1" class="pull-right btn-group" uib-dropdown>
+            <div class="pull-right btn-group" uib-dropdown>
               <button type="button" class="btn btn-default dropdown-toggle" uib-dropdown-toggle>
                 <span class="caret"></span>
               </button>
@@ -27,7 +24,7 @@
               </ul>
             </div>
           </div>
-          <h4 ng-if="currentSku.msrp && currentSku.price && currentSku.msrp > currentSku.price" class="vert-10">
+          <h4 ng-if="currentSku.msrp && currentSku.price && currentSku.msrp > currentSku.price && msrpDiscount > 0.045" class="vert-10">
             <span class="text-muted"><s>{{ currentSku.msrp | centToDollar }}</s></span>
             <span class="text-danger">&nbsp;{{ msrpDiscount | percentage:0 }} Off</span>
           </h4>
@@ -58,6 +55,10 @@
           </div>
           <div class="vert-5">
             <i class="fa fa-lg fa-fw fa-cube text-info"></i>&nbsp;&nbsp;&nbsp;Ships from USA
+            <br>
+            <a href ui-sref="search({ q: product.title })" class="text-muted">
+              <small class="hover-pointer"><i class="fa fa-fw fa-search"></i>more like this</small>
+            </a>
           </div>
         </div>
       </div>
@@ -96,7 +97,7 @@
     <!-- /Sku options -->
 
     <!-- Details -->
-    <div class="vert-10">
+    <div class="vert-50">
       <ul class="nav nav-tabs">
         <li class="active">
           <a href class="white-background" style="padding: 4px 10px">Details</a>

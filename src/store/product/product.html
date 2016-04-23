@@ -1,0 +1,12 @@
+<div ng-hide="product.data.reading" class="container max-width-900 text-center vert-10">
+  <!-- PRODUCT -->
+  <ee-product-card
+    ng-if="product.data.product.id"
+    product="product.data.product"
+    skus="product.data.product.skus"
+    disabled="isBuilder">
+  </ee-product-card>
+  <!-- /PRODUCT -->
+</div>
+
+<ee-loading loading="product.data.reading" ee-min-height="600"></ee-loading>

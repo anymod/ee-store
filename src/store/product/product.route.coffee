@@ -8,11 +8,11 @@ angular.module('store.product').config ($stateProvider) ->
       url: '/products/:id/:title?'
       views:
         top:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
+          controller: 'productCtrl as product'
+          templateUrl: 'store/product/product.header.html'
         middle:
           controller: 'productCtrl as product'
-          templateUrl: 'ee-shared/storefront/storefront.product.html'
+          templateUrl: 'store/product/product.html'
         footer:
           controller: 'storeCtrl as storefront'
           templateUrl: 'ee-shared/storefront/storefront.footer.html'
