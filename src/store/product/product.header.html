@@ -19,17 +19,9 @@
       class="round-2">
   </a>
   <!-- /logo -->
-  <!-- cart -->
-  <a ui-sref="cart" class="text-muted" style="margin-left: 10px;">
-    <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
-      <i class="fa fa-circle fa-stack-2x"></i>
-      <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
-    </span>
-    <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle" style="margin-right: 3px;"></i>
-  </a>
-  <!-- /cart -->
-  <!-- social -->
-  <div class="vert-20 margin-bottom-0 opacity-08">
+  <div class="vert-15 margin-bottom-0 opacity-08">
+    <!-- social & cart -->
+    &nbsp;&nbsp;
     <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{ product.currentUrl }}"
       class="text-facebook no-underline" target="_blank" rel="nofollow">
       <i class="fa fa-2x fa-facebook-official vertical-align-middle"></i>
@@ -41,7 +33,14 @@
     <a ng-href="http://twitter.com/share?url={{ product.currentUrl }}&text={{ product.data.product.title }}"
        class="text-twitter no-underline" target="_blank" rel="nofollow">
       <i class="fa fa-2x fa-twitter vertical-align-middle"></i>
+    </a>&nbsp;
+    <a ui-sref="cart" class="text-muted">
+      <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
+      </span>
+      <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle" style="margin-right: 3px;"></i>
     </a>
+    <!-- /social & cart -->
   </div>
-  <!-- /social -->
 </div>
