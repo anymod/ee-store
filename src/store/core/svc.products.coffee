@@ -46,6 +46,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   _clearProducts = () ->
     _data.products = []
     _data.count    = 0
+    _data.inputs.size = null
 
   _setPage = (p) ->
     _data.inputs.page = p
@@ -72,14 +73,13 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
 
   _resetPage = () ->
     _setPage null
-    _data.inputs.feat = false
     _data.inputs.category = parseInt $stateParams.id
 
   _formQuery = () ->
     query = {}
     query.size = _data.inputs.perPage
-    if _data.inputs.featured    then query.feat           = 'true'
     if _data.inputs.page        then query.page           = _data.inputs.page
+    if _data.inputs.size        then query.size           = _data.inputs.size
     if _data.inputs.search      then query.search         = _data.inputs.search
     if _data.inputs.range.min   then query.min_price      = _data.inputs.range.min
     if _data.inputs.range.max   then query.max_price      = _data.inputs.range.max
@@ -94,14 +94,15 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     eeBack.fns.productsGET _formQuery()
     .then (res) ->
       { rows, count, took } = res
-      _data.products      = rows
-      _data.count         = count
-      _data.took = took
+      _data.products  = rows
+      _data.count     = count
+      _data.took      = took
       _data.inputs.searchLabel = _data.inputs.search
     .catch (err) -> _data.count = null
     .finally () -> _data.reading = false
 
   _search = (term) ->
+    _clearProducts()
     _data.inputs.order = _data.inputs.orderArray[0]
     _data.inputs.search = term
     _setPage null
@@ -115,17 +116,21 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   fns:
     runQuery: _runQuery
     search: _search
-    featured: () ->
+    clearSearch: () ->
+      _clearProducts()
+      _search ''
+    searchLike: (title, category) ->
       _clearProducts()
       _setPage null
-      _setSort null
+      _setSort _inputDefaults.orderArray[0]
       _setRange null
-      _data.inputs.featured  = true
+      _data.inputs.search   = title
+      _data.inputs.category = category
+      _data.inputs.size     = 8
       _runQuery()
-    clearSearch: () -> _search ''
     setCategory: () ->
+      _clearProducts()
       _data.inputs.search = null
-      _data.inputs.featured = false
       _data.inputs.category = parseInt $stateParams.id
       _runQuery()
     setOrder: (order) ->

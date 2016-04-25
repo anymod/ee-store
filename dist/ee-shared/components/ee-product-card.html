@@ -55,14 +55,23 @@
           </div>
           <div class="vert-5">
             <i class="fa fa-lg fa-fw fa-cube text-info"></i>&nbsp;&nbsp;&nbsp;Ships from USA
-            <!-- <br>
+            <br>
             <a href ui-sref="search({ q: product.title })" class="text-muted">
               <small class="hover-pointer"><i class="fa fa-fw fa-search"></i>more like this</small>
-            </a> -->
+            </a>
           </div>
         </div>
       </div>
     </div>
+
+    <!-- Similar products -->
+    <!-- <div ng-if="products.length > 0" class="vert-50 margin-bottom-0 text-center">
+      <div ng-repeat="prod in products" class="homepage-product text-left inline-block vertical-align-top vert-5">
+        <ee-product-for-store product="prod"></ee-product-for-store>
+      </div>
+    </div> -->
+    <!-- /Similar products -->
+
     <!-- Sku options -->
     <table ng-if="product.skus.length > 1" class="table table-striped table-condensed table-hover vert-20 margin-bottom-0">
       <thead>
