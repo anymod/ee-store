@@ -17,30 +17,31 @@
       alt="{{ product.ee.User.user.storefront_meta.name }}"
       style="max-width: 180px; max-height: 35px"
       class="round-2">
-  </a>
+  </a>&nbsp;
   <!-- /logo -->
+  <!-- cart -->
+  <a ui-sref="cart" class="text-muted">
+    <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
+      <i class="fa fa-circle fa-stack-2x"></i>
+      <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
+    </span>
+    <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
+  </a>
+  <!-- /cart -->
   <div class="vert-15 margin-bottom-0 opacity-08">
-    <!-- social & cart -->
-    &nbsp;&nbsp;
+    <!-- social -->
     <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{ product.currentUrl }}"
-      class="text-facebook no-underline" target="_blank" rel="nofollow">
-      <i class="fa fa-2x fa-facebook-official vertical-align-middle"></i>
-    </a>&nbsp;&nbsp;
+      class="btn btn-default btn-facebook border-none pad-2" target="_blank" rel="nofollow">
+      &nbsp;<i class="fa fa-lg fa-facebook-official"></i>&nbsp;Share&nbsp;
+    </a>&nbsp;
     <a ng-href="http://www.pinterest.com/pin/create/button/?url={{ product.currentUrl }}&media={{ product.data.product.image }}&description={{ product.data.product.title }}"
-       class="text-pinterest no-underline" target="_blank" rel="nofollow">
-      <i class="fa fa-2x fa-pinterest vertical-align-middle"></i>
-    </a>&nbsp;&nbsp;
-    <a ng-href="http://twitter.com/share?url={{ product.currentUrl }}&text={{ product.data.product.title }}"
+       class="btn btn-default btn-pinterest border-none pad-2" target="_blank" rel="nofollow">
+      &nbsp;<i class="fa fa-lg fa-pinterest"></i>&nbsp;&nbsp;Pin&nbsp;&nbsp;
+    </a>
+    <!-- <a ng-href="http://twitter.com/share?url={{ product.currentUrl }}&text={{ product.data.product.title }}"
        class="text-twitter no-underline" target="_blank" rel="nofollow">
       <i class="fa fa-2x fa-twitter vertical-align-middle"></i>
-    </a>&nbsp;
-    <a ui-sref="cart" class="text-muted">
-      <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
-        <i class="fa fa-circle fa-stack-2x"></i>
-        <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
-      </span>
-      <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle" style="margin-right: 3px;"></i>
-    </a>
-    <!-- /social & cart -->
+    </a>&nbsp; -->
+    <!-- /social -->
   </div>
 </div>
