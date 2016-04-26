@@ -108,7 +108,9 @@
   </div>
 </div>
 
-<div ng-if="category.ee.Products.products.length <= 0" class="container max-width-900 vert-20 text-center min-height-600">
+<div ng-if="category.ee.Products.products.length <= 0"
+  ng-hide="category.ee.Products.reading"
+  class="container max-width-900 vert-20 text-center min-height-600">
   No results found
 </div>
 
