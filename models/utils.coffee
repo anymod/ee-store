@@ -29,7 +29,6 @@ utils =
     bootstrap.storefront_meta   = attrs.storefront_meta or {}
     bootstrap.home_carousel     = attrs.home_carousel or []
     bootstrap.home_arranged     = attrs.home_arranged or []
-    # bootstrap.collection_names  = utils.collectionNames attrs.collections
     bootstrap.title             = attrs.storefront_meta?.name
     bootstrap.site_name         = attrs.storefront_meta?.name
     bootstrap.images            = if attrs.storefront_meta?.home?.carousel[0]?.imgUrl then utils.makeMetaImages([ attrs.storefront_meta?.home?.carousel[0]?.imgUrl ]) else []
@@ -62,12 +61,6 @@ utils =
     imgs = []
     imgs.push utils.makeMetaImage(img) for img in img_array
     imgs
-
-  collectionNames: (collections) ->
-    collections ||= {}
-    names = ['featured']
-    names.push name for name in Object.keys(collections)
-    _.uniq names
 
   formCollectionPageTitle: (collection, title) ->
     if collection and title then (collection + ' | ' + title) else collection

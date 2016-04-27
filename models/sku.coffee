@@ -10,7 +10,7 @@ Customization = require './customization'
 Sku =
 
   addAllToProduct: (product) ->
-    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? ORDER BY regular_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? ORDER BY baseline_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
     .then (skus) ->
       product.skus = skus
       product
@@ -36,18 +36,16 @@ Sku =
           title:  sku.product_title
           image:  sku.product_image
         Customization.alterProduct sku.product, customizations
-      _.map scope.skus, (sku) -> _.omit(sku, ['identifier', 'regular_price'])
+      _.map scope.skus, (sku) -> _.omit(sku, ['identifier'])
 
 Sku.attrs = [
   'id'
   'product_id'
   'identifier'
-  'regular_price'
   'baseline_price'
   'msrp'
   'shipping_price'
   'selection_text'
-  # 'subcontent'
   'style'
   'color'
   'material'

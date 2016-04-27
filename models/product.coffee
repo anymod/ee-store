@@ -18,8 +18,6 @@ Product = sequelize.define 'Product',
   title:              type: Sequelize.STRING,   allowNull: false, validate: len: [3,140]
   content:            type: Sequelize.TEXT,     validate: len: [0,5000]
   external_identity:  type: Sequelize.STRING,   allowNull: false
-  discontinued:       type: Sequelize.BOOLEAN,  allowNull: false, defaultValue: false
-  hide_from_catalog:  type: Sequelize.BOOLEAN,  allowNull: false, defaultValue: false
   image:              type: Sequelize.STRING,   allowNull: false
   additional_images:  type: Sequelize.ARRAY(Sequelize.STRING)
   category_id:        type: Sequelize.INTEGER
@@ -59,12 +57,10 @@ Product = sequelize.define 'Product',
 Product.elasticsearch_findall_attrs = [
   'id'
   'title'
-  'discontinued'
   'image'
   'category_id'
   'skus'
   # 'msrps'
-  # 'regular_prices'
 ]
 
 module.exports = Product

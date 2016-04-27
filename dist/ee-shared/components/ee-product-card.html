@@ -37,13 +37,13 @@
           </h5>
           <div class="vert-10">
             <div class="btn btn-lg btn-block btn-themed"
-              ng-if="!product.out_of_stock && !product.discontinued"
+              ng-if="currentSku.quantity > 0 && !currentSku.discontinued"
               ng-disabled="disabled || adding"
               ng-click="addToCart(currentSku)"
               ng-bind="addingText || 'Add to cart'">
             </div>
-            <div class="btn btn-info btn-lg btn-block disabled" ng-if="product.out_of_stock" disabled>Out of Stock</div>
-            <div class="btn btn-info btn-lg btn-block disabled" ng-if="product.discontinued" disabled>Discontinued</div>
+            <div class="btn btn-info btn-lg btn-block disabled" ng-if="currentSku.quantity < 1" disabled>Out of Stock</div>
+            <div class="btn btn-info btn-lg btn-block disabled" ng-if="currentSku.discontinued" disabled>Discontinued</div>
           </div>
           <div ng-if="currentSku.length || currentSku.width || currentSku.height">
             <img src="https://res.cloudinary.com/eeosk/image/upload/c_scale,w_30/v1447453155/ruler.png"/>

@@ -34,7 +34,7 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
     _data.updating = true
     eeBack.fns.skuGET pair.product_id, pair.sku_id
     .then (fullSku) ->
-      delete fullSku[attr] for attr in ['baseline_price','regular_price']
+      delete fullSku[attr] for attr in ['baseline_price']
       fullSku
     .finally () ->
       _defineSummary()
@@ -71,7 +71,6 @@ angular.module('store.core').factory 'eeCart', ($rootScope, $state, $cookies, ee
       #   eeBack.fns.skuGET pair.product_id, pair.sku_id
       #   .then (fullSku) ->
       #     delete fullSku.baseline_price
-      #     delete fullSku.regular_price
       #     # for sku in _data.skus
       #     #   if sku.id is fullSku.id
       #     matchingSku[attr] = fullSku[attr] for attr in Object.keys(fullSku)
