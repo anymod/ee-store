@@ -25,7 +25,7 @@ angular.module 'eeStore', [
 
   # custom
   'ee-storefront-header'
-  # 'ee-storefront-logo'
+  'ee-storefront-scroller'
   'ee-storefront-brand'
   'ee-scroll-to-top'
   'ee-collection-nav'

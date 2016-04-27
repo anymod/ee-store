@@ -10,6 +10,11 @@
   Free Shipping on orders over $50
 </div>
 
+<ee-storefront-scroller
+  ng-if="product.ee.User.user"
+  user="product.ee.User.user">
+</ee-storefront-scroller>
+
 <div class="container vert-5 max-width-900 text-center">
   <!-- logo -->
   <a ui-sref="storefront" class="no-underline">

@@ -109,6 +109,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-collection-nav.coffee'
   './src/ee-shared/components/ee-collection-for-store.coffee'
   './src/ee-shared/components/ee-storefront-header.coffee'
+  './src/ee-shared/components/ee-storefront-scroller.coffee'
   './src/ee-shared/components/ee-storefront-logo.coffee'
   './src/ee-shared/components/ee-storefront-brand.coffee'
   './src/ee-shared/components/ee-scroll-to-top.coffee'

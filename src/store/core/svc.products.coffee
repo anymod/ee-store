@@ -89,7 +89,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     query
 
   _runQuery = () ->
-    if _data.reading then return
+    if _data.reading then return $q.when()
     _data.reading = true
     eeBack.fns.productsGET _formQuery()
     .then (res) ->
@@ -108,6 +108,22 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     _setPage null
     _runQuery()
 
+  _searchLike = (term, category) ->
+    _clearProducts()
+    _setPage null
+    _setSort _inputDefaults.orderArray[0]
+    _setRange null
+    _data.inputs.search   = term
+    _data.inputs.category = category
+    _data.inputs.size     = 9
+    _runQuery()
+    .then () ->
+      products = []
+      for prod, i in _data.products
+        if products.length < 8 and prod.title isnt term then products.push prod
+      _data.products = products
+      return
+
   ## MESSAGING
   $rootScope.$on 'reset:page', () -> _resetPage()
 
@@ -116,18 +132,8 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   fns:
     runQuery: _runQuery
     search: _search
-    clearSearch: () ->
-      _clearProducts()
-      _search ''
-    searchLike: (title, category) ->
-      _clearProducts()
-      _setPage null
-      _setSort _inputDefaults.orderArray[0]
-      _setRange null
-      _data.inputs.search   = title
-      _data.inputs.category = category
-      _data.inputs.size     = 8
-      _runQuery()
+    searchLike: _searchLike
+    clearSearch: () -> _search ''
     setCategory: () ->
       _clearProducts()
       _data.inputs.search = null

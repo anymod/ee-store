@@ -5,9 +5,6 @@ module = angular.module 'ee-storefront-header', []
 module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, categories) ->
   templateUrl: 'ee-shared/components/ee-storefront-header.html'
   scope:
-    # meta:           '='
-    # logo:           '='
-    # categoryIds:    '='
     user:           '='
     blocked:        '='
     fluid:          '@'
@@ -20,7 +17,6 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, cat
     scope.state  = $state.current.name
     scope.id     = if scope.state is 'category' then parseInt($state.params.id) else null
     scope.cart   = eeCart.cart
-    scope.showScrollButton = false
 
     return unless scope.user
 
@@ -28,16 +24,6 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, cat
       trigger = 75
       angular.element($window).bind 'scroll', (e, a, b) ->
         if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'
-
-    if scope.showScrollToTop
-      trigger = 200
-      angular.element($window).bind 'scroll', (e, a, b) ->
-        if scope.showScrollButton and $window.pageYOffset < trigger
-          scope.showScrollButton = false
-          scope.$apply()
-        else if scope.showScrollButton isnt $window.pageYOffset > trigger
-          scope.showScrollButton = $window.pageYOffset > trigger
-          scope.$apply()
 
     assignCategories = () ->
       scope.categories = []
