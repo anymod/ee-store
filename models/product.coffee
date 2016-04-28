@@ -50,7 +50,7 @@ Product = sequelize.define 'Product',
       .then (rows) -> Shared.Collection.formattedResponse rows[0], user, opts
 
     search: (user, opts) -> Shared.Product.search user, opts
-    sort: (user, opts) -> Shared.Product.sort user, opts
+    # sort: (user, opts) -> Shared.Product.sort user, opts
     addCustomizationsFor: (user, products) -> Shared.Product.addCustomizationsFor user, products
     # addAdminDetailsFor: (user, products) -> Shared.Product.addAdminDetailsFor user, products
 

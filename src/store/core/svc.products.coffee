@@ -21,7 +21,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
       { min: 20000, max: null   }
     ]
     orderArray: [
-      # { order: null,          title: 'Most relevant' },
+      { order: null,  title: 'Most relevant' },
       { order: 'pa',  title: 'Price, low to high',  use: true }, # price ASC (pa)
       { order: 'pd',  title: 'Price, high to low',  use: true }, # price DESC (pd)
       { order: 'ta',  title: 'A to Z',              use: true }, # title ASC (ta)
@@ -54,7 +54,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     $location.search 'p', p
 
   _setSort = (order) ->
-    if !order then order = { order: null, title: 'Most relevant' }
+    if !order then order = _data.inputs.orderArray[0]
     _data.inputs.order = order
     $stateParams.s = order.order?.replace(/ /g, '_')
     $location.search 's', order.order?.replace(/ /g, '_')
@@ -111,7 +111,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
   _searchLike = (term, category) ->
     _clearProducts()
     _setPage null
-    _setSort _inputDefaults.orderArray[0]
+    _setSort _data.inputs.orderArray[0]
     _setRange null
     _data.inputs.search   = term
     _data.inputs.category = category

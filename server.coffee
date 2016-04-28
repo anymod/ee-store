@@ -54,12 +54,13 @@ app.get '/', (req, res, next) ->
   User.defineStorefront host, bootstrap
   .then () -> User.defineHomepage bootstrap
   # TODO finish new meta images
-  .then () -> User.setCollectionMetaImages bootstrap
-  .then () -> Product.sort { id: bootstrap.id }, { page: bootstrap.page, feat: true }
-  .then (data) ->
-    { rows, count } = data
-    bootstrap.products    = rows || []
-    bootstrap.count       = count
+  .then () ->
+    User.setCollectionMetaImages bootstrap
+  # .then () -> Product.search { id: bootstrap.id }, { page: bootstrap.page }
+  # .then (data) ->
+    # { rows, count } = data
+    # bootstrap.products    = rows || []
+    # bootstrap.count       = count
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -135,7 +136,7 @@ app.get '/categories/:id/:title*?', (req, res, next) ->
   User.defineStorefront host, bootstrap
   .then () ->
     [min_price, max_price] = utils.rangeToPrices bootstrap.range
-    Product.sort { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, min_price: min_price, max_price: max_price, category_ids: '' + req.params.id }
+    Product.search { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, min_price: min_price, max_price: max_price, category_ids: '' + req.params.id }
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection
