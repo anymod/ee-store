@@ -42,105 +42,7 @@ fns.User.addPricing = (obj) ->
   obj
 ### /USER ###
 
-# ### SKU ###
-# fns.Sku.search = (user, opts) ->
-#   body = {}
-#   console.log '------------------------------- SKU SEARCH --------------------------------'
-#   scope   = {}
-#   user  ||= {}
-#   opts  ||= {}
-#
-#   esq = new ESQ()
-#
-#   # Size
-#   opts.size ||= 48
-#   esq.query 'size', opts.size
-#
-#   category_ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
-#
-#   # Aggregate
-#   esq.query 'aggs', 'group_by_product', { terms: field: 'product_id' }
-#
-#   # Filters
-#   in_price_range =
-#     range:
-#       baseline_price:
-#         gte: opts.min_price
-#         lte: opts.max_price
-#   in_category =
-#     terms:
-#       category_id: category_ids
-#   esq.query 'filter', ['and'], { bool: must: in_price_range }
-#   esq.query 'filter', ['and'], { bool: must: in_category }
-#
-#   # Search
-#   if opts.search
-#     esq.query 'query', 'fuzzy_like_this', { fields: ['title', 'content'], like_text: opts.search, fuzziness: 1 }
-#
-#   # Pagination
-#   if opts.size and opts.page then body.from = parseInt(opts.size) * (parseInt(opts.page) - 1)
-#
-#   # Search
-#   if opts.search
-#     body.query =
-#       fuzzy_like_this:
-#         fields: ['title', 'content']
-#         like_text: opts.search
-#         fuzziness: 1
-#       # multi_match:
-#       #   type: 'most_fields'
-#       #   query: opts.search
-#       #   fields: ['title', 'content']
-#     # body.highlight =
-#     #   pre_tags: ['<strong>']
-#     #   post_tags: ['</strong>']
-#     #   fields:
-#     #     title:
-#     #       force_source: true
-#     #       fragment_size: 150
-#     #       number_of_fragments: 1
-#
-#   console.log ' '
-#   console.log 'Orig:'
-#   console.log util.inspect(body, {depth:null})
-#   console.log ' '
-#   console.log 'ESQ:'
-#   console.log util.inspect(esq.getQuery(), {depth:null})
-#   console.log ' '
-#
-#   elasticsearch.client.search
-#     index: 'skus_search'
-#     _source: fns.Sku.elasticsearch_findall_attrs
-#     body: esq.getQuery() # body
-#   .then (res) ->
-#     console.log 'res', res.aggregations.group_by_product.buckets
-#     scope.rows    = _.map res?.hits?.hits, '_source'
-#     scope.count   = res?.hits?.total
-#     scope.took    = res.took
-#     scope.page    = opts?.page
-#     scope.perPage = opts?.size
-#     fns.Product.addAdminDetailsFor user, scope.rows
-#   .then () -> fns.Product.addCustomizationsFor user, scope.rows
-#   .then () ->
-#     scope
-#   .catch (err) ->
-#     console.log 'err', err
-#     throw err
-#
-# fns.Sku.elasticsearch_findall_attrs = [
-#   'id'
-#   'baseline_price'
-#   'shipping_price'
-#   'product_id'
-#   'title'
-#   'image'
-#   'category_id'
-# ]
-#
-# ### /SKU ###
-
 ### PRODUCT ###
-
 esqSetPagination = (esq, opts) ->
   if opts?.size and opts?.page
     opts.size = parseInt opts.size
@@ -226,11 +128,6 @@ fns.Product.search = (user, opts) ->
   # Defaults
   opts.size ||= 48
   category_ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
-
-  # Temp
-  # opts.min_price = 5000
-  # opts.max_price = 10000
-  # /Temp
 
   # Form query
   esq.query 'size', opts.size
@@ -571,51 +468,3 @@ fns.Customization.alterProduct = (product, customization) ->
 ### /CUSTOMIZATION ###
 
 module.exports = fns
-
-# GET /product/test/_search
-# {
-#   "query": {
-#     "bool": {
-#       "should": [
-#         {
-#           "match": {
-#             "title": "whatever"
-#           }
-#         }
-#       ],
-#       "must": [
-#         {
-#           "nested": {
-#             "path": "skus",
-#             "query": {
-#               "range": {
-#                 "skus.price": {
-#                   "gte": 11,
-#                   "lte": 50
-#                 }
-#               }
-#             }
-#           }
-#         }
-#       ]
-#     }
-#   },
-#   "sort": [
-#     {"_score": "asc"},
-#     {
-#       "skus.price": {
-#         "nested_path": "skus",
-#         "nested_filter": {
-#           "range": {
-#             "skus.price": {
-#               "gte": 11,
-#               "lte": 50
-#             }
-#           }
-#         },
-#         "order": "asc",
-#         "mode":  "min"
-#       }
-#     }
-#   ]
-# }

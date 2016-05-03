@@ -9,7 +9,7 @@ angular.module('store.categories').config ($stateProvider) ->
       views:
         top:
           controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
+          templateUrl: 'store/search/search.header.html'
         middle:
           controller: 'categoryCtrl as category'
           templateUrl: 'store/categories/category.html'

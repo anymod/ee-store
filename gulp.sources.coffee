@@ -112,6 +112,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-storefront-scroller.coffee'
   './src/ee-shared/components/ee-storefront-logo.coffee'
   './src/ee-shared/components/ee-storefront-brand.coffee'
+  './src/ee-shared/components/ee-search-sort.coffee'
   './src/ee-shared/components/ee-scroll-to-top.coffee'
   './src/ee-shared/components/ee-product-images.coffee'
   './src/ee-shared/components/ee-empty-message.coffee'

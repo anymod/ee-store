@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('eeStore').controller 'productCtrl', ($rootScope, $stateParams, $location, eeBootstrap, eeDefiner, eeProduct, eeProducts, eeCart) ->
+angular.module('eeStore').controller 'productCtrl', ($rootScope, $stateParams, $location, eeDefiner, eeProduct, eeProducts, eeCart) ->
 
   product = this
 

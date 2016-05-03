@@ -1,17 +1,20 @@
 'use strict'
 
-angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $stateParams, $location, eeBootstrap, eeBack) ->
+angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $stateParams, $location, eeBootstrap, eeBack, categories) ->
+
+  console.log eeBootstrap
 
   ## SETUP
   _inputDefaults =
     perPage:      eeBootstrap?.perPage
     page:         eeBootstrap?.page
-    search:       null
+    search:       $stateParams.q || null
     searchLabel:  null
     range:
       min:        null
       max:        null
-    category:     $stateParams.id
+    category:     eeBootstrap?.category || $stateParams.c
+    categories:   categories
     order:        { order: null, title: 'Most relevant' }
     rangeArray: [
       { min: 0,     max: 2500   },
@@ -29,11 +32,20 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     ]
   if eeBootstrap?.order
     for order in _inputDefaults.orderArray
-      if order.order is eeBootstrap?.order then _inputDefaults.order = angular.copy order
+      if order.order is eeBootstrap.order then _inputDefaults.order = angular.copy order
   if eeBootstrap?.range
     [min, max] = eeBootstrap?.range.split('-')
     for range in _inputDefaults.rangeArray
       if range.min is parseInt(min)*100 then _inputDefaults.range = angular.copy range
+  if eeBootstrap?.categorization_ids
+    cats = []
+    for category in _inputDefaults.categories
+      if eeBootstrap.categorization_ids.indexOf(category.id) > -1 then cats.push category
+    _inputDefaults.categories = cats
+  if eeBootstrap?.category
+    eeBootstrap.category = parseInt eeBootstrap.category
+    for category in _inputDefaults.categories
+      if category.id is eeBootstrap.category then _inputDefaults.category = angular.copy category
 
   ## PRIVATE EXPORT DEFAULTS
   _data =
@@ -48,28 +60,40 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     _data.count    = 0
     _data.inputs.size = null
 
-  _setPage = (p) ->
-    _data.inputs.page = p
-    $stateParams.p = p
-    $location.search 'p', p
-
-  _setSort = (order) ->
-    if !order then order = _data.inputs.orderArray[0]
-    _data.inputs.order = order
-    $stateParams.s = order.order?.replace(/ /g, '_')
-    $location.search 's', order.order?.replace(/ /g, '_')
-
   _setRange = (range) ->
     range ||= {}
-    str = if range.min or range.max then [range.min/100, range.max/100].join('-') else null
     if _data.inputs.range.min is range.min and _data.inputs.range.max is range.max
       _data.inputs.range.min = null
       _data.inputs.range.max = null
     else
       _data.inputs.range.min = range.min
       _data.inputs.range.max = range.max
+
+  _setPage = (p) -> _data.inputs.page = p
+
+  _setCategory = (category) ->
+    _data.inputs.category = if category? then category else null
+
+  _setSort = (order) ->
+    if !order? then order = _data.inputs.orderArray[0]
+    _data.inputs.order = order
+
+  _setSearch = (term) ->
+    console.log 'term', term
+    if term? then _data.inputs.search = term
+
+  _setUrlParams = () ->
+    str = if _data.inputs.range?.min? or _data.inputs.range?.max? then [_data.inputs.range.min/100, _data.inputs.range.max/100].join('-') else null
     $stateParams.r = str
+    $stateParams.p = _data.inputs.page
+    $stateParams.c = _data.inputs.category?.id
+    $stateParams.s = _data.inputs.order?.order?.replace(/ /g, '_')
+    $stateParams.q = _data.inputs.search
     $location.search 'r', str
+    $location.search 'p', _data.inputs.page
+    $location.search 'c', _data.inputs.category?.id
+    $location.search 's', _data.inputs.order?.order?.replace(/ /g, '_')
+    $location.search 'q', _data.inputs.search
 
   _resetPage = () ->
     _setPage null
@@ -84,13 +108,14 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     if _data.inputs.range.min   then query.min_price      = _data.inputs.range.min
     if _data.inputs.range.max   then query.max_price      = _data.inputs.range.max
     if _data.inputs.order.use   then query.order          = _data.inputs.order.order
-    if _data.inputs.category    then query.category_ids   = [_data.inputs.category]
+    if _data.inputs.category    then query.category_ids   = [_data.inputs.category.id]
     if _data.inputs.collection  then query.collection_id  = _data.inputs.collection.id
     query
 
   _runQuery = () ->
     if _data.reading then return $q.when()
     _data.reading = true
+    _setUrlParams()
     eeBack.fns.productsGET _formQuery()
     .then (res) ->
       { rows, count, took } = res
@@ -103,18 +128,16 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
 
   _search = (term) ->
     _clearProducts()
-    _data.inputs.order = _data.inputs.orderArray[0]
-    _data.inputs.search = term
+    _setSearch term
     _setPage null
     _runQuery()
 
-  _searchLike = (term, category) ->
+  _searchLike = (term, category_id) ->
     _clearProducts()
     _setPage null
-    _setSort _data.inputs.orderArray[0]
-    _setRange null
+    _setSort null
+    _setCategory { id: category_id }
     _data.inputs.search   = term
-    _data.inputs.category = category
     _data.inputs.size     = 9
     _runQuery()
     .then () ->
@@ -134,17 +157,22 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     search: _search
     searchLike: _searchLike
     clearSearch: () -> _search ''
-    setCategory: () ->
+    setCategory: (category) ->
       _clearProducts()
-      _data.inputs.search = null
-      _data.inputs.category = parseInt $stateParams.id
+      _setPage null
+      _setCategory category
       _runQuery()
     setOrder: (order) ->
-      _data.inputs.search  = if !order?.order then _data.inputs.searchLabel else null
+      _clearProducts()
       _setPage null
       _setSort order
       _runQuery()
     setRange: (range) ->
+      _clearProducts()
       _setPage null
       _setRange range
       _runQuery()
+    # setPage: (page) ->
+    #   _clearProducts()
+    #   _setPage page
+    #   _runQuery()

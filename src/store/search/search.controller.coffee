@@ -9,8 +9,6 @@ angular.module('store.search').controller 'searchCtrl', ($rootScope, $location, 
 
   if $rootScope.pageDepth > 1 then eeProducts.fns.search(search.params.q)
 
-  search.update = () ->
-    search.params.p = search.ee.Products.page
-    $state.go 'search', search.params
+  search.update = () -> eeProducts.fns.runQuery()
 
   return

@@ -135,8 +135,9 @@ app.get '/categories/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->
-    [min_price, max_price] = utils.rangeToPrices bootstrap.range
-    Product.search { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, min_price: min_price, max_price: max_price, category_ids: '' + req.params.id }
+    bootstrap.category = req.params.id
+    opts = utils.searchOpts bootstrap
+    Product.search { id: bootstrap.id }, opts
   .then (data) ->
     { collection, rows, count } = data
     bootstrap.collection    = collection
@@ -166,12 +167,7 @@ app.get '/search', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->
-    opts =
-      size:   bootstrap.perPage
-      search: bootstrap.query
-      page:   bootstrap.page
-    # if bootstrap.query  then opts.search  = bootstrap.query
-    # if bootstrap.page   then opts.page    = bootstrap.page
+    opts = utils.searchOpts bootstrap
     Product.search { id: bootstrap.id }, opts
   .then (data) ->
     bootstrap.products = data.rows

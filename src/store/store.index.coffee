@@ -33,6 +33,7 @@ angular.module 'eeStore', [
   'ee-product-for-store'
   'ee-product-card'
   'ee-product-images'
+  'ee-search-sort'
   'ee-empty-message'
   'ee-loading'
   # 'ee.templates' # commented out during build step for inline templates
