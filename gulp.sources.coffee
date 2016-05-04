@@ -75,12 +75,12 @@ sources.storeModule = [
   # Module - collection
   './src/store/collections/collections.module.coffee'
   './src/store/collections/collections.route.coffee'
-  './src/store/collections/collection.controller.coffee'
-  './src/store/collections/collections.controller.coffee'
+  # './src/store/collections/collection.controller.coffee'
+  # './src/store/collections/collections.controller.coffee'
   # Module - categories
   './src/store/categories/categories.module.coffee'
   './src/store/categories/categories.route.coffee'
-  './src/store/categories/category.controller.coffee'
+  # './src/store/categories/category.controller.coffee'
   # Module - product
   './src/store/product/product.module.coffee'
   './src/store/product/product.route.coffee'

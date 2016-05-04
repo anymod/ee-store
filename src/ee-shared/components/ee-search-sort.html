@@ -1,4 +1,13 @@
 <div class="text-left">
+
+  <!-- collection image -->
+  <div ng-show="state.current.name == 'collection' && collectionData.collection.banner"
+    class="text-center">
+    <img ng-src="{{ collectionData.collection.banner | cloudinaryResizeTo:200:118 }}"
+      class="vert-10 margin-bottom-0">
+  </div>
+  <!-- /collection image -->
+
   <form class="form-group input-group vert-10" ng-submit="fns.search()">
     <input type="text"
       class="form-control full-width-important"
@@ -15,18 +24,18 @@
 
   <div class="vert-5 margin-top-0">
     <!-- category -->
-    <span class="dropdown" uib-dropdown>
+    <span class="dropdown" ng-hide="state.current.name == 'collection'" uib-dropdown>
       <div class="btn btn-sm" ng-class="data.inputs.category.id ? 'btn-themed' : 'btn-default'" uib-dropdown-toggle>
         <span ng-show="data.inputs.category" ng-bind="data.inputs.category.title"></span>
         <span ng-hide="data.inputs.category">Category</span>&nbsp;<i class="caret"></i>
       </div>
       <ul class="dropdown-menu" uib-dropdown-menu>
         <li ng-repeat="category in data.inputs.categories" ng-class="{ active: data.inputs.category.id == category.id }">
-          <a href ng-bind="category.title" ng-click="fns.setCategory(category)"></a>
+          <a href ng-bind="category.title" ng-click="setCategory({ id: category.id, title: (category.title | urlText) })"></a>
         </li>
         <li ng-show="data.inputs.category" class="divider"></li>
         <li ng-show="data.inputs.category">
-          <a href ng-click="fns.setCategory()">Reset</a>
+          <a href ng-click="setCategory()">Reset</a>
         </li>
       </ul>
     </span>

@@ -33,7 +33,7 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, cat
     scope.search = (query, page) ->
       $state.go 'search', { q: (query || scope.query), p: (page || scope.page) }
 
-    $rootScope.$on 'search:query', (e, query) -> scope.search query, 1
+    $rootScope.$on 'search:query', (e, data) -> scope.search data.q, 1
 
     assignCategories()
     scope.$on 'updated:user', () -> assignCategories()

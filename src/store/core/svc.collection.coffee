@@ -33,11 +33,11 @@ angular.module('store.core').factory 'eeCollection', ($rootScope, $q, $state, $s
     eeBack.fns.collectionGET id, _formQuery()
     .then (res) ->
       { collection, rows, count, page, perPage } = res
-      _data.inputs.page     = page
-      _data.inputs.perPage  = perPage
-      _data.count           = count
+      # _data.inputs.page     = page
+      # _data.inputs.perPage  = perPage
+      # _data.count           = count
       _data.collection      = collection
-      _data.products        = rows
+      # _data.products        = rows
     .finally () -> _data.reading = false
 
   # MESSAGING

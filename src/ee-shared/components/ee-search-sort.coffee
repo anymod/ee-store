@@ -2,19 +2,23 @@
 
 angular.module 'ee-search-sort', []
 
-angular.module('ee-search-sort').directive 'eeSearchSort', ($state, eeProducts) ->
+angular.module('ee-search-sort').directive 'eeSearchSort', ($state, $stateParams, eeProducts, eeCollection) ->
   templateUrl: 'ee-shared/components/ee-search-sort.html'
   restrict: 'EA'
   scope: {}
   link: (scope, ele, attr) ->
     scope.data  = eeProducts.data
     scope.fns   = eeProducts.fns
+    scope.collectionData = eeCollection.data
+    scope.state = $state
 
-    scope.search = () -> return
-
-    scope.$on 'pagination:clicked', () ->
-      # eeProducts.fns.runQuery()
-      page = if scope.data.inputs?.page? > 1 then scope.data.inputs.page else null
-      $state.go 'category', { id: $stateParams.id, title: $stateParams.title, p: page }
+    scope.setCategory = (category) ->
+      if !category?.id?
+        $stateParams.c = null
+        $state.go 'search', $stateParams
+      else
+        $stateParams.id = category.id
+        $stateParams.title =  category.title
+        $state.go 'category', $stateParams
 
     return

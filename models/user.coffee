@@ -61,7 +61,7 @@ User =
     lastmod = utils.yyyymmdd()
     entries = [
       { loc: baseLoc, lastmod: lastmod, changefreq: 'weekly', priority: '1.0' }
-      { loc: baseLoc + '/collections', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
+      # { loc: baseLoc + '/collections', lastmod: lastmod, changefreq: 'weekly', priority: '0.9' }
       { loc: baseLoc + '/help', lastmod: lastmod, changefreq: 'monthly', priority: '0.8' }
       { loc: baseLoc + '/search', lastmod: lastmod, changefreq: 'monthly', priority: '0.6' }
     ]

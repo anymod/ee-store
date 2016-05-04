@@ -88,6 +88,7 @@ utils.searchOpts = (bootstrap) ->
     page:   bootstrap.page
     order:  bootstrap.order
   if bootstrap.category then opts.category_ids = bootstrap.category
+  if bootstrap.collection_id then opts.collection_id = bootstrap.collection_id
   if bootstrap.range then [opts.min_price, opts.max_price] = utils.rangeToPrices(bootstrap.range)
   opts
 

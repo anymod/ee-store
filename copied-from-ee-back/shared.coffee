@@ -116,6 +116,16 @@ esqSetProductIds = (esq, opts) ->
       id: opts.product_ids.split(',')
   esq.query 'query', 'bool', ['must'], id_match
 
+esqSetCollectionId = (esq, opts) ->
+  new Promise (resolve, reject) ->
+    return resolve(true) unless opts?.collection_id?
+    sequelize.query 'SELECT product_ids FROM "Collections" WHERE id = ?', { type: sequelize.QueryTypes.SELECT, replacements: [opts.collection_id] }
+    .then (data) ->
+      opts.product_ids = data[0].product_ids.join(',')
+      esqSetProductIds esq, opts
+    .catch (err) -> console.log 'Err in esqSetCollectionId', err
+    .finally () -> resolve true
+
 fns.Product.search = (user, opts) ->
   # console.log opts
   # console.log '------------------------------- PRODUCT SEARCH --------------------------------'
@@ -135,89 +145,16 @@ fns.Product.search = (user, opts) ->
   esqSetSearch esq, opts        # Search:     opts.search
   esqSetSort esq, opts          # Sort:       opts.order
   esqSetPrice esq, opts         # Price:      opts.min_price, opts.max_price
-  # Material: opts.material
+  # esqSetMaterial esq, opts      # Material: opts.material
   esqSetCategories esq, opts    # Categorization: opts.category_ids
   esqSetProductIds esq, opts    # Product ids: opts.product_ids
-  # Supplier (admin only): opts.supplier_id
-
-  # Filters
-  in_category =
-    terms:
-      category_id: category_ids
-  # esq.query 'filter', ['and'], { bool: must: in_category }
-
-  # # Initial body
-  # body =
-  #   size: opts.size
-  #   filter:
-  #     and: [
-  #       # { bool: must_not: term: hide_from_catalog: true },
-  #       { bool: must: has_child: {
-  #         type: 'sku',
-  #         filter:
-  #           and: [
-  #             # TODO change elasticsearch to be based on baseline_price instead of regular_price
-  #             { bool: must: range: baseline_price: { gte: opts.min_price, lte: opts.max_price } }
-  #             # { bool: must: range: supplier_id: { gte: 3797, lte: 3797 } }
-  #           ]
-  #       } }
-  #     ]
-  #
-  # # Pagination
-  # if opts.size and opts.page then body.from = parseInt(opts.size) * (parseInt(opts.page) - 1)
-  #
-  # # Search
-  # if opts.search
-  #   body.query =
-  #     fuzzy_like_this:
-  #       fields: ['title', 'content']
-  #       like_text: opts.search
-  #       fuzziness: 1
-  #     # multi_match:
-  #     #   type: 'most_fields'
-  #     #   query: opts.search
-  #     #   fields: ['title', 'content']
-  #   # body.highlight =
-  #   #   pre_tags: ['<strong>']
-  #   #   post_tags: ['</strong>']
-  #   #   fields:
-  #   #     title:
-  #   #       force_source: true
-  #   #       fragment_size: 150
-  #   #       number_of_fragments: 1
-  #
-  # # Sort
-  # if opts.order is 'updated_at DESC'
-  #   body.sort = [{ updated_at: { order: 'DESC' }} ]
-  #
-  # # Categorization
-  # ids = if opts.category_ids then ('' + opts.category_ids).split(',') else user.categorization_ids
-  # if ids
-  #   body.filter.and.push({
-  #     bool:
-  #       must:
-  #         terms:
-  #           category_id: ids
-  #   })
-  #
-  # # Supplier
-  # if user?.admin? and opts.supplier_id
-  #   body.filter.and[1].bool.must.has_child.filter.and.push({
-  #     bool:
-  #       must:
-  #         term:
-  #           supplier_id: parseInt(opts.supplier_id)
-  #   })
-
-  # console.log ' '
-  # console.log 'ESQ:'
-  # console.log util.inspect(esq.getQuery(), {depth:null})
-  # console.log ' '
-
-  elasticsearch.client.search
-    index: 'nested_search'
-    _source: fns.Product.elasticsearch_findall_attrs
-    body: esq.getQuery()
+  # esqSetSupplierId esq, opts    # Supplier (admin only): opts.supplier_id
+  esqSetCollectionId esq, opts  # Collection: opts.collection_id (Promise-based)
+  .then () ->
+    elasticsearch.client.search
+      index: 'nested_search'
+      _source: fns.Product.elasticsearch_findall_attrs
+      body: esq.getQuery()
   .then (res) ->
     scope.rows    = _.map res?.hits?.hits, '_source'
     scope.count   = res?.hits?.total

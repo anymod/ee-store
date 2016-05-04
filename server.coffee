@@ -56,11 +56,6 @@ app.get '/', (req, res, next) ->
   # TODO finish new meta images
   .then () ->
     User.setCollectionMetaImages bootstrap
-  # .then () -> Product.search { id: bootstrap.id }, { page: bootstrap.page }
-  # .then (data) ->
-    # { rows, count } = data
-    # bootstrap.products    = rows || []
-    # bootstrap.count       = count
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
@@ -96,36 +91,29 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     console.error 'error in PRODUCTS', err
     res.redirect '/'
 
+searchAndRespond = (res, opts, bootstrap) ->
+  Product.search { id: bootstrap.id }, opts
+  .then (data) ->
+    { rows, count, page, perPage } = data
+    bootstrap.products    = rows || []
+    bootstrap.count       = count
+    bootstrap.page        = page
+    bootstrap.perPage     = perPage
+    bootstrap.images      = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.stringified = utils.stringify bootstrap
+    res.render 'store.ejs', { bootstrap: bootstrap }
+
 # COLLECTION
 app.get '/collections/:id/:title*?', (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
-  .then () -> Product.findAllByCollection { id: bootstrap.id }, { page: bootstrap.page, order: bootstrap.order, range: bootstrap.range, collection_id: req.params.id }
+  .then () ->
+    bootstrap.collection_id = parseInt(req.params.id)
+    Collection.findById bootstrap.collection_id, bootstrap.id
   .then (data) ->
-    { collection, rows, count } = data
-    bootstrap.collection    = collection
-    bootstrap.products      = rows || []
-    bootstrap.count         = count
-    bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
-    bootstrap.stringified   = utils.stringify bootstrap
-    res.render 'store.ejs', { bootstrap: bootstrap }
-  .catch (err) ->
-    console.error 'error in COLLECTIONS', err
-    res.redirect '/'
-
-# COLLECTIONS
-app.get '/collections', (req, res, next) ->
-  { bootstrap, host, path } = utils.setup req
-  User.defineStorefront host, bootstrap
-  .then () -> Collection.findAll bootstrap.id
-  .then (data) ->
-    bootstrap.collections   = data
-    # bootstrap.count         = count
-    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    # bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
-    bootstrap.stringified   = utils.stringify bootstrap
-    res.render 'store.ejs', { bootstrap: bootstrap }
+    bootstrap.collection = data[0]
+    opts = utils.searchOpts bootstrap
+    searchAndRespond res, opts, bootstrap
   .catch (err) ->
     console.error 'error in COLLECTIONS', err
     res.redirect '/'
@@ -137,18 +125,20 @@ app.get '/categories/:id/:title*?', (req, res, next) ->
   .then () ->
     bootstrap.category = req.params.id
     opts = utils.searchOpts bootstrap
-    Product.search { id: bootstrap.id }, opts
-  .then (data) ->
-    { collection, rows, count } = data
-    bootstrap.collection    = collection
-    bootstrap.products      = rows || []
-    bootstrap.count         = count
-    # bootstrap.title         = utils.formCollectionPageTitle bootstrap.collection.title, bootstrap.title
-    bootstrap.images        = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
-    bootstrap.stringified   = utils.stringify bootstrap
-    res.render 'store.ejs', { bootstrap: bootstrap }
+    searchAndRespond res, opts, bootstrap
   .catch (err) ->
     console.error 'error in CATEGORIES', err
+    res.redirect '/'
+
+# SEARCH
+app.get '/search', (req, res, next) ->
+  { bootstrap, host, path } = utils.setup req
+  User.defineStorefront host, bootstrap
+  .then () ->
+    opts = utils.searchOpts bootstrap
+    searchAndRespond res, opts, bootstrap
+  .catch (err) ->
+    console.error 'error in SEARCH', err
     res.redirect '/'
 
 # HELP
@@ -160,24 +150,6 @@ app.get '/help', (req, res, next) ->
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
     console.error 'error in HELP', err
-    res.redirect '/'
-
-# SEARCH
-app.get '/search', (req, res, next) ->
-  { bootstrap, host, path } = utils.setup req
-  User.defineStorefront host, bootstrap
-  .then () ->
-    opts = utils.searchOpts bootstrap
-    Product.search { id: bootstrap.id }, opts
-  .then (data) ->
-    bootstrap.products = data.rows
-    bootstrap.count = data.count
-    bootstrap.page = data.page
-    bootstrap.perPage = data.perPage
-    bootstrap.stringified = utils.stringify bootstrap
-    res.render 'store.ejs', { bootstrap: bootstrap }
-  .catch (err) ->
-    console.error 'error in SEARCH', err
     res.redirect '/'
 
 # CART
@@ -211,7 +183,7 @@ app.get ['/sitemap', '/sitemap.xml'], (req, res, next) ->
     res.redirect '/'
 
 # LEGACY REDIRECTS
-app.get ['/selections/:id/:title', '/shop', '/shop/:title'], (req, res, next) ->
+app.get ['/selections/:id/:title', '/shop', '/shop/:title', '/collections'], (req, res, next) ->
   res.redirect '/'
 
 app.listen process.env.PORT, ->
