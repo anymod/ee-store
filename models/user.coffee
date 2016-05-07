@@ -25,7 +25,7 @@ User =
     searchTerm  = host
     queryUser   = User.storeByDomain
     if process.env.NODE_ENV isnt 'production' or host.indexOf('eeosk.com') > -1 or host.indexOf('herokuapp.com') > -1 or host.indexOf('.demoseller.com') > -1
-      username = 'stylishrustic' # 'stylishrustic' # 'demoseller'
+      username = 'meredithblue' # 'stylishrustic' # 'demoseller'
       if host.indexOf('herokuapp.com') > -1 then username = 'stylishrustic' # 'demoseller'
       if host.indexOf('eeosk.com') > -1 or host.indexOf('.demoseller.com') > -1 then username = host.split('.')[0]
       searchTerm  = username
