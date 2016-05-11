@@ -57,7 +57,7 @@
             <i class="fa fa-lg fa-fw fa-cube text-info"></i>&nbsp;&nbsp;Ships from USA
           </div>
           <div class="vert-5">
-            <i class="fa fa-lg fa-fw fa-info-circle text-info"></i>&nbsp;&nbsp;<a href="#details" class="text-dark-blue">Product details</a>
+            <i class="fa fa-lg fa-fw fa-info-circle text-info"></i>&nbsp;&nbsp;<a ui-sref="product({ id: product.id, title: (product.title | urlText), '#': 'details' })" class="text-dark-blue">Product details</a>
           </div>
         </div>
       </div>

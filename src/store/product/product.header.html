@@ -1,14 +1,7 @@
-<style ng-if="product.ee.User.user.storefront_meta.brand.color">
-  .alert-themed {
-    background-color: {{ product.ee.User.user.storefront_meta.brand.color.tertiary }};
-    border-color: {{ product.ee.User.user.storefront_meta.brand.color.tertiaryAccent }};
-    color: {{ product.ee.User.user.storefront_meta.brand.color.secondaryAccent }};
-  }
-</style>
-<div class="full-width alert alert-themed text-center round-0 margin-0 pad-5 no-side-border"
-  style="font-weight: bold; font-size: 12px;">
-  Free Shipping on orders over $50
-</div>
+<ee-storefront-announcement
+  ng-if="product.ee.User.user"
+  user="product.ee.User.user">
+</ee-storefront-announcement>
 
 <ee-storefront-scroller
   ng-if="product.ee.User.user"
@@ -25,7 +18,7 @@
   </a>&nbsp;
   <!-- /logo -->
   <!-- cart -->
-  <a ui-sref="cart" class="text-muted">
+  <a ui-sref="cart" class="text-muted no-underline">
     <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
       <i class="fa fa-circle fa-stack-2x"></i>
       <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
@@ -33,6 +26,11 @@
     <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
   </a>
   <!-- /cart -->
+  <!-- search -->
+  <a ui-sref="search({ q: (product.data.product.title | urlText) })" class="text-muted no-underline">
+    <i class="fa fa-2x fa-fw fa-search vertical-align-middle"></i>
+  </a>
+  <!-- /search -->
   <div class="vert-15 margin-bottom-0 opacity-08">
     <!-- social -->
     <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{ product.currentUrl }}"
@@ -42,11 +40,7 @@
     <a ng-href="http://www.pinterest.com/pin/create/button/?url={{ product.currentUrl }}&media={{ product.data.product.image }}&description={{ product.data.product.title }}"
        class="btn btn-default btn-pinterest border-none pad-2" target="_blank" rel="nofollow">
       &nbsp;<i class="fa fa-lg fa-pinterest"></i>&nbsp;&nbsp;Pin&nbsp;&nbsp;
-    </a>
-    <!-- <a ng-href="http://twitter.com/share?url={{ product.currentUrl }}&text={{ product.data.product.title }}"
-       class="text-twitter no-underline" target="_blank" rel="nofollow">
-      <i class="fa fa-2x fa-twitter vertical-align-middle"></i>
-    </a>&nbsp; -->
+    </a>&nbsp;
     <!-- /social -->
   </div>
 </div>

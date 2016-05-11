@@ -24,6 +24,7 @@ angular.module 'eeStore', [
   'store.search'
 
   # custom
+  'ee-storefront-announcement'
   'ee-storefront-header'
   'ee-storefront-scroller'
   'ee-storefront-brand'

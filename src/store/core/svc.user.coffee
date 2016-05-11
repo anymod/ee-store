@@ -9,7 +9,7 @@ angular.module('store.core').factory 'eeUser', (eeBootstrap, eeBack, categories)
     categories: categories
 
   if eeBootstrap
-    _data.user[attr] = eeBootstrap[attr] for attr in ['storefront_meta', 'logo', 'categorization_ids', 'home_carousel', 'home_arranged']
+    _data.user[attr] = eeBootstrap[attr] for attr in ['username', 'storefront_meta', 'logo', 'categorization_ids', 'home_carousel', 'home_arranged']
 
   ## PRIVATE FUNCTIONS
   _getUser = () ->

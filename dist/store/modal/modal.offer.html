@@ -2,9 +2,9 @@
   <button type="button" class="close" ng-click="$close()">&times;</button>
 </div>
 <div class="inline-block full-width text-center pad-10">
-  <img src="https://res.cloudinary.com/eeosk/image/upload/v1437416947/storefront_logo/myh3cetlupckpuimrybw.jpg" class="small-thumb img-circle margin-right-4">
-  <h2 class="inline-block vert-5 font-weight-200 vertical-align-middle">
-    Stylish Rustic
+  <img ng-src="{{ modal.ee.User.user.storefront_meta.logo }}" class="small-thumb img-circle margin-right-4">
+  <h2 class="inline-block vert-5 font-weight-200 vertical-align-middle"
+    ng-bind="modal.ee.User.user.storefront_meta.home.name">
   </h2>
 </div>
 <div class="position-relative min-height-300">
