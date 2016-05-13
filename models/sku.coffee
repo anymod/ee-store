@@ -10,7 +10,7 @@ Customization = require './customization'
 Sku =
 
   addAllToProduct: (product) ->
-    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? ORDER BY baseline_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? AND discontinued IS NOT true AND quantity > 0 ORDER BY baseline_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
     .then (skus) ->
       product.skus = skus
       product
