@@ -136,6 +136,7 @@
   </div>
 </div>
 <!-- /SR Mobile Sidenav -->
+
 <!-- SR Mobile Topnav -->
 <style>
   .ee-scroll-top {
@@ -146,6 +147,7 @@
   .ee-scroll-top-show { top: 0; }
 </style>
 <div ee-scroll-show trigger-at="{{ compactView ? 800 : 300 }}"
+  ng-if="state != 'cart' && state != 'help' && state != 'search'"
   class="ee-scroll-top full-width text-center pad-5 transition-200 visible-xs">
   <div class="inline-block pad-5 round-5" style="background: rgba(255,255,255,0.5);">
     <!-- offer -->
@@ -161,7 +163,7 @@
 <!-- Search -->
 <div class="container max-width-900 vert-5">
   <ee-search-sort
-    ng-if="!compactView"
+    ng-if="!compactView && state != 'cart' && state != 'help'"
     hide-sort="true">
   </ee-search-sort>
 </div>
