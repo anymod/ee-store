@@ -149,6 +149,7 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
     .finally () -> _data.reading = false
 
   _search = (term) ->
+    if $state.current.name is 'storefront' then $state.go 'search'
     _clearProducts()
     _setSearch term
     _runQuery()

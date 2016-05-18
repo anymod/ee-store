@@ -75,8 +75,6 @@ sources.storeModule = [
   # Module - collection
   './src/store/collections/collections.module.coffee'
   './src/store/collections/collections.route.coffee'
-  # './src/store/collections/collection.controller.coffee'
-  # './src/store/collections/collections.controller.coffee'
   # Module - categories
   './src/store/categories/categories.module.coffee'
   './src/store/categories/categories.route.coffee'
@@ -115,6 +113,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-storefront-brand.coffee'
   './src/ee-shared/components/ee-search-sort.coffee'
   './src/ee-shared/components/ee-scroll-to-top.coffee'
+  './src/ee-shared/components/ee-scroll-show.coffee'
   './src/ee-shared/components/ee-product-images.coffee'
   './src/ee-shared/components/ee-empty-message.coffee'
   './src/ee-shared/components/ee-loading.coffee'

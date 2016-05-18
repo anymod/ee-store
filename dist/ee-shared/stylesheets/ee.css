@@ -9199,6 +9199,7 @@ html {
   min-height: 40px;
   font-size: 17px;
   overflow: hidden;
+  border-top: none;
 }
 .ee-store-subnav ul.nav > li > a {
   padding-top: 8px;

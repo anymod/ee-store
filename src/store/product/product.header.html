@@ -1,46 +1,66 @@
-<ee-storefront-announcement
-  ng-if="product.ee.User.user"
-  user="product.ee.User.user">
-</ee-storefront-announcement>
-
-<ee-storefront-scroller
-  ng-if="product.ee.User.user"
-  user="product.ee.User.user">
-</ee-storefront-scroller>
-
-<div class="container vert-5 max-width-900 text-center">
-  <!-- logo -->
-  <a ui-sref="storefront" class="no-underline">
-    <img ng-src="{{ product.ee.User.user.logo | cloudinaryTrim }}"
-      alt="{{ product.ee.User.user.storefront_meta.name }}"
-      style="max-width: 180px; max-height: 35px"
-      class="round-2">
-  </a>&nbsp;
-  <!-- /logo -->
-  <!-- cart -->
-  <a ui-sref="cart" class="text-muted no-underline">
-    <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
-      <i class="fa fa-circle fa-stack-2x"></i>
-      <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
-    </span>
-    <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
-  </a>
-  <!-- /cart -->
-  <!-- search -->
-  <a ui-sref="search({ q: product.data.product.title })" class="text-muted no-underline">
-    <i class="fa fa-2x fa-fw fa-search vertical-align-middle"></i>
-  </a>
-  <!-- /search -->
-  <div class="vert-15 margin-bottom-0 opacity-08">
-    <!-- social -->
-    <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{ product.currentUrl }}"
-      class="btn btn-default btn-facebook border-none pad-2" target="_blank" rel="nofollow">
-      &nbsp;<i class="fa fa-lg fa-facebook-official"></i>&nbsp;Share&nbsp;
-    </a>&nbsp;
-    <a ng-href="http://www.pinterest.com/pin/create/button/?url={{ product.currentUrl }}&media={{ product.data.product.image }}&description={{ product.data.product.title }}"
-       class="btn btn-default btn-pinterest border-none pad-2" target="_blank" rel="nofollow">
-      &nbsp;<i class="fa fa-lg fa-pinterest"></i>&nbsp;&nbsp;Pin&nbsp;&nbsp;
-    </a>&nbsp;
-    <!-- /social -->
+<!-- SR-SPECIFIC -->
+<div ng-if="product.ee.User.user.username == 'stylishrustic'">
+  <ee-storefront-announcement
+    ng-if="product.ee.User.user"
+    user="product.ee.User.user">
+  </ee-storefront-announcement>
+  <ee-storefront-header
+    user="product.ee.User.user"
+    compact-view="true">
+  </ee-storefront-header>
+  <div class="full-width text-center text-muted vert-5 margin-bottom-0 visible-xs">
+    <strong>Free Shipping over $50</strong>
   </div>
 </div>
+<!-- /SR-SPECIFIC -->
+
+<!-- NON-SR -->
+<div ng-if="product.ee.User.user.username != 'stylishrustic'">
+  <ee-storefront-announcement
+    ng-if="product.ee.User.user"
+    user="product.ee.User.user">
+  </ee-storefront-announcement>
+
+  <ee-storefront-scroller
+    ng-if="product.ee.User.user"
+    user="product.ee.User.user">
+  </ee-storefront-scroller>
+
+  <div class="container vert-5 max-width-900 text-center">
+    <!-- logo -->
+    <a ui-sref="storefront" class="no-underline">
+      <img ng-src="{{ product.ee.User.user.logo | cloudinaryTrim }}"
+        alt="{{ product.ee.User.user.storefront_meta.name }}"
+        style="max-width: 180px; max-height: 35px"
+        class="round-2">
+    </a>&nbsp;
+    <!-- /logo -->
+    <!-- cart -->
+    <a ui-sref="cart" class="text-muted no-underline">
+      <span ng-if="product.ee.Cart.quantity_array && product.ee.Cart.quantity_array.length > 0" class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-stack-1x white-color"><strong ng-bind="product.ee.Cart.quantity_array.length"></strong></i>
+      </span>
+      <i ng-if="!product.ee.Cart.quantity_array || product.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
+    </a>
+    <!-- /cart -->
+    <!-- search -->
+    <a ui-sref="search({ q: product.data.product.title })" class="text-muted no-underline">
+      <i class="fa fa-2x fa-fw fa-search vertical-align-middle"></i>
+    </a>
+    <!-- /search -->
+    <div class="vert-15 margin-bottom-0 opacity-08">
+      <!-- social -->
+      <a ng-href="https://www.facebook.com/sharer/sharer.php?u={{ product.currentUrl }}"
+        class="btn btn-default btn-facebook border-none pad-2" target="_blank" rel="nofollow">
+        &nbsp;<i class="fa fa-lg fa-facebook-official"></i>&nbsp;Share&nbsp;
+      </a>&nbsp;
+      <a ng-href="http://www.pinterest.com/pin/create/button/?url={{ product.currentUrl }}&media={{ product.data.product.image }}&description={{ product.data.product.title }}"
+         class="btn btn-default btn-pinterest border-none pad-2" target="_blank" rel="nofollow">
+        &nbsp;<i class="fa fa-lg fa-pinterest"></i>&nbsp;&nbsp;Pin&nbsp;&nbsp;
+      </a>&nbsp;
+      <!-- /social -->
+    </div>
+  </div>
+</div>
+<!-- /NON-SR -->

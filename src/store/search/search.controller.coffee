@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.search').controller 'searchCtrl', ($rootScope, $location, $state, eeDefiner, eeProducts, eeCollection) ->
+angular.module('store.search').controller 'searchCtrl', ($rootScope, $location, $state, $scope, eeDefiner, eeProducts, eeCollection, categories) ->
 
   search = this
 

@@ -1,25 +1,3 @@
-<!-- breadcrumb -->
-<!-- <div style="background-color: #F5F5F5">
-  <div class="container">
-    <ol class="breadcrumb margin-0">
-      <li><a ui-sref="storefront" class="text-muted">Home</a></li>
-      <li>
-        <a ui-sref="collections" class="text-muted">Collections</a>
-        &nbsp;&&nbsp;
-        <span class="dropdown" uib-dropdown>
-          <a href class="dropdown-toggle text-muted" uib-dropdown-toggle>Categories<span class="caret"></span></a>
-          <ul class="dropdown-menu" uib-dropdown-menu>
-            <li ng-repeat="cat in collection.ee.User.categories">
-              <a ui-sref="category({ id: cat.id, title: (cat.title | urlText) })" ng-bind="cat.title"></a>
-            </li>
-          </ul>
-        </span>
-      </li>
-    </ol>
-  </div>
-</div> -->
-<!-- /breadcrumb -->
-
 <div class="container max-width-900 vert-20 text-center" ng-class="{ 'opacity-05': collection.ee.Collection.reading }">
 
   <img ng-src="{{ collection.ee.Collection.collection.banner | cloudinaryResizeTo:425:250 }}" class="full-width max-width-400"/>

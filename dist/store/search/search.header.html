@@ -1,32 +1,50 @@
-<ee-storefront-announcement
-  ng-if="storefront.ee.User.user"
-  user="storefront.ee.User.user">
-</ee-storefront-announcement>
-
-<ee-storefront-scroller
-  ng-if="storefront.ee.User.user"
-  user="storefront.ee.User.user">
-</ee-storefront-scroller>
-
-<div class="container vert-5 max-width-900 text-center">
-  <!-- logo -->
-  <a ui-sref="storefront" class="no-underline">
-    <img ng-src="{{ storefront.ee.User.user.logo | cloudinaryTrim }}"
-      alt="{{ storefront.ee.User.user.storefront_meta.name }}"
-      style="max-width: 180px; max-height: 35px"
-      class="round-2">
-  </a>&nbsp;
-  <!-- /logo -->
-  <!-- cart -->
-  <a ui-sref="cart" class="text-muted no-underline">
-    <span ng-if="storefront.ee.Cart.quantity_array && storefront.ee.Cart.quantity_array.length > 0" class="fa-stack">
-      <i class="fa fa-circle fa-stack-2x"></i>
-      <i class="fa fa-stack-1x white-color"><strong ng-bind="storefront.ee.Cart.quantity_array.length"></strong></i>
-    </span>
-    <i ng-if="!storefront.ee.Cart.quantity_array || storefront.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
-  </a>&nbsp;
-  <!-- /cart -->
+<!-- SR-SPECIFIC -->
+<div ng-if="storefront.ee.User.user.username == 'stylishrustic'">
+  <ee-storefront-announcement
+    ng-if="storefront.ee.User.user"
+    user="storefront.ee.User.user">
+  </ee-storefront-announcement>
+  <ee-storefront-header
+    ng-if="storefront.ee.User.user.username == 'stylishrustic'"
+    user="storefront.ee.User.user"
+    compact-view="true">
+  </ee-storefront-header>
 </div>
+<!-- /SR-SPECIFIC -->
+
+<!-- Non-SR -->
+<div ng-if="storefront.ee.User.user.username != 'stylishrustic'">
+  <ee-storefront-announcement
+    ng-if="storefront.ee.User.user"
+    user="storefront.ee.User.user">
+  </ee-storefront-announcement>
+
+  <ee-storefront-scroller
+    ng-if="storefront.ee.User.user"
+    user="storefront.ee.User.user">
+  </ee-storefront-scroller>
+
+  <div class="container vert-5 max-width-900 text-center">
+    <!-- logo -->
+    <a ui-sref="storefront" class="no-underline">
+      <img ng-src="{{ storefront.ee.User.user.logo | cloudinaryTrim }}"
+        alt="{{ storefront.ee.User.user.storefront_meta.name }}"
+        style="max-width: 180px; max-height: 35px"
+        class="round-2">
+    </a>&nbsp;
+    <!-- /logo -->
+    <!-- cart -->
+    <a ui-sref="cart" class="text-muted no-underline">
+      <span ng-if="storefront.ee.Cart.quantity_array && storefront.ee.Cart.quantity_array.length > 0" class="fa-stack">
+        <i class="fa fa-circle fa-stack-2x"></i>
+        <i class="fa fa-stack-1x white-color"><strong ng-bind="storefront.ee.Cart.quantity_array.length"></strong></i>
+      </span>
+      <i ng-if="!storefront.ee.Cart.quantity_array || storefront.ee.Cart.quantity_array.length < 1" class="fa fa-2x fa-fw fa-shopping-cart vertical-align-middle"></i>
+    </a>&nbsp;
+    <!-- /cart -->
+  </div>
+</div>
+<!-- /Non-SR -->
 
 <div class="max-width-600 margin-0-auto pad-5">
   <ee-search-sort></ee-search-sort>
