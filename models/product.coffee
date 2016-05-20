@@ -33,16 +33,18 @@ Product = sequelize.define 'Product',
 
     findCompleteById: (id, user) ->
       scope = {}
-      Customization.findAllByProductIds user.id, [id], null
-      .then (customizations) ->
-        scope.customizations = customizations
-        Shared.Product.findById id
+      # Customization.findAllByProductIds user.id, [id], null
+      # .then (customizations) ->
+      #   scope.customizations = customizations
+      Shared.Product.findById id
       .then (product) ->
         scope.product = product
         Sku.addAllToProduct scope.product
-      .then () -> Customization.alterProducts [scope.product], scope.customizations
+      # .then () -> Customization.alterProducts [scope.product], scope.customizations
+      # .then () ->
+      .then () -> Shared.Product.addCustomizationsFor user, [scope.product]
       .then () ->
-        Shared.Sku.setPricesFor scope.product.skus, user.pricing
+        # Shared.Sku.setPricesFor scope.product.skus, user.pricing
         scope.product
 
     findAllByCollection: (user, opts) ->

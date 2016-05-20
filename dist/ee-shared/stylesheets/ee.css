@@ -10426,6 +10426,24 @@ a.product:focus .product-title {
     width: 100%;
   }
 }
+.btn-arrow {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  height: 30px;
+  line-height: 16px;
+  border-radius: 2px 0 0 2px;
+}
+.btn-arrow:after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: -15px;
+  height: 0;
+  width: 0;
+  border-style: solid;
+  border-width: 15px 15px 15px 0;
+}
 img[data-action="zoom"] {
   cursor: pointer;
   cursor: -webkit-zoom-in;

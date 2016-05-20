@@ -30,7 +30,7 @@ angular.module('store.collections').config ($stateProvider) ->
           squash: true
 
     .state 'sale',
-      url: '/sale?q&p&s&r&coll'
+      url: '/sale/:id/:title?q&p&s&r&coll'
       views:
         top:
           controller: 'storeCtrl as storefront'

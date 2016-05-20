@@ -99,7 +99,7 @@ searchAndRespond = (res, opts, bootstrap) ->
     bootstrap.count       = count
     bootstrap.page        = page
     bootstrap.perPage     = perPage
-    bootstrap.images      = utils.makeMetaImages(_.pluck(bootstrap.products.slice(0,3), 'image'))
+    bootstrap.images      = utils.makeMetaImages(_.map(bootstrap.products.slice(0,3), 'image'))
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
 
@@ -172,7 +172,7 @@ app.get '/cart', (req, res, next) ->
   User.defineStorefront host, bootstrap
   .then () ->
     if req.cart and req.cart.quantity_array and req.cart.quantity_array.length > 0
-      sku_ids = _.pluck req.cart.quantity_array, 'sku_id'
+      sku_ids = _.map req.cart.quantity_array, 'sku_id'
       Sku.forCart sku_ids.join(','), bootstrap.id
       .then (data) -> bootstrap.cart.skus = data
       .finally () ->

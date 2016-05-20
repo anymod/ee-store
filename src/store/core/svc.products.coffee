@@ -189,13 +189,13 @@ angular.module('store.core').factory 'eeProducts', ($rootScope, $q, $state, $sta
       when 'category'
         _setCategoryById toParams.id
         _setCollectionById null
-      when 'collection'
+      when 'collection', 'sale'
         _setCollectionById toParams.id
         _setCategoryById null
       when 'search'
         _setCollectionById null
     switch toState.name
-      when 'search', 'category', 'collection' then _runQuery(true)
+      when 'search', 'category', 'collection', 'sale' then _runQuery(true)
     return
 
   ## EXPORTS

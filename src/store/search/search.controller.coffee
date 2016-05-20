@@ -9,7 +9,8 @@ angular.module('store.search').controller 'searchCtrl', ($rootScope, $location, 
 
   search.update = () -> eeProducts.fns.runQuery()
 
-  if $state.current.name is 'collection' and $rootScope.pageDepth > 1
-    eeCollection.fns.defineCollection $state.params.id, true
+  if $rootScope.pageDepth > 1
+    switch $state.current.name
+      when 'collection', 'sale' then eeCollection.fns.defineCollection $state.params.id, true
 
   return

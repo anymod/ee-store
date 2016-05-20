@@ -26,7 +26,7 @@ Sku =
     sequelize.query q, { type: sequelize.QueryTypes.SELECT }
     .then (skus) ->
       scope.skus = skus
-      product_ids = _.pluck(skus, 'product_id').join(',')
+      product_ids = _.map(skus, 'product_id').join(',')
       Customization.findAllByProductIds seller_id, product_ids
     .then (customizations) ->
       # Customization.alterSkus scope.skus, customizations

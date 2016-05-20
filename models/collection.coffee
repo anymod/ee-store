@@ -55,6 +55,6 @@ Collection =
   metaImagesFor: (seller_id) ->
     sequelize.query 'SELECT banner FROM "Collections" WHERE seller_id = ? AND banner IS NOT NULL AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 5', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
     .then (images) ->
-      _.pluck images, 'banner'
+      _.map images, 'banner'
 
 module.exports = Collection
