@@ -398,7 +398,7 @@ fns.Collection.setDiscountsFor = (user, products) ->
     # Use the maximum discount for each product
     for product in products
       collections_with_product = _.filter(colls, (c) -> c.product_ids.indexOf(product.id) > -1)
-      max_discount_collection = _.maxBy collections_with_product, 'discount_up_to'
+      max_discount_collection = _.max collections_with_product, 'discount_up_to'
       max_discount = max_discount_collection?.discount_up_to
       if max_discount > 0 and max_discount <= 0.7
         product.discounted = max_discount_collection.id
