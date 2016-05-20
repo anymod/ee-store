@@ -44,7 +44,7 @@
     "pg-hstore": "^2.3.2",
     "request": "^2.72.0",
     "run-sequence": "^1.2.0",
-    "sequelize": "^3.23.2",
+    "sequelize": "~3.23",
     "serve-static": "^1.10.2",
     "stream-combiner": "^0.2.2",
     "streamqueue": "^0.1.3",
