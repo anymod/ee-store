@@ -36,7 +36,7 @@
     "karma-chrome-launcher": "^0.1.12",
     "karma-firefox-launcher": "^0.1.7",
     "karma-nyan-reporter": "0.0.60",
-    "lodash": "~4.0",
+    "lodash": "~3.9",
     "mocha": "^2.4.5",
     "morgan": "^1.7.0",
     "newrelic": "^1.27.2",
