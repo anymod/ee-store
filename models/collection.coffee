@@ -25,6 +25,10 @@ Collection =
   findById: (collection_id, seller_id) ->
     sequelize.query 'SELECT id, title, headline, banner, seller_id, product_ids FROM "Collections" WHERE id = ? AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [collection_id, seller_id] }
 
+  findSaleBySellerId: (seller_id) ->
+    sequelize.query 'SELECT id, title, headline, banner, seller_id, product_ids FROM "Collections" WHERE seller_id = ? AND discount_sale_section IS true AND deleted_at IS NULL ORDER BY updated_at DESC LIMIT 1', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }
+    .then (collections) -> collections[0]
+
   findHomeCarousel: Shared.Collection.findHomeCarousel
     # collection_ids ||= '0'
     # sequelize.query 'SELECT id, banner FROM "Collections" WHERE id IN (' + collection_ids + ') AND banner IS NOT NULL AND show_banner IS TRUE AND seller_id = ? AND deleted_at IS NULL', { type: sequelize.QueryTypes.SELECT, replacements: [seller_id] }

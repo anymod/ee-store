@@ -92,7 +92,7 @@ app.get '/products/:id/:title*?', (req, res, next) ->
     res.redirect '/'
 
 searchAndRespond = (res, opts, bootstrap) ->
-  Product.search { id: bootstrap.id }, opts
+  Product.search { id: bootstrap.id, pricing: bootstrap.pricing }, opts
   .then (data) ->
     { rows, count, page, perPage } = data
     bootstrap.products    = rows || []
@@ -140,6 +140,20 @@ app.get '/search', (req, res, next) ->
   .catch (err) ->
     console.error 'error in SEARCH', err
     res.redirect '/'
+
+# SALE
+# app.get '/sale', (req, res, next) ->
+#   { bootstrap, host, path } = utils.setup req
+#   User.defineStorefront host, bootstrap
+#   .then () -> Collection.findSaleBySellerId bootstrap.id
+#   .then (collection) ->
+#     bootstrap.collection_id = collection.id
+#     bootstrap.collection = collection
+#     opts = utils.searchOpts bootstrap
+#     searchAndRespond res, opts, bootstrap
+#   .catch (err) ->
+#     console.error 'error in COLLECTIONS', err
+#     res.redirect '/'
 
 # HELP
 app.get '/help', (req, res, next) ->
