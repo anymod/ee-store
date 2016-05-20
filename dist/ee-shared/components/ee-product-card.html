@@ -24,6 +24,7 @@
               </ul>
             </div>
           </div>
+          <a ng-if="currentSku.discounted" ui-sref="sale({ id: currentSku.discounted })" class="btn btn-themed btn-arrow">Sale</a>
           <h4 ng-if="currentSku.msrp && currentSku.price && currentSku.msrp > currentSku.price && msrpDiscount > 0.045" class="vert-10">
             <span class="text-muted"><s>{{ currentSku.msrp | centToDollar }}</s></span>
             <span class="text-danger">&nbsp;{{ msrpDiscount | percentage:0 }} Off</span>
