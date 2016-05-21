@@ -104,7 +104,7 @@ searchAndRespond = (res, opts, bootstrap) ->
     res.render 'store.ejs', { bootstrap: bootstrap }
 
 # COLLECTION
-app.get '/collections/:id/:title*?', (req, res, next) ->
+app.get ['/collections/:id/:title*?', '/sale/:id/:title*?'], (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->
@@ -142,18 +142,18 @@ app.get '/search', (req, res, next) ->
     res.redirect '/'
 
 # SALE
-app.get '/sale', (req, res, next) ->
-  { bootstrap, host, path } = utils.setup req
-  User.defineStorefront host, bootstrap
-  .then () -> Collection.findSaleBySellerId bootstrap.id
-  .then (collection) ->
-    bootstrap.collection_id = collection.id
-    bootstrap.collection = collection
-    opts = utils.searchOpts bootstrap
-    searchAndRespond res, opts, bootstrap
-  .catch (err) ->
-    console.error 'error in COLLECTIONS', err
-    res.redirect '/'
+# app.get '/sale/:id', (req, res, next) ->
+#   { bootstrap, host, path } = utils.setup req
+#   User.defineStorefront host, bootstrap
+#   .then () -> Collection.findSaleBySellerId bootstrap.id
+#   .then (collection) ->
+#     bootstrap.collection_id = collection.id
+#     bootstrap.collection = collection
+#     opts = utils.searchOpts bootstrap
+#     searchAndRespond res, opts, bootstrap
+#   .catch (err) ->
+#     console.error 'error in COLLECTIONS', err
+#     res.redirect '/'
 
 # HELP
 app.get '/help', (req, res, next) ->
