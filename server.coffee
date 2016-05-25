@@ -54,8 +54,8 @@ app.get '/', (req, res, next) ->
   User.defineStorefront host, bootstrap
   .then () -> User.defineHomepage bootstrap
   # TODO finish new meta images
+  .then () -> User.setCollectionMetaImages bootstrap
   .then () ->
-    User.setCollectionMetaImages bootstrap
     bootstrap.stringified = utils.stringify bootstrap
     res.render 'store.ejs', { bootstrap: bootstrap }
   .catch (err) ->
