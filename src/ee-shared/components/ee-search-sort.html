@@ -8,13 +8,13 @@
   </div>
   <!-- /collection image -->
 
-  <form class="form-group input-group vert-10" ng-submit="fns.search()">
+  <form class="form-group input-group" ng-submit="fns.search()" ng-class="hideSort ? 'margin-0' : 'vert-10'">
     <input type="text"
       class="form-control full-width-important"
       placeholder="Search for products"
       ng-model="data.inputs.search"
       style="box-shadow: none; padding: 8px 20px; min-height: 38px;">
-    <span class="input-group-btn" ng-if="data.inputs.searchLabel">
+    <span class="input-group-btn" ng-if="data.inputs.search">
       <button class="btn btn-default round-0 no-side-border" type="button"
         style="padding: 8px 15px; min-height: 38px;"
         ng-click="fns.clearSearch()">

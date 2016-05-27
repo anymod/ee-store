@@ -29,12 +29,13 @@
             <div class="activity-area position-absolute">
               <div>
                 <!-- Search -->
-                <form class="form-group input-group margin-0" ng-submit="search()">
+                <ee-search-sort hide-sort="true"></ee-search-sort>
+                <!-- <form class="form-group input-group margin-0" ng-submit="search()">
                   <input type="text" class="form-control full-width-important" placeholder="Search for products" ng-model="query" style="box-shadow: none; padding: 8px 20px; min-height: 38px;">
                   <span class="input-group-btn">
                     <button class="btn btn-default" type="submit" style="padding: 8px 20px; min-height: 38px;">Search&nbsp;&nbsp;<i class="fa fa-caret-right"></i></button>
                   </span>
-                </form>
+                </form> -->
                 <!-- /Search -->
               </div>
               <div class="full-width text-right pad-5 vert-5 margin-top-0 vertical-align-middle">
@@ -105,9 +106,10 @@
     </div>
   </nav>
   <div class="visible-xs white-background pad-5 border-bottom-gray">
-    <form class="margin-0" ng-submit="search()">
+    <ee-search-sort hide-sort="true"></ee-search-sort>
+    <!-- <form class="margin-0" ng-submit="search()">
       <input type="text" class="form-control" placeholder="Search for products" ng-model="query">
-    </form>
+    </form> -->
   </div>
   <!-- /Mobile nav -->
 

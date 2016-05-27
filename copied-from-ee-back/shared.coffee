@@ -59,9 +59,16 @@ esqSetSort = (esq, opts) ->
     nested_path: 'skus'
     mode:  'min'
     order: order
+  sku_sort_script =
+    nested_path: 'skus'
+    mode:  'min'
+    order: order
+    type: 'number'
+    script: "doc['baseline_price'].value + doc['shipping_price'].value - doc['supply_price'].value - doc['supply_shipping_price'].value"
   switch opts.order
     when 'pa', 'pd' then esq.query 'sort', 'skus.baseline_price', sku_sort_order
     when 'ua', 'ud' then esq.query 'sort', 'updated_at', order
+    when 'ca', 'cd' then esq.query 'sort', 'created_at', order
     when 'ta', 'td' then esq.query ['sort'], 'title.raw', { order: order }
     when 'shipa', 'shipd' then esq.query 'sort', 'skus.shipping_price', sku_sort_order
     # TODO rework without regular_price column
@@ -72,7 +79,7 @@ esqSetSort = (esq, opts) ->
     #   attributes += ', min((1.0*s.msrp - s.regular_price)/s.msrp) as discount'
     #   order = "discount ASC"
     # TODO rework with calculation
-    # when 'eeprofd'
+    when 'eeprofa', 'eeprofd' then esq.query 'sort', '_script', sku_sort_script
     #   attributes += ', max(1.0 - (1.0*s.supply_price + s.supply_shipping_price) / (1.0*s.baseline_price + s.shipping_price)) as profit'
     #   order = "profit DESC"
     # when 'eeprofa'
@@ -151,6 +158,7 @@ fns.Product.search = (user, opts) ->
   # esqSetSupplierId esq, opts    # Supplier (admin only): opts.supplier_id
   esqSetCollectionId esq, opts  # Collection: opts.collection_id (Promise-based)
   .then () ->
+    # console.log 'esq.getQuery()', esq.getQuery()
     elasticsearch.client.search
       index: 'nested_search'
       _source: fns.Product.elasticsearch_findall_attrs
