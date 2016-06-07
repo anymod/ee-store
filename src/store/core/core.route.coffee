@@ -23,8 +23,8 @@ angular.module('store.core').config ($stateProvider, $urlRouterProvider) ->
       url: '/terms'
       views:
         top:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
+          controller: 'storeCtrl as product'
+          templateUrl: 'store/product/product.header.html'
         middle:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.terms.html'
@@ -36,8 +36,8 @@ angular.module('store.core').config ($stateProvider, $urlRouterProvider) ->
       url: '/privacy'
       views:
         top:
-          controller: 'storeCtrl as storefront'
-          templateUrl: 'store/store.header.html'
+          controller: 'storeCtrl as product'
+          templateUrl: 'store/product/product.header.html'
         middle:
           controller: 'storeCtrl as storefront'
           templateUrl: 'store/store.privacy.html'

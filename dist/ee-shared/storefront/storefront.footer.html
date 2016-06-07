@@ -29,6 +29,12 @@
             <li ng-if="storefront.ee.User.user.storefront_meta.about.headline || storefront.ee.User.user.storefront_meta.about.content">
               <a ui-sref="storefront-about">About</a>
             </li>
+            <li>
+              <a ui-sref="privacy">Privacy Policy</a>
+            </li>
+            <li>
+              <a ui-sref="terms">Terms of Service</a>
+            </li>
           </ul>
         </div>
         <div class="col col-sm-2" ng-if="storefront">
@@ -43,14 +49,9 @@
             </ee-collection-nav> -->
           </ul>
         </div>
-        <div class="col col-sm-2" ng-if="storefront.ee.User.user.storefront_meta.audience.social.facebook || storefront.ee.User.user.storefront_meta.audience.social.pinterest || !!storefront.ee.User.user.storefront_meta.audience.social.twitter || !!storefront.ee.User.user.storefront_meta.audience.social.instagram || !!storefront.ee.User.user.storefront_meta.audience.contact.email">
+        <div class="col col-sm-2" ng-if="storefront.ee.User.user.storefront_meta.audience.social.facebook || storefront.ee.User.user.storefront_meta.audience.social.pinterest || !!storefront.ee.User.user.storefront_meta.audience.social.twitter || !!storefront.ee.User.user.storefront_meta.audience.social.instagram">
           <ul class="nav nav-pills nav-stacked nav-compact">
             <li class="disabled">Connect</li>
-            <li ng-if="!!storefront.ee.User.user.storefront_meta.audience.contact.email">
-              <a href="mailto:{{ storefront.ee.User.user.storefront_meta.audience.contact.email }}" target="_blank">
-                Email us
-              </a>
-            </li>
             <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
                 ng-if="!!storefront.ee.User.user.storefront_meta.audience.social[site]">
               <a href="http://{{ site }}.com/{{ storefront.ee.User.user.storefront_meta.audience.social[site] }}" target="_blank">
@@ -68,7 +69,7 @@
     <div class="row margin-0">
       <div class="col col-sm-7">
         <small>
-          &copy;&nbsp;2015&nbsp;<span ng-bind="storefront.ee.User.user.storefront_meta.name"></span>.&nbsp;&nbsp;
+          &copy;&nbsp;2016&nbsp;<span ng-bind="storefront.ee.User.user.storefront_meta.name"></span>.&nbsp;&nbsp;
           <a href="https://eeosk.com" target="_blank" class="gray-color">Ecommerce by eeosk</a>.
         </small>
       </div>
