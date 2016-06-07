@@ -1,6 +1,6 @@
 'use strict'
 
-angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstrap) ->
+angular.module('store.core').factory 'eeBack', ($rootScope, $http, $q, eeBackUrl, eeBootstrap) ->
 
   back = this
 
@@ -110,6 +110,8 @@ angular.module('store.core').factory 'eeBack', ($http, $q, eeBackUrl, eeBootstra
       }
 
     customerPOST: (email) ->
+      console.log 'called customerPost'
+      $rootScope.$emit 'keen:addEvent', 'signup'
       _makeRequest {
         method: 'POST'
         url: eeBackUrl + 'customers'

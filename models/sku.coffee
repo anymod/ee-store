@@ -10,9 +10,14 @@ Customization = require './customization'
 Sku =
 
   addAllToProduct: (product) ->
-    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? AND discontinued IS NOT true AND quantity > 0 ORDER BY baseline_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
+    sequelize.query 'SELECT ' + Sku.attrs.join(',') + ' FROM "Skus" WHERE product_id = ? ORDER BY baseline_price ASC', { type: sequelize.QueryTypes.SELECT, replacements: [product.id] }
     .then (skus) ->
-      product.skus = skus
+      if skus.length is 1
+        product.skus = skus
+      else
+        product.skus = []
+        for sku in skus
+          if !sku.discontinued and sku.quantity > 0 then product.skus.push sku # AND discontinued IS NOT true AND quantity > 0
       product
 
   forCart: (sku_ids, seller_id) ->
