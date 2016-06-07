@@ -49,7 +49,7 @@ cartCookie = (req, res, next) ->
 app.use cartCookie
 
 # HOME
-app.get '/', (req, res, next) ->
+app.get ['/'], (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () -> User.defineHomepage bootstrap
@@ -156,7 +156,7 @@ app.get '/search', (req, res, next) ->
 #     res.redirect '/'
 
 # HELP
-app.get '/help', (req, res, next) ->
+app.get ['/help', '/terms', '/privacy'], (req, res, next) ->
   { bootstrap, host, path } = utils.setup req
   User.defineStorefront host, bootstrap
   .then () ->

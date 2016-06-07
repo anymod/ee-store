@@ -1,11 +1,12 @@
 'use strict'
 
-angular.module('store.core').factory 'eeUser', (eeBootstrap, eeBack, categories) ->
+angular.module('store.core').factory 'eeUser', ($location, eeBootstrap, eeBack, categories) ->
 
   ## SETUP
   _data =
     reading: false
-    user: {}
+    user:
+      current_host: $location.host() # For Terms and Privacy pages
     categories: categories
 
   if eeBootstrap
