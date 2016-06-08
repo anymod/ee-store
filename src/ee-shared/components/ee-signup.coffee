@@ -2,7 +2,7 @@
 
 angular.module 'ee-signup', []
 
-angular.module('ee-signup').directive 'eeSignup', (eeModal) ->
+angular.module('ee-signup').directive 'eeSignup', (eeBack) ->
   templateUrl: 'ee-shared/components/ee-signup.html'
   restrict: 'EA'
   scope: {}
