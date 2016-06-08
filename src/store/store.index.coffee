@@ -38,5 +38,6 @@ angular.module 'eeStore', [
   'ee-search-sort'
   'ee-empty-message'
   'ee-loading'
+  'ee-signup'
   # 'ee.templates' # commented out during build step for inline templates
 ]

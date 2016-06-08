@@ -123,6 +123,30 @@ esqSetProductIds = (esq, opts) ->
       id: opts.product_ids.split(',')
   esq.query 'query', 'bool', ['must'], id_match
 
+esqSetNoDimensions = (esq, opts) ->
+  # console.log esq, opts
+  return unless opts?.no_dimensions
+  nested_match =
+    nested:
+      path: 'skus'
+      query:
+        bool:
+          should: [
+            exists: { field: 'length' }
+            exists: { field: 'width' }
+            exists: { field: 'height' }
+            # range:
+            #   baseline_price:
+            #     gte: 500
+            #     lte: 1000
+          ]
+        #       "bool": {
+        # "should": [
+        #     { "exists": { "field": "name.first" }},
+        #     { "exists": { "field": "name.last" }}
+        # ]}
+  # esq.query 'query', 'bool', ['must'], nested_match
+
 esqSetCollectionId = (esq, opts) ->
   new Promise (resolve, reject) ->
     return resolve(true) unless opts?.collection_id?
@@ -156,6 +180,7 @@ fns.Product.search = (user, opts) ->
   esqSetCategories esq, opts    # Categorization: opts.category_ids
   esqSetProductIds esq, opts    # Product ids: opts.product_ids
   # esqSetSupplierId esq, opts    # Supplier (admin only): opts.supplier_id
+  esqSetNoDimensions esq, opts  # No Dimensions, Out of Stock, Discontinued, or Hidden
   esqSetCollectionId esq, opts  # Collection: opts.collection_id (Promise-based)
   .then () ->
     # console.log 'esq.getQuery()', esq.getQuery()

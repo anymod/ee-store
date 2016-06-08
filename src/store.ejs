@@ -106,6 +106,26 @@
         heap.load("2229609858");
     </script>
     <!-- End Heap code -->
+
+  <% } %>
+
+  <% if (!!bootstrap.id && bootstrap.id == 49) { %>
+    <!-- Facebook signup code -->
+    <div id="fb-root"></div>
+    <script>
+      (function(d, s, id) {
+        var js, fjs = d.getElementsByTagName(s)[0];
+        if (d.getElementById(id)) return;
+        js = d.createElement(s); js.id = id;
+        js.src = "https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.6&appId=459463727501772";
+        fjs.parentNode.insertBefore(js, fjs);
+      }(document, 'script', 'facebook-jssdk'));
+    </script>
+    <!-- End Facebook signup code -->
+
+    <!-- Pinterest signup code -->
+    <script type="text/javascript" async defer src="https://assets.pinterest.com/js/pinit.js"></script>
+    <!-- End Pinterest signup code -->
   <% } %>
 
 </head>
@@ -235,6 +255,7 @@
   <script src="js/ee-shared/components/ee-product-images.js"></script>
   <script src="js/ee-shared/components/ee-empty-message.js"></script>
   <script src="js/ee-shared/components/ee-loading.js"></script>
+  <script src="js/ee-shared/components/ee-signup.js"></script>
   <!-- endbuild -->
 
 </body>

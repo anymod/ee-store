@@ -117,6 +117,7 @@ sources.storeDirective = [
   './src/ee-shared/components/ee-product-images.coffee'
   './src/ee-shared/components/ee-empty-message.coffee'
   './src/ee-shared/components/ee-loading.coffee'
+  './src/ee-shared/components/ee-signup.coffee'
 ]
 
 module.exports = sources

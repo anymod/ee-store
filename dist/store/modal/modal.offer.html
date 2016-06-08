@@ -1,38 +1,15 @@
 <div class="position-absolute" style="top: 5px; right: 10px;">
   <button type="button" class="close" ng-click="$close()">&times;</button>
 </div>
-<div class="inline-block full-width text-center pad-10">
-  <img ng-src="{{ modal.ee.User.user.logo | cloudinaryTrim }}" class="max-width-200">
+<div class="inline-block full-width text-center btn-themed pad-10 vert-10 margin-top-0"
+  style="border-radius: 5px 5px 0 0;">
+  <!-- <img ng-src="{{ modal.ee.User.user.logo | cloudinaryTrim }}" class="max-width-200"> -->
+  <h3 class="font-weight-200 vert-5">
+    Follow for sales&nbsp;<br class="hidden-xs">and exclusive offers.
+  </h3>
 </div>
-<style>
-  .offer-modal {
-    width: 100%;
-    background: url({{ 'https://res.cloudinary.com/eeosk/image/upload/v1436216074/paris-stamped-ottoman_kgohn4.jpg' | cloudinaryResizeTo:500:300:'fill' }}) no-repeat center center;
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-  }
-</style>
-<div class="position-relative offer-modal" style="padding: 30px 0 50px;">
-  <div class="pad-20 text-center" style="background: rgba(255,255,255,0.8);">
-    <h3 class="font-weight-200">
-      Get exclusive offers & more&nbsp;<br class="hidden-xs">delivered straight to your inbox.
-    </h3>
-    <form class="form-group input-group max-width-300" style="margin: 20px auto;" ng-submit="modal.subscribe()">
-      <input ng-model="modal.email" type="email" class="form-control full-width-important box-shadow vert-5" placeholder="Email address" style="padding: 8px 20px; min-height: 38px;">
-      <span class="input-group-btn">
-        <button class="btn btn-themed box-shadow vert-5" type="submit" style="padding: 8px 10px; min-height: 38px;" ng-disabled="modal.submitting">Join</button>
-      </span>
-    </form>
-    <div ng-show="modal.alert" ng-bind="modal.alert" class="font-weight-200"></div>
-
-    <!-- <form class="form-inline vert-20" ng-submit="modal.subscribe()">
-      <div class="form-group">
-        <input ng-model="modal.email" type="email" class="form-control box-shadow vert-5" placeholder="Email address">
-        <button type="submit" class="btn btn-default box-shadow vert-5" ng-disabled="modal.submitting">Submit</button>
-      </div>
-      <div ng-show="modal.alert" ng-bind="modal.alert" class="font-weight-200"></div>
-    </form> -->
-  </div>
+<ee-signup></ee-signup>
+<div class="full-width text-center pad-10">
+  <h4 class="text-muted font-weight-200 vert-5">Discover deals and shop new trends and styles at Stylish Rustic.</h4>
 </div>
+<br>
