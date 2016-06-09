@@ -21,4 +21,9 @@ angular.module('ee-signup').directive 'eeSignup', (eeModal, eeBack) ->
     PinUtils?.build()
     FB?.XFBML?.parse()
 
+    page_like_callback = (url, html_element) ->
+      console.log 'running'
+      heap.track 'Clicked Follow Button'
+    FB?.Event.subscribe 'edge.create', page_like_callback
+
     return

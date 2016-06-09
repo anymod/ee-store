@@ -21,7 +21,7 @@ module.directive "eeStorefrontHeader", ($rootScope, $state, $window, eeCart, eeM
 
     return unless scope.user
 
-    if scope.showScrollnav
+    if !!scope.showScrollnav
       trigger = 75
       angular.element($window).bind 'scroll', (e, a, b) ->
         if $window.pageYOffset > trigger then ele.addClass 'show-scrollnav' else ele.removeClass 'show-scrollnav'

@@ -5,20 +5,22 @@
         <strong>Free Shipping over $50</strong>
       </div>
       <div class="col col-sm-4 text-center">
-        <!-- sale -->
-        <a ui-sref="sale({ id: 13016 })"
-          class="btn btn-themed pad-2"
-          style="text-shadow: none; border-bottom-width: 1px !important;">
-          &nbsp;<i class="fa fa-fw fa-tags"></i>&nbsp;Sale&nbsp;&nbsp;
-        </a>&nbsp;
-        <!-- /sale -->
-        <!-- offer -->
-        <div ng-click="openOfferModal()"
-          class="btn btn-themed pad-2"
-          style="text-shadow: none; border-bottom-width: 1px !important;">
-          &nbsp;<i class="fa fa-fw fa-envelope-o"></i>&nbsp;Get exclusive offers&nbsp;
+        <div ng-hide="hideButtons">
+          <!-- sale -->
+          <a ui-sref="sale({ id: 13016 })"
+            class="btn btn-themed pad-2"
+            style="text-shadow: none; border-bottom-width: 1px !important;">
+            &nbsp;<i class="fa fa-fw fa-tags"></i>&nbsp;Sale&nbsp;&nbsp;
+          </a>&nbsp;
+          <!-- /sale -->
+          <!-- offer -->
+          <div ng-click="openOfferModal()"
+            class="btn btn-themed pad-2"
+            style="text-shadow: none; border-bottom-width: 1px !important;">
+            &nbsp;<i class="fa fa-fw fa-envelope-o"></i>&nbsp;Get exclusive offers&nbsp;
+          </div>
+          <!-- /offer -->
         </div>
-        <!-- /offer -->
       </div>
       <div class="col col-sm-4 text-right">
         <div class="vertical-align-middle">

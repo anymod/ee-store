@@ -9157,6 +9157,13 @@ html {
   background: none;
   color: #03a9f4;
 }
+@media (max-width: 400px) {
+  #footer-region .bg-themed,
+  #store-footer-region .bg-themed {
+    margin: 10px -25px;
+    border-radius: 0;
+  }
+}
 .ee-brand {
   background-image: none !important;
   background: #03a9f4 !important;

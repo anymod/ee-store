@@ -152,13 +152,15 @@
       }
       .ee-scroll-to-top { background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>; }
       .ee-scroll-to-top i { color: <%= bootstrap.storefront_meta.brand.color.tertiary %>; }
-      .btn-themed {
-        color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
-        text-shadow: 1px 1px <%= bootstrap.storefront_meta.brand.color.secondaryAccent %>;
+      .btn-themed,
+      .bg-themed {
         background-color: <%= bootstrap.storefront_meta.brand.color.secondary %>;
+        color: <%= bootstrap.storefront_meta.brand.color.tertiary %>;
         border-color: <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
         border-bottom: 2px solid <%= bootstrap.storefront_meta.brand.color.secondaryAccent %> !important;
+
       }
+      .btn-themed { text-shadow: 1px 1px <%= bootstrap.storefront_meta.brand.color.secondaryAccent %>; }
       .btn-themed:hover,
       .btn-themed:focus,
       .btn-themed:active {

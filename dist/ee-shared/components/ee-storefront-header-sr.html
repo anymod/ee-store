@@ -158,7 +158,7 @@
   .ee-scroll-top-show { top: 0; }
 </style>
 <div ee-scroll-show trigger-at="{{ compactView ? 800 : 300 }}"
-  ng-if="state != 'cart' && state != 'help' && state != 'search'"
+  ng-if="showScrollnav != false && state != 'cart' && state != 'help' && state != 'search'"
   class="ee-scroll-top full-width text-center pad-5 transition-200 visible-xs">
   <div class="inline-block pad-5 round-5" style="background: rgba(255,255,255,0.5);">
     <!-- sale -->
@@ -177,7 +177,7 @@
 <!-- /SR Mobile Topnav -->
 
 <!-- Search -->
-<div class="container max-width-900 vert-5" ng-if="!compactView && state != 'cart' && state != 'help'">
+<div class="container max-width-900 vert-5" ng-if="!compactView && state != 'cart' && state != 'help' && state != 'sale'">
   <ee-search-sort hide-sort="true"></ee-search-sort>
 </div>
 <!-- <div class="container max-width-900 vert-5">
