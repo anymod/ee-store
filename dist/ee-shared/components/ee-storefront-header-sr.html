@@ -177,11 +177,8 @@
 <!-- /SR Mobile Topnav -->
 
 <!-- Search -->
-<div class="container max-width-900 vert-5">
-  <ee-search-sort
-    ng-if="!compactView && state != 'cart' && state != 'help'"
-    hide-sort="true">
-  </ee-search-sort>
+<div class="container max-width-900 vert-5" ng-if="!compactView && state != 'cart' && state != 'help'">
+  <ee-search-sort hide-sort="true"></ee-search-sort>
 </div>
 <!-- <div class="container max-width-900 vert-5">
   <form class="form-group input-group margin-0" ng-submit="search()">

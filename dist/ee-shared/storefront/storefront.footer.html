@@ -49,7 +49,8 @@
             </ee-collection-nav> -->
           </ul>
         </div>
-        <div class="col col-sm-2" ng-if="storefront.ee.User.user.storefront_meta.audience.social.facebook || storefront.ee.User.user.storefront_meta.audience.social.pinterest || !!storefront.ee.User.user.storefront_meta.audience.social.twitter || !!storefront.ee.User.user.storefront_meta.audience.social.instagram">
+        <div class="col col-sm-2" ng-if="storefront.ee.User.user.storefront_meta.audience.social.facebook || storefront.ee.User.user.storefront_meta.audience.social.pinterest || !!storefront.ee.User.user.storefront_meta.audience.social.twitter || !!storefront.ee.User.user.storefront_meta.audience.social.instagram"
+          ng-hide="storefront.ee.User.user.username == 'stylishrustic'">
           <ul class="nav nav-pills nav-stacked nav-compact">
             <li class="disabled">Connect</li>
             <li ng-repeat="site in ['facebook', 'pinterest', 'twitter', 'instagram']"
@@ -59,6 +60,14 @@
               </a>
             </li>
           </ul>
+        </div>
+        <div class="col col-sm-4" ng-if="storefront.ee.User.user.username == 'stylishrustic'">
+          <br class="visible-xs">
+          <h3 class="font-weight-200">Follow for sales and exclusive offers</h3>
+          <ee-signup></ee-signup>
+          <div class="max-width-300 margin-0-auto text-center pad-10">
+            <h4 class="text-muted font-weight-200 vert-5">Discover deals and shop new trends & styles at Stylish Rustic.</h4>
+          </div>
         </div>
       </div> <!-- /row -->
     </div> <!-- /container -->

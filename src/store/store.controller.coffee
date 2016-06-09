@@ -6,6 +6,7 @@ angular.module('eeStore').controller 'storeCtrl', ($rootScope, $state, $location
 
   storefront.ee = eeDefiner.exports
   storefront.categories = categories
+  storefront.state = $state.current.name
 
   # storefront.fns =
   #   update: () -> $rootScope.forceReload $location.path(), '?page=' + storefront.data.pagination.page
